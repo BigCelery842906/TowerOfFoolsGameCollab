@@ -1,17 +1,28 @@
 using NUnit.Framework;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class GenerationManager : MonoBehaviour
 {
+    [SerializeField]
+    public float m_desiredChunkWidth;
+    [SerializeField]
+    public float m_desiredChunkHeight;
 
-    List<BackgroundTile> m_backgroundTilePool;
-    BackgroundTile m_lastTilePlaced;
-    PlatformGenerator m_platformGenerator;
+
+    ChunkGenerator m_chunkGenerator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        m_chunkGenerator = GetComponent<ChunkGenerator>();
+        if(!m_chunkGenerator)
+        {
+            Debug.Log("Chunk Generator not Loaded on Generation Manager");
+        }
+    }
     void Start()
     {
-        
+        m_chunkGenerator.SpawnStartingRoom();
     }
     void GenerateNewTile()
     {
