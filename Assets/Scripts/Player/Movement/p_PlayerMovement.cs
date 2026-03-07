@@ -79,6 +79,8 @@ public class p_PlayerMovement : MonoBehaviour
 
     //All done for game feel since this is a platformer
 
+
+    //TODO: Edge case where player will have lower gravity if they hold down space and then walk off a platform
     public void Jump()
     {
         //if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
@@ -96,6 +98,7 @@ public class p_PlayerMovement : MonoBehaviour
         Physics.gravity = m_highGrav;
     }
 
+    //runs after the player jumps 
     private IEnumerator C_GroundedCheck()
     {
         while (!m_isGrounded)
