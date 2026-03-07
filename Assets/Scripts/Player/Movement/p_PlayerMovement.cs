@@ -3,11 +3,22 @@ using UnityEngine;
 
 public class p_PlayerMovement : MonoBehaviour
 {
+    [Header("Movement + Jumping Variables")]
     [Tooltip("How fast the player moves, 5 as a base is good")]
     [SerializeField] private float m_moveSpeed;
 
     [Tooltip("How high the player jumps, 8 feels good?")]
     [SerializeField] private float m_jumpForce;
+
+    [Header("Gravity Variables")]
+    [Tooltip("This value is how much gravity the player has has when they start jumping, should feel lighter than the higher gravity")]
+    [SerializeField] private float m_lowerGravValue;
+
+    [Tooltip("This value is how much gravity the player has a the apex of their jump, it should be lower than the other gravity values")]
+    [SerializeField] private float m_apexGravValue;
+
+    [Tooltip("This value is how much gravity the player feels when falling or when they stop their jump")]
+    [SerializeField] private float m_highGravValue;
 
     [Tooltip("You shouldn't need to touch this, this is where the grounded check for the jump is coming from")]
     [SerializeField] private Transform m_groundCheckTransform; //gives us more control over where the ground check is coming from, should be useful once theres a mesh in the game <3
@@ -17,9 +28,19 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the coroutine <3
 
+    private bool m_isGrounded;
+    private Vector3 m_lowGrav;    
+    private Vector3 m_apexGrav;    
+    private Vector3 m_highGrav;    
+
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody>();
+
+        //I didnt want to expose vectors to the designers ill be real xx You can change this
+        m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
+        m_apexGrav = new Vector3(0f,m_apexGravValue, 0f);
+        m_highGrav = new Vector3(0f,m_highGravValue, 0f);
     }
 
     public void SetMoveDirection(Vector2 direction)
@@ -52,12 +73,46 @@ public class p_PlayerMovement : MonoBehaviour
         }
     }
 
+    #region Jump Stuff
+    //This does normal jump stuff based on input but also handels variable jump height where the player falls faster once they let go of space 
+    //The player also hangs at their apex for a little bit longer than normal too
+
+    //All done for game feel since this is a platformer
+
     public void Jump()
     {
+        //if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
         if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
         {
-            Debug.Log(hit.collider.name);
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+            m_isGrounded = false;
+            Physics.gravity = m_lowGrav;
+            StartCoroutine(C_GroundedCheck());
         }
     }
+
+    public void JumpCancelled()
+    {
+        Physics.gravity = m_highGrav;
+    }
+
+    private IEnumerator C_GroundedCheck()
+    {
+        while (!m_isGrounded)
+        {
+            if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
+            {
+                m_isGrounded = true;
+                yield return new WaitForSeconds(0.1f);
+                //the coroutine is exited now since the bool is now true
+            }
+            
+            //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
+            if(m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > -0.2f)
+            {
+                Physics.gravity = m_apexGrav;
+            }
+        }
+    }
+    #endregion
 }
