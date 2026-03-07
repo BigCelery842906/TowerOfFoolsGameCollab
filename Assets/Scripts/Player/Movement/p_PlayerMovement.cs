@@ -7,7 +7,7 @@ public class p_PlayerMovement : MonoBehaviour
     [Tooltip("How fast the player moves, 5 as a base is good")]
     [SerializeField] private float m_moveSpeed;
 
-    [Tooltip("How high the player jumps, 8 feels good?")]
+    [Tooltip("How high the player jumps, 9 feels good?")]
     [SerializeField] private float m_jumpForce;
 
     [Header("Gravity Variables")]
@@ -26,9 +26,9 @@ public class p_PlayerMovement : MonoBehaviour
     private Rigidbody m_RB;
 
     private Vector2 m_moveDir; //is set based on input 
-    private bool m_shouldMove; //bool for stopping the coroutine <3
+    private bool m_shouldMove; //bool for stopping the movement coroutine <3
 
-    private bool m_isGrounded;
+    private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
     private Vector3 m_lowGrav;    
     private Vector3 m_apexGrav;    
     private Vector3 m_highGrav;    
@@ -79,8 +79,6 @@ public class p_PlayerMovement : MonoBehaviour
 
     //All done for game feel since this is a platformer
 
-
-    //TODO: Edge case where player will have lower gravity if they hold down space and then walk off a platform
     public void Jump()
     {
         //if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
@@ -89,6 +87,7 @@ public class p_PlayerMovement : MonoBehaviour
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             m_isGrounded = false;
             Physics.gravity = m_lowGrav;
+
             StartCoroutine(C_GroundedCheck());
         }
     }
@@ -103,17 +102,26 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while (!m_isGrounded)
         {
-            if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
+            yield return new WaitForSeconds(0.1f); //delays it so its not insta set to true whoops
+
+            if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
             {
                 m_isGrounded = true;
-                yield return new WaitForSeconds(0.1f);
+
+                yield return new WaitForFixedUpdate();
                 //the coroutine is exited now since the bool is now true
             }
-            
+
             //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
-            if(m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > -0.2f)
+            if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
             {
                 Physics.gravity = m_apexGrav;
+            }
+
+            if (m_RB.linearVelocity.y < 0f)
+            {
+                Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)
+                
             }
         }
     }
