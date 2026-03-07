@@ -45,7 +45,7 @@ public class p_PlayerMovement : MonoBehaviour
 
     public void SetMoveDirection(Vector2 direction)
     {
-        m_moveDir = direction;
+        m_moveDir = new Vector2(direction.x, 0);
 
         if(m_moveDir == Vector2.zero)
         {
