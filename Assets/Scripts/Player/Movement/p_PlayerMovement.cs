@@ -47,12 +47,15 @@ public class p_PlayerMovement : MonoBehaviour
     {
         m_moveDir = new Vector2(direction.x, 0);
 
+
         if(m_moveDir == Vector2.zero)
         {
             m_shouldMove = false;
         }
         else
         {
+            transform.rotation = Quaternion.LookRotation(m_moveDir);
+
             m_shouldMove = true;
             StartCoroutine(C_Move());
         }
