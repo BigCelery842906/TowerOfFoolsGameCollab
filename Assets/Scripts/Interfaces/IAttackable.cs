@@ -4,7 +4,7 @@ using UnityEngine;
 public interface IAttackable
 {
     /// <summary>
-    /// Called through 
+    /// Called from the attacking player to the attacked player
     /// </summary>
     public void Attacked(Vector3 knockbackDir);
 }
