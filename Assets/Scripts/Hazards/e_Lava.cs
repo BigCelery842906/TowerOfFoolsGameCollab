@@ -8,12 +8,12 @@ public class e_Lava : MonoBehaviour
 
     [Header("Starting Position")]
     [Tooltip("Whether or not the lava should start from it's current position in the editor - This is useful if you have positioned it in a certain way, or are testing something")]
-    [SerializeField] private bool startFromPosition = false;
+    [SerializeField] private bool m_startFromPosition = false;
     [SerializeField] private float m_startingYPosition = -5f;
 
     void Start()
     {
-        if (!startFromPosition)
+        if (!m_startFromPosition)
         {
             transform.position = new Vector3(transform.position.x, m_startingYPosition, transform.position.z);
         }

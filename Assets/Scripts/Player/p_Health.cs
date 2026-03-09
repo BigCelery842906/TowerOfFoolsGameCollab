@@ -2,31 +2,31 @@ using UnityEngine;
 
 public class p_Health : MonoBehaviour
 {
-    private int health = 1; // For now this is set to 1
-    private int maxHealth = 1; // In case we decide to change the health value later
+    private int m_health = 1; // For now this is set to 1
+    private int m_maxHealth = 1; // In case we decide to change the health value later
     
     void Start()
     {
-        health = maxHealth;
+        m_health = m_maxHealth;
     }
 
     public void TouchedLava()
     {
         Debug.Log("Touched Lava", this);
-        health--;
+        m_health--;
         CheckHealth();
     }
 
     private void CheckHealth()
     {
-        if (health <= 0)
+        if (m_health <= 0)
         {
-            health = 0;
+            m_health = 0;
             Destroy(transform.parent.gameObject);
         }
-        else if (health > maxHealth)
+        else if (m_health > m_maxHealth)
         {
-            health = maxHealth;
+            m_health = m_maxHealth;
         }
     }
 }
