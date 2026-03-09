@@ -67,6 +67,7 @@ public class p_PlayerMovement : MonoBehaviour
 
             m_shouldMove = true;
             StartCoroutine(C_Move());
+            
         }
     }
 
