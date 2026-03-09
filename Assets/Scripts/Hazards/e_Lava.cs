@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Lava : MonoBehaviour
+public class e_Lava : MonoBehaviour
 {
     [Tooltip("How fast the lava should rise up the screen - Default is 0.5")]
     [SerializeField] private float m_movementSpeed = 0.5f;
@@ -24,12 +24,13 @@ public class Lava : MonoBehaviour
         transform.position += Vector3.up * (m_movementSpeed * Time.deltaTime);
     }
 
-
-    private void OnCollisionEnter(Collision other)
-    { // Waiting on Player being pushed to main before testing this aspect
+    private void OnTriggerEnter(Collider other)
+    { 
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Hit Player, this is where it would send the kill/damage for player");
+            // "If you finger the lava, you're dead" - Connor Holt 2026
+            Debug.Log("Lava Fingered", other.gameObject);
+            other.GetComponent<p_Health>().TouchedLava();
         }
     }
 }
