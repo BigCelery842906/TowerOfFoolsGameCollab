@@ -24,6 +24,10 @@ public class p_PlayerMovement : MonoBehaviour
     [SerializeField] private Transform m_groundCheckTransform; //gives us more control over where the ground check is coming from, should be useful once theres a mesh in the game <3
 
     private Rigidbody m_RB;
+    private CapsuleCollider m_CapsuleCollider;
+
+    private float m_dynamicFriction; //dont set this here do it in the physics material
+    private float m_staticFriction; //dont set this here do it in the physics material
 
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the movement coroutine <3
@@ -36,6 +40,11 @@ public class p_PlayerMovement : MonoBehaviour
     private void Awake()
     {
         m_RB = GetComponent<Rigidbody>();
+        m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
+
+        //getting the intended values
+        m_dynamicFriction = m_CapsuleCollider.material.dynamicFriction;
+        m_staticFriction = m_CapsuleCollider.material.staticFriction;
 
         //I didnt want to expose vectors to the designers ill be real xx You can change this
         m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
@@ -58,6 +67,7 @@ public class p_PlayerMovement : MonoBehaviour
 
             m_shouldMove = true;
             StartCoroutine(C_Move());
+            
         }
     }
 
@@ -107,13 +117,19 @@ public class p_PlayerMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f); //delays it so its not insta set to true whoops
 
+            //Having this set to 0 means the player cant run into a wall while jumping and get stuck
+            m_CapsuleCollider.material.dynamicFriction = 0;
+            m_CapsuleCollider.material.staticFriction = 0;
+
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
             {
                 m_isGrounded = true;
+                m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
+                m_CapsuleCollider.material.staticFriction = m_staticFriction;
 
                 yield return new WaitForFixedUpdate();
                 //the coroutine is exited now since the bool is now true
-            }
+            }            
 
             //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
             if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
