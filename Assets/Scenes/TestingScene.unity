@@ -392,6 +392,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_desiredChunkWidth: 0
   m_desiredChunkHeight: 0
+  m_startRoomWidth: 0
+  m_startRoomHeight: 0
+  m_worldScale: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,7 +444,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1052529674
+--- !u!1 &1759349364
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -449,23 +452,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1052529676}
-  - component: {fileID: 1052529675}
-  - component: {fileID: 1052529677}
+  - component: {fileID: 1759349367}
+  - component: {fileID: 1759349366}
+  - component: {fileID: 1759349365}
   m_Layer: 0
-  m_Name: GenerationManager
+  m_Name: PG_GenerationManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1052529675
+--- !u!114 &1759349365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052529674}
+  m_GameObject: {fileID: 1759349364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced748f9720ef08438766b3223eafee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_regionOneWallPool:
+  - {fileID: 4495331142956246009, guid: 80187394dd1a1b9478437b906a492a2f, type: 3}
+  m_regionOneBlockPool: []
+  m_regionOneBackgroundPool: []
+  m_nextRoomEntrance: 2147483647
+  m_previousRoomExit: 2147483647
+--- !u!114 &1759349366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759349364}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34c68f81f6d7a1047b76feb24aa50d35, type: 3}
@@ -473,39 +494,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_desiredChunkWidth: 0
   m_desiredChunkHeight: 0
---- !u!4 &1052529676
+  m_startRoomWidth: 25
+  m_startRoomHeight: 25
+  m_worldScale: 3
+--- !u!4 &1759349367
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052529674}
+  m_GameObject: {fileID: 1759349364}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.30692, y: 0, z: 21.91021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1052529677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1052529674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ced748f9720ef08438766b3223eafee1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_wallPool:
-  - {fileID: 6915580450886259870, guid: a189dcf60c6073041865ba73805b8466, type: 3}
-  m_floorPool:
-  - {fileID: 6163712283284601154, guid: b35f140e6deabc84f95ff86af1a891e6, type: 3}
-  m_backgroundPool:
-  - {fileID: 8081268487055162772, guid: 4fa5ec64652d643419b463d59e6a1130, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -513,4 +519,4 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1052529676}
+  - {fileID: 1759349367}
