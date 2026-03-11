@@ -19,10 +19,16 @@ public class p_PlayerPickupManager : MonoBehaviour
         m_playerMovement = GetComponent<p_PlayerMovement>();
     }
 
-    public void SetPlayerMaxJumps(int maxJumps, int timerLength)
+    /// <summary>
+    /// Sets the players max jumps, starts timer then resets the max jumps to their base value
+    /// </summary>
+    /// <param name="maxJumps"></param>
+    /// <param name="baseValue"></param>
+    /// <param name="timerLength"></param>
+    public void SetPlayerMaxJumps(int maxJumps,int baseValue ,int timerLength)
     { 
         OnMaxJumpChange?.Invoke(maxJumps);
-        StartCoroutine(C_Timer(timerLength));
+        StartCoroutine(C_Timer(timerLength, baseValue, OnMaxJumpChange));
     }
 
     //TODO: SetPlayerDamageShield
@@ -38,10 +44,10 @@ public class p_PlayerPickupManager : MonoBehaviour
     #region Timers
     //super basic dont keep ts
     //Yell at me if i leave this in a commit to main
-    private IEnumerator C_Timer(int seconds)
+    private IEnumerator C_Timer(int seconds, int baseValue, Action<int> InvokedActionInt)
     {
         yield return new WaitForSeconds(seconds);
-        OnMaxJumpChange?.Invoke(1);
+        InvokedActionInt?.Invoke(baseValue);
     }
 
     #endregion
