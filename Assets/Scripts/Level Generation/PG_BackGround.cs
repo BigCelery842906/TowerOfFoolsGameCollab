@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class BackgroundTile : MonoBehaviour
+public class PG_BackGround : MonoBehaviour
 {
-
-    Sprite m_texture;
-    Vector2 m_dimensions;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

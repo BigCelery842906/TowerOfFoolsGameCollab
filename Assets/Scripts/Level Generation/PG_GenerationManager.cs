@@ -1,6 +1,10 @@
 using NUnit.Framework;
-
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PG_GenerationManager : MonoBehaviour
 {
@@ -8,29 +12,28 @@ public class PG_GenerationManager : MonoBehaviour
     public int m_desiredChunkWidth;
     [SerializeField]
     public int m_desiredChunkHeight;
-
-    public int m_startRoomWidth;
-    public int m_startRoomHeight;
+    public int m_chunksPerRoom;
 
     public float m_worldScale;
 
-    private PG_ChunkGenerator m_chunkGenerator;
+    private PG_RoomGenerator m_roomGenerator;
     private REGION m_currentRegion = REGION.ONE;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-
-    }
-    void Start()
-    {
-        m_chunkGenerator = GetComponent<PG_ChunkGenerator>();
-        if (!m_chunkGenerator)
+        m_roomGenerator = GetComponent<PG_RoomGenerator>();
+        if(!m_roomGenerator)
         {
             Debug.Log("Chunk Generator not Loaded on Generation Manager");
         }
-        m_chunkGenerator.SetWorldScale(m_worldScale);
-        m_chunkGenerator.SpawnStartingRoom(m_startRoomWidth, m_startRoomHeight);
+        m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
+        //m_roomGenerator.SetWorldScale(m_worldScale);
+       // m_roomGenerator.AddValuesToGrid();
+    }
+    void Start()
+    {
+        
         //m_chunkGenerator.SpawnStartingRoom(m_desiredChunkWidth, m_desiredChunkHeight);
     }
     void GenerateNewTile()
@@ -52,4 +55,7 @@ public class PG_GenerationManager : MonoBehaviour
     {
         ONE, TWO, THREE, FOUR, FIVE, SIX
     }
+
+
 }
+
