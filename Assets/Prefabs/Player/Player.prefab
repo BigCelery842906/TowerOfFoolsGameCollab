@@ -66,6 +66,9 @@ MonoBehaviour:
   m_apexGravValue: -6
   m_highGravValue: -15
   m_groundCheckTransform: {fileID: 6575185594403553813}
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!54 &806169417569996131
 Rigidbody:
   m_ObjectHideFlags: 0
