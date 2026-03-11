@@ -26,6 +26,7 @@ public class p_PlayerMovement : MonoBehaviour
     [Tooltip("Oh my you put the ground layer here, it should say ground :D")]
     [SerializeField] private LayerMask m_groundLayer;
 
+    private p_PlayerPickupManager m_PlayerPickupManager;
     private Rigidbody m_RB;
     private CapsuleCollider m_CapsuleCollider;
 
@@ -44,6 +45,9 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
+        if(m_PlayerPickupManager != null) { m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps; }
+
         m_RB = GetComponent<Rigidbody>();
         m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
@@ -96,8 +100,7 @@ public class p_PlayerMovement : MonoBehaviour
     //All done for game feel since this is a platformer
     public void Jump()
     {
-        //if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
-        if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f) && m_usedJumps >= m_maxJumps)
+        if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f) || m_usedJumps < m_maxJumps)
         {
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             m_isGrounded = false;

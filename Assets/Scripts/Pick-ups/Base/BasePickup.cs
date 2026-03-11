@@ -33,7 +33,7 @@ public class BasePickup : MonoBehaviour
     {
         if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
 
-        m_triggeredPlayer ??= other.GetComponent<p_PlayerPickupManager>();
+        m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
 
         PickupEffect();
     }
