@@ -20,6 +20,6 @@ public class pu_Scoll : BasePickup
 
         Instantiate(m_platformPrefab, new Vector3(m_triggeredPlayer.transform.position.x, m_triggeredPlayer.transform.position.y - m_distaceBelowPlayer, 0f), m_platformPrefab.transform.rotation);
 
-        Destroy(gameObject);
+        PickupUsed();
     }
 }

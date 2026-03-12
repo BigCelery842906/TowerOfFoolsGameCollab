@@ -40,6 +40,17 @@ public class BasePickup : MonoBehaviour
 
         m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
 
+        if (m_triggeredPlayer.CompareTag("Player1"))
+        {
+            //PlayerOne Triggered it
+            m_otherPlayer = m_playerTwo;
+        }
+        else
+        {
+            //PlayerTwo Triggered it
+            m_otherPlayer = m_playerOne;
+        }
+
         PickupEffect();     
     }
 
@@ -74,6 +85,11 @@ public class BasePickup : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    protected void PickupUsed()
+    {
+        Destroy(gameObject);
     }
 
     private void OnDisable()

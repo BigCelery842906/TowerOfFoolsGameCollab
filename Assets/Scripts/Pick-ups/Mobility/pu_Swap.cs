@@ -15,26 +15,12 @@ public class pu_Swap : BasePickup
     {
         //Grab the positions of each player
         Vector3 tempPlayerTrans = m_triggeredPlayer.transform.position;
-        Vector3 tempOtherPlayerTrans;
+        Vector3 tempOtherPlayerTrans = m_otherPlayer.transform.position;
 
-        //We dont know whic player triggered it so check then grabs the position of the other player
-        if (m_triggeredPlayer.CompareTag("Player1"))
-        {
-            //PlayerOne Triggered it
-            tempOtherPlayerTrans = m_playerTwo.transform.position;
+        //Swap their positions
+        m_triggeredPlayer.transform.position = tempOtherPlayerTrans;
+        m_otherPlayer.transform.position = tempPlayerTrans;
 
-            m_playerTwo.transform.position = tempPlayerTrans;
-            m_triggeredPlayer.transform.position = tempOtherPlayerTrans;
-        }
-        else 
-        {
-            //PlayerTwo Triggered it
-            tempOtherPlayerTrans = m_playerOne.transform.position;
-
-            m_playerOne.transform.position = tempPlayerTrans;
-            m_triggeredPlayer.transform.position = tempOtherPlayerTrans;
-        }
-
-        Destroy(gameObject);
+        PickupUsed();
     }
 }
