@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7849927746700546228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1217393644869758447}
+  - component: {fileID: 180740014500227777}
+  - component: {fileID: 5785224783523666041}
+  - component: {fileID: 1537447300731078245}
+  m_Layer: 0
+  m_Name: PG_GenerationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1217393644869758447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849927746700546228}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &180740014500227777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849927746700546228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34c68f81f6d7a1047b76feb24aa50d35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_desiredChunkWidth: 25
+  m_desiredChunkHeight: 10
+  m_chunksPerRoom: 5
+  m_worldScale: 1
+--- !u!114 &5785224783523666041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849927746700546228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced748f9720ef08438766b3223eafee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_regionOneWallPool:
+  - {fileID: 4495331142956246009, guid: 80187394dd1a1b9478437b906a492a2f, type: 3}
+  m_regionOneBlockPool: []
+  m_regionOneBackgroundPool:
+  - {fileID: 689665274087819324, guid: f440607545d1bf0479f127d7c84a5b78, type: 3}
+  m_nextRoomEntrance: 2
+  m_previousRoomExit: 2147483647
+--- !u!114 &1537447300731078245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849927746700546228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d401147ba6fe01b40b2e0d710ff303a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_width: 0
+  m_height: 0
+  m_gridNumber: 0
