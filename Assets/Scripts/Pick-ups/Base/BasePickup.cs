@@ -7,6 +7,7 @@ public class BasePickup : MonoBehaviour
 
     [Tooltip("Player who collided with the pickup")]
     protected p_PlayerPickupManager m_triggeredPlayer;
+    protected p_PlayerPickupManager m_otherPlayer;
 
     private void Awake()
     {
@@ -26,7 +27,7 @@ public class BasePickup : MonoBehaviour
             {
                 m_playerTwo = player;
             }
-        }
+        }        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,15 +36,27 @@ public class BasePickup : MonoBehaviour
 
         m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
 
-        PickupEffect();
+        if(m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
+
+        m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
+
+        PickupEffect();     
     }
 
     /// <summary>
-    /// Override in the children, called when a player 
+    /// Override in the children, called when a player collides with pickup, call "PickedUp()" at the end, also use this to set it as an interactable pickup
     /// </summary>
     protected virtual void PickupEffect()
     {
-        Debug.Log(gameObject.name + " has no pickup effect assigned and is using the base");
+        Debug.LogAssertion(gameObject.name + " has no pickup effect assigned and is using the base");
+    }
+
+    /// <summary>
+    /// Override in children, called from player controller when attack is pressed
+    /// </summary>
+    protected virtual void InteractedPickupEffect()
+    {
+        Debug.LogAssertion(gameObject.name + " You have passed this to the PPM as an interactable pickup but you have not overriden the base effect");
     }
 
     /// <summary>
@@ -51,6 +64,20 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected virtual void PickedUp()
     {
-        Destroy(gameObject);
+        if (m_triggeredPlayer.GetPlayerInteractablePickupPPM())
+        {
+            //shouldnt destroy an interactable pickup
+            transform.parent = m_triggeredPlayer.GetPickupPlayerPosPPM();
+            transform.localPosition = new Vector3(0,0,0);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if(m_triggeredPlayer != null) { m_triggeredPlayer.OnUseInteractablePickup -= InteractedPickupEffect; } //unbinding
     }
 }

@@ -7,18 +7,35 @@ using UnityEngine;
 /// </summary>
 public class p_PlayerPickupManager : MonoBehaviour
 {
+    public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
+
     public event Action<int> OnMaxJumpChange; //for the double jump pick up
 
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
-    //private p_PlayerCombat m_playerCombat; //might need this later?
     #endregion
+
+    [Tooltip("This is where pickups will go to after the player picks them up, unless they are destroyed")]
+    [SerializeField] private Transform m_pickupLocation;
+
+    private bool m_hasInteractablePickup = false;
+    private BasePickup interactablePickup; //this is sometimes null
 
     private void Awake()
     {
         m_playerMovement = GetComponent<p_PlayerMovement>();
     }
 
+    public void UseInteractablePickup()
+    {
+        OnUseInteractablePickup?.Invoke();
+    }
+
+    //TODO: SetPlayerDamageShield
+    //Todo: invoke stun
+
+
+    #region Public Set Functions
     /// <summary>
     /// Sets the players max jumps, starts timer then resets the max jumps to their base value
     /// </summary>
@@ -31,17 +48,31 @@ public class p_PlayerPickupManager : MonoBehaviour
         StartCoroutine(C_Timer(timerLength, baseValue, OnMaxJumpChange));
     }
 
-    //TODO: SetPlayerDamageShield
-    //Todo: invoke stun
+    public void SetIsInteractablePickup(bool isInteractable, BasePickup pickup)
+    {
+        m_hasInteractablePickup = isInteractable;
+        interactablePickup = pickup;
+    }
+
+    #endregion
+
 
     #region Public Get Functions
     /// <summary>
     /// Returns a bool, Calls the same function within the player movement  
     /// </summary>
     public bool GetPlayerGroundedPPM() { return m_playerMovement.GetPlayerGrouned(); }
+
+    /// <summary>
+    /// Returns true if the player has an interactable pickup;
+    /// </summary>
+    /// <returns></returns>
+    public bool GetPlayerInteractablePickupPPM() { return m_hasInteractablePickup; }
+
+    public Transform GetPickupPlayerPosPPM() { return m_pickupLocation; }
     #endregion
 
-    #region Timers
+    #region Timer(s)
     //super basic dont keep ts
     //Yell at me if i leave this in a commit to main
     private IEnumerator C_Timer(int seconds, int baseValue, Action<int> InvokedActionInt)

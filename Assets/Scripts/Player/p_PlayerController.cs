@@ -9,6 +9,7 @@ public class p_PlayerController : MonoBehaviour
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
     private p_PlayerCombat m_playerCombat;
+    private p_PlayerPickupManager m_playerPickupManager;
     #endregion
 
     private IA_Player m_playerInputs;
@@ -22,6 +23,7 @@ public class p_PlayerController : MonoBehaviour
     {
         m_playerMovement = GetComponent<p_PlayerMovement>();
         m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
+        m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
     }
 
     private void OnEnable()
@@ -92,10 +94,21 @@ public class p_PlayerController : MonoBehaviour
     private void Handle_Jump(InputAction.CallbackContext ctx) => m_playerMovement.Jump();
     private void Handle_JumpCancelled(InputAction.CallbackContext ctx) => m_playerMovement.JumpCancelled();
 
-    private void Handle_Attack(InputAction.CallbackContext ctx) => m_playerCombat.Attack();
+    private void Handle_Attack(InputAction.CallbackContext ctx)
+    {
+        if (m_playerPickupManager.GetPlayerInteractablePickupPPM())
+        {
+            //player has an interactable pickup use that rather than attack
+            m_playerPickupManager.UseInteractablePickup();
+        }
+        else
+        {
+            m_playerCombat.Attack();
+        }
+    }
+
 
     #region Public Get Functions
-
     /// <summary>
     /// 0 = player 1 , 1 = player 2.
     /// </summary>
