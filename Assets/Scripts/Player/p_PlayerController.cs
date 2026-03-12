@@ -8,6 +8,7 @@ public class p_PlayerController : MonoBehaviour
 {    
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
+    private p_PlayerCombat m_playerCombat;
     #endregion
 
     private IA_Player m_playerInputs;
@@ -20,6 +21,7 @@ public class p_PlayerController : MonoBehaviour
     private void Awake()
     {
         m_playerMovement = GetComponent<p_PlayerMovement>();
+        m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
     }
 
     private void OnEnable()
@@ -38,6 +40,8 @@ public class p_PlayerController : MonoBehaviour
                                     
             m_playerInputs.AM_PlayerOne.Jump.performed += Handle_Jump;
             m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
+
+            m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
         }
         else
         {
@@ -48,6 +52,8 @@ public class p_PlayerController : MonoBehaviour
 
             m_playerInputs.AM_PlayerTwo.Jump.performed += Handle_Jump;
             m_playerInputs.AM_PlayerTwo.Jump.canceled += Handle_JumpCancelled;
+
+            m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
         }
     }
 
@@ -85,4 +91,6 @@ public class p_PlayerController : MonoBehaviour
 
     public void Handle_Jump(InputAction.CallbackContext ctx) => m_playerMovement.Jump();
     public void Handle_JumpCancelled(InputAction.CallbackContext ctx) => m_playerMovement.JumpCancelled();
+
+    private void Handle_Attack(InputAction.CallbackContext ctx) => m_playerCombat.Attack();
 }

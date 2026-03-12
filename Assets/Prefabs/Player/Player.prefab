@@ -91,7 +91,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!1 &5591319589286080194
 GameObject:
@@ -133,12 +133,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8365038015379009077}
+  - component: {fileID: 5924825548060835192}
   - component: {fileID: 2409985518677433343}
   - component: {fileID: 4819606898716105951}
   - component: {fileID: 5497149163946304287}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,6 +159,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 35798953218804996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5924825548060835192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102355509299354212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 776a25c9ee42b5b4ea4b984f9fb67389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_attackRange: 1
+  m_knockbackForce: 10
 --- !u!33 &2409985518677433343
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -218,7 +233,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9102355509299354212}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8ed9c71915066a24892623a1d2d7766b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

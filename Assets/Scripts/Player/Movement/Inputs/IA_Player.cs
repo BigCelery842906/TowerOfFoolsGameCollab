@@ -108,6 +108,15 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""2732f2dd-04bb-4fc5-988b-c62a9a3bd83a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -176,6 +185,17 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa6ddd06-c928-4691-95ef-ea38734c08e8"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -196,6 +216,15 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""d602980f-dcc4-4402-b49a-30ca58ff02da"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""409823c6-ade8-4d32-81e4-bece6c223a23"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -268,6 +297,17 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8ec2d06-d644-420e-b18d-c29591aabe4a"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -278,10 +318,12 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         m_AM_PlayerOne = asset.FindActionMap("AM_PlayerOne", throwIfNotFound: true);
         m_AM_PlayerOne_Move = m_AM_PlayerOne.FindAction("Move", throwIfNotFound: true);
         m_AM_PlayerOne_Jump = m_AM_PlayerOne.FindAction("Jump", throwIfNotFound: true);
+        m_AM_PlayerOne_Attack = m_AM_PlayerOne.FindAction("Attack", throwIfNotFound: true);
         // AM_PlayerTwo
         m_AM_PlayerTwo = asset.FindActionMap("AM_PlayerTwo", throwIfNotFound: true);
         m_AM_PlayerTwo_Move = m_AM_PlayerTwo.FindAction("Move", throwIfNotFound: true);
         m_AM_PlayerTwo_Jump = m_AM_PlayerTwo.FindAction("Jump", throwIfNotFound: true);
+        m_AM_PlayerTwo_Attack = m_AM_PlayerTwo.FindAction("Attack", throwIfNotFound: true);
     }
 
     ~@IA_Player()
@@ -365,6 +407,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     private List<IAM_PlayerOneActions> m_AM_PlayerOneActionsCallbackInterfaces = new List<IAM_PlayerOneActions>();
     private readonly InputAction m_AM_PlayerOne_Move;
     private readonly InputAction m_AM_PlayerOne_Jump;
+    private readonly InputAction m_AM_PlayerOne_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_PlayerOne".
     /// </summary>
@@ -384,6 +427,10 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_PlayerOne/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_AM_PlayerOne_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerOne/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_AM_PlayerOne_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -416,6 +463,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -433,6 +483,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -472,6 +525,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     private List<IAM_PlayerTwoActions> m_AM_PlayerTwoActionsCallbackInterfaces = new List<IAM_PlayerTwoActions>();
     private readonly InputAction m_AM_PlayerTwo_Move;
     private readonly InputAction m_AM_PlayerTwo_Jump;
+    private readonly InputAction m_AM_PlayerTwo_Attack;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_PlayerTwo".
     /// </summary>
@@ -491,6 +545,10 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_PlayerTwo/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_AM_PlayerTwo_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerTwo/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_AM_PlayerTwo_Attack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -523,6 +581,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         /// <summary>
@@ -540,6 +601,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         /// <summary>
@@ -594,6 +658,13 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AM_PlayerTwo" which allows adding and removing callbacks.
@@ -616,5 +687,12 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttack(InputAction.CallbackContext context);
     }
 }
