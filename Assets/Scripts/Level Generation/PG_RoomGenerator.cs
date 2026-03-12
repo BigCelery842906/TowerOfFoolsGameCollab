@@ -22,6 +22,7 @@ public class PG_RoomGenerator : MonoBehaviour
     private float m_worldScale = 1;
     private PG_GridMap m_grid;
     private List<PG_GridMap> m_grids;
+    private int m_numGrids;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class PG_RoomGenerator : MonoBehaviour
     }
     public void GenerateRoom(int w, int h, float worldScale, int chunks)
     {
+        m_numGrids = chunks;
         m_grids = new List<PG_GridMap>();
         m_worldScale = worldScale;
         for (int i = 0; i < chunks; i++)
@@ -72,7 +74,7 @@ public class PG_RoomGenerator : MonoBehaviour
 
         if (exitPos == int.MaxValue)
         {
-            exitPos = UnityEngine.Random.Range(1, grid.m_width);
+            exitPos = UnityEngine.Random.Range(1, grid.m_width - 1);
 
         }
         for (int w = 0; w < grid.m_width; w++)
@@ -81,8 +83,11 @@ public class PG_RoomGenerator : MonoBehaviour
             {
 
 
-                if ((h == grid.m_height - 1 && w == exitPos && isLastGrid) 
-                    || h == grid.m_height - 1 && !isLastGrid && w != 0 && w != grid.m_width -1) // top of top most grid
+                if ((h == grid.m_height - 1 && w == exitPos && isLastGrid) //room exit
+                    || h == grid.m_height - 1                              //room middle
+                    && !isLastGrid 
+                    && w != 0 
+                    && w != grid.m_width -1) 
                 {
                     grid.m_grid[w, h] = PG_GridMap.BLOCK_TYPE.NONE;
                     continue;
@@ -135,16 +140,39 @@ public class PG_RoomGenerator : MonoBehaviour
             return;
         }
         float gridHeight = grid.m_height * m_worldScale;
-        float gridWidth = grid.m_width * m_worldScale - m_worldScale;
-        float vertOffset = gridHeight * grid.m_gridNumber - m_worldScale;
+        float gridWidth = grid.m_width * m_worldScale;
+        float vertOffset = gridHeight * grid.m_gridNumber - (m_worldScale * 0.5f);
+        //if (grid.m_gridNumber != 0 && grid.m_gridNumber != m_numGrids - 1)
+        //{
+        //    vertOffset -= m_worldScale;
+        //}
+        //if (grid.m_gridNumber == m_numGrids - 1)
+        //{
+        //    vertOffset -= m_worldScale * 0.5f;
+        //}
         Vector3 pos;
-        pos.x = gridWidth * 0.5f;
-        pos.y = (gridHeight * 0.5f - m_worldScale) + vertOffset;
+        pos.x = gridWidth * 0.5f - (m_worldScale * 0.5f);
+        pos.y = gridHeight * 0.5f + vertOffset - m_worldScale;
         pos.z = m_worldScale * 0.5f;
 
 
         PG_BackGround backGround = PG_BackGround.Instantiate(fab, this.transform.position + pos, this.transform.rotation);
-        backGround.transform.localScale *=  m_worldScale;
+
+
+        //if (grid.m_gridNumber == 0 )
+        //{
+        //    backGround.ResizeMesh(gridWidth - m_worldScale, gridHeight - m_worldScale);
+        //}
+        //else if(grid.m_gridNumber != m_numGrids - 1)
+        //{
+        //    backGround.ResizeMesh(gridWidth - m_worldScale, gridHeight - (m_worldScale * 0.5f));
+        //}
+        //else
+        //{
+            backGround.ResizeMesh(gridWidth - (m_worldScale * 2), gridHeight);
+        //}
+            
+        backGround.transform.localScale = Vector3.one;
     }
     void RegenerateStartingRoom(int width, int height)
     {

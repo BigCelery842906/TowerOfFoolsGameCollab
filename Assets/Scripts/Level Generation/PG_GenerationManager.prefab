@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7849927746700546228}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.30692, y: 0, z: 21.91021}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_desiredChunkWidth: 25
-  m_desiredChunkHeight: 25
-  m_chunksPerRoom: 3
-  m_worldScale: 3
+  m_desiredChunkHeight: 10
+  m_chunksPerRoom: 5
+  m_worldScale: 1
 --- !u!114 &5785224783523666041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_regionOneBlockPool: []
   m_regionOneBackgroundPool:
   - {fileID: 689665274087819324, guid: f440607545d1bf0479f127d7c84a5b78, type: 3}
-  m_nextRoomEntrance: 2147483647
+  m_nextRoomEntrance: 2
   m_previousRoomExit: 2147483647
 --- !u!114 &1537447300731078245
 MonoBehaviour:
