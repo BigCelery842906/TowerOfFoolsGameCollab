@@ -14,6 +14,8 @@ public class PG_GenerationManager : MonoBehaviour
     public int m_desiredChunkHeight;
     public int m_chunksPerRoom;
 
+    public GameObject m_currentRoom;
+
     public float m_worldScale;
 
     private PG_RoomGenerator m_roomGenerator;
@@ -27,7 +29,9 @@ public class PG_GenerationManager : MonoBehaviour
         {
             Debug.Log("Chunk Generator not Loaded on Generation Manager");
         }
-        m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
+
+        m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
+        m_currentRoom.transform.SetParent(this.transform, false);
         //m_roomGenerator.SetWorldScale(m_worldScale);
        // m_roomGenerator.AddValuesToGrid();
     }
