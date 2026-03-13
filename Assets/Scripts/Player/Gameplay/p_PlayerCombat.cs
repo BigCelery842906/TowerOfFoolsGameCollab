@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class p_PlayerCombat : MonoBehaviour, IAttackable
@@ -9,6 +10,7 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
     [Tooltip("How far should the other player be pushed back, 10 is ok?")]
     [SerializeField] private float m_knockbackForce;
 
+    private p_PlayerPickupManager m_pickupManager;
     private Rigidbody m_RB;
 
     private bool m_isShielded;
@@ -33,7 +35,6 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
         }
     }
 
-
     public void Attacked(Vector3 knockbackDir)
     {
         //Changes which direction the player should be pushed in 
@@ -47,8 +48,23 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
         }
     }
 
-    public void SetShield(bool shield)
+    public void Stun(float stunLength)
     {
-        m_isShielded = shield;
+        //daggers / marbles 'n' the like <3
+        if (m_pickupManager.GetPlayerShield())
+        {
+            //block an instance
+
+
+            m_pickupManager.SetPlayerShield(false, 0f);
+            return; //skip 
+        }
+
+        StartCoroutine(C_StunTimer(stunLength));
+    }
+
+    private IEnumerator C_StunTimer(float stunTime)
+    {
+        yield return new WaitForSeconds(stunTime);
     }
 }

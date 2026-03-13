@@ -15,13 +15,17 @@ public class p_PlayerPickupManager : MonoBehaviour
     private p_PlayerMovement m_playerMovement;
     #endregion
 
-    [Tooltip("This is where pickups will go to after the player picks them up, unless they are destroyed")]
+    [Tooltip("This is where pickups will go to after the player picks them up (if they are interactable :scroll/daggers/swap), unless they are destroyed")]
     [SerializeField] private Transform m_pickupLocation;
+
+    [Tooltip("This is where projectile like daggers will be fired from")]
+    [SerializeField] private Transform m_firingPosition;
 
     private bool m_hasInteractablePickup = false;
     private BasePickup interactablePickup; //this is sometimes null
 
     private bool m_hasShield;
+    private float m_shieldLavaDis;
 
     private void Awake()
     {
@@ -35,7 +39,6 @@ public class p_PlayerPickupManager : MonoBehaviour
         OnUseInteractablePickup?.Invoke();
     }
 
-    //TODO: SetPlayerDamageShield
     //Todo: invoke stun
 
 
@@ -44,6 +47,7 @@ public class p_PlayerPickupManager : MonoBehaviour
     public void SetPlayerShield(bool shield, float lavaDisplacement)
     {
         m_hasShield = shield;
+        m_shieldLavaDis = lavaDisplacement;
     }
 
     /// <summary>
@@ -77,6 +81,8 @@ public class p_PlayerPickupManager : MonoBehaviour
 
     public bool GetPlayerShield() { return m_hasShield; }
 
+    public float GetShieldLavaOffset() { return m_shieldLavaDis; }
+
     /// <summary>
     /// Returns true if the player has an interactable pickup;
     /// </summary>
@@ -84,11 +90,12 @@ public class p_PlayerPickupManager : MonoBehaviour
     public bool GetPlayerInteractablePickupPPM() { return m_hasInteractablePickup; }
 
     public Transform GetPickupPlayerPosPPM() { return m_pickupLocation; }
+
+    public Transform GetFiringPlayerPosPPM() {return m_firingPosition;}
     #endregion
 
     #region Timer(s)
-    //super basic dont keep ts
-    //Yell at me if i leave this in a commit to main
+    //will wait for set seconds then invoke an action passing in the ususal value for it, check out double jumps/player movement to see how this works
     private IEnumerator C_Timer(int seconds, int baseValue, Action<int> InvokedActionInt)
     {
         yield return new WaitForSeconds(seconds);

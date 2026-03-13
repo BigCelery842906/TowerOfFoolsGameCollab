@@ -106,13 +106,4 @@ public class p_PlayerController : MonoBehaviour
             m_playerCombat.Attack();
         }
     }
-
-
-    #region Public Get Functions
-    /// <summary>
-    /// 0 = player 1 , 1 = player 2.
-    /// </summary>
-    public int GetPlayerID() { return m_playerID; }
-
-    #endregion
 }

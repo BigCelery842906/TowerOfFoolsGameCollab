@@ -21,16 +21,18 @@ public class p_Health : MonoBehaviour
             //player has shield ignore one instance of dmg
             //since this is lava the player is teleported up
             Transform temp = m_pickupManager.gameObject.transform; //more readable, this is the parent player obj transform
-            temp.position = new Vector3(temp.position.x, temp.position.y + 10f, temp.position.z);
+            temp.position = new Vector3(temp.position.x, temp.position.y + m_pickupManager.GetShieldLavaOffset(), temp.position.z);
 
-            return;
+            m_pickupManager.SetPlayerShield(false, 0f);
+
+            return; //skip the health dmg stuff
         }
 
         Debug.Log("Touched Lava", this);
         m_health--;
         CheckHealth();
     }
-
+     
     private void CheckHealth()
     {        
         if (m_health <= 0)
