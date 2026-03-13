@@ -1,0 +1,96 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+/// <summary>
+/// This class is listening for inputs, if u bind to an input any reason bind here but have ur code in a different class <3///
+/// </summary>
+public class p_PlayerController : MonoBehaviour
+{    
+    #region Player Scripts
+    private p_PlayerMovement m_playerMovement;
+    private p_PlayerCombat m_playerCombat;
+    #endregion
+
+    private IA_Player m_playerInputs;
+
+    /// <summary>
+    /// 0 = player 1 , 1 = player 2. Not used for anything expect input maps rn
+    /// </summary>
+    private int m_playerID;
+
+    private void Awake()
+    {
+        m_playerMovement = GetComponent<p_PlayerMovement>();
+        m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
+    }
+
+    private void OnEnable()
+    {
+        m_playerInputs = new IA_Player();
+
+        m_playerInputs.Enable();
+
+        //I did try a couple ways to give the players different action maps but this keeps the inspector clean and its not performance heavy, its just kinda ugly xx
+        if (gameObject.CompareTag("Player1"))
+        {
+            m_playerID = 0;
+
+            m_playerInputs.AM_PlayerOne.Move.performed += Handle_Move;
+            m_playerInputs.AM_PlayerOne.Move.canceled += Handle_MoveCancelled;
+                                    
+            m_playerInputs.AM_PlayerOne.Jump.performed += Handle_Jump;
+            m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
+
+            m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
+        }
+        else
+        {
+            m_playerID = 1;
+
+            m_playerInputs.AM_PlayerTwo.Move.performed += Handle_Move;
+            m_playerInputs.AM_PlayerTwo.Move.canceled += Handle_MoveCancelled;
+
+            m_playerInputs.AM_PlayerTwo.Jump.performed += Handle_Jump;
+            m_playerInputs.AM_PlayerTwo.Jump.canceled += Handle_JumpCancelled;
+
+            m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
+        }
+    }
+
+    private void OnDisable()
+    {
+        m_playerInputs.Disable();
+
+        if (m_playerID == 0)
+        {
+            m_playerInputs.AM_PlayerOne.Move.performed -= Handle_Move;
+            m_playerInputs.AM_PlayerOne.Move.canceled -= Handle_MoveCancelled;
+
+            m_playerInputs.AM_PlayerOne.Jump.performed -= Handle_Jump;
+            m_playerInputs.AM_PlayerOne.Jump.canceled -= Handle_JumpCancelled;
+        }
+        else
+        {
+            m_playerInputs.AM_PlayerTwo.Move.performed -= Handle_Move;
+            m_playerInputs.AM_PlayerTwo.Move.canceled -= Handle_MoveCancelled;
+
+            m_playerInputs.AM_PlayerTwo.Jump.performed -= Handle_Jump;
+            m_playerInputs.AM_PlayerTwo.Jump.canceled -= Handle_JumpCancelled;
+        }
+    }
+
+    /// <summary>
+    /// Tells the player what direction to move
+    /// </summary>
+    public void Handle_Move(InputAction.CallbackContext ctx) => m_playerMovement.SetMoveDirection(ctx.ReadValue<Vector2>());
+
+    /// <summary>
+    /// Tells the player to stop moveing by passing in an empty vector 2
+    /// </summary>
+    public void Handle_MoveCancelled(InputAction.CallbackContext ctx) => m_playerMovement.SetMoveDirection(ctx.ReadValue<Vector2>());
+
+    public void Handle_Jump(InputAction.CallbackContext ctx) => m_playerMovement.Jump();
+    public void Handle_JumpCancelled(InputAction.CallbackContext ctx) => m_playerMovement.JumpCancelled();
+
+    private void Handle_Attack(InputAction.CallbackContext ctx) => m_playerCombat.Attack();
+}
