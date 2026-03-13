@@ -11,6 +11,8 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
 
     private Rigidbody m_RB;
 
+    private bool m_isShielded;
+
     private void Awake()
     {
         m_RB = GetComponentInParent<Rigidbody>();
@@ -43,5 +45,10 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
         {
             m_RB.AddForce(Vector3.left * m_knockbackForce, ForceMode.Impulse);
         }
+    }
+
+    public void SetShield(bool shield)
+    {
+        m_isShielded = shield;
     }
 }

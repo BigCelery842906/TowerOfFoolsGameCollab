@@ -21,9 +21,13 @@ public class p_PlayerPickupManager : MonoBehaviour
     private bool m_hasInteractablePickup = false;
     private BasePickup interactablePickup; //this is sometimes null
 
+    private bool m_hasShield;
+
     private void Awake()
     {
         m_playerMovement = GetComponent<p_PlayerMovement>();
+
+        m_hasShield = false;
     }
 
     public void UseInteractablePickup()
@@ -36,6 +40,12 @@ public class p_PlayerPickupManager : MonoBehaviour
 
 
     #region Public Set Functions
+
+    public void SetPlayerShield(bool shield, float lavaDisplacement)
+    {
+        m_hasShield = shield;
+    }
+
     /// <summary>
     /// Sets the players max jumps, starts timer then resets the max jumps to their base value
     /// </summary>
@@ -53,6 +63,8 @@ public class p_PlayerPickupManager : MonoBehaviour
         m_hasInteractablePickup = isInteractable;
         interactablePickup = pickup;
     }
+    
+
 
     #endregion
 
@@ -62,6 +74,8 @@ public class p_PlayerPickupManager : MonoBehaviour
     /// Returns a bool, Calls the same function within the player movement  
     /// </summary>
     public bool GetPlayerGroundedPPM() { return m_playerMovement.GetPlayerGrouned(); }
+
+    public bool GetPlayerShield() { return m_hasShield; }
 
     /// <summary>
     /// Returns true if the player has an interactable pickup;

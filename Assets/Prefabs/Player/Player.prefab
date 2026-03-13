@@ -183,6 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8365038015379009077}
   - component: {fileID: 5924825548060835192}
+  - component: {fileID: 8650566670008035535}
   - component: {fileID: 2409985518677433343}
   - component: {fileID: 4819606898716105951}
   - component: {fileID: 5497149163946304287}
@@ -222,6 +223,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackRange: 1
   m_knockbackForce: 10
+--- !u!114 &8650566670008035535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9102355509299354212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ca3487de401f574093d278664cfac30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &2409985518677433343
 MeshFilter:
   m_ObjectHideFlags: 0
