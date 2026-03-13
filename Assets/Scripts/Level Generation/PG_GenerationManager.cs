@@ -1,3 +1,11 @@
+//-------------------------------------
+//      Property of Dan.
+//      Break it and you suffer.
+//      Respectfully of course...
+//-------------------------------------
+
+
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -19,6 +27,7 @@ public class PG_GenerationManager : MonoBehaviour
     public float m_worldScale;
 
     private PG_RoomGenerator m_roomGenerator;
+    private PG_PlatformGenerator m_platformGenerator;
     private REGION m_currentRegion = REGION.ONE;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,11 +36,16 @@ public class PG_GenerationManager : MonoBehaviour
         m_roomGenerator = GetComponent<PG_RoomGenerator>();
         if(!m_roomGenerator)
         {
-            Debug.Log("Chunk Generator not Loaded on Generation Manager");
+            Debug.Log("Room Generator not Loaded on Generation Manager");
         }
-
+        m_platformGenerator = GetComponent<PG_PlatformGenerator>();
+        if (!m_roomGenerator)
+        {
+            Debug.Log("Platform Generator not Loaded on Generation Manager");
+        }
         m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         m_currentRoom.transform.SetParent(this.transform, false);
+        m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         //m_roomGenerator.SetWorldScale(m_worldScale);
        // m_roomGenerator.AddValuesToGrid();
     }

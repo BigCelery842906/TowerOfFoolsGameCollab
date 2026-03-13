@@ -1,3 +1,10 @@
+//-------------------------------------
+//      Property of Dan.
+//      Break it and you suffer.
+//      Respectfully of course...
+//-------------------------------------
+
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -194,11 +201,8 @@ public class PG_RoomGenerator : MonoBehaviour
 
         GameObject backgroundObj = new GameObject("Background " + (grid.m_gridNumber + 1));
         PG_BackGround background = PG_BackGround.Instantiate(fab, this.transform.position + pos, this.transform.rotation);
+
         background.transform.SetParent(backgroundObj.transform, false);
-
-
-
-
         background.ResizeMesh(gridWidth - (m_worldScale * 2), gridHeight);
 
 
@@ -211,10 +215,7 @@ public class PG_RoomGenerator : MonoBehaviour
         }
         else grid.m_backgrounds.Add(backgroundObj);
     }
-    void RegenerateStartingRoom(int width, int height)
-    {
 
-    }
     public void SetWorldScale(float scale)
     {
         for (int i = 0; i < m_grids.Count; i++)
