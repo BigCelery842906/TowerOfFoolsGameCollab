@@ -23,13 +23,11 @@ public class p_PlayerDataManager : MonoBehaviour
         e_GameEvents.instance.onPlayerNoLives += DestroyPlayer;
     }
 
-    void Update()
-    {
-    }
-
     void DestroyPlayer(int playerID)
     {
-        //Kill
-        Destroy(gameObject);
+        if(m_PlayerData.GetPlayerID() == playerID)
+        {
+            Destroy(gameObject);
+        }
     }
 }

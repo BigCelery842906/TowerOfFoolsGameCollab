@@ -12,6 +12,9 @@ public class e_GameEvents : MonoBehaviour
     }
 
     //Bool is true for health up, first int is amount and second int is PlayerID
+
+    //Change this to get rid of bool and take positives or negatives.
+
     public event Action<bool, int, int> onPlayerHealthUpdate;
     public event Action<bool, int, int> onPlayerScoreUpdate;
     public event Action<bool, int, int> onPlayerLivesUpdate;
