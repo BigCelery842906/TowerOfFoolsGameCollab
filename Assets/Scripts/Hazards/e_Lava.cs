@@ -30,7 +30,18 @@ public class e_Lava : MonoBehaviour
         {
             // "If you finger the lava, you're dead" - Connor Holt 2026
             Debug.Log("Lava Fingered", other.gameObject);
-            other.GetComponent<p_Health>().TouchedLava();
+            //other.GetComponent<p_Health>().TouchedLava();
+
+            if(other.gameObject.transform.parent.CompareTag("Player1"))
+            {
+                e_GameEvents.instance.PlayerHealthUpdate(false, 100, 0);
+                Debug.Log("Player 1 Health Update Sent");
+            }
+            else
+            {
+                e_GameEvents.instance.PlayerHealthUpdate(false, 100, 1);
+                Debug.Log("Player 2 Health Update Sent");
+            }
         }
     }
 }

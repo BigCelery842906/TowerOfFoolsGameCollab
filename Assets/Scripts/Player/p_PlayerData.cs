@@ -14,11 +14,11 @@ public class p_PlayerData
     private int m_Lives = 0;
     private int m_PlayerID = 0;
 
-    public p_PlayerData(int score, int deaths, int distanceMoved, int health, int lives, int playerID)
+    public p_PlayerData(int playerID, int health = 100, int lives = 1, int score = 0, int deaths = 0, int distanceUp = 0)
     {
         m_Score = score;
         m_Deaths = deaths;
-        m_DistanceUp = distanceMoved;
+        m_DistanceUp = distanceUp;
         m_Health = health;
         m_Lives = lives;
         m_PlayerID = playerID;
@@ -122,19 +122,22 @@ public class p_PlayerData
     public void UpdateHealth(bool up, int amount, int playerID)
     {
 
-        if(playerID != m_PlayerID)
+        if(playerID == m_PlayerID)
         {
             if (up)
             {
                 IncreaseHealth(amount);
+                Debug.Log(m_Health);
             }
             else
             {
                 DecreaseHealth(amount);
+                Debug.Log(m_Health);
 
                 if (CheckDead())
                 {
                     e_GameEvents.instance.PlayerLivesUpdate(false, 1, m_PlayerID);
+                    Debug.Log("Player " + m_PlayerID + " is Dead");
                 }
             }
         }
@@ -152,7 +155,6 @@ public class p_PlayerData
 
     public void KillPlayer()
     {
-        e_GameEvents.instance.PlayerHealthUpdate(false, GetHealth(), m_PlayerID);
     }
 
     public int GetHealth() { return m_Health; }
@@ -186,7 +188,7 @@ public class p_PlayerData
 
                 if (CheckNoLives())
                 {
-                    //Do Something (End Game)
+                    e_GameEvents.instance.PlayerNoLives(m_PlayerID);                
                 }
             }
         }
@@ -202,4 +204,6 @@ public class p_PlayerData
         return false;
     }
     #endregion Lives
+
+    public int GetPlayerID() { return m_PlayerID; }
 }
