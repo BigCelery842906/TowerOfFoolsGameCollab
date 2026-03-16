@@ -36,7 +36,7 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the movement coroutine <3
 
-    private int m_maxJumps; //set in pc at start to one, then controlled by pickups through pc
+    private float m_maxJumps; //set in pc at start to one, then controlled by pickups through pc
     private int m_usedJumps; //inc for each jump player maxs until reaches max
     private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
     private Vector3 m_lowGrav;    
@@ -46,7 +46,13 @@ public class p_PlayerMovement : MonoBehaviour
     private void Awake()
     {
         m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
-        if(m_PlayerPickupManager != null) { m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps; }
+        if(m_PlayerPickupManager != null) 
+        {
+            m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
+
+            m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
+            m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+        }
 
         m_RB = GetComponent<Rigidbody>();
         m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
@@ -84,6 +90,7 @@ public class p_PlayerMovement : MonoBehaviour
     /// <returns></returns>
     private IEnumerator C_Move()
     {
+        if(m_moveSpeed <= 0f) { yield return new WaitForFixedUpdate(); }
         while(m_shouldMove)
         {
             Vector3 velocity = new Vector3(m_moveDir.x, 0f, m_moveDir.y) * m_moveSpeed; 
@@ -91,6 +98,12 @@ public class p_PlayerMovement : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    private void SetMoveSpeed(float newSpeed)
+    {
+        m_moveSpeed = newSpeed;
+        Debug.Log(m_moveSpeed);
     }
 
     #region Jump Stuff
@@ -153,7 +166,7 @@ public class p_PlayerMovement : MonoBehaviour
             }
         }
     }
-    private void SetMaxJumps(int max) { m_maxJumps = max;}
+    private void SetMaxJumps(float max) { m_maxJumps = max;}
 
 
     public bool GetPlayerGrouned() { return m_isGrounded; } 

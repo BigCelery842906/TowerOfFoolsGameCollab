@@ -21,9 +21,10 @@ public class Dagger : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player")) { return; }
+        if (!collision.gameObject.CompareTag("Player1") || !collision.gameObject.CompareTag("Player2")) { Destroy(gameObject); }
+        Debug.Log(collision.gameObject.name);
 
-        IAttackable tempAttackable = collision.gameObject.GetComponent<IAttackable>();
+        IAttackable tempAttackable = collision.gameObject.GetComponentInChildren<IAttackable>();
 
         if (tempAttackable != null)
         {
