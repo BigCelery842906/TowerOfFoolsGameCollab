@@ -26,7 +26,7 @@ public class e_Lava : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     { 
-        if (other.gameObject.tag == "Player1")
+        if (other.gameObject.tag == "Player")
         {
             // "If you finger the lava, you're dead" - Connor Holt 2026
             Debug.Log("Lava Fingered", other.gameObject);
