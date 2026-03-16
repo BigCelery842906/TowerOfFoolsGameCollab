@@ -12,41 +12,41 @@ public class e_GameEvents : MonoBehaviour
     }
 
     //Bool is true for health up and int is amount
-    public event Action<bool, int> onPlayerHealthUpdate;
-    public event Action<bool, int> onPlayerScoreUpdate;
-    public event Action<bool, int> onPlayerLivesUpdate;
+    public event Action<bool, int, int> onPlayerHealthUpdate;
+    public event Action<bool, int, int> onPlayerScoreUpdate;
+    public event Action<bool, int, int> onPlayerLivesUpdate;
 
-    public event Action onPlayerDeathAdded;
+    public event Action<int> onPlayerDeathAdded;
 
-    public void PlayerHealthUpdate(bool up, int amount)
+    public void PlayerHealthUpdate(bool up, int amount, int playerID)
     {
         if(onPlayerHealthUpdate != null)
         {
-            onPlayerHealthUpdate(up, amount);
+            onPlayerHealthUpdate(up, amount, playerID);
         }
     }
 
-    public void PlayerScoreUpdate(bool up, int amount)
+    public void PlayerScoreUpdate(bool up, int amount, int playerID)
     {
         if (onPlayerHealthUpdate != null)
         {
-            onPlayerScoreUpdate(up, amount);
+            onPlayerScoreUpdate(up, amount, playerID);
         }
     }
 
-    public void PlayerLivesUpdate(bool up, int amount)
+    public void PlayerLivesUpdate(bool up, int amount, int playerID)
     {
         if (onPlayerHealthUpdate != null)
         {
-            onPlayerLivesUpdate(up, amount);
+            onPlayerLivesUpdate(up, amount, playerID);
         }
     }
 
-    public void PlayerDeathAdded()
+    public void PlayerDeathAdded(int playerID)
     {
         if(onPlayerDeathAdded != null)
         {
-            onPlayerDeathAdded();
+            onPlayerDeathAdded(playerID);
         }
     }
 }

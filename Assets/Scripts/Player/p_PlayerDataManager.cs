@@ -8,7 +8,6 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void Start()
     {
-        m_PlayerData = new p_PlayerData();
     }
 
     void Update()

@@ -12,16 +12,26 @@ public class p_PlayerData
     private int m_DistanceUp = 0;
     private int m_Health = 0;
     private int m_Lives = 0;
+    private int m_PlayerID = 0;
 
-    public p_PlayerData(int score, int deaths, int distanceMoved, int health, int lives)
+    public p_PlayerData(int score, int deaths, int distanceMoved, int health, int lives, int playerID)
     {
         m_Score = score;
         m_Deaths = deaths;
         m_DistanceUp = distanceMoved;
         m_Health = health;
         m_Lives = lives;
+        m_PlayerID = playerID;
+
+        //Events
+        e_GameEvents.instance.onPlayerHealthUpdate += UpdateHealth;
+        e_GameEvents.instance.onPlayerScoreUpdate += UpdateScore;
+        e_GameEvents.instance.onPlayerLivesUpdate += UpdateLives;
+
+        e_GameEvents.instance.onPlayerDeathAdded += IncrementDeaths;
     }
 
+    //Should not be used 
     public p_PlayerData() 
     {
         m_Score = 0;
@@ -41,15 +51,18 @@ public class p_PlayerData
     #region Score
 
     //Score Management
-    public void UpdateScore(bool up, int amount)
+    public void UpdateScore(bool up, int amount, int playerID)
     {
-        if(up)
+        if(playerID == m_PlayerID)
         {
-            IncrementScore(amount);
-        }
-        else
-        {
-            DecrementScore(amount);
+            if (up)
+            {
+                IncrementScore(amount);
+            }
+            else
+            {
+                DecrementScore(amount);
+            }
         }
     }
 
@@ -70,9 +83,12 @@ public class p_PlayerData
     #region Deaths
     //Deaths Management
 
-    public void IncrementDeaths()
+    public void IncrementDeaths(int playerID)
     {
-        m_Deaths++;
+        if(playerID == m_PlayerID)
+        {
+            m_Deaths++;
+        }
     }
 
     public int GetDeaths() { return m_Deaths; }
@@ -103,19 +119,23 @@ public class p_PlayerData
         m_Health += amount;
     }
 
-    public void UpdateHealth(bool up, int amount)
+    public void UpdateHealth(bool up, int amount, int playerID)
     {
-        if(up)
+
+        if(playerID != m_PlayerID)
         {
-            IncreaseHealth(amount);
-        }
-        else
-        {
-            DecreaseHealth(amount);
-            
-            if (CheckDead())
+            if (up)
             {
-                e_GameEvents.instance.PlayerLivesUpdate(false, 1);
+                IncreaseHealth(amount);
+            }
+            else
+            {
+                DecreaseHealth(amount);
+
+                if (CheckDead())
+                {
+                    e_GameEvents.instance.PlayerLivesUpdate(false, 1, m_PlayerID);
+                }
             }
         }
     }
@@ -132,7 +152,7 @@ public class p_PlayerData
 
     public void KillPlayer()
     {
-        e_GameEvents.instance.PlayerHealthUpdate(false, GetHealth());
+        e_GameEvents.instance.PlayerHealthUpdate(false, GetHealth(), m_PlayerID);
     }
 
     public int GetHealth() { return m_Health; }
@@ -152,19 +172,22 @@ public class p_PlayerData
         m_Lives -= amount;
     }
 
-    public void UpdateLives(bool up, int amount)
+    public void UpdateLives(bool up, int amount, int playerID)
     {
-        if(up)
+        if(playerID == m_PlayerID)
         {
-            AddLives(amount);
-        }
-        else
-        {
-            DecreaseLives(amount);
-
-            if(CheckNoLives())
+            if (up)
             {
-                //Do Something (End Game)
+                AddLives(amount);
+            }
+            else
+            {
+                DecreaseLives(amount);
+
+                if (CheckNoLives())
+                {
+                    //Do Something (End Game)
+                }
             }
         }
     }
