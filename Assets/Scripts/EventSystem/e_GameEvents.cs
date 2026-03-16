@@ -11,12 +11,14 @@ public class e_GameEvents : MonoBehaviour
         instance = this;
     }
 
-    //Bool is true for health up and int is amount
+    //Bool is true for health up, first int is amount and second int is PlayerID
     public event Action<bool, int, int> onPlayerHealthUpdate;
     public event Action<bool, int, int> onPlayerScoreUpdate;
     public event Action<bool, int, int> onPlayerLivesUpdate;
 
+    //PlayerID is the int
     public event Action<int> onPlayerDeathAdded;
+    public event Action<int> onPlayerNoLives;
 
     public void PlayerHealthUpdate(bool up, int amount, int playerID)
     {
@@ -47,6 +49,16 @@ public class e_GameEvents : MonoBehaviour
         if(onPlayerDeathAdded != null)
         {
             onPlayerDeathAdded(playerID);
+            Debug.Log("Death Event Fired");
+        }
+    }
+
+    public void PlayerNoLives(int playerID)
+    {
+        if (onPlayerNoLives != null)
+        {
+            onPlayerNoLives(playerID);
+            Debug.Log("No Lives Fired");
         }
     }
 }
