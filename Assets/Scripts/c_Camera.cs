@@ -137,11 +137,11 @@ public class c_Camera : MonoBehaviour
     
     
     
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube();
-    }
+    // void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawCube();
+    // }
 
     
     
