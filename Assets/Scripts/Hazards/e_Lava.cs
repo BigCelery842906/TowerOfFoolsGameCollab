@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+// Written by Connor Saysell
+
 public class e_Lava : MonoBehaviour
 {
     [Tooltip("How fast the lava should rise up the screen - Default is 0.5")]
@@ -28,20 +30,13 @@ public class e_Lava : MonoBehaviour
     { 
         if (other.gameObject.tag == "Player")
         {
+            //The parent of the gameobject has the player ID within the tag, use this to get the player ID
+            int playerID = p_PlayerData.ReturnPlayerIDFromTag(other.gameObject.transform.parent.tag);
+            
             // "If you finger the lava, you're dead" - Connor Holt 2026
             Debug.Log("Lava Fingered", other.gameObject);
-            //other.GetComponent<p_Health>().TouchedLava();
 
-            if(other.gameObject.transform.parent.CompareTag("Player1"))
-            {
-                e_GameEvents.instance.PlayerHealthUpdate(false, 100, 0);
-                Debug.Log("Player 1 Health Update Sent");
-            }
-            else
-            {
-                e_GameEvents.instance.PlayerHealthUpdate(false, 100, 1);
-                Debug.Log("Player 2 Health Update Sent");
-            }
+            e_GameEvents.instance.PlayerHealthUpdate(false, 100, playerID);
         }
     }
 }
