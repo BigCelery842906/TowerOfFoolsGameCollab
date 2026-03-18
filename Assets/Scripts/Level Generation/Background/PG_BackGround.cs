@@ -1,3 +1,10 @@
+//-------------------------------------
+//      Property of Dan.
+//      Break it and you suffer.
+//      Respectfully of course...
+//-------------------------------------
+
+
 using UnityEngine;
 
 public class PG_BackGround : MonoBehaviour
