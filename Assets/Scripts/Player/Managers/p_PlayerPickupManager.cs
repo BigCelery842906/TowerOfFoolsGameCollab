@@ -107,6 +107,7 @@ public class p_PlayerPickupManager : MonoBehaviour
     //will wait for set seconds then invoke an action passing in the ususal value for it, check out double jumps/player movement to see how this works
     private IEnumerator C_Timer(float seconds, float baseValue, Action<float> InvokedActionInt)
     {
+        Debug.Log(InvokedActionInt);
         yield return new WaitForSeconds(seconds);
         InvokedActionInt?.Invoke(baseValue);
     }

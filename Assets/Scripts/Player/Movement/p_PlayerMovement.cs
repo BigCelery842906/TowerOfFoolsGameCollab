@@ -103,7 +103,6 @@ public class p_PlayerMovement : MonoBehaviour
     private void SetMoveSpeed(float newSpeed)
     {
         m_moveSpeed = newSpeed;
-        Debug.Log(m_moveSpeed);
     }
 
     #region Jump Stuff
@@ -113,6 +112,8 @@ public class p_PlayerMovement : MonoBehaviour
     //All done for game feel since this is a platformer
     public void Jump()
     {
+        if(m_moveSpeed <= 0) { return; }//prevents player jumping while stunned
+
         if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f) || m_usedJumps < m_maxJumps)
         {
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
