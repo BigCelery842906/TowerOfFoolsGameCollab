@@ -1,0 +1,106 @@
+using System;
+using System.Collections;
+using UnityEngine;
+
+/// <summary>
+/// The middle man between the pickups and the player scripts it effects, can also do timer stuff here if we wanna
+/// </summary>
+public class p_PlayerPickupManager : MonoBehaviour
+{
+    public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
+
+    public event Action<int> OnMaxJumpChange; //for the double jump pick up
+
+    #region Player Scripts
+    private p_PlayerMovement m_playerMovement;
+    #endregion
+
+    [Tooltip("This is where pickups will go to after the player picks them up (if they are interactable :scroll/daggers/swap), unless they are destroyed")]
+    [SerializeField] private Transform m_pickupLocation;
+
+    [Tooltip("This is where projectile like daggers will be fired from")]
+    [SerializeField] private Transform m_firingPosition;
+
+    private bool m_hasInteractablePickup = false;
+    private BasePickup interactablePickup; //this is sometimes null
+
+    private bool m_hasShield;
+    private float m_shieldLavaDis;
+
+    private void Awake()
+    {
+        m_playerMovement = GetComponent<p_PlayerMovement>();
+
+        m_hasShield = false;
+    }
+
+    public void UseInteractablePickup()
+    {
+        OnUseInteractablePickup?.Invoke();
+    }
+
+    //Todo: invoke stun
+
+
+    #region Public Set Functions
+
+    public void SetPlayerShield(bool shield, float lavaDisplacement)
+    {
+        m_hasShield = shield;
+        m_shieldLavaDis = lavaDisplacement;
+    }
+
+    /// <summary>
+    /// Sets the players max jumps, starts timer then resets the max jumps to their base value
+    /// </summary>
+    /// <param name="maxJumps"></param>
+    /// <param name="baseValue"></param>
+    /// <param name="timerLength"></param>
+    public void SetPlayerMaxJumps(int maxJumps,int baseValue ,int timerLength)
+    { 
+        OnMaxJumpChange?.Invoke(maxJumps);
+        StartCoroutine(C_Timer(timerLength, baseValue, OnMaxJumpChange));
+    }
+
+    public void SetIsInteractablePickup(bool isInteractable, BasePickup pickup)
+    {
+        m_hasInteractablePickup = isInteractable;
+        interactablePickup = pickup;
+    }
+    
+
+
+    #endregion
+
+
+    #region Public Get Functions
+    /// <summary>
+    /// Returns a bool, Calls the same function within the player movement  
+    /// </summary>
+    public bool GetPlayerGroundedPPM() { return m_playerMovement.GetPlayerGrouned(); }
+
+    public bool GetPlayerShield() { return m_hasShield; }
+
+    public float GetShieldLavaOffset() { return m_shieldLavaDis; }
+
+    /// <summary>
+    /// Returns true if the player has an interactable pickup;
+    /// </summary>
+    /// <returns></returns>
+    public bool GetPlayerInteractablePickupPPM() { return m_hasInteractablePickup; }
+
+    public Transform GetPickupPlayerPosPPM() { return m_pickupLocation; }
+
+    public Transform GetFiringPlayerPosPPM() {return m_firingPosition;}
+    #endregion
+
+    #region Timer(s)
+    //will wait for set seconds then invoke an action passing in the ususal value for it, check out double jumps/player movement to see how this works
+    private IEnumerator C_Timer(int seconds, int baseValue, Action<int> InvokedActionInt)
+    {
+        yield return new WaitForSeconds(seconds);
+        InvokedActionInt?.Invoke(baseValue);
+    }
+
+    #endregion
+}
