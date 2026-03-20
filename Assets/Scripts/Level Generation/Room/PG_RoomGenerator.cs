@@ -54,6 +54,9 @@ public class PG_RoomGenerator : MonoBehaviour
         PG_GridMap roomGrid = room.GetComponent<PG_GridMap>();
         AddValuesToGrid(ref roomGrid);
         SpawnBlocksInGrid(ref roomGrid);
+        room.AddComponent<PG_Room>();
+        PG_Room roomScript = room.GetComponent<PG_Room>();
+        roomScript.SetGrids(m_grids);
         for (int i = 0; i < m_grids.Count; i++)
         {
             Destroy(m_grids[i]);
@@ -176,7 +179,7 @@ public class PG_RoomGenerator : MonoBehaviour
             }
         }
     }
-    void SpawnBackGround(ref PG_GridMap grid)
+    public void SpawnBackGround(ref PG_GridMap grid)
     {
         PG_BackGround fab = m_regionOneBackgroundPool[0]; //first for testing
         if (!fab)
@@ -195,9 +198,12 @@ public class PG_RoomGenerator : MonoBehaviour
 
         GameObject backgroundObj = new GameObject("Background " + (grid.m_gridNumber + 1));
         PG_BackGround background = PG_BackGround.Instantiate(fab, this.transform.position + pos, this.transform.rotation);
+        backgroundObj.tag = "Background";
 
         background.transform.SetParent(backgroundObj.transform, false);
         background.ResizeMesh(gridWidth - (m_worldScale * 2), gridHeight);
+        background.m_width = gridWidth - (m_worldScale * 2);
+        background.m_height = gridHeight;
 
 
         background.transform.localScale = Vector3.one;
