@@ -30,12 +30,19 @@ public class e_Lava : MonoBehaviour
     { 
         if (other.gameObject.tag == "Player")
         {
-            //The parent of the gameobject has the player ID within the tag, use this to get the player ID
-            int playerID = p_PlayerData.ReturnPlayerIDFromTag(other.gameObject.transform.parent.tag);
-            
             // "If you finger the lava, you're dead" - Connor Holt 2026
             Debug.Log("Lava Fingered", other.gameObject);
+            
+            
+            //The parent of the gameobject has the player ID within the tag, use this to get the player ID
+            int playerID = -1; //default to -1 in case of error
+            playerID = p_PlayerData.ReturnPlayerIDFromTag(other.gameObject.transform.parent.tag);
 
+            if (playerID == -1)
+            {
+                Debug.LogError("Player found but ID not returned", other.gameObject);
+                return;
+            }
             e_GameEvents.instance.PlayerHealthUpdate(false, 100, playerID);
         }
     }
