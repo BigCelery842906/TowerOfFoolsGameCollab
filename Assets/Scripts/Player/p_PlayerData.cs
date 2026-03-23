@@ -206,4 +206,31 @@ public class p_PlayerData
     #endregion Lives
 
     public int GetPlayerID() { return m_PlayerID; }
+
+
+   
+    /// <summary>
+    /// Parse through the player tag, which will then return the int value of the player.
+    /// Written by Connor Saysell.
+    /// </summary>
+    /// <returns>The integer ID of the player.</returns>
+    /// <example>
+    /// Example:
+    /// <code>
+    /// p_PlayerData.ReturnPlayerIDFromTag(Player1);
+    /// </code>
+    /// Returns 1 from this argument.
+    /// </example>
+    public static int ReturnPlayerIDFromTag(string tag)
+    {
+        if (tag.Contains("Player"))
+        {
+            string intPart = tag.Replace("Player", ""); //Remove the player part of the string
+            int.TryParse(intPart, out int ID);
+            return ID;
+        }
+
+        //If tag doesn't contain player, return error value
+        return -1;
+    }
 }

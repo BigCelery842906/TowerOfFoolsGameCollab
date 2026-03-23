@@ -45,6 +45,10 @@ public class c_Camera : MonoBehaviour
         float highestYPosition = 0f;
         for (int i = 0; i < m_PlayersToTrack.Length; i++)
         {
+            if (m_PlayersToTrack[i] == null)
+            {
+                continue;
+            }
             float objectXPosition = m_PlayersToTrack[i].transform.position.x;
             totalXPosition += objectXPosition;
 
@@ -122,6 +126,10 @@ public class c_Camera : MonoBehaviour
         Vector3 totalPosition = Vector3.zero;
         for (int i = 0; i < m_PlayersToTrack.Length; i++)
         {
+            if (m_PlayersToTrack[i] == null)
+            {
+                continue;
+            }
             totalPosition += m_PlayersToTrack[i].transform.position;
         }
         
