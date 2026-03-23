@@ -27,6 +27,7 @@ public class p_PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask m_groundLayer;
 
     private p_PlayerPickupManager m_PlayerPickupManager;
+    private p_playerAnimControl m_playerAnim;
     private Rigidbody m_RB;
     private CapsuleCollider m_CapsuleCollider;
 
@@ -54,6 +55,8 @@ public class p_PlayerMovement : MonoBehaviour
             m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
         }
 
+        m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
+
         m_RB = GetComponent<Rigidbody>();
         m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
@@ -73,7 +76,7 @@ public class p_PlayerMovement : MonoBehaviour
 
         if(m_moveDir == Vector2.zero)
         {
-            m_shouldMove = false;
+            m_shouldMove = false;            
         }
         else
         {
@@ -82,6 +85,8 @@ public class p_PlayerMovement : MonoBehaviour
             m_shouldMove = true;
             StartCoroutine(C_Move());            
         }
+
+        m_playerAnim.SetAnimMove(m_shouldMove);
     }
 
     /// <summary>

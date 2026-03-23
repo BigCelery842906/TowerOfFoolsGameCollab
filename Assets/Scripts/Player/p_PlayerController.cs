@@ -33,7 +33,7 @@ public class p_PlayerController : MonoBehaviour
         m_playerInputs.Enable();
 
         //I did try a couple ways to give the players different action maps but this keeps the inspector clean and its not performance heavy, its just kinda ugly xx
-        if (gameObject.CompareTag("Player1"))
+        if (gameObject.CompareTag("Player0"))
         {
             m_playerID = 0;
 
