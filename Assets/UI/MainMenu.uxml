@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/MainStyleSheet.uss?fileID=7433441132597879392&amp;guid=d7167debae920204d8f2e837a88d3567&amp;type=3#MainStyleSheet" />
-    <ui:VisualElement style="flex-grow: 1; flex-direction: column; left: auto; position: relative; display: flex; visibility: visible; overflow: visible; align-items: stretch; align-self: flex-start; padding-top: 32px; padding-right: 32px; padding-bottom: 32px; padding-left: 32px; justify-content: center; width: auto;">
-        <ui:Button text="PLAY" name="play-btn" />
-        <ui:Button text="QUIT" name="quit-btn" />
+    <Style src="project://database/Assets/UI/MainStyleSheet.uss?fileID=7433441132597879392&amp;guid=d7167debae920204d8f2e837a88d3567&amp;type=3" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: column; left: auto; position: relative; display: flex; visibility: visible; overflow: visible; align-items: stretch; align-self: flex-start; padding-top: 32px; padding-right: 32px; padding-bottom: 32px; padding-left: 32px; justify-content: center; width: auto; align-content: flex-start;">
+        <ui:Button name="play-btn" text="PLAY" />
+        <ui:Button name="quit-btn" text="QUIT" double-click-selects-word="false" />
     </ui:VisualElement>
 </ui:UXML>
