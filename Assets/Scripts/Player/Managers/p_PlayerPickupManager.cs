@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+//CRAFTED BY TYLER
+
 /// <summary>
 /// The middle man between the pickups and the player scripts it effects, can also do timer stuff here if we wanna
 /// </summary>
@@ -9,7 +11,8 @@ public class p_PlayerPickupManager : MonoBehaviour
 {
     public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
 
-    public event Action<int> OnMaxJumpChange; //for the double jump pick up
+    public event Action<float> OnMaxJumpChange; //for the double jump pick up
+    public event Action<float> OnStunStateChange; //for stun
 
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
@@ -24,8 +27,10 @@ public class p_PlayerPickupManager : MonoBehaviour
     private bool m_hasInteractablePickup = false;
     private BasePickup interactablePickup; //this is sometimes null
 
-    private bool m_hasShield;
+    private bool m_hasShield = false;
     private float m_shieldLavaDis;
+
+    private float m_baseMoveSpeed;
 
     private void Awake()
     {
@@ -37,12 +42,12 @@ public class p_PlayerPickupManager : MonoBehaviour
     public void UseInteractablePickup()
     {
         OnUseInteractablePickup?.Invoke();
-    }
-
-    //Todo: invoke stun
+    }    
 
 
     #region Public Set Functions
+
+    public void SetBaseMoveSpeed(float speed) { m_baseMoveSpeed = speed; }
 
     public void SetPlayerShield(bool shield, float lavaDisplacement)
     {
@@ -68,7 +73,11 @@ public class p_PlayerPickupManager : MonoBehaviour
         interactablePickup = pickup;
     }
     
-
+    public void SetStun(float timerLength)
+    {
+        OnStunStateChange?.Invoke(0);
+        StartCoroutine(C_Timer(timerLength, m_baseMoveSpeed, OnStunStateChange));
+    }
 
     #endregion
 
@@ -96,8 +105,9 @@ public class p_PlayerPickupManager : MonoBehaviour
 
     #region Timer(s)
     //will wait for set seconds then invoke an action passing in the ususal value for it, check out double jumps/player movement to see how this works
-    private IEnumerator C_Timer(int seconds, int baseValue, Action<int> InvokedActionInt)
+    private IEnumerator C_Timer(float seconds, float baseValue, Action<float> InvokedActionInt)
     {
+        Debug.Log(InvokedActionInt);
         yield return new WaitForSeconds(seconds);
         InvokedActionInt?.Invoke(baseValue);
     }
