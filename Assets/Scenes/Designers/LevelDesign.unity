@@ -237,7 +237,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.64
+      value: -6.21
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1073,6 +1073,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5956999706621271206, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_PlayersToTrack.Array.size
       value: 2
@@ -1284,6 +1288,10 @@ PrefabInstance:
     - target: {fileID: 7039006090255952521, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
       propertyPath: m_Name
       value: Lava
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039006090255952521, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8817498719487324918, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
       propertyPath: m_startFromPosition
