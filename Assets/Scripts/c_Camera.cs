@@ -1,5 +1,3 @@
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class c_Camera : MonoBehaviour
@@ -38,50 +36,69 @@ public class c_Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float totalXPosition = 0f;
-        float furthestXPosition = 0f;
+        Vector3 camPos = transform.position;
+        Vector3 avg = returnAveragePosition();
 
-        float totalYPosition = 0f;
-        float highestYPosition = 0f;
-        for (int i = 0; i < m_PlayersToTrack.Length; i++)
+// --- STEP 1: Get bounds of players ---
+        float minX = float.MaxValue;
+        float maxX = float.MinValue;
+        float minY = float.MaxValue;
+        float maxY = float.MinValue;
+
+        foreach (var player in m_PlayersToTrack)
         {
-            float objectXPosition = m_PlayersToTrack[i].transform.position.x;
-            totalXPosition += objectXPosition;
+            Vector3 pos = player.transform.position;
 
-            if (objectXPosition > furthestXPosition)
-            {
-                furthestXPosition = objectXPosition;
-            }
-            
-            float objectYPosition = m_PlayersToTrack[i].transform.position.y;
-            totalYPosition += objectYPosition;
-
-            if (objectYPosition > highestYPosition)
-            {
-                highestYPosition = objectYPosition;
-                furthestPlayer = i;
-            }
+            minX = Mathf.Min(minX, pos.x);
+            maxX = Mathf.Max(maxX, pos.x);
+            minY = Mathf.Min(minY, pos.y);
+            maxY = Mathf.Max(maxY, pos.y);
         }
 
-        Vector3 averagePosition = returnAveragePosition();
+// --- STEP 2: Dead zone bounds ---
+        float left = camPos.x - m_LeftBuffer;
+        float right = camPos.x + m_RightBuffer;
+        float bottom = camPos.y - m_BottomBuffer;
+        float top = camPos.y + m_TopBuffer;
 
-        if (furthestXPosition - averagePosition.x > m_RightBuffer)
+// --- STEP 3: Check if ALL players are inside ---
+        bool insideDeadZone =
+            minX >= left &&
+            maxX <= right &&
+            minY >= bottom &&
+            maxY <= top;
+
+        float targetX = camPos.x;
+        float targetY = camPos.y;
+
+        if (insideDeadZone)
         {
-            transform.position = new Vector3(furthestXPosition - m_RightBuffer, transform.position.y, transform.position.z);
+            // Follow average ONLY when safe
+            targetX = avg.x;
+            targetY = avg.y;
         }
         else
         {
-            transform.position = new Vector3(averagePosition.x, transform.position.y, transform.position.z);
+            // --- Horizontal: keep everyone in view ---
+            if (minX < left)
+                targetX += minX - left;
+            else if (maxX > right)
+                targetX += maxX - right;
+
+            // --- Vertical: PRIORITISE TOP PLAYER ---
+            if (maxY > top)
+            {
+                // push camera up first
+                targetY += maxY - top;
+            }
+            else if (minY < bottom)
+            {
+                // only go down if no top pressure
+                targetY += minY - bottom;
+            }
         }
 
-        if (highestYPosition - averagePosition.y > m_TopBuffer)
-        {
-            transform.position = new Vector3(transform.position.x,  highestYPosition - m_TopBuffer, transform.position.z );
-        }
-        else
-        {
-            transform.position = new Vector3(transform.position.x, averagePosition.y, transform.position.z);
-        }
+        transform.position = new Vector3(targetX, targetY, camPos.z);
     }
 
 // float totalXPosition = 0f;
@@ -137,12 +154,24 @@ public class c_Camera : MonoBehaviour
     
     
     
-    // void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawCube();
-    // }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
 
+        Vector3 camPos = transform.position;
+
+        float width = m_LeftBuffer + m_RightBuffer;
+        float height = m_TopBuffer + m_BottomBuffer;
+
+        // Center of the rectangle (important!)
+        Vector3 center = new Vector3(
+            camPos.x + (m_RightBuffer - m_LeftBuffer) / 2f,
+            camPos.y + (m_TopBuffer - m_BottomBuffer) / 2f,
+            camPos.z
+        );
+
+        Gizmos.DrawWireCube(center, new Vector3(width, height, 0f));
+    }
     
     
     
