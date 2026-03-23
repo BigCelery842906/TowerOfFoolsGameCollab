@@ -8,11 +8,12 @@ public class c_Camera : MonoBehaviour
     
     
     [Header("Buffers")] 
-    [SerializeField]private float m_TopBuffer = 50f;
-    [SerializeField]private float m_BottomBuffer = 50f;
-    [SerializeField]private float m_LeftBuffer = 50f;
-    [SerializeField]private float m_RightBuffer = 50f;
-    
+    [SerializeField]private float m_YBuffer = 50f;
+    // [SerializeField]private float m_BottomBuffer = 50f;
+    [SerializeField]private float m_XBuffer = 50f;
+    // [SerializeField]private float m_RightBuffer = 50f;
+
+    [SerializeField] private float tempDepth = 0.5f;
     
     [SerializeField] private int furthestPlayer = -1;
     
@@ -56,10 +57,10 @@ public class c_Camera : MonoBehaviour
         }
 
 // --- STEP 2: Dead zone bounds ---
-        float left = camPos.x - m_LeftBuffer;
-        float right = camPos.x + m_RightBuffer;
-        float bottom = camPos.y - m_BottomBuffer;
-        float top = camPos.y + m_TopBuffer;
+        float left = camPos.x - m_XBuffer;
+        float right = camPos.x + m_XBuffer;
+        float bottom = camPos.y - m_YBuffer;
+        float top = camPos.y + m_YBuffer;
 
 // --- STEP 3: Check if ALL players are inside ---
         bool insideDeadZone =
@@ -154,23 +155,62 @@ public class c_Camera : MonoBehaviour
     
     
     
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
 
         Vector3 camPos = transform.position;
 
-        float width = m_LeftBuffer + m_RightBuffer;
-        float height = m_TopBuffer + m_BottomBuffer;
+        camPos.z = transform.position.z + 0.3f;
+        //Assume 16:9
+        float width = m_XBuffer / 1920 / 0.615625f;
+        float height = m_YBuffer/ 1080 / 0.615625f;
 
+        // At 1080 x 1920
+        // Y = 374
+        // X = 1182
+        
+        // At / 1920 / 0.615625f and / 1080 / 0.615625f;
+        // Y = 727
+        // X = 230
+        
+        
+        Gizmos.DrawWireCube(camPos, new Vector3(width, height, 0f));
+        
+        
+        
+        #region BS
+        
         // Center of the rectangle (important!)
-        Vector3 center = new Vector3(
-            camPos.x + (m_RightBuffer - m_LeftBuffer) / 2f,
-            camPos.y + (m_TopBuffer - m_BottomBuffer) / 2f,
-            camPos.z
-        );
-
-        Gizmos.DrawWireCube(center, new Vector3(width, height, 0f));
+        // Vector3 center = new Vector3(
+        //     camPos.x + (m_RightBuffer - m_XBuffer) / 2f,
+        //     camPos.y + (m_YBuffer - m_BottomBuffer) / 2f,
+        //     camPos.z + (0.5f)
+        // );
+        
+        
+        //
+        // //Top Left = Top Buffer.y, LeftBuffer.x, 0
+        // Vector3 TL = new Vector3(camPos.x + m_LeftBuffer, camPos.y + m_TopBuffer, camPos.z);
+        // //Top right = Top Buffer.y, RightBuffer.x, 0
+        // Vector3 TR = new Vector3(camPos.x - m_RightBuffer, camPos.y + m_TopBuffer, camPos.z);
+        // //Bottom Left = BottomBuffer.y, LeftBuffer.x, 0
+        // Vector3 BL = new Vector3(camPos.x + m_LeftBuffer, camPos.y - m_BottomBuffer, camPos.z);
+        // //Bottom Right = BottomBuffer.y, RightBuffer.x, 0
+        // Vector3 BR = new Vector3(camPos.x - m_RightBuffer, camPos.y - m_BottomBuffer, camPos.z);
+        //
+        // //Lines to Draw
+        // // TL - TR
+        // // TR - BR
+        // // BR - BL
+        // // BL - TL
+        // Debug.DrawLine(TL, TR, Color.blue);
+        // Debug.DrawLine(TR, BR, Color.blue);
+        // Debug.DrawLine(BR, BL, Color.blue);
+        // Debug.DrawLine(TL, BL, Color.blue);
+        
+        #endregion
+        
     }
     
     
