@@ -153,7 +153,7 @@ public class p_PlayerMovement : MonoBehaviour
 
                 yield return new WaitForFixedUpdate();
                 //the coroutine is exited now since the bool is now true
-            }            
+            }
 
             //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
             if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
