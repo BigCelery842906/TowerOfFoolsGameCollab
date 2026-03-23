@@ -164,6 +164,7 @@ public class p_PlayerMovement : MonoBehaviour
             if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
             {
                 Physics.gravity = m_apexGrav;
+                //do a diff anim?
             }
 
             if (m_RB.linearVelocity.y < 0f)
