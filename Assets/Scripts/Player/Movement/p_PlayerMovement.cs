@@ -124,6 +124,10 @@ public class p_PlayerMovement : MonoBehaviour
 
             StartCoroutine(C_GroundedCheck());
         }
+        else
+        {
+            //Debug.Log(hit.);
+        }
     }
 
     public void JumpCancelled()
