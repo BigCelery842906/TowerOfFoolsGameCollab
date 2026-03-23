@@ -27,11 +27,12 @@ public class p_PlayerDataManager : MonoBehaviour
     void PlayerDeathPositionUpdate(int playerID)
     {
         if(playerID == m_PlayerID)
-        {
+        { 
+
             Vector3 currentPos = gameObject.transform.position;
             Vector3 newPos = currentPos;
 
-            newPos.x = currentPos.x + 10;
+            newPos.y = currentPos.y + 10;
 
             gameObject.transform.position = newPos;
         }

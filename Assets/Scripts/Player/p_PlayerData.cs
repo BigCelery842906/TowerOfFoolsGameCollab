@@ -186,6 +186,8 @@ public class p_PlayerData
             {
                 DecreaseLives(amount);
 
+                e_GameEvents.instance.PlayerDeathAdded(playerID);
+
                 if (CheckNoLives())
                 {
                     e_GameEvents.instance.PlayerNoLives(m_PlayerID);                
