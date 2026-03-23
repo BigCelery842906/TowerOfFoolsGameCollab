@@ -18,6 +18,7 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
     private void Awake()
     {
         m_RB = GetComponentInParent<Rigidbody>();
+        m_pickupManager = GetComponentInParent<p_PlayerPickupManager>();
     }
 
     /// <summary>
@@ -60,11 +61,6 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
             return; //skip 
         }
 
-        StartCoroutine(C_StunTimer(stunLength));
-    }
-
-    private IEnumerator C_StunTimer(float stunTime)
-    {
-        yield return new WaitForSeconds(stunTime);
+        m_pickupManager.SetStun(stunLength);
     }
 }
