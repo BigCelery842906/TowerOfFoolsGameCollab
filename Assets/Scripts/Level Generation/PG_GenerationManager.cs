@@ -8,6 +8,8 @@
 
 using UnityEngine;
 
+using Unity.VisualScripting;
+
 
 public class PG_GenerationManager : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class PG_GenerationManager : MonoBehaviour
     [SerializeField]
     public int m_desiredChunkHeight;
     public int m_chunksPerRoom;
-
+    public int m_chunkSizeMultiplier;
     public GameObject m_currentRoom;
 
     public float m_worldScale;
@@ -28,8 +30,10 @@ public class PG_GenerationManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        m_desiredChunkHeight = 9 * m_chunkSizeMultiplier;
+        m_desiredChunkWidth = 16 * m_chunkSizeMultiplier;
         m_roomGenerator = GetComponent<PG_RoomGenerator>();
-        if(!m_roomGenerator)
+        if (!m_roomGenerator)
         {
             Debug.Log("Room Generator not Loaded on Generation Manager");
         }
@@ -38,17 +42,35 @@ public class PG_GenerationManager : MonoBehaviour
         {
             Debug.Log("Platform Generator not Loaded on Generation Manager");
         }
+
         m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         m_currentRoom.transform.SetParent(this.transform, false);
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         //m_roomGenerator.SetWorldScale(m_worldScale);
-       // m_roomGenerator.AddValuesToGrid();
+        // m_roomGenerator.AddValuesToGrid();
     }
-    void Start()
+
+    public void RegenerateRoom()
     {
-        
-        //m_chunkGenerator.SpawnStartingRoom(m_desiredChunkWidth, m_desiredChunkHeight);
+        if (transform.childCount > 0)
+        {
+            GameObject room = transform.GetChild(0).gameObject;
+            DestroyImmediate(room);
+        }
+        else
+        {
+            Debug.Log("No child objects to destroy.");
+        }
+
+
+        m_desiredChunkHeight = 9 * m_chunkSizeMultiplier;
+        m_desiredChunkWidth = 16 * m_chunkSizeMultiplier;
+
+        m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
+        m_currentRoom.transform.SetParent(this.transform, false);
+        m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
     }
+
     void GenerateNewTile()
     {
 
@@ -60,7 +82,7 @@ public class PG_GenerationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -71,4 +93,6 @@ public class PG_GenerationManager : MonoBehaviour
 
 
 }
+
+
 

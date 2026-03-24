@@ -6,6 +6,7 @@
 
 
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -151,6 +152,7 @@ public class PG_PlatformGenerator : MonoBehaviour
     void CommitChanges(List<Change> changes, GameObject room)
     {
         PG_GridMap grid = room.GetComponent<PG_GridMap>();
+        
         for (int i = 0; i < changes.Count; i++)
         {
 
@@ -189,11 +191,16 @@ public class PG_PlatformGenerator : MonoBehaviour
                     endPlatform.transform.localScale = Vector3.one * m_scale;
                     endPlatform.transform.SetParent(grid.gameObject.transform, false);
                     break;
+
                 default:
                     Debug.Log("Error, tried to commit bad platform spawn");
                     break;
             }
 
+
+        }
+        void BindPlatformsToGameObject(List<Change> changes, GameObject room)
+        {
 
         }
     }
@@ -208,6 +215,18 @@ public class PG_PlatformGenerator : MonoBehaviour
     {
         public int x, y;
         public PG_GridMap.BLOCK_TYPE blockType;
+    }
+}
+    [CustomEditor(typeof(PG_PlatformGenerator))]
+[CanEditMultipleObjects]
+public class PlatformGeneratorEditor : Editor 
+{
+    public void OnGui()
+    {
+        if(GUILayout.Button("Generate Platform"))
+        {
+            Debug.Log("platofmr Button Pressed");
+        }
     }
 }
 
