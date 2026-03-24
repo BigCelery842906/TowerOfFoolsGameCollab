@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class ui_MainMenuManager : MonoBehaviour
@@ -18,8 +16,9 @@ public class ui_MainMenuManager : MonoBehaviour
     [Tooltip("This value will only be taken into account if 'Use Scene Build Index' is false.")]
     [SerializeField] private string  m_sceneName;
 
-    private Button playButton;
-    private Button quitButton;
+    private Button m_playButton;
+    private Button m_scoreboardButton;
+    private Button m_quitButton;
     
     void Awake()
     {
@@ -30,29 +29,36 @@ public class ui_MainMenuManager : MonoBehaviour
         }
         
         // Query the buttons from the UI document, check validity, and set click callbacks
-        playButton = m_uiMainMenuDocument.rootVisualElement.Q<Button>("play-btn");
-        quitButton = m_uiMainMenuDocument.rootVisualElement.Q<Button>("quit-btn");
+        m_playButton = m_uiMainMenuDocument.rootVisualElement.Q<Button>("play-btn");
+        m_scoreboardButton =  m_uiMainMenuDocument.rootVisualElement.Q<Button>("scoreboard-btn");
+        m_quitButton = m_uiMainMenuDocument.rootVisualElement.Q<Button>("quit-btn");
 
-        if (playButton == null || quitButton == null)
+        if (m_playButton == null || m_scoreboardButton == null || m_quitButton == null)
         {
             throw new UnityException("ui_MainMenuDocument play or quit button is invalid");
         }
 
-        playButton.clicked += HandleButtonClicked_Play;
-        quitButton.clicked += HandleButtonClicked_Quit;
+        m_playButton.clicked += HandleButtonClicked_Play;
+        m_scoreboardButton.clicked += HandleButtonClicked_Scoreboard;
+        m_quitButton.clicked += HandleButtonClicked_Quit;
     }
 
     private void OnDestroy()
     {
         // Just to be safe, unbind the callbacks when the menu is destroyed
-        if (playButton != null)
+        if (m_playButton != null)
         {
-            playButton.clicked -= HandleButtonClicked_Play;
+            m_playButton.clicked -= HandleButtonClicked_Play;
+        }
+
+        if (m_scoreboardButton != null)
+        {
+            m_scoreboardButton.clicked -= HandleButtonClicked_Scoreboard;
         }
         
-        if (quitButton != null)
+        if (m_quitButton != null)
         {
-            quitButton.clicked -= HandleButtonClicked_Quit;
+            m_quitButton.clicked -= HandleButtonClicked_Quit;
         }
     }
 
@@ -66,6 +72,11 @@ public class ui_MainMenuManager : MonoBehaviour
         }
         
         sc_SceneManager.LoadSceneByName(m_sceneName);
+    }
+
+    private void HandleButtonClicked_Scoreboard()
+    {
+        
     }
 
     private void HandleButtonClicked_Quit()

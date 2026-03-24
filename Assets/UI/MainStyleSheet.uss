@@ -29,16 +29,18 @@
     -unity-background-scale-mode: scale-to-fit;
     background-position-y: center 0;
     background-position-x: center 0;
-    height: auto;
-    width: 200px;
+    height: 100%;
+    width: 100%;
     align-items: stretch;
     align-self: auto;
     align-content: stretch;
     justify-content: flex-start;
-    min-height: 50px;
+    min-height: auto;
     -unity-text-align: middle-center;
     background-size: contain;
     -unity-font-definition: url("project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&guid=03fb5fe5b67ed9749bfee08dac9db391&type=3#Evil Empire");
+    translate: 0 0;
+    position: relative;
 }
 
 .unity-button:hover {
