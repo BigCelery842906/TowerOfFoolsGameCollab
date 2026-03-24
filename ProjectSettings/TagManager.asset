@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - Player0
   - Player1
-  - Player2
   - Background
   layers:
   - Default
