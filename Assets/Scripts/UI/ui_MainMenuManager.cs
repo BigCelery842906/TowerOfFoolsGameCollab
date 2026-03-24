@@ -81,6 +81,10 @@ public class ui_MainMenuManager : MonoBehaviour
 
     private void HandleButtonClicked_Quit()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 }
