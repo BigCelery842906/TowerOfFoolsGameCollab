@@ -152,6 +152,10 @@ public class PG_RoomGenerator : MonoBehaviour
                 {
                     grid.m_grid[w, h].SetType(PG_GridMap.BLOCK_TYPE.NONE);
                 }
+                if(h == 0 && w == entrancePos)
+                {
+                    grid.m_grid[w, h].SetType(PG_GridMap.BLOCK_TYPE.NONE);
+                }
             }
         }
     }

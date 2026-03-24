@@ -7,7 +7,7 @@
 
 using UnityEngine;
 
-public class PG_PlatformEnd : MonoBehaviour
+public class PG_PlatformEnd : PG_PlatformParent
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
