@@ -68,6 +68,8 @@ public class PG_GenerationManager : MonoBehaviour
         m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         m_currentRoom.transform.SetParent(this.transform, false);
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
+        m_platformGenerator.m_xSpawnLocation = 1;
+        m_platformGenerator.m_ySpawnLocation = 1;
     }
 
     void GenerateNewTile()
