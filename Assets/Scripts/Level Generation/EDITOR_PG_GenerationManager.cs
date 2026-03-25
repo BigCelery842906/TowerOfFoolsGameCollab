@@ -1,3 +1,9 @@
+//-------------------------------------
+//      Property of Dan.
+//      Break it and you suffer.
+//      Respectfully of course...
+//-------------------------------------
+
 using System;
 using System.Runtime.CompilerServices;
 using UnityEditor;
@@ -32,5 +38,8 @@ public class EDITOR_PG_GenerationManager : Editor
             manager.RegenerateRoom();
         }
         serializedObject.ApplyModifiedProperties();
+
     }
+
+
 }

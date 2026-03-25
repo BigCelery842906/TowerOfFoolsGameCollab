@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -135183531683309430}
   m_Layer: 0
   m_Name: Plat_PlatformEnd
-  m_TagString: Untagged
+  m_TagString: PlatformEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

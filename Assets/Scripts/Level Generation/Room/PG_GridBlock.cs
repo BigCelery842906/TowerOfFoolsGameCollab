@@ -11,6 +11,7 @@ public class GridBlock : MonoBehaviour
 {
     [SerializeField] Vector2 m_coords;
     [SerializeField] int m_gridNumber;
+    float m_worldScale;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

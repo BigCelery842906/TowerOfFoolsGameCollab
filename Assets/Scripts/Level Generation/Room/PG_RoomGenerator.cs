@@ -112,7 +112,7 @@ public class PG_RoomGenerator : MonoBehaviour
                     Vector2 adjustedWorldPos;
                     adjustedWorldPos.x = grid.m_grid[w, h].m_worldPosition.x;
                     adjustedWorldPos.y = grid.m_grid[w, h].m_worldPosition.y + (roomGrid.m_grid[w, newHeight].m_worldPosition.y * g);
-                    roomGrid.m_grid[w, newHeight].SetWorldPos(new Vector2(w * m_worldScale, h * m_worldScale));
+                    roomGrid.m_grid[w, newHeight].SetWorldPos(new Vector2(w * m_worldScale, newHeight * m_worldScale));
                 }
 
             }

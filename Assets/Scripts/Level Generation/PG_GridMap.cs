@@ -49,6 +49,7 @@ public class PG_GridMap : MonoBehaviour
             }
         }
     }
+    public float GetWorldScale() { return m_worldScale; }
     public Vector2 CalculateWorldPositionFromCoords(int x, int y)
     {
         Vector2 pos = new Vector2();
