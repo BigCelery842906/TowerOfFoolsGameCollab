@@ -3957,7 +3957,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.83
+      value: 9.82
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3998,46 +3998,6 @@ PrefabInstance:
     - target: {fileID: 2567493114257180752, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_Name
       value: Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3472860394123550700, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_RequiresDepthTextureOption
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5956999706621271206, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: orthographic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_XBuffer
-      value: 727
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_YBuffer
-      value: 230
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: tempDepth
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_TopBuffer
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_LeftBuffer
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_RightBuffer
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_BottomBuffer
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_PlayersToTrack.Array.size
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: 'm_PlayersToTrack.Array.data[0]'

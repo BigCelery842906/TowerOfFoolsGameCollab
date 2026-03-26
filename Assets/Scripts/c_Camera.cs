@@ -8,9 +8,9 @@ public class c_Camera : MonoBehaviour
     
     
     [Header("Buffers")] 
-    [SerializeField]private float m_YBuffer = 50f;
+    [SerializeField]private float m_YBuffer = 10f;
     // [SerializeField]private float m_BottomBuffer = 50f;
-    [SerializeField]private float m_XBuffer = 50f;
+    [SerializeField]private float m_XBuffer = 17.75f;
     // [SerializeField]private float m_RightBuffer = 50f;
 
     [SerializeField] private float tempDepth = 0.5f;
@@ -161,11 +161,16 @@ public class c_Camera : MonoBehaviour
 
         Vector3 camPos = transform.position;
 
-        camPos.z = transform.position.z + 0.3f;
+        // camPos.z = transform.position.z + tempDepth;
+       
         //Assume 16:9
-        float width = m_XBuffer / 1920 / 0.615625f;
-        float height = m_YBuffer/ 1080 / 0.615625f;
+        float width = m_XBuffer; /// 1920 / 0.615625f;
+        float height = m_YBuffer; /// 1080 / 0.615625f;
 
+        // To be at screen boundary in 16:9:
+        // Y buffer at 10
+        // X Buffer at 17.75
+        
         // At 1080 x 1920
         // Y = 374
         // X = 1182
@@ -179,7 +184,7 @@ public class c_Camera : MonoBehaviour
         
         
         
-        #region BS
+        #region BS - Manual Line Drawing
         
         // Center of the rectangle (important!)
         // Vector3 center = new Vector3(

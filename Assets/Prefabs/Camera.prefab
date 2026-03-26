@@ -150,8 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be89fb4393356547bd37430729dd126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayersToTrack: []
-  m_YBuffer: 50
-  m_XBuffer: 50
-  tempDepth: 0.5
+  m_PlayersToTrack:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_YBuffer: 10
+  m_XBuffer: 17.75
+  tempDepth: 0
   furthestPlayer: -1
