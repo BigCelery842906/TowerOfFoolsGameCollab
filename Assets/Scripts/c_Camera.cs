@@ -17,6 +17,8 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private float tempDepth = 0.5f;
     
     [SerializeField] private int furthestPlayer = -1;
+    [SerializeField] private float highestYPos = float.MinValue;
+    [SerializeField] private float furthestXPos = float.MinValue;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -43,30 +45,64 @@ public class c_Camera : MonoBehaviour
 
 
         float totalYPosition = 0f;
-        float furthestYPosition = float.MinValue;
+       
 
         for (int i = 0; i < m_PlayersToTrack.Count; i++)
         {
             float Yposition = m_PlayersToTrack[i].transform.position.y;
             totalYPosition += Yposition;
 
-            if (Yposition > furthestYPosition)
+            if (Yposition > highestYPos)
             {
-                furthestYPosition = Yposition;
+                highestYPos = Yposition;
                 furthestPlayer = i;
             }
         }
 
-        float averageYposition = totalYPosition / m_PlayersToTrack.Count;
+        float avgYPos = totalYPosition / m_PlayersToTrack.Count;
 
-        if (furthestYPosition - averageYposition > m_YBuffer)
+        if (highestYPos - avgYPos > m_YBuffer)
         {
-            camPos.y = furthestYPosition;
+            camPos.y = highestYPos;
         }
         else
         {
-            camPos.y = averageYposition;
+            camPos.y = avgYPos;
         }
+
+        Debug.Log("Furthest player on Y axis is:" + furthestPlayer);
+
+        float totalXPosition = 0f;
+       
+
+        for (int i = 0; i < m_PlayersToTrack.Count; i++)
+        {
+            float XPosition = m_PlayersToTrack[i].transform.position.x;
+            totalXPosition += XPosition;
+
+            if (XPosition > furthestXPos)
+            {
+                furthestXPos = XPosition;
+                furthestPlayer = i;
+            }
+        }
+
+        float avgXPos = totalXPosition / m_PlayersToTrack.Count;
+
+        if (furthestXPos - avgXPos > m_XBuffer)
+        {
+            camPos.x = furthestXPos;
+        }
+        else
+        {
+            camPos.x = avgXPos;
+        }
+
+        Debug.Log("Furthest player on X axis is:" + furthestPlayer);
+
+        transform.position = camPos;
+
+
 
         // float highestYPos = float.MinValue;
         //
@@ -96,8 +132,8 @@ public class c_Camera : MonoBehaviour
         //     camPos.y = avg.y;
         // }
         //
-        transform.position = camPos;
         
+
     }
 
 // float totalXPosition = 0f;
@@ -189,7 +225,7 @@ public class c_Camera : MonoBehaviour
         // X = 230
         
         
-        Gizmos.DrawWireCube(camPos, new Vector3(width, height, 0f));
+        Gizmos.DrawWireCube(returnAveragePosition(), new Vector3(width, height, 0f));
         
         
         
