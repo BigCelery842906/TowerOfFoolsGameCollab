@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 
 public class PG_GridMap : MonoBehaviour
@@ -19,6 +20,9 @@ public class PG_GridMap : MonoBehaviour
     private int m_roomNumber = 1;
 
     private float m_worldScale = 1;
+
+    [NonSerialized]
+    public bool m_roomComplete = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()

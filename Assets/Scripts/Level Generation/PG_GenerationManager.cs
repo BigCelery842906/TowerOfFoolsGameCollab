@@ -14,11 +14,11 @@ using Unity.VisualScripting;
 public class PG_GenerationManager : MonoBehaviour
 {
     [SerializeField]
-    public int m_desiredChunkWidth;
+    public int m_desiredChunkWidth = 16;
     [SerializeField]
-    public int m_desiredChunkHeight;
-    public int m_chunksPerRoom;
-    public int m_chunkSizeMultiplier;
+    public int m_desiredChunkHeight = 9;
+    public int m_chunksPerRoom = 3;
+    public int m_chunkSizeMultiplier = 1;
     public GameObject m_currentRoom;
 
     public float m_worldScale;
@@ -27,11 +27,13 @@ public class PG_GenerationManager : MonoBehaviour
     private PG_PlatformGenerator m_platformGenerator;
     private REGION m_currentRegion = REGION.ONE;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     private void Awake()
     {
-        m_desiredChunkHeight = 9 * m_chunkSizeMultiplier;
-        m_desiredChunkWidth = 16 * m_chunkSizeMultiplier;
+        //this needs to be set to default values on generation otherwise the UI has a moment and sets it to zero, causing a bombardment of UI draw and OOB errors
+        m_desiredChunkHeight = 9;
+        m_desiredChunkWidth = 16;
+
         m_roomGenerator = GetComponent<PG_RoomGenerator>();
         if (!m_roomGenerator)
         {
@@ -47,7 +49,9 @@ public class PG_GenerationManager : MonoBehaviour
         m_currentRoom.transform.SetParent(this.transform, false);
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
 
+
     }
+
 
     public void RegenerateRoom()
     {

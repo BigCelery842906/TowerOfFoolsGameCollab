@@ -4,6 +4,7 @@
 //      Respectfully of course...
 //-------------------------------------
 
+using NUnit.Framework;
 using System.Drawing;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
@@ -24,6 +25,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
     SerializedProperty platformSize;
     SerializedProperty currentGridProp;
     PG_GridMap m_currentGrid;
+    PG_PlatformGenerator m_generator;
     void OnEnable()
     {
 
@@ -37,6 +39,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
     }
     public override void OnInspectorGUI()
     {
+        m_generator = (PG_PlatformGenerator)target;
         var gridProp = serializedObject.FindProperty("m_currentGrid");
         m_currentGrid = gridProp != null ? gridProp.objectReferenceValue as PG_GridMap : null;
         PG_PlatformGenerator generator = (PG_PlatformGenerator)target;
@@ -79,24 +82,28 @@ public class EDITOR_PG_PlatformGenerator : Editor
     public void OnSceneGUI()
     {
 
-        PG_PlatformGenerator generator = (PG_PlatformGenerator)target;
-        PG_GridMap grid = generator.m_currentGrid;
+        if (!m_generator) return;
+        PG_GridMap grid = m_generator.m_currentGrid;
         if (grid == null) return;
 
-        int currentX = generator.m_xSpawnLocation;
-        int currentY = generator.m_ySpawnLocation;
-        int size = generator.m_platformSpawnSize;
+        int currentX = m_generator.m_xSpawnLocation;
+        int currentY = m_generator.m_ySpawnLocation;
+        int size = m_generator.m_platformSpawnSize;
         float worldScale = grid.GetWorldScale();
 
         UnityEngine.Color prev = Handles.color;
         Handles.color = UnityEngine.Color.cyan;
+        if(grid.m_roomComplete)
+        {
 
         for (int i = 0; i < size; i++)
         {
+            
             Vector2 pos = grid.GetWorldPosFromCell(currentX + i, currentY);
             Vector3 wireframePos = new Vector3(pos.x, pos.y, 0f);
             Vector3 wireframeSize = Vector3.one * worldScale;
             Handles.DrawWireCube(wireframePos, wireframeSize);
+        }
         }
 
         Handles.color = prev;

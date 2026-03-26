@@ -61,6 +61,7 @@ public class PG_RoomGenerator : MonoBehaviour
         {
             Destroy(m_grids[i]);
         }
+        room.GetComponent<PG_GridMap>().m_roomComplete = true;
         return room;
     }
     public GameObject GenerateGrid(int w, int h, float worldScale, int gridNumber)
