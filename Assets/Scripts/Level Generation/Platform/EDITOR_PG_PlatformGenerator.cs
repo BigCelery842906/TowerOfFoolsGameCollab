@@ -23,7 +23,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
     SerializedProperty xPos;
     SerializedProperty yPos;
     SerializedProperty platformSize;
-    SerializedProperty currentGridProp;
+
     PG_GridMap m_currentGrid;
     PG_PlatformGenerator m_generator;
     void OnEnable()
@@ -34,7 +34,8 @@ public class EDITOR_PG_PlatformGenerator : Editor
         xPos = serializedObject.FindProperty("m_xSpawnLocation");
         yPos = serializedObject.FindProperty("m_ySpawnLocation");
         platformSize = serializedObject.FindProperty("m_platformSpawnSize");
-        currentGridProp = serializedObject.FindProperty("m_currentGrid");
+
+
 
     }
     public override void OnInspectorGUI()
@@ -82,7 +83,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
     public void OnSceneGUI()
     {
 
-        if (!m_generator) return;
+        if (m_generator == null) return;
         PG_GridMap grid = m_generator.m_currentGrid;
         if (grid == null) return;
 

@@ -67,6 +67,19 @@ public class PG_GridMap : MonoBehaviour
 
         return m_grid[cellW, cellH].m_worldPosition;
     }
+    public List<PG_PlatformParent> GetNeighboursOfPlatform(int xCoord, int yCoord)
+    {
+        List<PG_PlatformParent> neighbours = new();
+        if (m_grid[xCoord - 1,yCoord].m_blockType != BLOCK_TYPE.NONE && m_grid[xCoord - 1, yCoord].m_blockType != BLOCK_TYPE.WALL)
+        {
+            neighbours.Add((PG_PlatformParent)m_grid[xCoord - 1, yCoord].m_contents.GetComponent<PG_PlatformParent>());
+        }
+        if (m_grid[xCoord + 1, yCoord].m_blockType != BLOCK_TYPE.NONE && m_grid[xCoord + 1, yCoord].m_blockType != BLOCK_TYPE.WALL)
+        {
+            neighbours.Add((PG_PlatformParent)m_grid[xCoord + 1, yCoord].m_contents.GetComponent<PG_PlatformParent>());
+        }
+        return neighbours;
+    }
 
     void Start()
     {

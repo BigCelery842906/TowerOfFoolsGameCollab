@@ -6,9 +6,10 @@
 
 
 
-using UnityEngine;
-
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine;
+using static PG_GridMap;
 
 
 public class PG_GenerationManager : MonoBehaviour
@@ -20,6 +21,8 @@ public class PG_GenerationManager : MonoBehaviour
     public int m_chunksPerRoom = 3;
     public int m_chunkSizeMultiplier = 1;
     public GameObject m_currentRoom;
+    public bool m_spawnPowerups = false;
+    public float m_powerupSpawnChance = 0.0f;
 
     public float m_worldScale;
 
@@ -48,10 +51,52 @@ public class PG_GenerationManager : MonoBehaviour
         m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         m_currentRoom.transform.SetParent(this.transform, false);
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
-
+        if (m_spawnPowerups) SpawnPowerups();
 
     }
-
+    public void SpawnPowerups()
+    {
+        Debug.Log("Spawning Powerups");
+        PG_GridMap grid = m_currentRoom.GetComponent<PG_GridMap>();
+        if(!grid)
+        {
+            Debug.Log("Can't find grid for powerup spawns");
+        }
+        
+        for (int x = 0; x < grid.m_width; x++)
+        {
+            for (int y = 0; y < grid.m_height; y++)
+            {
+                bool valid = true;
+                List<PG_PlatformParent> neighbours = new();
+                if (grid.m_grid[x,y].m_blockType == BLOCK_TYPE.PLATFORM_MIDDLE || grid.m_grid[x, y].m_blockType == BLOCK_TYPE.PLATFORM_END)
+                {
+                    neighbours = grid.GetNeighboursOfPlatform(x, y);
+                    foreach (PG_PlatformParent block in neighbours)
+                    {
+                        if(block.m_hasPowerup == true)
+                        {
+                            valid = false;
+                            break;
+                        }
+                    }
+                    if(valid == false)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        float spawnRoll = UnityEngine.Random.Range(0, 100.0f);
+                        if (spawnRoll < m_powerupSpawnChance)
+                        {
+                            GameObject room = transform.GetChild(0).gameObject;
+                            grid.m_grid[x, y].m_contents.GetComponent<PG_PlatformParent>().SpawnPowerup(room);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     public void RegenerateRoom()
     {
@@ -74,16 +119,10 @@ public class PG_GenerationManager : MonoBehaviour
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         m_platformGenerator.m_xSpawnLocation = 1;
         m_platformGenerator.m_ySpawnLocation = 1;
+        if (m_spawnPowerups) SpawnPowerups();
     }
 
-    void GenerateNewTile()
-    {
 
-    }
-    void GeneratePlatform()
-    {
-
-    }
     // Update is called once per frame
     void Update()
     {

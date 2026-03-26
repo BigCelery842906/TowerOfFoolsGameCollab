@@ -196,6 +196,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                     grid.m_grid[x, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
                     middlePlatform.transform.localScale = Vector3.one * m_scale;
                     middlePlatform.transform.SetParent(grid.gameObject.transform, false);
+                    middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
                     break;
                 case PG_GridMap.BLOCK_TYPE.PLATFORM_END:
                     if (m_ends.Count == 0)
@@ -211,6 +212,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                     grid.m_grid[x, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_END);
                     endPlatform.transform.localScale = Vector3.one * m_scale;
                     endPlatform.transform.SetParent(grid.gameObject.transform, false);
+                    endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
                     break;
 
                 default:

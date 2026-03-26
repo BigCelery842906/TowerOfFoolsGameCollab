@@ -48,6 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool:
+  - {fileID: 653915677348896967, guid: 838a006f90a1e7a4fb836d2bdc073035, type: 3}
+  - {fileID: 867675361325496951, guid: 9d6f1d5bc969fde419f48f9619631365, type: 3}
+  - {fileID: 8400691131253148563, guid: 0ed897359a80a7b48a352a2b15200a99, type: 3}
+  - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
 --- !u!33 &3462084118483910517
 MeshFilter:
   m_ObjectHideFlags: 0
