@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class c_Camera : MonoBehaviour
 {
 
-    [SerializeField] GameObject[] m_PlayersToTrack;
+    [SerializeField] List<GameObject> m_PlayersToTrack;
 
     
     
@@ -18,7 +19,6 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private int furthestPlayer = -1;
     
     
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,10 +26,10 @@ public class c_Camera : MonoBehaviour
         GameObject[] tempGO = GameObject.FindGameObjectsWithTag("Player");
         // This would be the capsule component of the player, so I need to get the parent for the actual physical player
 
-        m_PlayersToTrack = new GameObject[tempGO.Length];
+        m_PlayersToTrack = new List<GameObject>();
         for(int i = 0; i < tempGO.Length; i++)
         {
-            m_PlayersToTrack[i] = tempGO[i].transform.parent.gameObject;
+            m_PlayersToTrack.Add(tempGO[i].transform.parent.gameObject);
         }
         
     }
@@ -38,68 +38,66 @@ public class c_Camera : MonoBehaviour
     void Update()
     {
         Vector3 camPos = transform.position;
+
         Vector3 avg = returnAveragePosition();
 
-// --- STEP 1: Get bounds of players ---
-        float minX = float.MaxValue;
-        float maxX = float.MinValue;
-        float minY = float.MaxValue;
-        float maxY = float.MinValue;
 
-        foreach (var player in m_PlayersToTrack)
+        float totalYPosition = 0f;
+        float furthestYPosition = float.MinValue;
+
+        for (int i = 0; i < m_PlayersToTrack.Count; i++)
         {
-            Vector3 pos = player.transform.position;
+            float Yposition = m_PlayersToTrack[i].transform.position.y;
+            totalYPosition += Yposition;
 
-            minX = Mathf.Min(minX, pos.x);
-            maxX = Mathf.Max(maxX, pos.x);
-            minY = Mathf.Min(minY, pos.y);
-            maxY = Mathf.Max(maxY, pos.y);
+            if (Yposition > furthestYPosition)
+            {
+                furthestYPosition = Yposition;
+                furthestPlayer = i;
+            }
         }
 
-// --- STEP 2: Dead zone bounds ---
-        float left = camPos.x - m_XBuffer;
-        float right = camPos.x + m_XBuffer;
-        float bottom = camPos.y - m_YBuffer;
-        float top = camPos.y + m_YBuffer;
+        float averageYposition = totalYPosition / m_PlayersToTrack.Count;
 
-// --- STEP 3: Check if ALL players are inside ---
-        bool insideDeadZone =
-            minX >= left &&
-            maxX <= right &&
-            minY >= bottom &&
-            maxY <= top;
-
-        float targetX = camPos.x;
-        float targetY = camPos.y;
-
-        if (insideDeadZone)
+        if (furthestYPosition - averageYposition > m_YBuffer)
         {
-            // Follow average ONLY when safe
-            targetX = avg.x;
-            targetY = avg.y;
+            camPos.y = furthestYPosition;
         }
         else
         {
-            // --- Horizontal: keep everyone in view ---
-            if (minX < left)
-                targetX += minX - left;
-            else if (maxX > right)
-                targetX += maxX - right;
-
-            // --- Vertical: PRIORITISE TOP PLAYER ---
-            if (maxY > top)
-            {
-                // push camera up first
-                targetY += maxY - top;
-            }
-            else if (minY < bottom)
-            {
-                // only go down if no top pressure
-                targetY += minY - bottom;
-            }
+            camPos.y = averageYposition;
         }
 
-        transform.position = new Vector3(targetX, targetY, camPos.z);
+        // float highestYPos = float.MinValue;
+        //
+        // for (int i = 0; i < m_PlayersToTrack.Count; i++)
+        // {
+        //     float yPos = m_PlayersToTrack[i].transform.position.y;
+        //     if (yPos> highestYPos)
+        //     {
+        //         highestYPos = yPos;
+        //         furthestPlayer = i;
+        //     }
+        // }
+        //
+        //
+        // float deltaY = highestYPos - avg.y;
+        //
+        // float topEdge = avg.y + m_YBuffer;
+        // Debug.Log($"DeltaY: {deltaY} | topEdge: {topEdge}");
+        // if (highestYPos > topEdge)
+        // {
+        //     Debug.Log("Highest Player Tracking");
+        //     camPos.y = highestYPos - m_YBuffer;
+        // }
+        // else
+        // {
+        //     Debug.Log("Average Player Tracking");
+        //     camPos.y = avg.y;
+        // }
+        //
+        transform.position = camPos;
+        
     }
 
 // float totalXPosition = 0f;
@@ -132,22 +130,22 @@ public class c_Camera : MonoBehaviour
 
     Vector3 returnAveragePosition()
     {
-        if (m_PlayersToTrack.Length == 0)
+        if (m_PlayersToTrack.Count == 0)
         {
             return Vector3.zero;
         }
 
         Vector3 totalPosition = Vector3.zero;
-        for (int i = 0; i < m_PlayersToTrack.Length; i++)
+        for (int i = 0; i < m_PlayersToTrack.Count; i++)
         {
             totalPosition += m_PlayersToTrack[i].transform.position;
         }
         
-        if (totalPosition.magnitude == 0)
-        {
-            return Vector3.zero;
-        }
-        totalPosition /= m_PlayersToTrack.Length;
+        // if (totalPosition.magnitude == 0)
+        // {
+        //     return Vector3.zero;
+        // }
+        totalPosition /= m_PlayersToTrack.Count;
         
         return totalPosition;
     } 
@@ -155,14 +153,21 @@ public class c_Camera : MonoBehaviour
     
     
     
-    void OnDrawGizmosSelected()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
 
         Vector3 camPos = transform.position;
-
-        // camPos.z = transform.position.z + tempDepth;
        
+        float zOffset = tempDepth;
+        Camera cam = GetComponent<Camera>();
+        if (cam != null)
+        {
+            zOffset = cam.nearClipPlane;
+        }
+        camPos.z += zOffset;
+        
+        
         //Assume 16:9
         float width = m_XBuffer; /// 1920 / 0.615625f;
         float height = m_YBuffer; /// 1080 / 0.615625f;
@@ -170,6 +175,10 @@ public class c_Camera : MonoBehaviour
         // To be at screen boundary in 16:9:
         // Y buffer at 10
         // X Buffer at 17.75
+        
+        // When half boundary
+        // Y Buffer at 20
+        // X Buffer at 35.5
         
         // At 1080 x 1920
         // Y = 374
@@ -184,7 +193,7 @@ public class c_Camera : MonoBehaviour
         
         
         
-        #region BS - Manual Line Drawing
+        #region Manual Line Drawing
         
         // Center of the rectangle (important!)
         // Vector3 center = new Vector3(
