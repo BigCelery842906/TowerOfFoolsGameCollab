@@ -7,6 +7,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 
 public class PG_GridMap : MonoBehaviour
@@ -19,6 +20,9 @@ public class PG_GridMap : MonoBehaviour
     private int m_roomNumber = 1;
 
     private float m_worldScale = 1;
+
+    [NonSerialized]
+    public bool m_roomComplete = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -49,6 +53,7 @@ public class PG_GridMap : MonoBehaviour
             }
         }
     }
+    public float GetWorldScale() { return m_worldScale; }
     public Vector2 CalculateWorldPositionFromCoords(int x, int y)
     {
         Vector2 pos = new Vector2();
@@ -61,6 +66,19 @@ public class PG_GridMap : MonoBehaviour
     {
 
         return m_grid[cellW, cellH].m_worldPosition;
+    }
+    public List<PG_PlatformParent> GetNeighboursOfPlatform(int xCoord, int yCoord)
+    {
+        List<PG_PlatformParent> neighbours = new();
+        if (m_grid[xCoord - 1,yCoord].m_blockType != BLOCK_TYPE.NONE && m_grid[xCoord - 1, yCoord].m_blockType != BLOCK_TYPE.WALL)
+        {
+            neighbours.Add((PG_PlatformParent)m_grid[xCoord - 1, yCoord].m_contents.GetComponent<PG_PlatformParent>());
+        }
+        if (m_grid[xCoord + 1, yCoord].m_blockType != BLOCK_TYPE.NONE && m_grid[xCoord + 1, yCoord].m_blockType != BLOCK_TYPE.WALL)
+        {
+            neighbours.Add((PG_PlatformParent)m_grid[xCoord + 1, yCoord].m_contents.GetComponent<PG_PlatformParent>());
+        }
+        return neighbours;
     }
 
     void Start()
