@@ -11,6 +11,8 @@ public class p_PlayerPickupManager : MonoBehaviour
 {
     public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
 
+    public event Action OnShieldUsed; 
+
     public event Action<float> OnMaxJumpChange; //for the double jump pick up
     public event Action<float> OnStunStateChange; //for stun
 
@@ -53,6 +55,11 @@ public class p_PlayerPickupManager : MonoBehaviour
     {
         m_hasShield = shield;
         m_shieldLavaDis = lavaDisplacement;
+
+        if(!shield)
+        {
+            OnShieldUsed?.Invoke();
+        }
     }
 
     /// <summary>
@@ -107,7 +114,6 @@ public class p_PlayerPickupManager : MonoBehaviour
     //will wait for set seconds then invoke an action passing in the ususal value for it, check out double jumps/player movement to see how this works
     private IEnumerator C_Timer(float seconds, float baseValue, Action<float> InvokedActionInt)
     {
-        Debug.Log(InvokedActionInt);
         yield return new WaitForSeconds(seconds);
         InvokedActionInt?.Invoke(baseValue);
     }
