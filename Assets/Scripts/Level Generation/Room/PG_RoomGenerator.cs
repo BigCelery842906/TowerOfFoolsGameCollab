@@ -5,15 +5,9 @@
 //-------------------------------------
 
 
-using NUnit.Framework;
-using System;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class PG_RoomGenerator : MonoBehaviour
 {
@@ -60,10 +54,14 @@ public class PG_RoomGenerator : MonoBehaviour
         PG_GridMap roomGrid = room.GetComponent<PG_GridMap>();
         AddValuesToGrid(ref roomGrid);
         SpawnBlocksInGrid(ref roomGrid);
+        room.AddComponent<PG_Room>();
+        PG_Room roomScript = room.GetComponent<PG_Room>();
+        roomScript.SetGrids(m_grids);
         for (int i = 0; i < m_grids.Count; i++)
         {
             Destroy(m_grids[i]);
         }
+        room.GetComponent<PG_GridMap>().m_roomComplete = true;
         return room;
     }
     public GameObject GenerateGrid(int w, int h, float worldScale, int gridNumber)
@@ -115,7 +113,7 @@ public class PG_RoomGenerator : MonoBehaviour
                     Vector2 adjustedWorldPos;
                     adjustedWorldPos.x = grid.m_grid[w, h].m_worldPosition.x;
                     adjustedWorldPos.y = grid.m_grid[w, h].m_worldPosition.y + (roomGrid.m_grid[w, newHeight].m_worldPosition.y * g);
-                    roomGrid.m_grid[w, newHeight].SetWorldPos(new Vector2(w * m_worldScale, h * m_worldScale));
+                    roomGrid.m_grid[w, newHeight].SetWorldPos(new Vector2(w * m_worldScale, newHeight * m_worldScale));
                 }
 
             }
@@ -155,6 +153,10 @@ public class PG_RoomGenerator : MonoBehaviour
                 {
                     grid.m_grid[w, h].SetType(PG_GridMap.BLOCK_TYPE.NONE);
                 }
+                if(h == 0 && w == entrancePos)
+                {
+                    grid.m_grid[w, h].SetType(PG_GridMap.BLOCK_TYPE.NONE);
+                }
             }
         }
     }
@@ -182,7 +184,7 @@ public class PG_RoomGenerator : MonoBehaviour
             }
         }
     }
-    void SpawnBackGround(ref PG_GridMap grid)
+    public void SpawnBackGround(ref PG_GridMap grid)
     {
         PG_BackGround fab = m_regionOneBackgroundPool[0]; //first for testing
         if (!fab)
@@ -201,9 +203,12 @@ public class PG_RoomGenerator : MonoBehaviour
 
         GameObject backgroundObj = new GameObject("Background " + (grid.m_gridNumber + 1));
         PG_BackGround background = PG_BackGround.Instantiate(fab, this.transform.position + pos, this.transform.rotation);
+        backgroundObj.tag = "Background";
 
         background.transform.SetParent(backgroundObj.transform, false);
         background.ResizeMesh(gridWidth - (m_worldScale * 2), gridHeight);
+        background.m_width = gridWidth - (m_worldScale * 2);
+        background.m_height = gridHeight;
 
 
         background.transform.localScale = Vector3.one;
