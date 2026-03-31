@@ -78,7 +78,7 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(0.1f);
+            //Debug.Log(m_RB.linearVelocity.y);
 
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
@@ -89,8 +89,6 @@ public class p_PlayerMovement : MonoBehaviour
                 m_CapsuleCollider.material.staticFriction = m_staticFriction;
 
                 m_usedJumps = 0;
-
-                m_playerAnim.SetAnimJump(-1f);
             }
             else
             {
@@ -100,6 +98,33 @@ public class p_PlayerMovement : MonoBehaviour
                 m_CapsuleCollider.material.dynamicFriction = 0;
                 m_CapsuleCollider.material.staticFriction = 0;
             }
+
+            //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
+            if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
+            {
+                Physics.gravity = m_apexGrav;
+                //do a diff anim?
+            }
+            else
+            {
+                switch (m_RB.linearVelocity.y)
+                {
+                    case 0f:
+                        m_playerAnim.SetAnimJump(-1f);
+                        break;
+                    case < 0f:
+                        m_playerAnim.SetAnimJump(0.6f);
+                        Physics.gravity = m_highGrav;
+                        break;
+                    case > -0.1f:
+                        m_playerAnim.SetAnimJump(0.1f);
+                        break;
+                    default: break;
+                }
+            }            
+
+            yield return new WaitForSeconds(0.1f);
+
         }
     }
 
@@ -157,11 +182,9 @@ public class p_PlayerMovement : MonoBehaviour
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             m_isGrounded = false;
             Physics.gravity = m_lowGrav;
-
-            m_usedJumps++;
             m_playerAnim.SetAnimJump(0.1f);
 
-            StartCoroutine(C_JumpGrav());
+            m_usedJumps++;
         }
     }
 
@@ -171,25 +194,25 @@ public class p_PlayerMovement : MonoBehaviour
     }
 
     //runs after the player jumps 
-    private IEnumerator C_JumpGrav()
-    {
-        while (!m_isGrounded)
-        {
-            //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
-            if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
-            {
-                Physics.gravity = m_apexGrav;
-                //do a diff anim?
-            }
+    //private IEnumerator C_JumpGrav()
+    //{
+    //    while (!m_isGrounded)
+    //    {
+    //        //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
+    //        if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
+    //        {
+    //            Physics.gravity = m_apexGrav;
+    //            //do a diff anim?
+    //        }
 
-            if (m_RB.linearVelocity.y < 0f)
-            {
-                Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)                
-                m_playerAnim.SetAnimJump(0.5f);
-            }
-            yield return new WaitForFixedUpdate();
-        }
-    }
+    //        if (m_RB.linearVelocity.y < 0f)
+    //        {
+    //            Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)                
+    //        }
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //}
+
     private void SetMaxJumps(float max) { m_maxJumps = max;}
 
 
