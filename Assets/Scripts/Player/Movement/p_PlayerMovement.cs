@@ -126,6 +126,7 @@ public class p_PlayerMovement : MonoBehaviour
             Physics.gravity = m_lowGrav;
 
             m_usedJumps++;
+            m_playerAnim.SetAnimJump(0.1f);
 
             StartCoroutine(C_GroundedCheck());
         }
@@ -156,6 +157,8 @@ public class p_PlayerMovement : MonoBehaviour
 
                 m_usedJumps = 0;
 
+                m_playerAnim.SetAnimJump(-1f);
+
                 yield return new WaitForFixedUpdate();
                 //the coroutine is exited now since the bool is now true
             }
@@ -170,6 +173,7 @@ public class p_PlayerMovement : MonoBehaviour
             if (m_RB.linearVelocity.y < 0f)
             {
                 Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)                
+                m_playerAnim.SetAnimJump(0.5f);
             }
         }
     }
