@@ -9,6 +9,8 @@ public class BasePickup : MonoBehaviour
     protected p_PlayerPickupManager m_triggeredPlayer;
     protected p_PlayerPickupManager m_otherPlayer;
 
+    protected CapsuleCollider m_playerCollider;
+
     private void Awake()
     {
         m_triggeredPlayer = null;
@@ -35,6 +37,7 @@ public class BasePickup : MonoBehaviour
         if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
 
         m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
+        m_playerCollider ??= other.GetComponent<CapsuleCollider>();
 
         if(m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
 
