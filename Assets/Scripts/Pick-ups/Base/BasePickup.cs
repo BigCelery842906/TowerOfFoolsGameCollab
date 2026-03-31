@@ -74,7 +74,7 @@ public class BasePickup : MonoBehaviour
     }
 
     /// <summary>
-    /// Override this if needed, base destroys object
+    /// Override this if needed, base destroys object (if its not interactable) if its interactable it sets its new position
     /// </summary>
     protected virtual void PickedUp()
     {

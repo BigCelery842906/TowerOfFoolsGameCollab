@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class pu_SpringBoots : BasePickup
 {
+    [Tooltip("How long does the player go up for")]
     [SerializeField] private float m_boostTime;
 
+    [Tooltip("How strong the force applied upwards to the player is")]
     [SerializeField] private float m_boostStrength;
 
-    [SerializeField] private float m_timeInterval;
     private Rigidbody m_RB;
-
     private float m_elapsedTime = 0;
 
     protected override void PickupEffect()
