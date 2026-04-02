@@ -78,8 +78,6 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while(true)
         {
-            //Debug.Log(m_RB.linearVelocity.y);
-
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
@@ -87,6 +85,8 @@ public class p_PlayerMovement : MonoBehaviour
                 //players grounded so they should have friction again
                 m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
                 m_CapsuleCollider.material.staticFriction = m_staticFriction;
+
+                m_playerAnim.SetAnimJump(-1f);
 
                 m_usedJumps = 0;
             }
@@ -98,6 +98,9 @@ public class p_PlayerMovement : MonoBehaviour
                 m_CapsuleCollider.material.dynamicFriction = 0;
                 m_CapsuleCollider.material.staticFriction = 0;
             }
+
+            //this checks if the player is grounded, if they are it doesnt run any of the code for the jumping
+            if (m_isGrounded) { yield return new WaitForSeconds(0.1f); continue; }
 
             //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
             if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
@@ -112,7 +115,7 @@ public class p_PlayerMovement : MonoBehaviour
                     case 0f:
                         m_playerAnim.SetAnimJump(-1f);
                         break;
-                    case < 0f:
+                    case < -1f:
                         m_playerAnim.SetAnimJump(0.6f);
                         Physics.gravity = m_highGrav;
                         break;
@@ -121,10 +124,8 @@ public class p_PlayerMovement : MonoBehaviour
                         break;
                     default: break;
                 }
-            }            
-
+            }
             yield return new WaitForSeconds(0.1f);
-
         }
     }
 

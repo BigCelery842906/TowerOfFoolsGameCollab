@@ -41,6 +41,9 @@ public class BasePickup : MonoBehaviour
 
         if(m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
 
+        //player is already holding a pickup and i dont think they need a second one >:c
+        if(m_triggeredPlayer.GetPlayerHoldingPickup()) { return; }
+
         m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
 
         if (m_triggeredPlayer.CompareTag("Player1"))
@@ -54,6 +57,7 @@ public class BasePickup : MonoBehaviour
             m_otherPlayer = m_playerOne;
         }
 
+        m_triggeredPlayer.SetPlayerHoldingPickup(true);
         PickupEffect();     
     }
 
@@ -90,8 +94,12 @@ public class BasePickup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Should be called after the pickup does its effect, it tells the pickup manager that the players not holding a pickup and deletes the pickup
+    /// </summary>
     protected void PickupUsed()
     {
+        m_triggeredPlayer.SetPlayerHoldingPickup(false);
         Destroy(gameObject);
     }
 

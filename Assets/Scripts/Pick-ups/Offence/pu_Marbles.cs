@@ -15,5 +15,6 @@ public class pu_marbles : BasePickup
     protected override void InteractedPickupEffect()
     {
         Instantiate(m_marbelPrefab, m_triggeredPlayer.GetFiringPlayerPosPPM().position, m_triggeredPlayer.transform.rotation);
+        PickupUsed();
     }
 }

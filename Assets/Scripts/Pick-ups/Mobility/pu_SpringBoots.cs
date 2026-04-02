@@ -40,6 +40,6 @@ public class pu_SpringBoots : BasePickup
         m_RB.useGravity = true;
 
         //boost used so now we can destroy the boots
-        Destroy(gameObject);
+        PickupUsed();
     }
 }
