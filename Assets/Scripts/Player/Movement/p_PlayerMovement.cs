@@ -194,28 +194,7 @@ public class p_PlayerMovement : MonoBehaviour
         Physics.gravity = m_highGrav;
     }
 
-    //runs after the player jumps 
-    //private IEnumerator C_JumpGrav()
-    //{
-    //    while (!m_isGrounded)
-    //    {
-    //        //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
-    //        if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
-    //        {
-    //            Physics.gravity = m_apexGrav;
-    //            //do a diff anim?
-    //        }
-
-    //        if (m_RB.linearVelocity.y < 0f)
-    //        {
-    //            Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)                
-    //        }
-    //        yield return new WaitForSeconds(0.1f);
-    //    }
-    //}
-
     private void SetMaxJumps(float max) { m_maxJumps = max;}
-
 
     public bool GetPlayerGrouned() { return m_isGrounded; } 
     #endregion

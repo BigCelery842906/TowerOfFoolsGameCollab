@@ -10,6 +10,8 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
     [Tooltip("How far should the other player be pushed back, 10 is ok?")]
     [SerializeField] private float m_knockbackForce;
 
+    [SerializeField] private Transform m_attackPoint;
+
     private p_PlayerPickupManager m_pickupManager;
     private Rigidbody m_RB;
 

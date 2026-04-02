@@ -43,7 +43,6 @@ public class p_PlayerPickupManager : MonoBehaviour
     public void UseInteractablePickup()
     {
         OnUseInteractablePickup?.Invoke();
-        m_hasInteractablePickup = false ;
     }
 
 

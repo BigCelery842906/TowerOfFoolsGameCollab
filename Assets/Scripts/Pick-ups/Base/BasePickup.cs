@@ -18,18 +18,20 @@ public class BasePickup : MonoBehaviour
         //grabbing refs to our players
         foreach(p_PlayerPickupManager player in Resources.FindObjectsOfTypeAll(typeof(p_PlayerPickupManager)))
         {
-            if(m_playerOne == player || m_playerTwo == player) { continue; } //prevents assigning them / checking tags if the player refs are already assinged
+            //if(m_playerOne == player || m_playerTwo == player) { continue; } //prevents assigning them / checking tags if the player refs are already assinged
 
-            if (player.gameObject.CompareTag("Player1"))
+            if (player.gameObject.CompareTag("Player0"))
             {
                 m_playerOne = player;
-
             }
             else
             {
                 m_playerTwo = player;
             }
-        }        
+        }
+
+        //Debug.Log("player one " +  m_playerOne.gameObject.name);
+        //Debug.Log("player two " +  m_playerTwo.gameObject.name);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,7 +48,7 @@ public class BasePickup : MonoBehaviour
 
         m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
 
-        if (m_triggeredPlayer.CompareTag("Player1"))
+        if (m_triggeredPlayer.CompareTag("Player0"))
         {
             //PlayerOne Triggered it
             m_otherPlayer = m_playerTwo;
@@ -100,6 +102,7 @@ public class BasePickup : MonoBehaviour
     protected void PickupUsed()
     {
         m_triggeredPlayer.SetPlayerHoldingPickup(false);
+        m_triggeredPlayer.SetIsInteractablePickup(false,this);
         Destroy(gameObject);
     }
 

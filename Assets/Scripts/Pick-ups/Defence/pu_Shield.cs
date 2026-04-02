@@ -22,6 +22,6 @@ public class pu_Shield : BasePickup
     private void ShieldUsed()
     {
         m_triggeredPlayer.OnShieldUsed -= ShieldUsed;
-        Destroy(gameObject);
+        PickupUsed();
     }
 }
