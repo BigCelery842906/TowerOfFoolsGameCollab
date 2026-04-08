@@ -7,13 +7,13 @@ public class c_Camera : MonoBehaviour
 {
     
     // Camera Plan for Script
-    //     Average Position -
+    //     Average Position - TODO: DONE
     //          If all active players are within the average boundary, then track average position
     //
     //          If a player is outside the boundary, then zoom the camera out to put both players
     //          inside the boundary, up to a specified value.
     //
-    //     Zoomed and tracking Furthest Player -
+    //     Zoomed and tracking Furthest Player - TODO: Need to Implement the lava component x distance below the camera.
     //          If the specified value is reached, then prioritise the top player.
     //          Keep this top player within the top buffer of the camera, so they can always see
     //          the next platform they need to jump to.
@@ -21,7 +21,7 @@ public class c_Camera : MonoBehaviour
     //          If the bottom player falls too far out of camera, have a lava object below it (0 speed)
     //          - Can set this dynamically based on the max zoom value
     //
-    //     Zoomed and returning to average -
+    //     Zoomed and returning to average - TODO: All of this part
     //          If zoomed out, but then only one player becomes active,
     //          lerp to being zoomed in on the average position
 
@@ -51,11 +51,21 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private float cameraZoom = 5f;
     [SerializeField] private float minCameraZoom = 5f;
     [SerializeField] private float maxCameraZoom = 30f;
+    [SerializeField] private float desiredCameraZoom = 5f;
     //Might need a float for desired X and Y zoom, then take max from that.
+    [SerializeField] private float camHeight;
+    [SerializeField] private float camWidth;
 
 
+    [Header("Dead Zone Values")] 
+    [SerializeField] private float deadZoneHeight;
+    [SerializeField] private float deadZoneWidth;
+    
     [SerializeField] private float yBufferScale = 2.5f;
     private Bounds playerBounds;
+    
+    
+    
     
     
     
@@ -96,8 +106,7 @@ public class c_Camera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
+        
         m_ActivePlayers.Clear();
         for (int i = 0; i < m_PlayersToTrack.Count; i++)
         {
@@ -113,6 +122,12 @@ public class c_Camera : MonoBehaviour
         {
             playerBounds.Encapsulate(m_ActivePlayers[i].transform.position);
         }
+
+        camHeight = _camera.orthographicSize * 2;
+        camWidth = camHeight * _camera.aspect;
+
+        deadZoneHeight = camHeight - (m_YBuffer * 2f);
+        deadZoneWidth = camWidth - (m_XBuffer * 2f);
 
         #region playerBounds MinMax - Doesn't work 100% of time
         //Doesn't work due to sometimes player 1 is not the min, instead player 2 is the min, which means it doesn't work properly
@@ -130,56 +145,66 @@ public class c_Camera : MonoBehaviour
         // }
         #endregion
 
+        if (desiredCameraZoom < maxCameraZoom)
+        {
+            CalculateCameraPosition();
+            
+        }
+        else
+        {
+            FollowHighestPlayer();
+            
+        }
+        
         CalculateCameraZoom();
 
-
-        Vector3 camPos = transform.position;
-
-        Vector3 avg = returnAveragePosition();
-
-
-        highestYPos = float.MinValue;
-
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
-        {
-            float Yposition = m_ActivePlayers[i].transform.position.y;
-
-            if (Yposition > highestYPos)
-            {
-                highestYPos = Yposition;
-                furthestPlayer = i;
-            }
-        }
-
-        float avgYPos = avg.y;
-
-        trackingAverage = true;
-        camPos.y = avgYPos;
-
-
-        Debug.Log("Furthest player on Y axis is:" + furthestPlayer);
-
-        furthestXPos = float.MinValue;
-
-
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
-        {
-            float XPosition = m_ActivePlayers[i].transform.position.x;
-
-            if (XPosition > furthestXPos)
-            {
-                furthestXPos = XPosition;
-                furthestPlayer = i;
-            }
-        }
-
-
-        float avgXPos = avg.x;
-        camPos.x = avgXPos;
-
-        Debug.Log("Furthest player on X axis is:" + furthestPlayer);
-
-        transform.position = camPos;
+        // Vector3 camPos = transform.position;
+        //
+        // Vector3 avg = returnAveragePosition();
+        //
+        //
+        // highestYPos = float.MinValue;
+        //
+        // for (int i = 0; i < m_ActivePlayers.Count; i++)
+        // {
+        //     float Yposition = m_ActivePlayers[i].transform.position.y;
+        //
+        //     if (Yposition > highestYPos)
+        //     {
+        //         highestYPos = Yposition;
+        //         furthestPlayer = i;
+        //     }
+        // }
+        //
+        // float avgYPos = avg.y;
+        //
+        // trackingAverage = true;
+        // camPos.y = avgYPos;
+        //
+        //
+        // Debug.Log("Furthest player on Y axis is:" + furthestPlayer);
+        //
+        // furthestXPos = float.MinValue;
+        //
+        //
+        // for (int i = 0; i < m_ActivePlayers.Count; i++)
+        // {
+        //     float XPosition = m_ActivePlayers[i].transform.position.x;
+        //
+        //     if (XPosition > furthestXPos)
+        //     {
+        //         furthestXPos = XPosition;
+        //         furthestPlayer = i;
+        //     }
+        // }
+        //
+        //
+        // float avgXPos = avg.x;
+        // camPos.x = avgXPos;
+        //
+        // Debug.Log("Furthest player on X axis is:" + furthestPlayer);
+        //
+        // transform.position = camPos;
 
 
         #region commented
@@ -265,27 +290,158 @@ public class c_Camera : MonoBehaviour
         return totalPosition;
     }
 
+    // Calculate the camera position, based on the average of all active players.
+    // This should be used until the camera is fully zoomed out, at which point the highest player tracking should kick into effect.
+    void CalculateCameraPosition()
+    {
+        Vector3 camPos = transform.position;
+        
+        float left = camPos.x - deadZoneWidth / 2f;
+        float right = camPos.x + deadZoneWidth / 2f;
+        float top = camPos.y + deadZoneHeight / 2f;
+        float bottom = camPos.y - deadZoneHeight / 2f;
+
+        Vector3 newCamPos = camPos;
+
+        for (int i = 0; i < m_ActivePlayers.Count; i++)
+        {
+            Vector3 playerPosition =  m_ActivePlayers[i].transform.position;
+
+            if (playerPosition.x < left)
+            {
+                newCamPos.x += playerPosition.x - left;
+            }
+            else if (playerPosition.x > right)
+            {
+                newCamPos.x += playerPosition.x - right;
+            }
+
+            if (playerPosition.y > top)
+            {
+                newCamPos.y += playerPosition.y - top;
+            }
+            else if (playerPosition.y < bottom)
+            {
+                newCamPos.y += playerPosition.y - bottom;
+            }
+        }
+        
+        transform.position = new Vector3(newCamPos.x, newCamPos.y, transform.position.z);
+    }
+
+    void FollowHighestPlayer()
+    {
+        //Rewrite this logic, something isn't going right here, causing unnecessary jitter
+
+        highestYPos = float.MinValue;
+        int highestPlayer = -1;
+        for (int i = 0; i < m_ActivePlayers.Count; i++)
+        {
+            float playerYPos = m_ActivePlayers[i].transform.position.y;
+
+            if (playerYPos > highestYPos)
+            {
+                highestYPos = playerYPos;
+                highestPlayer = i;
+            }
+        }
+
+        if (highestPlayer == -1) // Essentially a null check
+        {
+            return;
+        }
+
+        Vector3 camPos = transform.position;
+        Vector3 newCamPos = camPos;
+        float top = camPos.y + deadZoneHeight / 2f;
+
+        newCamPos.y += highestYPos - top;
+
+
+        transform.position = newCamPos;
+
+
+
+
+
+
+        #region Old Logic
+
+        // Vector3 camPos = transform.position;
+        //
+        // float top = camPos.y + deadZoneHeight / 2f;
+        // Vector3 newCamPos = camPos;
+        //
+        // // transform.position = new Vector3(newCamPos.x, newCamPos.y, transform.position.z);
+        //
+        //
+        // float totalYPosition = 0f;
+        // float furthestYPosition = float.MinValue;
+        // int furthestTurtle = furthestPlayer;
+        // for (int i = 0; i < m_ActivePlayers.Count; i++)
+        // {
+        //     float turtleYposition = m_ActivePlayers[i].transform.position.y;
+        //     totalYPosition += turtleYposition;
+        //
+        //     if (turtleYposition > furthestYPosition)
+        //     {
+        //         furthestYPosition = turtleYposition;
+        //         furthestTurtle = i;
+        //     }
+        // }
+        //
+        // float averageYPosition = totalYPosition / m_ActivePlayers.Count;
+        //
+        // if (furthestYPosition - averageYPosition > m_YBuffer)
+        // {
+        //     transform.position = new Vector3(transform.position.x,
+        //         furthestYPosition - top, transform.position.z);
+        // }
+        // // else
+        // // {
+        // //     transform.position =
+        // //         new Vector3(averageXPosition, transform.position.y, transform.position.z);
+        // // }
+
+        #endregion
+
+    }
+
     void CalculateCameraZoom()
     {
-        float requiredHeight = float.MinValue;
-        float dynamicTVal = 10f;
-        float dynamicYBuffer = Mathf.Lerp(0f, m_YBuffer, playerBounds.size.y / dynamicTVal);
-        requiredHeight = Mathf.Abs(playerBounds.size.y / 2f + dynamicYBuffer);
+        // float requiredHeight = float.MinValue;
+        // float dynamicTVal = 10f;
+        // float dynamicYBuffer = Mathf.Lerp(0f, m_YBuffer, playerBounds.size.y / dynamicTVal);
+        // requiredHeight = Mathf.Abs(playerBounds.size.y / 2f + dynamicYBuffer);
+        //
+        // float requiredWidth = Mathf.Abs(playerBounds.size.x / 2f + m_XBuffer) / _camera.aspect;
+        //
+        // float requiredSize = Mathf.Max(requiredHeight, requiredWidth);
+        //
+        // //Scaled Buffers
+        //
+        // cameraZoom = Mathf.Clamp(requiredSize, minCameraZoom, maxCameraZoom);
+        //
+        // _camera.orthographicSize = cameraZoom;
+        //
+        // scaledXbuffer = m_XBuffer * cameraZoom / 5f; //Buffers are calibrated to be with 5 zoom
+        // scaledYbuffer = m_YBuffer * cameraZoom / 5f; //Buffers are calibrated to be with 5 zoom
+        
+        // Recalculate bounds AFTER camera adjustment
+        playerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
+        foreach (var p in m_ActivePlayers)
+            playerBounds.Encapsulate(p.transform.position);
 
-        
-        
-        float requiredWidth = Mathf.Abs(playerBounds.size.x / 2f + m_XBuffer) / _camera.aspect;
+        float requiredHeight = playerBounds.size.y / 2f + m_YBuffer;
+        float requiredWidth  = (playerBounds.size.x / 2f + m_XBuffer) / _camera.aspect;
 
-        float requiredSize = Mathf.Max(requiredHeight, requiredWidth);
-        
-        //Scaled Buffers
-        
-        cameraZoom = Mathf.Clamp(requiredSize, minCameraZoom, maxCameraZoom);
-        
-        _camera.orthographicSize = cameraZoom;
-        
-        scaledXbuffer = m_XBuffer * cameraZoom / 5f; //Buffers are calibrated to be with 5 zoom
-        scaledYbuffer = m_YBuffer * cameraZoom / 5f; //Buffers are calibrated to be with 5 zoom
+        desiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
+
+// Only zoom out if necessary
+        // if (requiredSize > _camera.orthographicSize)
+        // {
+            _camera.orthographicSize = Mathf.Clamp(desiredCameraZoom, minCameraZoom, maxCameraZoom);
+        // }
     }
     
     
