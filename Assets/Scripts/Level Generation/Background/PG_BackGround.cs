@@ -9,10 +9,13 @@ using UnityEngine;
 
 public class PG_BackGround : MonoBehaviour
 {
+    public float m_width = 0;
+    public float m_height = 0;
+    public Material m_bGMat;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        SetMaterial();
     }
 
     // Update is called once per frame
@@ -22,15 +25,17 @@ public class PG_BackGround : MonoBehaviour
     }
     public void ResizeMesh(float w, float h)
     {
+        m_width = w;
+        m_height = h;
         MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
         Mesh mesh = new();
 
         Vector3[] verts = new Vector3[4]
         {
-            new Vector3(- w * 0.5f, - h * 0.5f, 0), //bottom left
-            new Vector3(w * 0.5f, - h * 0.5f, 0), // bottom right
-            new Vector3(- w * 0.5f, h * 0.5f, 0), //top left
-            new Vector3(w * 0.5f, h * 0.5f, 0) // top right
+            new Vector3(- m_width * 0.5f, - m_height * 0.5f, 0), //bottom left
+            new Vector3(m_width * 0.5f, - m_height * 0.5f, 0), // bottom right
+            new Vector3(- m_width * 0.5f, m_height * 0.5f, 0), //top left
+            new Vector3(m_width * 0.5f, m_height * 0.5f, 0) // top right
         };
         mesh.vertices = verts;
 
@@ -54,5 +59,9 @@ public class PG_BackGround : MonoBehaviour
         };
         mesh.uv = uv;
         meshFilter.mesh = mesh;
+    }
+    void SetMaterial()
+    {
+        if(m_bGMat != null)  GetComponent<Renderer>().material = m_bGMat;
     }
 }

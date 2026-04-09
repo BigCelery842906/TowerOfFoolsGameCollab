@@ -69,7 +69,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -151,8 +151,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PlayersToTrack: []
-  m_TopBuffer: 50
-  m_BottomBuffer: 50
-  m_LeftBuffer: 50
-  m_RightBuffer: 50
-  furthestPlayer: -1
+  m_ActivePlayers: []
+  trackingAverage: 1
+  m_YBuffer: 0.2
+  m_XBuffer: 0.15
+  tempDepth: 0.3
+  highestYPos: -3.4028235e+38
+  furthestXPos: -3.4028235e+38
+  cameraZoom: 5
+  minCameraZoom: 5
+  maxCameraZoom: 30
+  desiredCameraZoom: 5
+  camHeight: 0
+  camWidth: 0
+  deadZoneHeight: 6
+  deadZoneWidth: 12.45
+  xBufferWorld: 2.67
+  yBufferWorld: 2
