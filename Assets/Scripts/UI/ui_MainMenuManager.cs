@@ -18,8 +18,8 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     protected override void InitialiseMenuManager()
     {
         BindButton("play-btn", HandleButtonClicked_Play);
-        BindButton("play-scoreboard", HandleButtonClicked_Scoreboard);
-        BindButton("play-quit", HandleButtonClicked_Quit);
+        BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
+        BindButton("quit-btn", HandleButtonClicked_Quit);
     }
 
     private void HandleButtonClicked_Play()
