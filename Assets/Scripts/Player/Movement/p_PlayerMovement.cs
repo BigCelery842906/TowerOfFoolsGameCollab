@@ -23,6 +23,11 @@ public class p_PlayerMovement : MonoBehaviour
     [Tooltip("You shouldn't need to touch this, this is where the grounded check for the jump is coming from")]
     [SerializeField] private Transform m_groundCheckTransform; //gives us more control over where the ground check is coming from, should be useful once theres a mesh in the game <3
 
+    [Tooltip("Oh my you put the ground layer here, it should say ground :D")]
+    [SerializeField] private LayerMask m_groundLayer;
+
+    private p_PlayerPickupManager m_PlayerPickupManager;
+    private p_playerAnimControl m_playerAnim;
     private Rigidbody m_RB;
     private CapsuleCollider m_CapsuleCollider;
 
@@ -32,6 +37,8 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the movement coroutine <3
 
+    private float m_maxJumps; //set in pc at start to one, then controlled by pickups through pc
+    private int m_usedJumps; //inc for each jump player maxs until reaches max
     private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
     private Vector3 m_lowGrav;    
     private Vector3 m_apexGrav;    
@@ -39,6 +46,17 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
+        if(m_PlayerPickupManager != null) 
+        {
+            m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
+
+            m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
+            m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+        }
+
+        m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
+
         m_RB = GetComponent<Rigidbody>();
         m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
@@ -56,19 +74,19 @@ public class p_PlayerMovement : MonoBehaviour
     {
         m_moveDir = new Vector2(direction.x, 0);
 
-
         if(m_moveDir == Vector2.zero)
         {
-            m_shouldMove = false;
+            m_shouldMove = false;            
         }
         else
         {
             transform.rotation = Quaternion.LookRotation(m_moveDir);
 
             m_shouldMove = true;
-            StartCoroutine(C_Move());
-            
+            StartCoroutine(C_Move());            
         }
+
+        m_playerAnim.SetAnimMove(m_shouldMove);
     }
 
     /// <summary>
@@ -77,6 +95,7 @@ public class p_PlayerMovement : MonoBehaviour
     /// <returns></returns>
     private IEnumerator C_Move()
     {
+        if(m_moveSpeed <= 0f) { yield return new WaitForFixedUpdate(); }
         while(m_shouldMove)
         {
             Vector3 velocity = new Vector3(m_moveDir.x, 0f, m_moveDir.y) * m_moveSpeed; 
@@ -86,20 +105,27 @@ public class p_PlayerMovement : MonoBehaviour
         }
     }
 
+    private void SetMoveSpeed(float newSpeed)
+    {
+        m_moveSpeed = newSpeed;
+    }
+
     #region Jump Stuff
     //This does normal jump stuff based on input but also handels variable jump height where the player falls faster once they let go of space 
     //The player also hangs at their apex for a little bit longer than normal too
 
     //All done for game feel since this is a platformer
-
     public void Jump()
     {
-        //if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
-        if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
+        if(m_moveSpeed <= 0) { return; }//prevents player jumping while stunned
+
+        if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f) || m_usedJumps < m_maxJumps)
         {
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             m_isGrounded = false;
             Physics.gravity = m_lowGrav;
+
+            m_usedJumps++;
 
             StartCoroutine(C_GroundedCheck());
         }
@@ -113,23 +139,26 @@ public class p_PlayerMovement : MonoBehaviour
     //runs after the player jumps 
     private IEnumerator C_GroundedCheck()
     {
+        //Having this set to 0 means the player cant run into a wall while jumping and get stuck
+        m_CapsuleCollider.material.dynamicFriction = 0;
+        m_CapsuleCollider.material.staticFriction = 0;
+
         while (!m_isGrounded)
         {
-            yield return new WaitForSeconds(0.1f); //delays it so its not insta set to true whoops
+            yield return new WaitForSeconds(0.1f); //delays it so its not insta set to true whoops            
 
-            //Having this set to 0 means the player cant run into a wall while jumping and get stuck
-            m_CapsuleCollider.material.dynamicFriction = 0;
-            m_CapsuleCollider.material.staticFriction = 0;
-
-            if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f))
+            if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
+
                 m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
                 m_CapsuleCollider.material.staticFriction = m_staticFriction;
 
+                m_usedJumps = 0;
+
                 yield return new WaitForFixedUpdate();
                 //the coroutine is exited now since the bool is now true
-            }            
+            }
 
             //the peak of the jump so the player can hang in mid air for a second (a forgiveness mechanic)
             if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
@@ -139,10 +168,13 @@ public class p_PlayerMovement : MonoBehaviour
 
             if (m_RB.linearVelocity.y < 0f)
             {
-                Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)
-                
+                Physics.gravity = m_highGrav; //fixes an edge case where the player could hold jump then fall off ledges with lower gravity (IDK y they would do this but they can't now at least)                
             }
         }
     }
+    private void SetMaxJumps(float max) { m_maxJumps = max;}
+
+
+    public bool GetPlayerGrouned() { return m_isGrounded; } 
     #endregion
 }
