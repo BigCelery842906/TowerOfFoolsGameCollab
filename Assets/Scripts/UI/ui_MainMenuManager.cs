@@ -5,9 +5,10 @@ using UnityEngine.UIElements;
 
 public class ui_MainMenuManager : ui_BaseMenuManager
 {
-    [Header("Gameplay Level Settings")]
+    [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
     
+    [Header("Level Settings - Gameplay Scene")]
     [Tooltip("This value will only be taken into account if 'Use Scene Build Index' is true.")]
     [SerializeField] private int m_sceneBuildIndex;
     
