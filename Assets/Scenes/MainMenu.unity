@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73409e8b526bf9d41ad2ecf9558c16aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uiMainMenuDocument: {fileID: 1845819536}
+  m_uiDocument: {fileID: 1845819536}
   m_useSceneBuildIndex: 1
   m_sceneBuildIndex: 1
   m_sceneName: TestingScene
@@ -324,8 +324,8 @@ Camera:
   m_GameObject: {fileID: 1740613107}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.26165897, g: 0.30665323, b: 0.3773585, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

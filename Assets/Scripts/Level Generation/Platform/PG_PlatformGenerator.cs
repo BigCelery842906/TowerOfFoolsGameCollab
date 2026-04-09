@@ -5,12 +5,12 @@
 //-------------------------------------
 
 
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static PG_RoomGenerator;
+
 
 public class PG_PlatformGenerator : MonoBehaviour
 {
@@ -35,12 +35,29 @@ public class PG_PlatformGenerator : MonoBehaviour
     [SerializeField]
     List<PG_PlatformEnd> m_ends;
 
+    [HideInInspector]
+    public PG_PlatformMiddle m_middleToSpawn;
+    [HideInInspector]
+    public PG_PlatformEnd m_endToSpawn;
+    [HideInInspector]
+    public int m_xSpawnLocation = 1;
+    [HideInInspector]
+    public int m_ySpawnLocation = 1;
+    [HideInInspector]
+    public int m_platformSpawnSize = 1;
+    [HideInInspector]
+    public PG_GridMap m_currentGrid;
+    [HideInInspector]
+    GameObject m_currentRoom = null;
+
     public PLATFORM_GENERATION_METHOD m_platformGenMethod = PLATFORM_GENERATION_METHOD.NONE;
     private float m_scale;
 
     public void GeneratePlatforms(GameObject room, float worldScale)
     {
         m_scale = worldScale;
+        m_currentGrid = room.GetComponent<PG_GridMap>();
+        m_currentRoom = room;
         switch (m_platformGenMethod)
         {
             case PLATFORM_GENERATION_METHOD.NONE:
@@ -101,7 +118,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                     maxSteps = UnityEngine.Random.Range(m_minPlatformRandomXStep, m_maxPlatformRandomXStep);
                 }
                 else maxSteps = m_DesiredPlatformXStep;
-                    int x = UnityEngine.Random.Range(0 + maxSteps + 1, grid.m_width - maxSteps - 1);
+                int x = UnityEngine.Random.Range(0 + maxSteps + 1, grid.m_width - maxSteps - 1);
                 bool platformFinished = false;
                 Change change = new Change();
                 change.x = x;
@@ -125,7 +142,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                     changeLeft.y = h;
                     changeRight.y = h;
                     xSize += 2;
-                    if(xSize >= 1 + (maxSteps * 2))
+                    if (xSize >= 1 + (maxSteps * 2))
                     {
                         platformFinished = true;
                         changeLeft.blockType = PG_GridMap.BLOCK_TYPE.PLATFORM_END;
@@ -154,6 +171,7 @@ public class PG_PlatformGenerator : MonoBehaviour
     void CommitChanges(List<Change> changes, GameObject room)
     {
         PG_GridMap grid = room.GetComponent<PG_GridMap>();
+
         for (int i = 0; i < changes.Count; i++)
         {
 
@@ -175,8 +193,10 @@ public class PG_PlatformGenerator : MonoBehaviour
                     PG_PlatformMiddle middlePlatform = PG_PlatformMiddle.Instantiate(middleFab, this.transform.position + coords, this.transform.rotation);
                     middlePlatform.name = "Platform " + i;
                     grid.m_grid[x, y].SetContents(middlePlatform.gameObject);
+                    grid.m_grid[x, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
                     middlePlatform.transform.localScale = Vector3.one * m_scale;
                     middlePlatform.transform.SetParent(grid.gameObject.transform, false);
+                    middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
                     break;
                 case PG_GridMap.BLOCK_TYPE.PLATFORM_END:
                     if (m_ends.Count == 0)
@@ -189,9 +209,12 @@ public class PG_PlatformGenerator : MonoBehaviour
                     PG_PlatformEnd endPlatform = PG_PlatformEnd.Instantiate(endFab, this.transform.position + coords, this.transform.rotation);
                     endPlatform.name = "Platform " + i;
                     grid.m_grid[x, y].SetContents(endPlatform.gameObject);
+                    grid.m_grid[x, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_END);
                     endPlatform.transform.localScale = Vector3.one * m_scale;
                     endPlatform.transform.SetParent(grid.gameObject.transform, false);
+                    endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
                     break;
+
                 default:
                     Debug.Log("Error, tried to commit bad platform spawn");
                     break;
@@ -199,6 +222,82 @@ public class PG_PlatformGenerator : MonoBehaviour
 
 
         }
+
+    }
+    /// <summary>
+    /// Spawns platform from left most point
+    /// </summary>
+    public void SpawnPlatformAtCoords(int x, int y, int size)
+    {
+        PG_GridMap roomGrid = m_currentRoom.GetComponent<PG_GridMap>();
+        if (!roomGrid)
+        {
+            Debug.Log("Can't spawn platform, no grid attached to room");
+            return;
+        }
+        if ((x >= roomGrid.m_width && x < 1) || (y >= roomGrid.m_height && y < 1))
+        {
+            Debug.Log("Can't spawn platform, spawn location not valid");
+            return;
+        }
+        if (x + size >= roomGrid.m_width)
+        {
+            Debug.Log("Can't spawn platform, Would overlap wall");
+            return;
+        }
+        //loop though and check if platforms overlap
+        for (int i = 0; i < size; i++)
+        {
+            PG_GridMap.Cell currentCell = roomGrid.m_grid[x + i, y];
+            if (currentCell.m_blockType != PG_GridMap.BLOCK_TYPE.NONE)
+            {
+                Debug.Log("Can't spawn platform, overlapping other platform");
+                return;
+            }
+        }
+        PG_PlatformEnd endFab = m_endToSpawn;
+        PG_PlatformMiddle middleFab = m_middleToSpawn;
+
+
+        if (!endFab)
+        {
+            int choice = UnityEngine.Random.Range(0, m_middles.Count);
+            endFab = m_ends[choice];
+        }
+        if (!middleFab)
+        {
+            int choice = UnityEngine.Random.Range(0, m_middles.Count);
+            middleFab = m_middles[choice];
+        }
+        for (int i = 0; i < size; i++)
+        {
+            
+            if(i == 0 || i == size -1)
+            {
+                Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + i, y);
+                PG_PlatformEnd endPlatform = PG_PlatformEnd.Instantiate(endFab, this.transform.position + coords, this.transform.rotation);
+                endPlatform.name = "Platform " + i;
+                roomGrid.m_grid[x + i, y].SetContents(endPlatform.gameObject);
+                roomGrid.m_grid[x + i, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_END);
+                //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_END}");
+                endPlatform.transform.localScale = Vector3.one * m_scale;
+                endPlatform.transform.SetParent(roomGrid.gameObject.transform, false);
+                endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
+            }
+            else
+            {
+                Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + i, y);
+                PG_PlatformMiddle middlePlatform = PG_PlatformMiddle.Instantiate(middleFab, this.transform.position + coords, this.transform.rotation);
+                middlePlatform.name = "Platform " + i;
+                roomGrid.m_grid[x +i, y].SetContents(middlePlatform.gameObject);
+                roomGrid.m_grid[x + i, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
+                //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE}");
+                middlePlatform.transform.localScale = Vector3.one * m_scale;
+                middlePlatform.transform.SetParent(roomGrid.gameObject.transform, false);
+                middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
+            }
+        }
+
     }
     public enum PLATFORM_GENERATION_METHOD
     {
@@ -213,4 +312,5 @@ public class PG_PlatformGenerator : MonoBehaviour
         public PG_GridMap.BLOCK_TYPE blockType;
     }
 }
+
 
