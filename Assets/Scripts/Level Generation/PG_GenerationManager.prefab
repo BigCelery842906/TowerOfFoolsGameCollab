@@ -50,7 +50,10 @@ MonoBehaviour:
   m_desiredChunkWidth: 16
   m_desiredChunkHeight: 9
   m_chunksPerRoom: 5
+  m_chunkSizeMultiplier: 1
   m_currentRoom: {fileID: 0}
+  m_spawnPowerups: 0
+  m_powerupSpawnChance: 0
   m_worldScale: 1
 --- !u!114 &4235117051892316211
 MonoBehaviour:
@@ -68,7 +71,11 @@ MonoBehaviour:
   - {fileID: 4495331142956246009, guid: 80187394dd1a1b9478437b906a492a2f, type: 3}
   m_regionOneBlockPool: []
   m_regionOneBackgroundPool:
-  - {fileID: 689665274087819324, guid: f440607545d1bf0479f127d7c84a5b78, type: 3}
+  - {fileID: 689665274087819324, guid: b5592c98e4532c94e87f42cf0d8a54fc, type: 3}
+  - {fileID: 689665274087819324, guid: 056dd568cbee3bb41806c319df7e79d8, type: 3}
+  - {fileID: 689665274087819324, guid: de4d5a509df1bc6488139161906e3704, type: 3}
+  - {fileID: 689665274087819324, guid: b9ae77b604085964b8f34b9d45ec0e4e, type: 3}
+  - {fileID: 689665274087819324, guid: c2d4940d670c8884ab5aa69fab6d45af, type: 3}
   m_nextRoomEntrance: 2
   m_previousRoomExit: 2147483647
 --- !u!114 &5043704889533043654
@@ -94,6 +101,12 @@ MonoBehaviour:
   - {fileID: 219155375013138608, guid: e83be5e0dce13fe49afe415e9b3aebc9, type: 3}
   m_ends:
   - {fileID: 4354099230181445210, guid: becfc65c7e42500468ddecc7b93506ae, type: 3}
+  m_middleToSpawn: {fileID: 0}
+  m_endToSpawn: {fileID: 0}
+  m_xSpawnLocation: 1
+  m_ySpawnLocation: 1
+  m_platformSpawnSize: 1
+  m_currentGrid: {fileID: 0}
   m_platformGenMethod: 2
 --- !u!114 &6849143609539218465
 MonoBehaviour:

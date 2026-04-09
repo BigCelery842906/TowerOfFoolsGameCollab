@@ -11,10 +11,11 @@ public class PG_BackGround : MonoBehaviour
 {
     public float m_width = 0;
     public float m_height = 0;
+    public Material m_bGMat;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        SetMaterial();
     }
 
     // Update is called once per frame
@@ -58,5 +59,9 @@ public class PG_BackGround : MonoBehaviour
         };
         mesh.uv = uv;
         meshFilter.mesh = mesh;
+    }
+    void SetMaterial()
+    {
+        if(m_bGMat != null)  GetComponent<Renderer>().material = m_bGMat;
     }
 }
