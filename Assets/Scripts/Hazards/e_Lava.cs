@@ -32,7 +32,7 @@ public class e_Lava : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             // "If you finger the lava, you're dead" - Connor Holt 2026
-            Debug.Log("Lava Fingered" + other.gameObject.name);
+            Debug.Log("Lava Fingered", other.gameObject);
             
             //player touched lava so we should see if they have a shield  //Tyler xx
             p_PlayerPickupManager playerPickupMan = other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
@@ -62,7 +62,6 @@ public class e_Lava : MonoBehaviour
                 Debug.LogError("Player found but ID not returned", other.gameObject);
                 return;
             }
-            e_GameEvents.instance.PlayerHealthUpdate(false, 100, playerID);
             e_GameEvents.instance.PlayerHealthUpdate(false, 100, playerID);
         }
     }
