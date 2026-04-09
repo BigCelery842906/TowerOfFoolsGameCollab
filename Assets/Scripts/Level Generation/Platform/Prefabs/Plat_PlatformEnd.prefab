@@ -12,10 +12,11 @@ GameObject:
   - component: {fileID: 4354099230181445210}
   - component: {fileID: 7223865614193965388}
   - component: {fileID: 8998190087065296416}
-  - component: {fileID: 6254734541998354081}
+  - component: {fileID: -7259734375159190823}
+  - component: {fileID: -135183531683309430}
   m_Layer: 0
   m_Name: Plat_PlatformEnd
-  m_TagString: Untagged
+  m_TagString: PlatformEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool:
+  - {fileID: 653915677348896967, guid: 838a006f90a1e7a4fb836d2bdc073035, type: 3}
+  - {fileID: 867675361325496951, guid: 9d6f1d5bc969fde419f48f9619631365, type: 3}
+  - {fileID: 8400691131253148563, guid: 0ed897359a80a7b48a352a2b15200a99, type: 3}
+  - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
+  m_worldScale: 0
 --- !u!33 &7223865614193965388
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78,7 +85,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  - {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100,7 +107,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6254734541998354081
+--- !u!54 &-7259734375159190823
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391572280141034937}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &-135183531683309430
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
