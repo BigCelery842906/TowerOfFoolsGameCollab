@@ -1,59 +1,25 @@
-using System;
+using System.Collections.Generic;
+using UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class ui_MainMenuManager : MonoBehaviour
+public class ui_MainMenuManager : ui_BaseMenuManager
 {
-    [Header("UI Settings")]
-    [Tooltip("The UI Document for the Main Menu.")]
-    [SerializeField] private UIDocument m_uiMainMenuDocument;
-
-    [Header("Gameplay Level Settings")]
+    [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
     
+    [Header("Level Settings - Gameplay Scene")]
     [Tooltip("This value will only be taken into account if 'Use Scene Build Index' is true.")]
     [SerializeField] private int m_sceneBuildIndex;
     
     [Tooltip("This value will only be taken into account if 'Use Scene Build Index' is false.")]
     [SerializeField] private string  m_sceneName;
 
-    private Button playButton;
-    private Button quitButton;
-    
-    void Awake()
+    protected override void InitialiseMenuManager()
     {
-        // Check if the UI Document is valid
-        if (m_uiMainMenuDocument == null)
-        {
-            throw new UnityException("ui_MainMenuDocument is null");
-        }
-        
-        // Query the buttons from the UI document, check validity, and set click callbacks
-        playButton = m_uiMainMenuDocument.rootVisualElement.Q<Button>("play-btn");
-        quitButton = m_uiMainMenuDocument.rootVisualElement.Q<Button>("quit-btn");
-
-        if (playButton == null || quitButton == null)
-        {
-            throw new UnityException("ui_MainMenuDocument play or quit button is invalid");
-        }
-
-        playButton.clicked += HandleButtonClicked_Play;
-        quitButton.clicked += HandleButtonClicked_Quit;
-    }
-
-    private void OnDestroy()
-    {
-        // Just to be safe, unbind the callbacks when the menu is destroyed
-        if (playButton != null)
-        {
-            playButton.clicked -= HandleButtonClicked_Play;
-        }
-        
-        if (quitButton != null)
-        {
-            quitButton.clicked -= HandleButtonClicked_Quit;
-        }
+        BindButton("play-btn", HandleButtonClicked_Play);
+        BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
+        BindButton("quit-btn", HandleButtonClicked_Quit);
     }
 
     private void HandleButtonClicked_Play()
@@ -68,8 +34,18 @@ public class ui_MainMenuManager : MonoBehaviour
         sc_SceneManager.LoadSceneByName(m_sceneName);
     }
 
+    private void HandleButtonClicked_Scoreboard()
+    {
+        // TODO: Scoreboard button implementation
+        Debug.Log("Scoreboard Button Clicked, implementation todo");
+    }
+
     private void HandleButtonClicked_Quit()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 }
