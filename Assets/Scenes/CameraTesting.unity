@@ -4106,7 +4106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_PlayersToTrack.Array.size
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: 'm_PlayersToTrack.Array.data[0]'
@@ -4114,6 +4114,18 @@ PrefabInstance:
       objectReference: {fileID: 908596066}
     - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: 'm_PlayersToTrack.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1974297055}
+    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: 'm_PlayersToTrack.Array.data[2]'
+      value: 
+      objectReference: {fileID: 608832138}
+    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: 'm_PlayersToTrack.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1974297055}
+    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: 'm_PlayersToTrack.Array.data[4]'
       value: 
       objectReference: {fileID: 1974297055}
     m_RemovedComponents: []
