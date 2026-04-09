@@ -9,6 +9,8 @@ public class BasePickup : MonoBehaviour
     protected p_PlayerPickupManager m_triggeredPlayer;
     protected p_PlayerPickupManager m_otherPlayer;
 
+    protected CapsuleCollider m_playerCollider;
+
     private void Awake()
     {
         m_triggeredPlayer = null;
@@ -16,18 +18,20 @@ public class BasePickup : MonoBehaviour
         //grabbing refs to our players
         foreach(p_PlayerPickupManager player in Resources.FindObjectsOfTypeAll(typeof(p_PlayerPickupManager)))
         {
-            if(m_playerOne == player || m_playerTwo == player) { continue; } //prevents assigning them / checking tags if the player refs are already assinged
+            //if(m_playerOne == player || m_playerTwo == player) { continue; } //prevents assigning them / checking tags if the player refs are already assinged
 
-            if (player.gameObject.CompareTag("Player1"))
+            if (player.gameObject.CompareTag("Player0"))
             {
                 m_playerOne = player;
-
             }
             else
             {
                 m_playerTwo = player;
             }
-        }        
+        }
+
+        //Debug.Log("player one " +  m_playerOne.gameObject.name);
+        //Debug.Log("player two " +  m_playerTwo.gameObject.name);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -35,12 +39,16 @@ public class BasePickup : MonoBehaviour
         if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
 
         m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
+        m_playerCollider ??= other.GetComponent<CapsuleCollider>();
 
         if(m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
 
+        //player is already holding a pickup and i dont think they need a second one >:c
+        if(m_triggeredPlayer.GetPlayerHoldingPickup()) { return; }
+
         m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
 
-        if (m_triggeredPlayer.CompareTag("Player1"))
+        if (m_triggeredPlayer.CompareTag("Player0"))
         {
             //PlayerOne Triggered it
             m_otherPlayer = m_playerTwo;
@@ -51,6 +59,7 @@ public class BasePickup : MonoBehaviour
             m_otherPlayer = m_playerOne;
         }
 
+        m_triggeredPlayer.SetPlayerHoldingPickup(true);
         PickupEffect();     
     }
 
@@ -71,7 +80,7 @@ public class BasePickup : MonoBehaviour
     }
 
     /// <summary>
-    /// Override this if needed, base destroys object
+    /// Override this if needed, base destroys object (if its not interactable) if its interactable it sets its new position
     /// </summary>
     protected virtual void PickedUp()
     {
@@ -87,8 +96,13 @@ public class BasePickup : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Should be called after the pickup does its effect, it tells the pickup manager that the players not holding a pickup and deletes the pickup
+    /// </summary>
     protected void PickupUsed()
     {
+        m_triggeredPlayer.SetPlayerHoldingPickup(false);
+        m_triggeredPlayer.SetIsInteractablePickup(false,this);
         Destroy(gameObject);
     }
 

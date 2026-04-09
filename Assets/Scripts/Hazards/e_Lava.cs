@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Written by Connor Saysell
@@ -33,6 +34,24 @@ public class e_Lava : MonoBehaviour
             // "If you finger the lava, you're dead" - Connor Holt 2026
             Debug.Log("Lava Fingered", other.gameObject);
             
+            //player touched lava so we should see if they have a shield  //Tyler xx
+            p_PlayerPickupManager playerPickupMan = other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
+            if (playerPickupMan != null)
+            {
+                if (playerPickupMan.GetPlayerShield())
+                {
+                    //player has shield, they should be moved up?
+
+                    Vector3 tempTransfrom = playerPickupMan.gameObject.transform.position; //for readability sake 
+                    float offset = playerPickupMan.GetShieldLavaOffset();
+                    playerPickupMan.gameObject.transform.position = new Vector3(tempTransfrom.x,tempTransfrom.y + offset,tempTransfrom.z);
+
+                    //players been moved now remove their shield
+                    playerPickupMan.SetPlayerShield(false, 0f);
+
+                    return;
+                }
+            }
             
             //The parent of the gameobject has the player ID within the tag, use this to get the player ID
             int playerID = -1; //default to -1 in case of error
