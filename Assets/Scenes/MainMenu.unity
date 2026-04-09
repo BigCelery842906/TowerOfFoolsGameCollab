@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73409e8b526bf9d41ad2ecf9558c16aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uiMainMenuDocument: {fileID: 1845819536}
+  m_uiDocument: {fileID: 1845819536}
   m_useSceneBuildIndex: 1
   m_sceneBuildIndex: 1
   m_sceneName: TestingScene
