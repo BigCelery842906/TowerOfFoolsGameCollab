@@ -30,11 +30,23 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_ReturnToMenu()
     {
-        throw new NotImplementedException();
+        if (m_useSceneBuildIndexes)
+        {
+            sc_SceneManager.LoadSceneByIndex(m_mainMenuSceneBuildIndex);
+            return;
+        }
+        
+        sc_SceneManager.LoadSceneByName(m_mainMenuSceneName);
     }
 
     private void HandleButtonClicked_Replay()
     {
-        throw new NotImplementedException();
+        if (m_useSceneBuildIndexes)
+        {
+            sc_SceneManager.LoadSceneByIndex(m_replaySceneBuildIndex);
+            return;
+        }
+        
+        sc_SceneManager.LoadSceneByName(m_replaySceneName);
     }
 }
