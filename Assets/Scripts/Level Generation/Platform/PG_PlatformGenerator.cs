@@ -282,17 +282,19 @@ public class PG_PlatformGenerator : MonoBehaviour
                 //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_END}");
                 endPlatform.transform.localScale = Vector3.one * m_scale;
                 endPlatform.transform.SetParent(roomGrid.gameObject.transform, false);
+                endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
             }
             else
             {
                 Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + i, y);
-                PG_PlatformMiddle middlePlatform = PG_PlatformEnd.Instantiate(middleFab, this.transform.position + coords, this.transform.rotation);
+                PG_PlatformMiddle middlePlatform = PG_PlatformMiddle.Instantiate(middleFab, this.transform.position + coords, this.transform.rotation);
                 middlePlatform.name = "Platform " + i;
                 roomGrid.m_grid[x +i, y].SetContents(middlePlatform.gameObject);
                 roomGrid.m_grid[x + i, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
                 //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE}");
                 middlePlatform.transform.localScale = Vector3.one * m_scale;
                 middlePlatform.transform.SetParent(roomGrid.gameObject.transform, false);
+                middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
             }
         }
 
