@@ -32,14 +32,14 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private bool trackingAverage = true;
     
     [Header("Buffers")] 
-    [SerializeField]private float m_YBuffer = 10f;
-    // [SerializeField]private float m_BottomBuffer = 50f; //Might need this later
-    [SerializeField]private float m_XBuffer = 17.75f;
+    [Range(0f,0.5f)][SerializeField]private float m_YBuffer = 0.2f;
+    //Might want a bottom buffer later on
+    [Range(0f,0.5f)][SerializeField]private float m_XBuffer = 0.15f;
 
     [SerializeField] private float scaledYbuffer = 10f; // The buffers are calibrated with 5 zoom
     [SerializeField] private float scaledXbuffer = 17.75f; // The buffers are calibrated with 5 zoom
 
-    [SerializeField] private float tempDepth = 0.5f;
+    [SerializeField] private float tempDepth = 0.3f;
     
     [SerializeField] private int furthestPlayer = -1;
     [SerializeField] private float highestYPos = float.MinValue;
@@ -58,8 +58,10 @@ public class c_Camera : MonoBehaviour
 
 
     [Header("Dead Zone Values")] 
-    [SerializeField] private float deadZoneHeight;
-    [SerializeField] private float deadZoneWidth;
+    [SerializeField] private float deadZoneHeight = 6.0f;
+    [SerializeField] private float deadZoneWidth = 12.45f;
+    [SerializeField] private float xBufferWorld = 2.67f;
+    [SerializeField] private float yBufferWorld = 2.0f;
     
     [SerializeField] private float yBufferScale = 2.5f;
     private Bounds playerBounds;
@@ -126,9 +128,6 @@ public class c_Camera : MonoBehaviour
         camHeight = _camera.orthographicSize * 2;
         camWidth = camHeight * _camera.aspect;
 
-        deadZoneHeight = camHeight - (m_YBuffer * 2f);
-        deadZoneWidth = camWidth - (m_XBuffer * 2f);
-
         #region playerBounds MinMax - Doesn't work 100% of time
         //Doesn't work due to sometimes player 1 is not the min, instead player 2 is the min, which means it doesn't work properly
         // if (m_ActivePlayers.Count == 2)
@@ -144,16 +143,21 @@ public class c_Camera : MonoBehaviour
         //     Debug.Log("No active players");
         // }
         #endregion
+        yBufferWorld = camHeight * m_YBuffer;
+        xBufferWorld = camWidth * m_XBuffer;
+        
+        deadZoneHeight = camHeight - (yBufferWorld * 2f);
+        deadZoneWidth = camWidth - (xBufferWorld * 2f);
 
         if (desiredCameraZoom < maxCameraZoom)
         {
             CalculateCameraPosition();
-            
+            trackingAverage = true;
         }
         else
         {
             FollowHighestPlayer();
-            
+            trackingAverage = false;
         }
         
         CalculateCameraZoom();
@@ -432,8 +436,8 @@ public class c_Camera : MonoBehaviour
         foreach (var p in m_ActivePlayers)
             playerBounds.Encapsulate(p.transform.position);
 
-        float requiredHeight = playerBounds.size.y / 2f + m_YBuffer;
-        float requiredWidth  = (playerBounds.size.x / 2f + m_XBuffer) / _camera.aspect;
+        float requiredHeight = playerBounds.size.y / 2f + yBufferWorld;
+        float requiredWidth  = (playerBounds.size.x / 2f + xBufferWorld) / _camera.aspect;
 
         desiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
 
@@ -461,8 +465,8 @@ public class c_Camera : MonoBehaviour
         
         
         //Assume 16:9
-        float width = scaledXbuffer; /// 1920 / 0.615625f;
-        float height = scaledYbuffer * yBufferScale; /// 1080 / 0.615625f;
+        // float width = scaledXbuffer; /// 1920 / 0.615625f;
+        // float height = scaledYbuffer * yBufferScale; /// 1080 / 0.615625f;
 
         // To be at screen boundary in 16:9:
         // Y buffer at 10
@@ -480,10 +484,11 @@ public class c_Camera : MonoBehaviour
         // Y = 727
         // X = 230
         
-        // Theoretically the player buffer - Still figuring the exact logic for this, currently followed until the buffer is reached
-        Gizmos.DrawWireCube(returnAveragePosition(), new Vector3(width, height, 0f));
+        // Player Buffer
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(camPos, new Vector3(deadZoneWidth, deadZoneHeight, 0f));
         
-        //Player Bounds
+        // Player Bounds
         Gizmos.color = Color.brown;
         Gizmos.DrawWireCube(playerBounds.center, playerBounds.size);
         
