@@ -17,6 +17,8 @@ public class PG_RoomGenerator : MonoBehaviour
     public List<GridBlock> m_regionOneBlockPool;
     public List<PG_BackGround> m_regionOneBackgroundPool;
 
+    int m_previousBackgroundIndex = int.MaxValue;
+
 
     public int m_nextRoomEntrance = int.MaxValue;
     public int m_previousRoomExit = int.MaxValue;
@@ -186,7 +188,14 @@ public class PG_RoomGenerator : MonoBehaviour
     }
     public void SpawnBackGround(ref PG_GridMap grid)
     {
-        PG_BackGround fab = m_regionOneBackgroundPool[0]; //first for testing
+        int randNum = UnityEngine.Random.Range(0, m_regionOneBackgroundPool.Count);
+
+        while(m_previousBackgroundIndex == randNum)
+        {
+            randNum = UnityEngine.Random.Range(0, m_regionOneBackgroundPool.Count);
+        }
+        PG_BackGround fab = m_regionOneBackgroundPool[randNum];
+        m_previousBackgroundIndex = randNum;
         if (!fab)
         {
             Debug.Log("background not found");
