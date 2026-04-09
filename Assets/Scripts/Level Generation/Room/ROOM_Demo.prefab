@@ -349,6 +349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &5246474996991110998
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -923,6 +926,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2652698712947272840
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1799,6 +1805,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8129671008779166284
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2071,6 +2080,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &967038741128816203
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2494,6 +2506,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2162734207209700761
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2615,6 +2630,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1525280378099766782
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3491,6 +3509,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &849181010626054248
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3914,6 +3935,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2432711232871724700
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4035,6 +4059,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6733159204295207506
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4760,6 +4787,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &576112348166793226
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4881,6 +4911,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3898626025369714653
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5002,6 +5035,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3407354464822602514
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5576,6 +5612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3663497413218563483
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5999,6 +6038,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2411497574310722109
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6271,6 +6313,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2532885560551113258
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7298,6 +7343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &5024095779102990544
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8023,6 +8071,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3427879935599592222
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9201,6 +9252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &5319911400940422805
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9624,6 +9678,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1005825322184696735
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9896,6 +9953,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &4286730801676079366
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10168,6 +10228,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8201806121334772480
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10591,6 +10654,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &5480437691089625281
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11316,6 +11382,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8213315209843922086
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -11588,6 +11657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2687319806884668534
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12011,6 +12083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6413719664229311570
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12132,6 +12207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &4754251203156299082
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12555,6 +12633,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &4804464544574397270
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -14035,6 +14116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6614459496259163612
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -15698,6 +15782,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2004646873178538246
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16576,6 +16663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_width: 30
   m_height: 18
+  m_bGMat: {fileID: 0}
 --- !u!33 &1550194357643752767
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17151,6 +17239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &574507728436534223
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17272,6 +17363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8657164201998650172
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -17999,6 +18093,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_width: 30
   m_height: 18
+  m_bGMat: {fileID: 0}
 --- !u!33 &4427292781079286884
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -18876,6 +18971,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &795660979548680927
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19148,6 +19246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3090343309162038004
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19873,6 +19974,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &4852155711323106282
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19994,6 +20098,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &5150010426700486010
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20115,6 +20222,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3239712755678639719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20387,6 +20497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &686363565192978304
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20659,6 +20772,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8507328998117439525
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -21082,6 +21198,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &9029341477242087314
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -21354,6 +21473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1732875875182889638
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -21475,6 +21597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1301144193804669576
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -21596,6 +21721,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8104993471918716593
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22321,6 +22449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8312515159008399270
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22593,6 +22724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3872751900215988206
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22865,6 +22999,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2312360906523758784
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22986,6 +23123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3181655364583491104
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23441,6 +23581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8685671570504462284
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23562,6 +23705,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &5755743845934512828
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23683,6 +23829,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &971808411712481924
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23804,6 +23953,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1395115109162673203
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -25284,6 +25436,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1120164433234821879
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -26192,6 +26347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8457712870344112367
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -26313,6 +26471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6380961184747393072
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -26887,6 +27048,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3704803795052473195
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27461,6 +27625,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6408906095547169423
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27582,6 +27749,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2629853653685718504
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27703,6 +27873,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &7185977990890524258
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -28579,6 +28752,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &3985588746895494791
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -29304,6 +29480,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1966602896180269021
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -29425,6 +29604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8965073816383687324
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -30905,6 +31087,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1065577049768929858
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -31328,6 +31513,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &7382185652909580598
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -31600,6 +31788,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &8850695691538520113
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -31721,6 +31912,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6825400968552757451
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -31842,6 +32036,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &6316274163748700226
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -32718,6 +32915,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &2997355026774008265
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -32839,6 +33039,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b203786b704333418e4cfa286a66851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &505020554251902194
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33566,6 +33769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_width: 30
   m_height: 18
+  m_bGMat: {fileID: 0}
 --- !u!33 &7711238988449453961
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -33839,6 +34043,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6460337bed33a4fa74ae7447d2adba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupPool: []
+  m_worldScale: 0
+  m_hasPowerup: 0
 --- !u!33 &1365843711623111176
 MeshFilter:
   m_ObjectHideFlags: 0
