@@ -67,7 +67,6 @@
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
-    background-image: url("project://database/Assets/UI/Assets/Button_Plate_Default.png?fileID=2800000&guid=27b24b6ddab20c74990f1897d4cd1288&type=3#Button_Plate_Default");
     scale: 1.1 1.1;
     -unity-text-align: middle-center;
     text-overflow: clip;
