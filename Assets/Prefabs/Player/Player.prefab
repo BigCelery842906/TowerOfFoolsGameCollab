@@ -56760,6 +56760,7 @@ GameObject:
   - component: {fileID: 8577146385212615068}
   - component: {fileID: 7849269804269014520}
   - component: {fileID: 6765221560075692234}
+  - component: {fileID: 7961848418309483780}
   - component: {fileID: 806169417569996131}
   m_Layer: 0
   m_Name: Player
@@ -56834,6 +56835,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_pickupLocation: {fileID: 3312968605175277694}
   m_firingPosition: {fileID: 7242073138325944006}
+--- !u!114 &7961848418309483780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5223547158863069099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &806169417569996131
 Rigidbody:
   m_ObjectHideFlags: 0
