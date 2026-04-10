@@ -39,6 +39,8 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void EndGame(int playerID)
     {
+        Destroy(gameObject);
+        sc_SceneManager.LoadSceneByName("GameOver");
         //Save Data
         //Load End Scene
     }
