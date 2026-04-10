@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56953df1e94dfe49bdcd22330a29ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 0.5
+  m_movementSpeed: 1.5
   m_startFromPosition: 1
   m_startingYPosition: -5
 --- !u!1 &7997343170357358610
