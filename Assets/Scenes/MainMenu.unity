@@ -151,7 +151,7 @@ MonoBehaviour:
   m_uiDocument: {fileID: 1845819536}
   m_useSceneBuildIndex: 1
   m_sceneBuildIndex: 1
-  m_sceneName: TestingScene
+  m_sceneName: Game
 --- !u!4 &349895716
 Transform:
   m_ObjectHideFlags: 0

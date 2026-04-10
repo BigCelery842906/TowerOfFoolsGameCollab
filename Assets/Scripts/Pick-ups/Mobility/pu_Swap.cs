@@ -1,5 +1,3 @@
-using Mono.Cecil.Cil;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class pu_Swap : BasePickup
