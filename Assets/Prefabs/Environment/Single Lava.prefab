@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9197457806374378780}
   - component: {fileID: 8817498719487324918}
   m_Layer: 0
-  m_Name: Lava
+  m_Name: Single Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementSpeed: 0.5
-  m_startFromPosition: 0
+  m_startFromPosition: 1
   m_startingYPosition: -5
 --- !u!1 &7997343170357358610
 GameObject:
@@ -168,7 +168,7 @@ Animator:
   m_GameObject: {fileID: 7997343170357358610}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cb9addacef315e14792586811fa8b5b6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4f71e283557f9f243a48b1443a315ba3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
