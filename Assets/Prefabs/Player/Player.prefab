@@ -85986,7 +85986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackRange: 1
   m_knockbackForce: 10
-  m_attackPoint: {fileID: 0}
+  m_attackPoint: {fileID: 7242073138325944006}
 --- !u!114 &2543479646462891059
 MonoBehaviour:
   m_ObjectHideFlags: 0
