@@ -5701,7 +5701,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7863357619561378954, guid: 7d7d4347be2d7eb46b020a917491af5b, type: 3}
+  - {fileID: 7863357619561378954, guid: ccba926b6cb7be347acd424fa26cdd2c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -56764,7 +56764,7 @@ GameObject:
   - component: {fileID: 806169417569996131}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player0
+  m_TagString: Player1
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85985,7 +85985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776a25c9ee42b5b4ea4b984f9fb67389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_attackRange: 1
+  m_attackRange: 1.5
   m_knockbackForce: 10
   m_attackPoint: {fileID: 7242073138325944006}
 --- !u!114 &2543479646462891059
