@@ -5,8 +5,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     [SerializeField] private AudioSource m_backgroundMusic;
-    [SerializeField] private AudioSource m_pickupSound;
-    [SerializeField] private AudioSource m_pickupUsed;
+    [SerializeField] private AudioSource m_pickupGained;
+    [SerializeField] private AudioSource m_pickupSounds;
 
     private void Awake()
     {
@@ -15,15 +15,17 @@ public class AudioManager : MonoBehaviour
         if (!m_backgroundMusic.isPlaying) { m_backgroundMusic.Play(); }
     }
 
-    public void PlayPickupCollected()
+    public void PlayAudioClip ( AudioClip sound)
     {
-        if (m_pickupSound.isPlaying) { return; }
-        m_pickupSound.Play();
+        m_pickupSounds.clip = null;
+        m_pickupSounds.clip = sound;
+
+        m_pickupSounds.Play();
     }
 
-    public void PlayPickupUsed()
+    public void PlayPickupCollected()
     {
-        if (m_pickupUsed.isPlaying) { return; }
-        m_pickupUsed.Play();
-    } 
+        if (m_pickupGained.isPlaying) { return; }
+        m_pickupGained.Play();
+    }
 }

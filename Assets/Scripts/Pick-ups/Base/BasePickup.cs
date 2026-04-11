@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BasePickup : MonoBehaviour
 {
-    private AudioSource m_pickupSound;
+    protected AudioSource m_pickupSound;
 
     protected p_PlayerPickupManager m_playerOne;
     protected p_PlayerPickupManager m_playerTwo;
@@ -59,6 +59,9 @@ public class BasePickup : MonoBehaviour
         }
 
         m_triggeredPlayer.SetPlayerHoldingPickup(true);
+
+        AudioManager.instance.PlayPickupCollected();
+
         PickupEffect();     
     }
 
@@ -100,7 +103,7 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected void PickupUsed()
     {
-        m_pickupSound.Play();
+        AudioManager.instance.PlayAudioClip(m_pickupSound.clip);
 
         m_triggeredPlayer.SetPlayerHoldingPickup(false);
         m_triggeredPlayer.SetIsInteractablePickup(false,this);

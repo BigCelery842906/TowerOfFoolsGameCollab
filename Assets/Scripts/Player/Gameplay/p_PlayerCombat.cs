@@ -12,6 +12,7 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
 
     [SerializeField] private Transform m_attackPoint;
 
+    private AudioSource m_stunSound;
     private p_PlayerPickupManager m_pickupManager;
     private Rigidbody m_RB;
 
@@ -63,6 +64,7 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
             return; //skip 
         }
 
+        m_stunSound.Play();
         m_pickupManager.SetStun(stunLength);
     }
 }
