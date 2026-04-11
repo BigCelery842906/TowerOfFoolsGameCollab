@@ -14,7 +14,7 @@ public class p_PlayerData
     private int m_Lives = 0;
     private int m_PlayerID = 0;
 
-    public p_PlayerData(int playerID, int health = 100, int lives = 1, int score = 0, int deaths = 0, int distanceUp = 0)
+    public p_PlayerData(int playerID, int health = 100, int lives = 3, int score = 0, int deaths = 0, int distanceUp = 0)
     {
         m_Score = score;
         m_Deaths = deaths;
@@ -185,7 +185,7 @@ public class p_PlayerData
             else
             {
                 DecreaseLives(amount);
-
+                e_GameEvents.instance.PlayerDeathAdded(m_PlayerID);
                 if (CheckNoLives())
                 {
                     e_GameEvents.instance.PlayerNoLives(m_PlayerID);                
