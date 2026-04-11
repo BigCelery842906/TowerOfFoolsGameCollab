@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BasePickup : MonoBehaviour
 {
+    private AudioSource m_pickupSound;
+
     protected p_PlayerPickupManager m_playerOne;
     protected p_PlayerPickupManager m_playerTwo;
 
@@ -18,8 +20,6 @@ public class BasePickup : MonoBehaviour
         //grabbing refs to our players
         foreach(p_PlayerPickupManager player in Resources.FindObjectsOfTypeAll(typeof(p_PlayerPickupManager)))
         {
-            //if(m_playerOne == player || m_playerTwo == player) { continue; } //prevents assigning them / checking tags if the player refs are already assinged
-
             if (player.gameObject.CompareTag("Player0"))
             {
                 m_playerOne = player;
@@ -30,8 +30,7 @@ public class BasePickup : MonoBehaviour
             }
         }
 
-        //Debug.Log("player one " +  m_playerOne.gameObject.name);
-        //Debug.Log("player two " +  m_playerTwo.gameObject.name);
+        m_pickupSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,6 +100,8 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected void PickupUsed()
     {
+        m_pickupSound.Play();
+
         m_triggeredPlayer.SetPlayerHoldingPickup(false);
         m_triggeredPlayer.SetIsInteractablePickup(false,this);
         Destroy(gameObject);
