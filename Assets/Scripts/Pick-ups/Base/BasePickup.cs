@@ -103,7 +103,7 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected void PickupUsed()
     {
-        AudioManager.instance.PlayAudioClip(m_pickupSound.clip);
+        if(m_pickupSound != null) { AudioManager.instance.PlayAudioClip(m_pickupSound.clip); }
 
         m_triggeredPlayer.SetPlayerHoldingPickup(false);
         m_triggeredPlayer.SetIsInteractablePickup(false,this);

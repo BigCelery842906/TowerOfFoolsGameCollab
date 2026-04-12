@@ -12,10 +12,13 @@ public class Dagger : MonoBehaviour
     private void Awake()
     {
         m_RB ??= GetComponent<Rigidbody>();
+
         
         Vector3 daggerForce = transform.forward * m_speed;
         m_RB.AddForce(daggerForce, ForceMode.Impulse);
+        transform.rotation = new Quaternion(0,90,0,0);
 
+        StartCoroutine(C_Rotate());
         StartCoroutine(C_LifetimeTimer());
     }
 
@@ -32,6 +35,15 @@ public class Dagger : MonoBehaviour
         }
         Destroy(gameObject);
     }    
+
+    private IEnumerator C_Rotate()
+    {
+        while (true)
+        {
+            transform.Rotate(0,0, transform.rotation.z + 25f,Space.World);
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
 
     private IEnumerator C_LifetimeTimer()
     {
