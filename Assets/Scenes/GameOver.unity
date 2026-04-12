@@ -563,7 +563,7 @@ MonoBehaviour:
   m_uiDocument: {fileID: 573227369}
   m_useSceneBuildIndexes: 0
   m_replaySceneBuildIndex: 0
-  m_replaySceneName: Game
+  m_replaySceneName: GamePlayTest
   m_mainMenuSceneBuildIndex: 0
   m_mainMenuSceneName: MainMenu
 --- !u!4 &1468560360

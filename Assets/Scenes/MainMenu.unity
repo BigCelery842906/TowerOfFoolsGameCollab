@@ -150,8 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_uiDocument: {fileID: 1845819536}
   m_useSceneBuildIndex: 1
-  m_sceneBuildIndex: 1
-  m_sceneName: Game
+  m_sceneBuildIndex: 2
+  m_sceneName: GamePlayTest
 --- !u!4 &349895716
 Transform:
   m_ObjectHideFlags: 0
