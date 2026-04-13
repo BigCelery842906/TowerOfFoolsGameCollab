@@ -7,4 +7,6 @@ public interface IAttackable
     /// Called from the attacking player to the attacked player
     /// </summary>
     public void Attacked(Vector3 knockbackDir);
+
+    public void Stun(float stunTime);
 }
