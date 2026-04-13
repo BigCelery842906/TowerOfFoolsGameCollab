@@ -9,7 +9,7 @@ namespace UI
     {
         [Header("UI Settings")]
         [Tooltip("The UI Document for the menu.")]
-        [SerializeField] private UIDocument m_uiDocument;
+        [SerializeField] protected UIDocument m_uiDocument;
         
         private Dictionary<Button, Action> m_buttonCallbacks = new Dictionary<Button, Action>();
 

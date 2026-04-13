@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainStyleSheet.uss?fileID=7433441132597879392&amp;guid=d7167debae920204d8f2e837a88d3567&amp;type=3#MainStyleSheet" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.25); flex-direction: row; align-items: auto; align-content: auto; align-self: auto; height: 100%; width: 100%; justify-content: flex-start;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: column; left: auto; position: relative; display: flex; visibility: visible; overflow: visible; align-items: center; align-self: center; padding-top: 64px; padding-right: 64px; padding-bottom: 64px; padding-left: 64px; justify-content: center; width: 534px; background-size: 100% 100%; align-content: flex-start; height: 100%;">
+            <ui:DropdownField label="Graphics Quality" name="DropdownField" choices="1,2,3,4" style="height: 66px; width: 500px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
