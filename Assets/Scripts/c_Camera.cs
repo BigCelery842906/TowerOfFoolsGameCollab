@@ -244,6 +244,16 @@ public class c_Camera : MonoBehaviour
     {
         if (m_DebugDraw)
         {
+            // m_CamHeight = m_CameraZoom * 2;
+            // m_CamWidth = m_CamHeight * m_CamHeight / m_CamWidth;
+            //
+            // m_YBufferWorld = m_CamHeight * (m_YBufferPercent / 100.0f);
+            // m_XBufferWorld = m_CamWidth * (m_XBufferPercent / 100.0f);
+            //
+            // m_DeadZoneHeight = m_CamHeight - (m_YBufferWorld * 2f);
+            // m_DeadZoneWidth = m_CamWidth - (m_XBufferWorld * 2f);
+            
+            
             Vector3 camPos = transform.position;
             float zOffset = tempDepth; //Default Value in case of no camera reference
 
