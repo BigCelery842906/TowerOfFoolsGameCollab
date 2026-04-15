@@ -56812,8 +56812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a10854e5a365aa458ebaef8d5c34460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 5
-  m_jumpForce: 12
+  m_moveSpeed: 8
+  m_jumpForce: 18
   m_lowerGravValue: -12
   m_apexGravValue: -6
   m_highGravValue: -15
@@ -56847,6 +56847,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_radius: 10
+  m_deathPositionCorrection: 10
+  m_drawDeathReset: 1
+  m_respawnTimer: 3
 --- !u!54 &806169417569996131
 Rigidbody:
   m_ObjectHideFlags: 0
