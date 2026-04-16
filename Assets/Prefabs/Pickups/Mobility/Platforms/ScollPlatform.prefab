@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1884490674539001117}
   - component: {fileID: 3550708523451583819}
   - component: {fileID: 6034691991239416083}
+  - component: {fileID: 8143394805635551947}
   m_Layer: 6
   m_Name: ScollPlatform
   m_TagString: Untagged
@@ -108,3 +109,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8143394805635551947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247280348690738588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c318e1f85f62464408f4254281e99e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

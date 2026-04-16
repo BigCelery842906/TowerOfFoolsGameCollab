@@ -185,11 +185,11 @@ public class p_PlayerData
             else
             {
                 DecreaseLives(amount);
-                e_GameEvents.instance.PlayerDeathAdded(m_PlayerID);
                 if (CheckNoLives())
                 {
                     e_GameEvents.instance.PlayerNoLives(m_PlayerID);                
                 }
+                e_GameEvents.instance.PlayerDeathAdded(m_PlayerID);
             }
         }
     }

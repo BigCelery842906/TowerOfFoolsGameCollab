@@ -30,8 +30,8 @@ public class c_Camera : MonoBehaviour
     [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. It can be changed to not do this if needed.")]
     [SerializeField]
     List<GameObject> m_PlayersToTrack;
-
     [Header("Buffers")]
+    [Header("This will not visually update while not in play mode.")]
     [Tooltip("What percentage of the screen the Y buffer should be. This is a half value, as it will apply this to both the top and bottom")]
     [Range(0f, 50f)] [SerializeField] private float m_YBufferPercent = 20.0f;
 
@@ -41,7 +41,8 @@ public class c_Camera : MonoBehaviour
     [Range(0f, 50f)] [SerializeField] private float m_XBufferPercent = 15.0f;
     
 
-    [Header("Camera Values")] private Camera m_Camera;
+    [Header("Camera Values")] 
+    private Camera m_Camera;
     [SerializeField] private float m_MinCameraZoom = 5f;
     [SerializeField] private float m_MaxCameraZoom = 30f;
     
@@ -67,7 +68,7 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private float m_CamHeight;
     [SerializeField] private float m_CamWidth;
 
-
+    
     [Header("Dead Zone Values")] 
     [SerializeField] private float m_DeadZoneHeight = 6.0f;
     [SerializeField] private float m_DeadZoneWidth = 12.45f;
