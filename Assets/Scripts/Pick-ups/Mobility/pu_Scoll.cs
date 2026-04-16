@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class pu_Scoll : BasePickup
@@ -21,8 +22,8 @@ public class pu_Scoll : BasePickup
         //m_pickupSound.Play();
         //AudioManager.instance.PlayAudioClip(m_pickupSound);
 
-        Instantiate(m_platformPrefab, new Vector3(m_triggeredPlayer.transform.position.x, m_triggeredPlayer.transform.position.y - m_distaceBelowPlayer, 0f), m_platformPrefab.transform.rotation);
-
+       Instantiate(m_platformPrefab, new Vector3(m_triggeredPlayer.transform.position.x, m_triggeredPlayer.transform.position.y - m_distaceBelowPlayer, 0f), m_platformPrefab.transform.rotation);
+        
         PickupUsed();
     }
 }
