@@ -30,8 +30,7 @@ namespace UI
         // Button binding helper to bind a callback to a button
         protected void BindButton(string documentButtonName, Action callback)
         {
-            var button = m_uiDocument.rootVisualElement.Q<Button>(documentButtonName);
-
+            Button button = m_uiDocument.rootVisualElement.Q<Button>(documentButtonName);
             if (button == null)
             {
                 throw new UnityException($"UI Document button {documentButtonName} is invalid in: {GetType().Name}");
@@ -57,6 +56,16 @@ namespace UI
             
             // Clear the button callbacks set
             m_buttonCallbacks.Clear();
+        }
+
+        public void ShowMenu()
+        {
+            m_uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
+        }
+
+        public void HideMenu()
+        {
+            m_uiDocument.rootVisualElement.style.display = DisplayStyle.None;
         }
     }
 }
