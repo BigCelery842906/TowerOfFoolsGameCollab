@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class ui_PauseMenuManager : ui_BaseMenuManager
 {
-    [Header("Pause Menu UI Components")]
-    [SerializeField] private UIDocument m_settingsMenuUiDocument;
+    [Header("Settings Menu")]
+    [SerializeField] private ui_SettingsMenuManager m_settingsMenuManager;
     
     [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
@@ -20,12 +20,11 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
     
     protected override void InitialiseMenuManager()
     {
-        m_uiDocument.enabled = false;
-        m_settingsMenuUiDocument.enabled = false;
-        
         BindButton("continue-btn", HandleButtonClicked_Continue);
         BindButton("settings-btn", HandleButtonClicked_Settings);
         BindButton("quit-btn", HandleButtonClicked_Quit);
+        
+        HideMenu();
     }
 
     private void HandleButtonClicked_Continue()
@@ -36,9 +35,9 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_Settings()
     {
-        // Toggle the visibility of the main UI document and the settings UI document
-        m_uiDocument.enabled = false;
-        m_settingsMenuUiDocument.enabled = true;
+        // Hide the pause menu and show the settings menu
+        HideMenu();
+        m_settingsMenuManager.ShowMenu();
     }
     
     private void HandleButtonClicked_Quit()
