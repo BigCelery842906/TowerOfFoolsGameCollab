@@ -57,6 +57,9 @@ public class p_PlayerController : MonoBehaviour
 
             m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
         }
+
+        // bind the other non-player specific actions
+        m_playerInputs.Menus.Pause.performed += Handle_Pause;
     }
 
     private void OnDisable()
@@ -105,5 +108,13 @@ public class p_PlayerController : MonoBehaviour
         {
             m_playerCombat.Attack();
         }
+    }
+
+    private void Handle_Pause(InputAction.CallbackContext ctx)
+    {
+        // tells game events pause was fired
+        
+        // game events handles pause, inverts it, pauses game (timescale),
+        // game events sends off a message that pause menu listens for to toggle pause state
     }
 }
