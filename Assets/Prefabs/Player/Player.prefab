@@ -56812,11 +56812,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a10854e5a365aa458ebaef8d5c34460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 8
-  m_jumpForce: 18
-  m_lowerGravValue: -12
-  m_apexGravValue: -6
-  m_highGravValue: -15
+  m_moveSpeed: 6
+  m_jumpForce: 16
+  m_lowerGravValue: -15
+  m_apexGravValue: -10
+  m_highGravValue: -20
   m_groundCheckTransform: {fileID: 6575185594403553813}
   m_groundLayer:
     serializedVersion: 2
