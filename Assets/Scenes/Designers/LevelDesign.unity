@@ -159,6 +159,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 806169417569996131, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_LinearDamping
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5223547158863069099, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_Name
       value: Player
