@@ -44,7 +44,9 @@ public class PG_PlatformGenerator : MonoBehaviour
     [HideInInspector]
     public int m_ySpawnLocation = 1;
     [HideInInspector]
-    public int m_platformSpawnSize = 1;
+    public int m_platformXSpawnSize = 1;
+    [HideInInspector]
+    public int m_platformYSpawnSize = 1;
     [HideInInspector]
     public PG_GridMap m_currentGrid;
     [HideInInspector]
@@ -247,7 +249,7 @@ public class PG_PlatformGenerator : MonoBehaviour
     /// <summary>
     /// Spawns platform from left most point
     /// </summary>
-    public void SpawnPlatformAtCoords(int x, int y, int size)
+    public void SpawnPlatformAtCoords(int x, int y, int xSize, int ySize)
     {
         PG_GridMap roomGrid = m_currentRoom.GetComponent<PG_GridMap>();
         if (!roomGrid)
@@ -260,19 +262,22 @@ public class PG_PlatformGenerator : MonoBehaviour
             Debug.Log("Can't spawn platform, spawn location not valid");
             return;
         }
-        if (x + size >= roomGrid.m_width)
+        if (x + xSize >= roomGrid.m_width)
         {
             Debug.Log("Can't spawn platform, Would overlap wall");
             return;
         }
         //loop though and check if platforms overlap
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < ySize; i++)
         {
-            PG_GridMap.Cell currentCell = roomGrid.m_grid[x + i, y];
-            if (currentCell.m_blockType != PG_GridMap.BLOCK_TYPE.NONE)
+            for (int j = 0; j < xSize; j++)
             {
-                Debug.Log("Can't spawn platform, overlapping other platform");
-                return;
+                PG_GridMap.Cell currentCell = roomGrid.m_grid[x + j, y + i];
+                if (currentCell.m_blockType != PG_GridMap.BLOCK_TYPE.NONE)
+                {
+                    Debug.Log("Can't spawn platform, overlapping other platform");
+                    return;
+                }
             }
         }
         PG_PlatformEnd endFab = m_endToSpawn;
@@ -294,34 +299,37 @@ public class PG_PlatformGenerator : MonoBehaviour
         platformContainer.AddComponent<PG_PlatformContainer>();
         platformContainer.GetComponent<PG_PlatformContainer>().m_generator = this;
         platformContainer.GetComponent<PG_PlatformContainer>().m_room = roomGrid;
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < ySize; i++)
         {
+            for (int j = 0; j < xSize; j++)
+            {
 
-            if (i == 0 || i == size - 1)
-            {
-                Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + i, y);
-                PG_PlatformEnd endPlatform = PG_PlatformEnd.Instantiate(endFab, this.transform.position + coords, this.transform.rotation);
-                endPlatform.name = "Platform " + i;
-                roomGrid.m_grid[x + i, y].SetContents(endPlatform.gameObject);
-                roomGrid.m_grid[x + i, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_END);
-                endPlatform.SetCoordinates(x + i, y);
-                //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_END}");
-                endPlatform.transform.localScale = Vector3.one * m_scale;
-                endPlatform.transform.SetParent(platformContainer.gameObject.transform, false);
-                endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
-            }
-            else
-            {
-                Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + i, y);
-                PG_PlatformMiddle middlePlatform = PG_PlatformMiddle.Instantiate(middleFab, this.transform.position + coords, this.transform.rotation);
-                middlePlatform.name = "Platform " + i;
-                roomGrid.m_grid[x + i, y].SetContents(middlePlatform.gameObject);
-                roomGrid.m_grid[x + i, y].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
-                middlePlatform.SetCoordinates(x + i, y);
-                //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE}");
-                middlePlatform.transform.localScale = Vector3.one * m_scale;
-                middlePlatform.transform.SetParent(platformContainer.gameObject.transform, false);
-                middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
+                if (j == 0 || j == xSize - 1)
+                {
+                    Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + j, y + i);
+                    PG_PlatformEnd endPlatform = PG_PlatformEnd.Instantiate(endFab, this.transform.position + coords, this.transform.rotation);
+                    endPlatform.name = "Platform " + j;
+                    roomGrid.m_grid[x + j, y + i].SetContents(endPlatform.gameObject);
+                    roomGrid.m_grid[x + j, y + i].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_END);
+                    endPlatform.SetCoordinates(x + j, y + i);
+                    //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_END}");
+                    endPlatform.transform.localScale = Vector3.one * m_scale;
+                    endPlatform.transform.SetParent(platformContainer.gameObject.transform, false);
+                    endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
+                }
+                else
+                {
+                    Vector3 coords = roomGrid.CalculateWorldPositionFromCoords(x + j, y + i);
+                    PG_PlatformMiddle middlePlatform = PG_PlatformMiddle.Instantiate(middleFab, this.transform.position + coords, this.transform.rotation);
+                    middlePlatform.name = "Platform " + j;
+                    roomGrid.m_grid[x + j, y + i].SetContents(middlePlatform.gameObject);
+                    roomGrid.m_grid[x + j, y + i].SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
+                    middlePlatform.SetCoordinates(x + j, y + i);
+                    //Debug.Log($"Tile number {x + i}, {y} set to {PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE}");
+                    middlePlatform.transform.localScale = Vector3.one * m_scale;
+                    middlePlatform.transform.SetParent(platformContainer.gameObject.transform, false);
+                    middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
+                }
             }
         }
         platformContainer.transform.SetParent(roomGrid.gameObject.transform, false);
@@ -341,7 +349,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                 return;
             }
             toDelete = m_platformUndoStack.Pop();
-            if(toDelete == null)
+            if (toDelete == null)
             {
                 Debug.Log("Tried to Undo platform that has already been deleted, skipped to next in stack");
             }

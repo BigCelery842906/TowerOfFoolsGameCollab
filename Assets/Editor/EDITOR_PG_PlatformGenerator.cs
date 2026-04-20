@@ -22,7 +22,8 @@ public class EDITOR_PG_PlatformGenerator : Editor
     SerializedProperty middle;
     SerializedProperty xPos;
     SerializedProperty yPos;
-    SerializedProperty platformSize;
+    SerializedProperty platformXSize;
+    SerializedProperty platformYSize;
 
     PG_GridMap m_currentGrid;
     PG_PlatformGenerator m_generator;
@@ -34,7 +35,8 @@ public class EDITOR_PG_PlatformGenerator : Editor
         middle = serializedObject.FindProperty("m_middleToSpawn");
         xPos = serializedObject.FindProperty("m_xSpawnLocation");
         yPos = serializedObject.FindProperty("m_ySpawnLocation");
-        platformSize = serializedObject.FindProperty("m_platformSpawnSize");
+        platformXSize = serializedObject.FindProperty("m_platformXSpawnSize");
+        platformYSize = serializedObject.FindProperty("m_platformYSpawnSize");
 
 
 
@@ -67,25 +69,27 @@ public class EDITOR_PG_PlatformGenerator : Editor
             int maxY = Mathf.Max(1, m_currentGrid.m_height - 1);
             int currentX = (xPos != null) ? xPos.intValue : 1;
             int currentY = (yPos != null) ? yPos.intValue : 1;
-            int maxSize = Mathf.Max(1, m_currentGrid.m_width - currentX);
+            int maxXSize = Mathf.Max(1, m_currentGrid.m_width - currentX);
+            int maxYSize = Mathf.Max(1, m_currentGrid.m_height - currentY);
 
 
             xPos.intValue = EditorGUILayout.IntSlider(new GUIContent("X Spawn Location"), currentX, 1, maxX);
             yPos.intValue = EditorGUILayout.IntSlider(new GUIContent("Y Spawn Location"), yPos.intValue, 1, maxY);
-            platformSize.intValue = EditorGUILayout.IntSlider(new GUIContent("Platform Size"), platformSize.intValue, 1, maxSize - 1);
-            if(GUILayout.Button(new GUIContent("Spawn Platform")))
+            platformXSize.intValue = EditorGUILayout.IntSlider(new GUIContent("Platform X Size"), platformXSize.intValue, 1, maxXSize - 1);
+            platformYSize.intValue = EditorGUILayout.IntSlider(new GUIContent("Platform Y Size"), platformYSize.intValue, 1, maxYSize - 1);
+            if (GUILayout.Button(new GUIContent("Spawn Platform")))
             {
-                generator.SpawnPlatformAtCoords(generator.m_xSpawnLocation, generator.m_ySpawnLocation, generator.m_platformSpawnSize);
+                generator.SpawnPlatformAtCoords(generator.m_xSpawnLocation, generator.m_ySpawnLocation, generator.m_platformXSpawnSize, generator.m_platformYSpawnSize);
             }
             GUILayout.Space(20);
-            if(m_warningStyle == null)
+            if (m_warningStyle == null)
             {
                 m_warningStyle = new GUIStyle();
             }
             m_warningStyle.normal.textColor = UnityEngine.Color.red;
             GUILayout.Label("WARNING - DO NOT USE IN CONJUNCTION WITH PLATFORM CONTAINER DELETE BUTTON", m_warningStyle);
             GUILayout.Label("ONLY USE IMMEDIATELY AFTER CREATION OF A PLATFORM", m_warningStyle);
-            if(GUILayout.Button(new GUIContent("Undo Platform Placement")))
+            if (GUILayout.Button(new GUIContent("Undo Platform Placement")))
             {
                 generator.UndoPlatformPlacement();
             }
@@ -102,22 +106,27 @@ public class EDITOR_PG_PlatformGenerator : Editor
 
         int currentX = m_generator.m_xSpawnLocation;
         int currentY = m_generator.m_ySpawnLocation;
-        int size = m_generator.m_platformSpawnSize;
+        int sizeX = m_generator.m_platformXSpawnSize;
+        int sizeY = m_generator.m_platformYSpawnSize;
         float worldScale = grid.GetWorldScale();
 
         UnityEngine.Color prev = Handles.color;
         Handles.color = UnityEngine.Color.cyan;
-        if(grid.m_roomComplete)
+        if (grid.m_roomComplete)
         {
 
-        for (int i = 0; i < size; i++)
-        {
-            
-            Vector2 pos = grid.GetWorldPosFromCell(currentX + i, currentY);
-            Vector3 wireframePos = new Vector3(pos.x, pos.y, 0f);
-            Vector3 wireframeSize = Vector3.one * worldScale;
-            Handles.DrawWireCube(wireframePos, wireframeSize);
-        }
+            for (int i = 0; i < sizeY; i++)
+            {
+
+                for (int j = 0; j < sizeX; j++)
+                {
+
+                    Vector2 pos = grid.GetWorldPosFromCell(currentX + j, currentY + i);
+                    Vector3 wireframePos = new Vector3(pos.x, pos.y, 0f);
+                    Vector3 wireframeSize = Vector3.one * worldScale;
+                    Handles.DrawWireCube(wireframePos, wireframeSize);
+                }
+            }
         }
 
         Handles.color = prev;

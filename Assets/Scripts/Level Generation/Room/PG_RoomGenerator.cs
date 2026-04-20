@@ -254,9 +254,7 @@ public class PG_RoomGenerator : MonoBehaviour
         block.transform.SetParent(grid.gameObject.transform, false);
         if (y == 0 || y == grid.m_height - 1)
         {
-            LayerMask floorLayer = LayerMask.GetMask("Ground");
             block.gameObject.layer = LayerMask.NameToLayer( "Ground" );
-
         }
 
     }
