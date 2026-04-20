@@ -26,6 +26,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
 
     PG_GridMap m_currentGrid;
     PG_PlatformGenerator m_generator;
+    GUIStyle m_warningStyle;
     void OnEnable()
     {
 
@@ -75,6 +76,18 @@ public class EDITOR_PG_PlatformGenerator : Editor
             if(GUILayout.Button(new GUIContent("Spawn Platform")))
             {
                 generator.SpawnPlatformAtCoords(generator.m_xSpawnLocation, generator.m_ySpawnLocation, generator.m_platformSpawnSize);
+            }
+            GUILayout.Space(20);
+            if(m_warningStyle == null)
+            {
+                m_warningStyle = new GUIStyle();
+            }
+            m_warningStyle.normal.textColor = UnityEngine.Color.red;
+            GUILayout.Label("WARNING - DO NOT USE IN CONJUNCTION WITH PLATFORM CONTAINER DELETE BUTTON", m_warningStyle);
+            GUILayout.Label("ONLY USE IMMEDIATELY AFTER CREATION OF A PLATFORM", m_warningStyle);
+            if(GUILayout.Button(new GUIContent("Undo Platform Placement")))
+            {
+                generator.UndoPlatformPlacement();
             }
 
         }
