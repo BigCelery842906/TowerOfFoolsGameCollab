@@ -466,7 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_uiDocument: {fileID: 1868294717}
   m_menuShownByDefault: 1
-  m_settingsMenuUiDocument: {fileID: 0}
+  m_settingsMenuManager: {fileID: 1968318110}
   m_useSceneBuildIndex: 0
   m_mainMenuSceneBuildIndex: 0
   m_mainMenuSceneName: MainMenu
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_uiDocument: {fileID: 159457394}
   m_menuShownByDefault: 0
-  m_otherMenuManager: {fileID: 0}
+  m_otherMenuManager: {fileID: 1968318108}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
