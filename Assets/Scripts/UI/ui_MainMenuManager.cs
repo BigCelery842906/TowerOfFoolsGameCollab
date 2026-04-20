@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 
 public class ui_MainMenuManager : ui_BaseMenuManager
 {
+    [Header("Main Menu UI Components")]
+    [SerializeField] private ui_SettingsMenuManager m_settingsMenuManager;
+    
     [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
     
@@ -25,8 +28,11 @@ public class ui_MainMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_Settings()
     {
-        // TODO: Settings button implementation
-        Debug.Log("Settings Button Clicked, implementation todo");
+        if (!m_settingsMenuManager) return;
+        
+        // Hide the current menu and show the settings menu
+        m_settingsMenuManager.ShowMenu();
+        HideMenu();
     }
 
     private void HandleButtonClicked_Play()

@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_uiDocument: {fileID: 573227369}
+  m_menuShownByDefault: 1
   m_useSceneBuildIndexes: 0
   m_replaySceneBuildIndex: 0
   m_replaySceneName: Game

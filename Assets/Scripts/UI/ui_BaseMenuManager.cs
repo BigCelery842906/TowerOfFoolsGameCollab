@@ -10,9 +10,12 @@ namespace UI
         [Header("UI Settings")]
         [Tooltip("The UI Document for the menu.")]
         [SerializeField] protected UIDocument m_uiDocument;
+
+        [Tooltip("Whether the menu is shown or hidden when the scene loads.")]
+        [SerializeField] private bool m_menuShownByDefault = false;
         
         private Dictionary<Button, Action> m_buttonCallbacks = new Dictionary<Button, Action>();
-
+        
         protected virtual void Awake()
         {
             // If the UI document is not set, warn about it
@@ -21,6 +24,15 @@ namespace UI
                 throw new UnityException($"UI Document is invalid for: {GetType().Name}");
             }
 
+            if (m_menuShownByDefault)
+            {
+                ShowMenu();
+            }
+            else
+            {
+                HideMenu();
+            }
+            
             InitialiseMenuManager();
         }
 
@@ -30,11 +42,18 @@ namespace UI
         // Button binding helper to bind a callback to a button
         protected void BindButton(string documentButtonName, Action callback)
         {
+            // Guard if the document is not available (in a scenario where the gameobject is disabled, etc)
+            if (m_uiDocument == null) return;
+            if (m_uiDocument.rootVisualElement == null) return;
+            
             Button button = m_uiDocument.rootVisualElement.Q<Button>(documentButtonName);
             if (button == null)
             {
                 throw new UnityException($"UI Document button {documentButtonName} is invalid in: {GetType().Name}");
             }
+
+            // Cancel out if this button has already been bound
+            if (m_buttonCallbacks.ContainsKey(button)) return;
 
             // Bind and track the callback
             button.clicked += callback;
