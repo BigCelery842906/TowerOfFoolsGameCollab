@@ -27,6 +27,8 @@ public class p_PlayerPickupManager : MonoBehaviour
     [Tooltip("This is where projectile like daggers will be fired from")]
     [SerializeField] private Transform m_firingPosition;
 
+    private p_playerAnimControl m_playerAnim;
+
     private bool m_isHoldingPickup = false;
     private bool m_hasInteractablePickup = false;
     private BasePickup interactablePickup; //this is sometimes null

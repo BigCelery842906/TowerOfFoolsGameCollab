@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class p_playerAnimControl : MonoBehaviour
@@ -19,5 +20,30 @@ public class p_playerAnimControl : MonoBehaviour
     public void SetAnimJump(float jumpVel)
     {
         m_anim.SetFloat("JumpFloat",jumpVel);
+    }
+
+    /// <summary>
+    /// [Subject to change] - atm 0 = knife throw, 0.5 = push
+    /// </summary>
+    /// <param name="pickupValue"></param>
+    /// <returns></returns>
+    public void SetPickupAnim(float pickupValue)
+    {
+        if(pickupValue != 0 || pickupValue != 0.5)
+        {
+            m_anim.SetBool("pickup", false);
+        }
+
+        m_anim.SetBool("pickup", true);
+        m_anim.SetFloat("pickupFloat", pickupValue);
+
+        StartCoroutine(C_WaitForPickupAnim());
+    }
+
+    private IEnumerator C_WaitForPickupAnim()
+    {
+        yield return new WaitForSeconds(1);
+
+        m_anim.SetBool("pickup", false);
     }
 }
