@@ -112,9 +112,6 @@ public class p_PlayerController : MonoBehaviour
 
     private void Handle_Pause(InputAction.CallbackContext ctx)
     {
-        // tells game events pause was fired
-        
-        // game events handles pause, inverts it, pauses game (timescale),
-        // game events sends off a message that pause menu listens for to toggle pause state
+        e_GlobalData.instance.TogglePause();
     }
 }

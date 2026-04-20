@@ -103,4 +103,10 @@ public class e_GlobalData : MonoBehaviour
         m_IsPaused = !m_IsPaused;
         return m_IsPaused;
     }
+
+    public void SetPause(bool isPaused)
+    {
+        m_IsPaused = isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+    }
 }

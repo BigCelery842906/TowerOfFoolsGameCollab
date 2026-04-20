@@ -27,8 +27,8 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_Continue()
     {
-        // TODO: continue button
-        Debug.Log("continue Button Clicked, implementation todo");
+        HideMenu();
+        e_GlobalData.instance.SetPause(false);
     }
 
     private void HandleButtonClicked_Settings()
