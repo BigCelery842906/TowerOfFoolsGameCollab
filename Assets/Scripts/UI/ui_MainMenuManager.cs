@@ -18,8 +18,15 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     protected override void InitialiseMenuManager()
     {
         BindButton("play-btn", HandleButtonClicked_Play);
+        BindButton("settings-btn", HandleButtonClicked_Settings);
         BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
         BindButton("quit-btn", HandleButtonClicked_Quit);
+    }
+
+    private void HandleButtonClicked_Settings()
+    {
+        // TODO: Settings button implementation
+        Debug.Log("Settings Button Clicked, implementation todo");
     }
 
     private void HandleButtonClicked_Play()
