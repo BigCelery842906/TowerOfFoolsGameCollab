@@ -8,7 +8,7 @@ public class p_playerAnimControl : MonoBehaviour
     private void Awake()
     {
         m_anim = GetComponent<Animator>();
-        m_RB = GetComponentInParent<Rigidbody>();
+        m_RB = GetComponentInParent<Rigidbody>(); 
     }
 
     public void SetAnimMove(bool isMoving)

@@ -9,6 +9,7 @@ using UnityEngine;
 /// </summary>
 public class p_PlayerPickupManager : MonoBehaviour
 {
+    public event Action OnPickupUsed;
     public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
 
     public event Action OnShieldUsed; 
@@ -45,6 +46,12 @@ public class p_PlayerPickupManager : MonoBehaviour
         OnUseInteractablePickup?.Invoke();
     }
 
+    public void UsedPickup()
+    {
+        //broke if i put it in InteractablePickUp
+        OnPickupUsed?.Invoke();
+    }
+
 
     #region Public Set Functions
 
@@ -72,6 +79,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         if(!shield)
         {
             OnShieldUsed?.Invoke();
+            OnPickupUsed?.Invoke();
         }
     }
 
