@@ -18,13 +18,13 @@ public class PG_GenerationManager : MonoBehaviour
     public int m_desiredChunkWidth = 16;
     [SerializeField]
     public int m_desiredChunkHeight = 9;
-    public int m_chunksPerRoom = 3;
-    public int m_chunkSizeMultiplier = 1;
+    public int m_chunksPerRoom = 6;
+    public int m_chunkSizeMultiplier = 2;
     public GameObject m_currentRoom;
     public bool m_spawnPowerups = false;
     public float m_powerupSpawnChance = 0.0f;
 
-    public float m_worldScale;
+    public float m_worldScale = 1.5f;
 
     private PG_RoomGenerator m_roomGenerator;
     private PG_PlatformGenerator m_platformGenerator;
