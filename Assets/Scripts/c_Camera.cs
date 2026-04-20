@@ -2,9 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
+//WRITTEN BY CONNOR SAYSELL - DO NOT BREAK PLEASE (IT TOOK FAR TOO LONG TO GET WORKING)
 public class c_Camera : MonoBehaviour
 {
-
+    
     // Camera Plan for Script
     //     Average Position - TODO: DONE
     //          If all active players are within the average boundary, then track average position
@@ -27,9 +28,7 @@ public class c_Camera : MonoBehaviour
     //     TODO: Something when all players are dead. Not sure how I missed that
 
 
-    [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. It can be changed to not do this if needed.")]
-    [SerializeField]
-    List<GameObject> m_PlayersToTrack;
+    
     [Header("Buffers")]
     [Header("This will not visually update while not in play mode.")]
     [Tooltip("What percentage of the screen the Y buffer should be. This is a half value, as it will apply this to both the top and bottom")]
@@ -54,6 +53,11 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private bool m_DebugDraw;
     
     [Header("Debug Values - Not Editable")]
+    
+    [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. This gets taken from the global Data Script, edit from there.")]
+    [SerializeField]
+    List<GameObject> m_PlayersToTrack;
+    
     [Tooltip("These are the players who are considered 'Active', AKA they are not dead. These are the players the camera is trying to track.")]
     [SerializeField] List<GameObject> m_ActivePlayers;
 
@@ -75,6 +79,9 @@ public class c_Camera : MonoBehaviour
     [SerializeField] private float m_XBufferWorld = 2.67f;
     [SerializeField] private float m_YBufferWorld = 2.0f;
 
+    [Tooltip("This gets called at the start of the scene load, to scale with the world. If you want to change how much the camera sees, use the min and max camera zoom.")]
+    [SerializeField] private float m_WorldScale = 1.0f;
+
     enum CameraStates
     {
         trackingHighest,
@@ -86,14 +93,8 @@ public class c_Camera : MonoBehaviour
     {
         m_Camera = GetComponent<Camera>();
 
-        GameObject[] tempGO = GameObject.FindGameObjectsWithTag("Player");
-        // This would be the capsule component of the player, so I need to get the parent for the actual physical player
-
-        m_PlayersToTrack = new List<GameObject>();
-        for (int i = 0; i < tempGO.Length; i++)
-        {
-            m_PlayersToTrack.Add(tempGO[i].transform.parent.gameObject);
-        }
+        m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(0));
+        m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
 
         m_ActivePlayers.Clear();
         for (int i = 0; i < m_PlayersToTrack.Count; i++)
@@ -106,6 +107,7 @@ public class c_Camera : MonoBehaviour
 
         m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
         
+        m_WorldScale = e_GlobalData.instance.GetWorldScale();
     }
 
     void Update()
@@ -237,7 +239,7 @@ public class c_Camera : MonoBehaviour
 
         m_DesiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
 
-        m_Camera.orthographicSize = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom, m_MaxCameraZoom);
+        m_Camera.orthographicSize = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
     }
 
 
