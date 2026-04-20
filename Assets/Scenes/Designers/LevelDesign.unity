@@ -224,6 +224,10 @@ PrefabInstance:
       propertyPath: m_platformGenMethod
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6856678357482579456, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_chunksPerRoom
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9026932992449788629, guid: 343810732bd90e9478f046157e23c5be, type: 3}
       propertyPath: m_Name
       value: PG_GenerationManager
@@ -340,11 +344,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7452281482468420698, guid: b2b44cf43f0b98042b9a295e3681728a, type: 3}
       propertyPath: m_WorldScale
-      value: 3.93
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7452281482468420698, guid: b2b44cf43f0b98042b9a295e3681728a, type: 3}
       propertyPath: m_PlayerScale
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8264070355954900946, guid: b2b44cf43f0b98042b9a295e3681728a, type: 3}
       propertyPath: m_Name
