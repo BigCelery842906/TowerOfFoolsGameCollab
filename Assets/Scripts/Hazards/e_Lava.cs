@@ -20,6 +20,12 @@ public class e_Lava : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, m_startingYPosition, transform.position.z);
         }
+        
+        //TODO: DISCUSS WHETHER THIS GETS PUTS IN.
+        
+        // Vector3 currentScale = transform.localScale; 
+        // float scale = e_GlobalData.instance.GetWorldScale();
+        // transform.localScale = new Vector3(currentScale.x * scale, currentScale.y * scale, currentScale.z * scale);
     }
 
     void Update()
@@ -62,7 +68,7 @@ public class e_Lava : MonoBehaviour
                 Debug.LogError("Player found but ID not returned", other.gameObject);
                 return;
             }
-            e_GameEvents.instance.PlayerHealthUpdate(false, 100, playerID);
+            e_GameEvents.instance.PlayerHealthUpdate(-100, playerID);
         }
     }
 }
