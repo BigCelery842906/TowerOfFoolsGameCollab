@@ -426,7 +426,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1038660582
+--- !u!1001 &1498807579
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -474,10 +474,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5043704889533043654, guid: 343810732bd90e9478f046157e23c5be, type: 3}
-      propertyPath: m_platformGenMethod
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9026932992449788629, guid: 343810732bd90e9478f046157e23c5be, type: 3}
       propertyPath: m_Name
       value: PG_GenerationManager
@@ -494,4 +490,4 @@ SceneRoots:
   - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 1038660582}
+  - {fileID: 1498807579}

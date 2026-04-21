@@ -179,6 +179,7 @@ public class PG_RoomGenerator : MonoBehaviour
                         coords.x = w; coords.y = h;
                         int id = UnityEngine.Random.Range(0, numOfPossibleWallBlocks);
                         SpawnBlock(w, h, id, ref grid);
+
                         break;
                     default:
                         break;
@@ -251,6 +252,10 @@ public class PG_RoomGenerator : MonoBehaviour
         Vector2 gridLoc = new Vector2(x, y);
         block.SetCoords(gridLoc);
         block.transform.SetParent(grid.gameObject.transform, false);
+        if (y == 0 || y == grid.m_height - 1)
+        {
+            block.gameObject.layer = LayerMask.NameToLayer( "Ground" );
+        }
 
     }
 
