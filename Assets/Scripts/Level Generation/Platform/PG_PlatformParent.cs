@@ -15,6 +15,8 @@ public class PG_PlatformParent : MonoBehaviour
     public float m_worldScale;
     //[NonSerialized]
     public bool m_hasPowerup = false;
+    int m_xCoord =0;
+    int m_yCoord=0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,7 +37,15 @@ public class PG_PlatformParent : MonoBehaviour
         m_hasPowerup = true;
         return true;
     }
-
+    public void SetCoordinates(int x, int y)
+    {
+        m_xCoord = x;
+        m_yCoord = y;
+    }
+    public void ClearReferenceInGrid(PG_GridMap grid)
+    {
+        grid.m_grid[m_xCoord, m_yCoord].ClearContents();
+    }
 
     // Update is called once per frame
     void Update()
