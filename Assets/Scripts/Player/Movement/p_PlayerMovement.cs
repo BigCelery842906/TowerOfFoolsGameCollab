@@ -120,7 +120,7 @@ public class p_PlayerMovement : MonoBehaviour
                         Physics.gravity = m_highGrav;
                         break;
                     case > -0.1f:
-                        m_playerAnim.SetAnimJump(0.1f);
+                        m_playerAnim.SetAnimJump(1);
                         break;
                     default: break;
                 }

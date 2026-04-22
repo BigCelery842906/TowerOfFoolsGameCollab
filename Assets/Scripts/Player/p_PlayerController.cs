@@ -127,8 +127,16 @@ public class p_PlayerController : MonoBehaviour
     private void Handle_Taunt(InputAction.CallbackContext ctx)
     {
         float tempF = Random.Range(0.0f, 1.0f);
+        if (tempF >= 0.5)
+        {
+            tempF = 1;
+        }
+        else
+        {
+            tempF = 0;
+        }
 
-        m_playerAnim.SetTauntFloat(tempF);
+            m_playerAnim.SetTauntFloat(tempF);
     }
 
     private void Handle_Pause(InputAction.CallbackContext ctx)

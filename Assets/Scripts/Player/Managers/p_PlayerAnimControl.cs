@@ -5,17 +5,21 @@ public class p_playerAnimControl : MonoBehaviour
 {
     private Animator m_anim;
     private Rigidbody m_RB;
+    private p_PlayerPickupManager m_playerPickup; //for setting stun
 
     private void Awake()
     {
         m_anim = GetComponent<Animator>();
         m_RB = GetComponentInParent<Rigidbody>();
+        m_playerPickup = GetComponentInParent<p_PlayerPickupManager>();
 
         m_anim.SetBool("taunting", false);
     }
 
     public void SetTauntFloat(float taunt)
     {
+        StopAllCoroutines();
+
         m_anim.SetBool("taunting",true);
         m_anim.SetFloat("Taunt", taunt);
 
@@ -44,6 +48,7 @@ public class p_playerAnimControl : MonoBehaviour
             m_anim.SetBool("pickup", false);
         }
 
+
         m_anim.SetBool("pickup", true);
         m_anim.SetFloat("pickupFloat", pickupValue);
 
@@ -59,9 +64,10 @@ public class p_playerAnimControl : MonoBehaviour
 
     private IEnumerator C_WaitForAnim(float seconds, string boolName)
     {
-        yield return new WaitForSeconds(seconds);
+        //transform.parent.rotation = new Quaternion(0, 180, 0, 0);
+        m_playerPickup.SetStun(seconds);
 
-        //transform.rotation = Quaternion.LookRotation(m_moveDir);
+        yield return new WaitForSeconds(seconds);
 
         m_anim.SetBool(boolName, false);
     }
