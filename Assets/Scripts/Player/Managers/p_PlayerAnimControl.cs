@@ -9,7 +9,17 @@ public class p_playerAnimControl : MonoBehaviour
     private void Awake()
     {
         m_anim = GetComponent<Animator>();
-        m_RB = GetComponentInParent<Rigidbody>(); 
+        m_RB = GetComponentInParent<Rigidbody>();
+
+        m_anim.SetBool("taunting", false);
+    }
+
+    public void SetTauntFloat(float taunt)
+    {
+        m_anim.SetBool("taunting",true);
+        m_anim.SetFloat("Taunt", taunt);
+
+        StartCoroutine(C_WaitForAnim(1, "taunting"));
     }
 
     public void SetAnimMove(bool isMoving)
@@ -41,6 +51,13 @@ public class p_playerAnimControl : MonoBehaviour
     }
 
     private IEnumerator C_WaitForPickupAnim()
+    {
+        yield return new WaitForSeconds(1);
+
+        m_anim.SetBool("pickup", false);
+    }
+
+    private IEnumerator C_WaitForAnim(float seconds, string boolName)
     {
         yield return new WaitForSeconds(1);
 
