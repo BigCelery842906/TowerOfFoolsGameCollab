@@ -59,8 +59,10 @@ public class p_playerAnimControl : MonoBehaviour
 
     private IEnumerator C_WaitForAnim(float seconds, string boolName)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(seconds);
 
-        m_anim.SetBool("pickup", false);
+        //transform.rotation = Quaternion.LookRotation(m_moveDir);
+
+        m_anim.SetBool(boolName, false);
     }
 }
