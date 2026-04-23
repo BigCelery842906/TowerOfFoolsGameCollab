@@ -6,14 +6,14 @@ public class e_GlobalData : MonoBehaviour
 {
 
     public static e_GlobalData instance;
-    [SerializeField] float m_WorldScale;
-    [SerializeField] private float m_PlayerScale;
+    [SerializeField] float m_WorldScale = 1;
+    [SerializeField] private float m_PlayerScale = 1;
     [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. It can be changed to not do this if needed.")]
     [SerializeField] private List<GameObject> m_PlayersToTrack;
-    [SerializeField] private float m_TimeSpentInCurrentRoom;
-    [SerializeField] private float m_TimeSpentInGame;
+    [SerializeField] private float m_TimeSpentInCurrentRoom = 0;
+    [SerializeField] private float m_TimeSpentInGame = 0 ;
 
-    [SerializeField] private bool m_IsPaused;
+    [SerializeField] private bool m_IsPaused = false;
 
     void Awake()
     {
