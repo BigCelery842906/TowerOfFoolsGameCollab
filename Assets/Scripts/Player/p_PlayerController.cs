@@ -82,6 +82,9 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerTwo.Jump.performed -= Handle_Jump;
             m_playerInputs.AM_PlayerTwo.Jump.canceled -= Handle_JumpCancelled;
         }
+        
+        // unbind the other non-specific player actions
+        m_playerInputs.Menus.Pause.performed -= Handle_Pause;
     }
 
     /// <summary>
