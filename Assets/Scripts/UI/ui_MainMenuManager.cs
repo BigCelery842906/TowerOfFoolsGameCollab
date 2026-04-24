@@ -40,11 +40,11 @@ public class ui_MainMenuManager : ui_BaseMenuManager
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)
         {
-            sc_SceneManager.LoadSceneByIndex(m_sceneBuildIndex);
+            sc_SceneManager.LoadScene(m_sceneBuildIndex);
             return;
         }
         
-        sc_SceneManager.LoadSceneByName(m_sceneName);
+        sc_SceneManager.LoadScene(m_sceneName);
     }
 
     private void HandleButtonClicked_Scoreboard()

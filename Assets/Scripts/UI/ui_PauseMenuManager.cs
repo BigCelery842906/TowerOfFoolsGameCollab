@@ -42,10 +42,10 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)
         {
-            sc_SceneManager.LoadSceneByIndex(m_mainMenuSceneBuildIndex);
+            sc_SceneManager.LoadScene(m_mainMenuSceneBuildIndex);
             return;
         }
         
-        sc_SceneManager.LoadSceneByName(m_mainMenuSceneName);
+        sc_SceneManager.LoadScene(m_mainMenuSceneName);
     }
 }

@@ -32,21 +32,21 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
     {
         if (m_useSceneBuildIndexes)
         {
-            sc_SceneManager.LoadSceneByIndex(m_mainMenuSceneBuildIndex);
+            sc_SceneManager.LoadScene(m_mainMenuSceneBuildIndex);
             return;
         }
         
-        sc_SceneManager.LoadSceneByName(m_mainMenuSceneName);
+        sc_SceneManager.LoadScene(m_mainMenuSceneName);
     }
 
     private void HandleButtonClicked_Replay()
     {
         if (m_useSceneBuildIndexes)
         {
-            sc_SceneManager.LoadSceneByIndex(m_replaySceneBuildIndex);
+            sc_SceneManager.LoadScene(m_replaySceneBuildIndex);
             return;
         }
         
-        sc_SceneManager.LoadSceneByName(m_replaySceneName);
+        sc_SceneManager.LoadScene(m_replaySceneName);
     }
 }
