@@ -6,6 +6,7 @@
 
 
 
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,6 +31,9 @@ public class PG_GenerationManager : MonoBehaviour
     private PG_PlatformGenerator m_platformGenerator;
     private REGION m_currentRegion = REGION.ONE;
 
+    [HideInInspector]
+    public Action m_actionSpawnPowerups;
+
 
     private void Awake()
     {
@@ -43,12 +47,13 @@ public class PG_GenerationManager : MonoBehaviour
             Debug.Log("Room Generator not Loaded on Generation Manager");
         }
         m_platformGenerator = GetComponent<PG_PlatformGenerator>();
+        m_platformGenerator.m_genManager = this;
         if (!m_roomGenerator)
         {
             Debug.Log("Platform Generator not Loaded on Generation Manager");
         }
         RegenerateRoom();
-
+        m_actionSpawnPowerups += SpawnPowerups;
         //m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         //m_currentRoom.transform.SetParent(this.transform, false);
         //m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
@@ -154,7 +159,10 @@ public class PG_GenerationManager : MonoBehaviour
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         m_platformGenerator.m_xSpawnLocation = 1;
         m_platformGenerator.m_ySpawnLocation = 1;
-        if (m_spawnPowerups) SpawnPowerups();
+        if (m_platformGenerator.m_generationFinished)
+        {
+            if (m_spawnPowerups) SpawnPowerups();
+        }
         PrintGrid();
     }
 
