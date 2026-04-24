@@ -20,20 +20,33 @@ public class PG_PlatformGenerator : MonoBehaviour
     int m_randomHigh = 10;
 
     [SerializeField]
-    int m_platformYSpace = 2;
+    public int m_platformYSpace = 2;
     [SerializeField]
-    int m_DesiredPlatformXStep = 1;
+    public int m_DesiredPlatformXStep = 1;
     [SerializeField]
-    bool m_randomisePlatformXStep = false;
+    public bool m_randomisePlatformXStep = false;
     [SerializeField]
-    int m_maxPlatformRandomXStep = 2;
+    public int m_maxPlatformRandomXStep = 2;
     [SerializeField]
-    int m_minPlatformRandomXStep = 1;
+    public int m_minPlatformRandomXStep = 1;
+    [SerializeField]
+    int m_ZigZagMaxXVariation = 5;
+    [SerializeField]
+    public int m_ZigZagMinPlatformSize = 4;
+    [SerializeField]
+    public int m_ZigZagMaxPlatformSize = 4;
+    public int m_numberOfBonusPlatforms = 10;
+    public bool m_areBonusPlatformFixedSize = false;
+    public int m_bonusPlatformFixedSize = 3;
+    public int m_bonusPlatformMinSize = 2;
+    public int m_bonusPlatformMaxSize = 5;
+    public int m_bonusPlatformXSeperation = 2;
 
     [SerializeField]
     List<PG_PlatformMiddle> m_middles;
     [SerializeField]
     List<PG_PlatformEnd> m_ends;
+
 
     [HideInInspector]
     public PG_PlatformMiddle m_middleToSpawn;
@@ -52,14 +65,22 @@ public class PG_PlatformGenerator : MonoBehaviour
     [HideInInspector]
     GameObject m_currentRoom = null;
 
+
+    List<GameObject> m_platformList;
+
     Stack<GameObject> m_platformUndoStack;
 
     public PLATFORM_GENERATION_METHOD m_platformGenMethod = PLATFORM_GENERATION_METHOD.NONE;
     private float m_scale;
 
-    public void Start()
+    [SerializeField]
+    int m_playerJumpDistance = 3; //How far the player can jump, in number of blocks in grid
+
+    public void Awake()
     {
         m_platformUndoStack = new();
+        m_platformList = new();
+
     }
     public void GeneratePlatforms(GameObject room, float worldScale)
     {
@@ -79,6 +100,10 @@ public class PG_PlatformGenerator : MonoBehaviour
                 break;
             case PLATFORM_GENERATION_METHOD.CRITICAL_PATH:
                 CriticalPath(room);
+                break;
+            case PLATFORM_GENERATION_METHOD.ZIGZAG:
+                ZigZag(room);
+                SpawnBonusPlatforms();
                 break;
         }
     }
@@ -173,11 +198,274 @@ public class PG_PlatformGenerator : MonoBehaviour
 
 
     }
+
+    //void SpawnBonusPlatforms()
+    //{
+    //    PG_GridMap roomGrid = m_currentRoom.GetComponent<PG_GridMap>();
+    //    int attempts = 0;
+    //    int platformsSpawned = 0;
+    //    while (platformsSpawned < m_numberOfBonusPlatforms && attempts < m_numberOfBonusPlatforms + 50)
+    //    {
+    //        int platformSize;
+    //        if (m_areBonusPlatformFixedSize)
+    //        {
+    //            platformSize = UnityEngine.Random.Range(m_bonusPlatformMinSize, m_bonusPlatformMaxSize + 1);
+    //        }
+    //        else platformSize = m_bonusPlatformFixedSize;
+    //        int xPos = UnityEngine.Random.Range(2, roomGrid.m_width - 2);
+    //        int yPos = UnityEngine.Random.Range(m_platformYSpace, roomGrid.m_height - m_platformYSpace);
+    //        bool validSpawn = false;
+
+    //        while (SpawnPlatformAtCoords(xPos, yPos, platformSize, 1) && !validSpawn)
+    //        {
+    //            validSpawn = true;
+    //            GameObject platform = m_platformList[m_platformList.Count - 1];
+    //            for (int i = 0; i < platform.transform.childCount; i++)
+    //            {
+    //                GameObject platformBlock = platform.transform.GetChild(i).gameObject;
+    //                PG_PlatformParent platformScript = platformBlock.GetComponent<PG_PlatformParent>();
+    //                int blockX = platformScript.m_xCoord;
+    //                int blockY = platformScript.m_yCoord;
+    //                if (i == 0) //left most
+    //                {
+    //                    if (roomGrid.m_grid[blockX - 1, blockY].m_contents != null)
+    //                    {
+    //                        //not valid
+    //                        UndoPlatformPlacement();
+    //                        validSpawn = false;
+    //                        break;
+    //                    }
+    //                }
+    //                if (i == platform.transform.childCount - 1) //right most
+    //                {
+    //                    if (roomGrid.m_grid[blockX + 1, blockY].m_contents != null)
+    //                    {
+    //                        UndoPlatformPlacement();
+    //                        validSpawn = false;
+    //                        break;
+    //                    }
+    //                }
+    //                for (int j = 1; j < m_platformYSpace; j++)
+    //                {
+    //                    bool verticalValid = true;
+    //                    if (roomGrid.m_grid[blockX, blockY + j].m_contents != null ||
+    //                                        roomGrid.m_grid[blockX, blockY - j].m_contents != null)
+    //                    {
+    //                        UndoPlatformPlacement();
+    //                        verticalValid = false;
+    //                        break;
+    //                    }
+    //                    if (!verticalValid)
+    //                    {
+    //                        validSpawn = false;
+    //                        break;
+    //                    }
+    //                }
+
+
+    //            }
+    //            if (!validSpawn)
+    //            {
+    //                xPos = UnityEngine.Random.Range(2, roomGrid.m_width - 2);
+    //                yPos = UnityEngine.Random.Range(m_platformYSpace, roomGrid.m_height - m_platformYSpace);
+    //            }
+
+
+
+    //        }
+    //        attempts++;
+    //        if(attempts >= m_numberOfBonusPlatforms + 50)
+    //        {
+    //            Debug.Log("Too Many Failed Bonus Platform Spawns");
+    //        }
+    //    }
+    //}
+    void SpawnBonusPlatforms()
+    {
+        PG_GridMap roomGrid = m_currentRoom.GetComponent<PG_GridMap>();
+        int attempts = 0;
+        int platformsSpawned = 0;
+        int maxAttempts = m_numberOfBonusPlatforms + 50;
+
+        while (platformsSpawned < m_numberOfBonusPlatforms && attempts < maxAttempts)
+        {
+            attempts++;
+            int platformSize;
+            if (m_areBonusPlatformFixedSize)
+            {
+                platformSize = m_bonusPlatformFixedSize;
+            }
+            else
+            {
+                platformSize = UnityEngine.Random.Range(m_bonusPlatformMinSize, m_bonusPlatformMaxSize + 1);
+            }
+
+            int innerAttempts = 0;
+            const int MaxInnerAttempts = 8;
+            bool placedAndValid = false;
+
+            while (!placedAndValid && innerAttempts < MaxInnerAttempts)
+            {
+                innerAttempts++;
+                int xPos = UnityEngine.Random.Range(1, Mathf.Max(2, roomGrid.m_width - platformSize - 1));
+                int yPos = UnityEngine.Random.Range(m_platformYSpace, roomGrid.m_height - m_platformYSpace);
+
+                if (!SpawnPlatformAtCoords(xPos, yPos, platformSize, 1))
+                {
+
+                    continue;
+                }
+
+                GameObject platform = m_platformList[m_platformList.Count - 1];
+                bool spawnInvalid = false;
+
+                for (int i = 0; i < platform.transform.childCount; i++)
+                {
+                    GameObject platformBlock = platform.transform.GetChild(i).gameObject;
+                    PG_PlatformParent platformScript = platformBlock.GetComponent<PG_PlatformParent>();
+                    int blockX = platformScript.m_xCoord;
+                    int blockY = platformScript.m_yCoord;
+
+                    if (i == 0) //left most, check left
+                    {
+                        if (blockX - 1 >= 0 && roomGrid.m_grid[blockX - 1, blockY].m_contents != null)
+                        {
+                            spawnInvalid = true;
+                            break;
+                        }
+                    }
+
+                    if (i == platform.transform.childCount - 1) //right most, check right
+                    {
+                        if (blockX + 1 < roomGrid.m_width && roomGrid.m_grid[blockX + 1, blockY].m_contents != null)
+                        {
+                            spawnInvalid = true;
+                            break;
+                        }
+                    }
+
+                    for (int j = 1; j < m_platformYSpace; j++) // check up and down based on y step value
+                    {
+                        if (blockY + j < roomGrid.m_height && roomGrid.m_grid[blockX, blockY + j].m_contents != null)
+                        {
+                            spawnInvalid = true;
+                            break;
+                        }
+                        if (blockY - j >= 0 && roomGrid.m_grid[blockX, blockY - j].m_contents != null)
+                        {
+                            spawnInvalid = true;
+                            break;
+                        }
+                    }
+
+                    if (spawnInvalid) break;
+                }
+
+                if (spawnInvalid)
+                {
+
+                    UndoPlatformPlacement();
+                    continue;
+                }
+                placedAndValid = true;
+                platformsSpawned++;
+            }
+        }
+
+        if (attempts >= maxAttempts)
+        {
+            Debug.Log("Too Many Failed Bonus Platform Spawns");
+        }
+    }
+
+
     void CriticalPath(GameObject room)
     {
-        Debug.Log("Critical Path Platforms Not Yet Implemented");
-
+        LayerPlatforms(room);
+        int attempts = 1;
+        while (!IsPathCompleteable(room))
+        {
+            foreach (GameObject plat in m_platformList)
+            {
+                //clear incorrect path
+                UndoPlatformPlacement();
+            }
+            if (attempts > 50)
+            {
+                Debug.Log("Unable to create Critical Path, LayerPlatform method used instead");
+                LayerPlatforms(room);
+                break;
+            }
+            m_platformList.Clear();
+            //for now generate layer platforms
+            LayerPlatforms(room);
+            attempts++;
+        }
+        Debug.Log("Critical Path Platforms Not Yet Completed");
     }
+    void ZigZag(GameObject room)
+    {
+        PG_GridMap roomGrid = room.GetComponent<PG_GridMap>();
+        int roomW = roomGrid.m_width;
+        int roomH = roomGrid.m_height;
+        bool platformsFinished = false;
+
+
+        //set OOB for checking
+        int exitX = roomGrid.m_width + 1;
+
+        int exitY = roomGrid.m_height;
+        for (int i = 0; i < roomGrid.m_width; i++)
+        {
+            if (roomGrid.m_grid[i, exitY - 1].IsEmpty())
+            {
+                exitX = i;
+                break;
+            }
+        }
+        if (exitX > roomGrid.m_width)
+        {
+            Debug.Log("Can't Find Room Exit");
+            return;
+        }
+        int xPointer = exitX - 1;
+        int yPointer = exitY - (m_platformYSpace + 1);
+        SpawnPlatformAtCoords(xPointer, yPointer, 3, 1);
+        while (!platformsFinished)
+        {
+            int xVariation = UnityEngine.Random.Range(1, m_ZigZagMaxXVariation);
+            int platformSize = UnityEngine.Random.Range(m_ZigZagMinPlatformSize, m_ZigZagMaxPlatformSize);
+            bool reverse = false;
+            if (UnityEngine.Random.Range(0, 2) == 0) reverse = true;
+            switch (reverse)
+            {
+                case true:
+                    xPointer += xVariation;
+                    break;
+                case false:
+                    xPointer -= xVariation;
+                    break;
+            }
+            //xPointer += xVariation;
+            if (xPointer <= 0)
+            {
+                xPointer = m_ZigZagMaxXVariation;
+            }
+            if (xPointer + platformSize >= roomW - 1)
+            {
+                xPointer = roomW - platformSize - 1 - m_ZigZagMaxXVariation;
+            }
+            yPointer -= m_platformYSpace;
+            if (yPointer - (m_platformYSpace / 2) <= 0)
+            {
+                platformsFinished = true;
+                continue;
+            }
+            SpawnPlatformAtCoords(xPointer, yPointer, platformSize, 1);
+
+        }
+    }
+
 
     void CommitChanges(List<List<Change>> changes, GameObject room)
     {
@@ -241,31 +529,34 @@ public class PG_PlatformGenerator : MonoBehaviour
 
 
             }
+            m_platformUndoStack.Push(platformContainer);
             platformContainer.transform.SetParent(grid.gameObject.transform, false);
+            if (m_platformGenMethod == PLATFORM_GENERATION_METHOD.CRITICAL_PATH) m_platformList.Add(platformContainer);
 
         }
 
     }
+
     /// <summary>
     /// Spawns platform from left most point
     /// </summary>
-    public void SpawnPlatformAtCoords(int x, int y, int xSize, int ySize)
+    public bool SpawnPlatformAtCoords(int x, int y, int xSize, int ySize)
     {
         PG_GridMap roomGrid = m_currentRoom.GetComponent<PG_GridMap>();
         if (!roomGrid)
         {
             Debug.Log("Can't spawn platform, no grid attached to room");
-            return;
+            return false;
         }
         if ((x >= roomGrid.m_width && x < 1) || (y >= roomGrid.m_height && y < 1))
         {
             Debug.Log("Can't spawn platform, spawn location not valid");
-            return;
+            return false;
         }
         if (x + xSize >= roomGrid.m_width)
         {
             Debug.Log("Can't spawn platform, Would overlap wall");
-            return;
+            return false;
         }
         //loop though and check if platforms overlap
         for (int i = 0; i < ySize; i++)
@@ -276,7 +567,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                 if (currentCell.m_blockType != PG_GridMap.BLOCK_TYPE.NONE)
                 {
                     Debug.Log("Can't spawn platform, overlapping other platform");
-                    return;
+                    return false;
                 }
             }
         }
@@ -316,6 +607,7 @@ public class PG_PlatformGenerator : MonoBehaviour
                     endPlatform.transform.localScale = Vector3.one * m_scale;
                     endPlatform.transform.SetParent(platformContainer.gameObject.transform, false);
                     endPlatform.GetComponent<PG_PlatformEnd>().m_worldScale = m_scale;
+                    endPlatform.SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_END);
                 }
                 else
                 {
@@ -329,12 +621,15 @@ public class PG_PlatformGenerator : MonoBehaviour
                     middlePlatform.transform.localScale = Vector3.one * m_scale;
                     middlePlatform.transform.SetParent(platformContainer.gameObject.transform, false);
                     middlePlatform.GetComponent<PG_PlatformMiddle>().m_worldScale = m_scale;
+                    middlePlatform.SetType(PG_GridMap.BLOCK_TYPE.PLATFORM_MIDDLE);
                 }
             }
         }
         platformContainer.transform.SetParent(roomGrid.gameObject.transform, false);
 
         m_platformUndoStack.Push(platformContainer);
+        m_platformList.Add(platformContainer);
+        return true;
 
     }
     public void UndoPlatformPlacement()
@@ -367,12 +662,66 @@ public class PG_PlatformGenerator : MonoBehaviour
         Destroy(toDelete);
 
     }
+    bool IsPathCompleteable(in GameObject room)
+    {
+        //get current level exit coords
+        PG_GridMap roomGrid = room.GetComponent<PG_GridMap>();
+
+        //set OOB for checking
+        int exitX = roomGrid.m_width + 1;
+
+        int exitY = roomGrid.m_height;
+        for (int i = 0; i < roomGrid.m_width; i++)
+        {
+            if (roomGrid.m_grid[i, exitY - 1].IsEmpty())
+            {
+                exitX = i;
+                break;
+            }
+        }
+        if (exitX > roomGrid.m_width)
+        {
+            Debug.Log("Can't Find Room Exit");
+            return false;
+        }
+
+        //check player can reach exit from final platform
+        bool playerCanReachEndFromFinal = false;
+        GameObject finalPlatform = m_platformList[m_platformList.Count - 1];
+
+        for (int i = 0; i < finalPlatform.transform.childCount; i++)
+        {
+            GameObject plat = finalPlatform.transform.GetChild(i).gameObject;
+            PG_PlatformParent s = plat.GetComponent<PG_PlatformParent>();
+            float squDist = roomGrid.GetSquaredUnitDistanceBetweenCells(exitX, exitY, s.m_xCoord, s.m_yCoord);
+            Debug.Log("squ distance" + squDist);
+            Debug.Log("squ jump" + (m_playerJumpDistance * m_playerJumpDistance));
+            if (squDist < m_playerJumpDistance)
+            {
+                playerCanReachEndFromFinal = true;
+                break;
+            }
+        }
+
+        //check each platform is not directly above previous
+
+        //check player can reach platform from previous
+
+        //check player can reach first platform from floor
+
+        if (playerCanReachEndFromFinal)
+        {
+            return true;
+        }
+        else return false;
+    }
     public enum PLATFORM_GENERATION_METHOD
     {
         NONE,
         RANDOM,
         LAYER,
-        CRITICAL_PATH
+        CRITICAL_PATH,
+        ZIGZAG
     }
     struct Change
     {
