@@ -91,23 +91,14 @@ public class c_Camera : MonoBehaviour
 
     void Start()
     {
+        m_WorldScale = e_GlobalData.instance.GetWorldScale();
+        
         m_Camera = GetComponent<Camera>();
 
+        m_PlayersToTrack = new List<GameObject>();
         m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(0));
         m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
-
-        m_ActivePlayers.Clear();
-        for (int i = 0; i < m_PlayersToTrack.Count; i++)
-        {
-            if (m_PlayersToTrack[i].activeSelf)
-            {
-                m_ActivePlayers.Add(m_PlayersToTrack[i]);
-            }
-        }
-
-        m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
         
-        m_WorldScale = e_GlobalData.instance.GetWorldScale();
     }
 
     void Update()
@@ -239,7 +230,8 @@ public class c_Camera : MonoBehaviour
 
         m_DesiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
 
-        m_Camera.orthographicSize = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
+        m_CameraZoom = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
+        m_Camera.orthographicSize = m_CameraZoom;
     }
 
 
