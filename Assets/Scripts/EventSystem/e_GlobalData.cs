@@ -68,11 +68,16 @@ public class e_GlobalData : MonoBehaviour
 
     public GameObject GetPlayer(int playerNum)
     {
-        if (playerNum is 0 or 1)
-        {
-            return m_PlayersToTrack[playerNum];
+        if (m_PlayersToTrack.Count > playerNum){
         }
-        else return null;
+        if (m_PlayersToTrack[playerNum] != null)
+        {
+            return  m_PlayersToTrack[playerNum];
+        }
+        else
+        {
+            return null;
+        }
     }
     
     public void ResetRoomTimer()
