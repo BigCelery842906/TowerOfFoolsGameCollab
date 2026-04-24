@@ -38,15 +38,20 @@ public class p_PlayerDataManager : MonoBehaviour
     {
         if (playerID == m_PlayerID)
         {
-            StartCoroutine(RespawnTimer());
+            //Don't even ask. I need an active instance of monobehaviour otherwise the player won't do the reset to active.
+            MonoBehaviour camMono = Camera.main.GetComponent<MonoBehaviour>();
+            camMono.StartCoroutine(RespawnTimer());
+            // StartCoroutine(RespawnTimer());
         }
     }
 
     IEnumerator RespawnTimer()
         {
+            gameObject.SetActive(false);
             yield return new WaitForSeconds(m_respawnTimer);
 
             // Written by Connor, shout if you need to 
+            gameObject.SetActive(true);
             Vector3 currentPos = gameObject.transform.position;
             Vector3 newPos = currentPos;
 
