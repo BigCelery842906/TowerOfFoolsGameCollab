@@ -51,9 +51,11 @@ public class p_PlayerMovement : MonoBehaviour
         if(m_PlayerPickupManager != null) 
         {
             m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
+            m_PlayerPickupManager.SetBaseJumpForce(m_jumpForce);
 
             m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
             m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+            m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
         }
 
         m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
@@ -174,8 +176,13 @@ public class p_PlayerMovement : MonoBehaviour
     //The player also hangs at their apex for a little bit longer than normal too
 
     //All done for game feel since this is a platformer
+
+    private void SetJumpForce(float jumpForce) { m_jumpForce = jumpForce; }
+
     public void Jump()
     {
+        Debug.Log(m_jumpForce);
+
         if(m_moveSpeed <= 0) { return; }//prevents player jumping while stunned
 
         if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f) || m_usedJumps < m_maxJumps)
