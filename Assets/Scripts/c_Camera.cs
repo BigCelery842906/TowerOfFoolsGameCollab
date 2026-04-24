@@ -15,7 +15,7 @@ public class c_Camera : MonoBehaviour
     //          If a player is outside the boundary, then zoom the camera out to put both players
     //          inside the boundary, up to a specified value.
     //
-    //     Zoomed and tracking Furthest Player - TODO: Need to Implement the lava component x distance below the camera.
+    //     Zoomed and tracking Furthest Player - TODO: Need to Implement the lava component x distance below the camera. - Currently waiting for tyler to finish with the lava before going in just in case.
     //          If the specified value is reached, then prioritise the top player.
     //          Keep this top player within the top buffer of the camera, so they can always see
     //          the next platform they need to jump to.
@@ -23,7 +23,7 @@ public class c_Camera : MonoBehaviour
     //          If the bottom player falls too far out of camera, have a lava object below it (0 speed)
     //          - Can set this dynamically based on the max zoom value
     //
-    //     Zoomed and returning to average - TODO: I think this is now done?
+    //     Zoomed and returning to average - TODO: DONE
     //          If zoomed out, but then only one player becomes active,
     //          lerp to being zoomed in on the average position
     //      
@@ -92,13 +92,6 @@ public class c_Camera : MonoBehaviour
 
     [Tooltip("This gets called at the start of the scene load, to scale with the world. If you want to change how much the camera sees, use the min and max camera zoom.")]
     [SerializeField] private float m_WorldScale = 1.0f;
-
-    enum CameraStates
-    {
-        trackingHighest,
-        trackingAverage,
-        transitioning,
-    }
 
     void Start()
     {
