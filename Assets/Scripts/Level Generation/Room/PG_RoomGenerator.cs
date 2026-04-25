@@ -13,8 +13,8 @@ public class PG_RoomGenerator : MonoBehaviour
 {
 
     [SerializeField]
-    public List<GridBlock> m_regionOneWallPool;
-    public List<GridBlock> m_regionOneBlockPool;
+    public List<PG_GridBlock> m_regionOneWallPool;
+    public List<PG_GridBlock> m_regionOneBlockPool;
     public List<PG_BackGround> m_regionOneBackgroundPool;
 
     int m_previousBackgroundIndex = int.MaxValue;
@@ -244,8 +244,8 @@ public class PG_RoomGenerator : MonoBehaviour
     {
 
         Vector3 coords = grid.CalculateWorldPositionFromCoords(x, y);
-        GridBlock fab = m_regionOneWallPool[id];
-        GridBlock block = GridBlock.Instantiate(fab, this.transform.position + coords, this.transform.rotation);
+        PG_GridBlock fab = m_regionOneWallPool[id];
+        PG_GridBlock block = PG_GridBlock.Instantiate(fab, this.transform.position + coords, this.transform.rotation);
         block.name = "GridBlock " + (x + 1) + ", " + (y + 1);
         grid.m_grid[x, y].SetContents(block.gameObject);
         block.transform.localScale = Vector3.one * m_worldScale;

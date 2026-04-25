@@ -80,6 +80,12 @@ public class PG_GridMap : MonoBehaviour
         }
         return neighbours;
     }
+    public float GetSquaredUnitDistanceBetweenCells(int aX, int aY, int bX, int bY)
+    {
+        int dx = aX - bX;
+        int dy = aY - bY;
+        return Mathf.Sqrt((dx * dx) + (dy * dy));
+    }
 
     void Start()
     {
