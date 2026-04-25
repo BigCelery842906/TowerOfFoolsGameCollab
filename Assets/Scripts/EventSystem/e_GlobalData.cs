@@ -99,6 +99,8 @@ public class e_GlobalData : MonoBehaviour
     {
         m_IsPaused = !m_IsPaused;
         Time.timeScale = m_IsPaused ? 0 : 1;
+        
+        e_GameEvents.instance.PauseToggle(m_IsPaused);
         return m_IsPaused;
     }
 
@@ -106,5 +108,6 @@ public class e_GlobalData : MonoBehaviour
     {
         m_IsPaused = isPaused;
         Time.timeScale = isPaused ? 0 : 1;
+        e_GameEvents.instance.PauseToggle(m_IsPaused);
     }
 }
