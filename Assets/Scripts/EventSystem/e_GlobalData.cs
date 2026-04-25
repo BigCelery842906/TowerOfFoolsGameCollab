@@ -97,15 +97,8 @@ public class e_GlobalData : MonoBehaviour
 
     public bool TogglePause()
     {
-        if (m_IsPaused)
-        {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }
         m_IsPaused = !m_IsPaused;
+        Time.timeScale = m_IsPaused ? 0 : 1;
         return m_IsPaused;
     }
 
