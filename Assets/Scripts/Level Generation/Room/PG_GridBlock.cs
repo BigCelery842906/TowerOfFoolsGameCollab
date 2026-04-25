@@ -7,9 +7,9 @@
 
 using UnityEngine;
 
-public class GridBlock : MonoBehaviour
+public class PG_GridBlock : MonoBehaviour
 {
-    [SerializeField] Vector2 m_coords;
+    [SerializeField] public Vector2 m_coords;
     [SerializeField] int m_gridNumber;
     float m_worldScale;
 

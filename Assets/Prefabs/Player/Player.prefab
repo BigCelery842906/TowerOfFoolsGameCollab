@@ -56812,11 +56812,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a10854e5a365aa458ebaef8d5c34460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 8
-  m_jumpForce: 18
-  m_lowerGravValue: -12
-  m_apexGravValue: -6
-  m_highGravValue: -15
+  m_moveSpeed: 6
+  m_jumpForce: 16
+  m_lowerGravValue: -15
+  m_apexGravValue: -10
+  m_highGravValue: -20
   m_groundCheckTransform: {fileID: 6575185594403553813}
   m_groundLayer:
     serializedVersion: 2
@@ -61373,7 +61373,7 @@ Transform:
   m_GameObject: {fileID: 5591319589286080194}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.6, z: 0}
+  m_LocalPosition: {x: 0, y: -1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
