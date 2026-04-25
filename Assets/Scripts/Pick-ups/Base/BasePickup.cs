@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class BasePickup : MonoBehaviour
 {
+    [Tooltip("Dw bout this <3, dont touch it !!!")]
+    [SerializeField] private float pickupAnimFloat;
+
     protected AudioSource m_pickupSound;
 
     protected p_PlayerPickupManager m_playerOne;
@@ -10,6 +13,8 @@ public class BasePickup : MonoBehaviour
     [Tooltip("Player who collided with the pickup")]
     protected p_PlayerPickupManager m_triggeredPlayer;
     protected p_PlayerPickupManager m_otherPlayer;
+
+    private p_playerAnimControl m_playerAnim;
 
     protected CapsuleCollider m_playerCollider;
 
@@ -45,6 +50,7 @@ public class BasePickup : MonoBehaviour
         if (!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
 
         m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
+        m_playerAnim ??= other.gameObject.GetComponent<p_playerAnimControl>();
         m_playerCollider ??= other.GetComponent<CapsuleCollider>();
 
         if (m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
@@ -194,6 +200,7 @@ public class BasePickup : MonoBehaviour
         m_triggeredPlayer.SetPlayerHoldingPickup(false);
         m_triggeredPlayer.SetIsInteractablePickup(false,this);
         m_triggeredPlayer.UsedPickup();
+        m_playerAnim.SetPickupAnim(pickupAnimFloat);
         Destroy(gameObject);
     }
 
