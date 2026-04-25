@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainStyleSheet.uss?fileID=7433441132597879392&amp;guid=d7167debae920204d8f2e837a88d3567&amp;type=3#MainStyleSheet" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.83); justify-content: space-around; align-content: stretch;">
+        <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/ArtAssets/Logo.PNG?fileID=2800000&amp;guid=446aab2d63698154f99815ce11ead977&amp;type=3#Logo&quot;); -unity-background-scale-mode: scale-to-fit; margin-top: 128px;" />
+        <ui:VisualElement style="flex-grow: 1; justify-content: center; margin-bottom: 0;">
+            <ui:Label text="LOADING..." style="-unity-text-align: middle-center; font-size: 125px; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&amp;guid=03fb5fe5b67ed9749bfee08dac9db391&amp;type=3#Evil Empire&quot;); margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; align-self: stretch; justify-content: center; align-content: center; align-items: center;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

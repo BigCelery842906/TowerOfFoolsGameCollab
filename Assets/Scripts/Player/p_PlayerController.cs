@@ -96,6 +96,9 @@ public class p_PlayerController : MonoBehaviour
 
             m_playerInputs.AM_PlayerTwo.Taunt.performed -= Handle_Taunt;
         }
+        
+        // unbind the other non-specific player actions
+        m_playerInputs.Menus.Pause.performed -= Handle_Pause;
     }
 
     /// <summary>
@@ -141,9 +144,6 @@ public class p_PlayerController : MonoBehaviour
 
     private void Handle_Pause(InputAction.CallbackContext ctx)
     {
-        // tells game events pause was fired
-        
-        // game events handles pause, inverts it, pauses game (timescale),
-        // game events sends off a message that pause menu listens for to toggle pause state
+        e_GlobalData.instance.TogglePause();
     }
 }
