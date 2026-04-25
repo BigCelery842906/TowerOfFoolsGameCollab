@@ -5,7 +5,6 @@
 //-------------------------------------
 
 
-
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -52,6 +51,7 @@ public class PG_GenerationManager : MonoBehaviour
         {
             Debug.Log("Platform Generator not Loaded on Generation Manager");
         }
+        m_worldScale = e_GlobalData.instance.GetWorldScale();
         RegenerateRoom();
         m_actionSpawnPowerups += SpawnPowerups;
         //m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
@@ -98,29 +98,29 @@ public class PG_GenerationManager : MonoBehaviour
     {
         Debug.Log("Spawning Powerups");
         PG_GridMap grid = m_currentRoom.GetComponent<PG_GridMap>();
-        if (!grid)
+        if(!grid)
         {
             Debug.Log("Can't find grid for powerup spawns");
         }
-
+        
         for (int x = 0; x < grid.m_width; x++)
         {
             for (int y = 0; y < grid.m_height; y++)
             {
                 bool valid = true;
                 List<PG_PlatformParent> neighbours = new();
-                if (grid.m_grid[x, y].m_blockType == BLOCK_TYPE.PLATFORM_MIDDLE || grid.m_grid[x, y].m_blockType == BLOCK_TYPE.PLATFORM_END)
+                if (grid.m_grid[x,y].m_blockType == BLOCK_TYPE.PLATFORM_MIDDLE || grid.m_grid[x, y].m_blockType == BLOCK_TYPE.PLATFORM_END)
                 {
                     neighbours = grid.GetNeighboursOfPlatform(x, y);
                     foreach (PG_PlatformParent block in neighbours)
                     {
-                        if (block.m_hasPowerup == true)
+                        if(block.m_hasPowerup == true)
                         {
                             valid = false;
                             break;
                         }
                     }
-                    if (valid == false)
+                    if(valid == false)
                     {
                         continue;
                     }
@@ -159,11 +159,7 @@ public class PG_GenerationManager : MonoBehaviour
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         m_platformGenerator.m_xSpawnLocation = 1;
         m_platformGenerator.m_ySpawnLocation = 1;
-        if (m_platformGenerator.m_generationFinished)
-        {
-            if (m_spawnPowerups) SpawnPowerups();
-        }
-        PrintGrid();
+        if (m_spawnPowerups) SpawnPowerups();
     }
 
 

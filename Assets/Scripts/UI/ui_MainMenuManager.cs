@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 
 public class ui_MainMenuManager : ui_BaseMenuManager
 {
+    [Header("Main Menu UI Components")]
+    [SerializeField] private ui_SettingsMenuManager m_settingsMenuManager;
+    
     [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
     
@@ -18,8 +21,18 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     protected override void InitialiseMenuManager()
     {
         BindButton("play-btn", HandleButtonClicked_Play);
+        BindButton("settings-btn", HandleButtonClicked_Settings);
         BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
         BindButton("quit-btn", HandleButtonClicked_Quit);
+    }
+
+    private void HandleButtonClicked_Settings()
+    {
+        if (!m_settingsMenuManager) return;
+        
+        // Hide the current menu and show the settings menu
+        m_settingsMenuManager.ShowMenu();
+        HideMenu();
     }
 
     private void HandleButtonClicked_Play()
