@@ -34,6 +34,9 @@ public class e_GameEvents : MonoBehaviour
     public event Action<int> onPlayerDeathAdded;
     public event Action<int> onPlayerNoLives;
 
+    //For the pause toggle, bool is the value on whether the game is now paused or not
+    public event Action<bool> onPauseToggle;
+
     public void PlayerHealthUpdate(int amount, int playerID)
     {
         if(onPlayerHealthUpdate != null)
@@ -73,6 +76,15 @@ public class e_GameEvents : MonoBehaviour
         {
             onPlayerNoLives(playerID);
             Debug.Log("No Lives Fired");
+        }
+    }
+
+    public void PauseToggle(bool pauseVal)
+    {
+        if (onPauseToggle != null)
+        {
+            onPauseToggle(pauseVal);
+            Debug.Log("Pause Event Fired, set to: " +  pauseVal);
         }
     }
 }
