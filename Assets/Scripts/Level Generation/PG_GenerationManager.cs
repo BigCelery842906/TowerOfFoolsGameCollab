@@ -51,7 +51,13 @@ public class PG_GenerationManager : MonoBehaviour
         {
             Debug.Log("Platform Generator not Loaded on Generation Manager");
         }
-        m_worldScale = e_GlobalData.instance.GetWorldScale();
+
+        m_worldScale = 1.5f;
+        if (e_GlobalData.instance)
+        {
+            m_worldScale = e_GlobalData.instance.GetWorldScale();
+        }
+
         RegenerateRoom();
         m_actionSpawnPowerups += SpawnPowerups;
         //m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
