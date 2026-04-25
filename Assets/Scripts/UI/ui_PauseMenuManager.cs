@@ -17,6 +17,8 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
     
     [Tooltip("This value will only be taken into account if 'Use Scene Build Index' is false.")]
     [SerializeField] private string  m_mainMenuSceneName;
+
+    private bool m_quitButtonPressed = false;
     
     protected override void InitialiseMenuManager()
     {
@@ -39,6 +41,9 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
     
     private void HandleButtonClicked_Quit()
     {
+        if (m_quitButtonPressed) return;
+        m_quitButtonPressed = true;
+        
         HideMenu();
 
         // Load the scene via build index if that option is selected, if not, load via scene name

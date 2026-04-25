@@ -21,6 +21,8 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
     
     [Tooltip("The main menu scene name. This value will only be taken into account if 'Use Scene Build Indexes' is false.")]
     [SerializeField] private string  m_mainMenuSceneName;
+
+    private bool m_hasSceneLoadStarted = false;
     
     protected override void InitialiseMenuManager()
     {
@@ -33,6 +35,9 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_ReturnToMenu()
     {
+        if (m_hasSceneLoadStarted) return;
+        m_hasSceneLoadStarted = true;
+        
         HideMenu();
 
         if (m_useSceneBuildIndexes)
@@ -46,6 +51,9 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_Replay()
     {
+        if (m_hasSceneLoadStarted) return;
+        m_hasSceneLoadStarted = true;
+        
         HideMenu();
         
         if (m_useSceneBuildIndexes)
