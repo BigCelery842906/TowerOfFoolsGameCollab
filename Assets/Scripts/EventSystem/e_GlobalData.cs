@@ -14,6 +14,8 @@ public class e_GlobalData : MonoBehaviour
     [SerializeField] private float m_TimeSpentInGame = 0 ;
 
     [SerializeField] private bool m_IsPaused = false;
+    
+    private bool m_HasGameEnded = false;
 
     void Awake()
     {
@@ -106,5 +108,15 @@ public class e_GlobalData : MonoBehaviour
     {
         m_IsPaused = isPaused;
         Time.timeScale = isPaused ? 0 : 1;
+    }
+    
+    public void SetGameEnded(bool isGameEnded)
+    {
+        m_HasGameEnded = isGameEnded;
+    }
+
+    public bool GetGameEnded()
+    {
+        return m_HasGameEnded;
     }
 }
