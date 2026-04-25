@@ -39,6 +39,8 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
     
     private void HandleButtonClicked_Quit()
     {
+        HideMenu();
+
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)
         {
