@@ -114,8 +114,9 @@ public class e_GlobalData : MonoBehaviour
         m_lavaSpeedComponent = newSpeed;
     }
     
-    public float currentLavaSpeed()
+    public float GetCurrentLavaSpeed()
     {
-        return m_lavaSpeedComponent * m_TimeSpentInGame;
+        //TODO: GET THE LAVA SPEED COMPONENT AND DISTRIBUTE THIS TO THE RESPAWN TIMER
+        return m_lavaSpeedComponent * GetCurrentTimeSpentInGame();
     }
 }

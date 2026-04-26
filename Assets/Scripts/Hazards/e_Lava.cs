@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,12 +9,18 @@ using UnityEngine;
 public class e_Lava : MonoBehaviour
 {
     [Tooltip("How fast the lava should rise up the screen - Default is 0.5")]
-    [SerializeField] private float m_movementSpeed = 0.5f;
+    [SerializeField] private float m_currentMovementSpeed = 0.5f;
+    [SerializeField] private float m_baseMovementSpeed = 0.5f;
+    [SerializeField] private float m_speedMultiplier = 0.5f;
+
+    [SerializeField] private float m_lavaWaitPeriod = 5.0f;
 
     [Header("Starting Position")]
     [Tooltip("Whether or not the lava should start from it's current position in the editor - This is useful if you have positioned it in a certain way, or are testing something")]
     [SerializeField] private bool m_startFromPosition = false;
     [SerializeField] private float m_startingYPosition = -5f;
+    
+    [SerializeField]  e_AdrenalineCheck m_AdrenalineCheck;
 
     void Start()
     {
@@ -20,7 +28,12 @@ public class e_Lava : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, m_startingYPosition, transform.position.z);
         }
-        
+        StartCoroutine(DelayLavaStartMove());
+
+        if (m_AdrenalineCheck == null)
+        {
+            m_AdrenalineCheck = GetComponentInChildren<e_AdrenalineCheck>();
+        }
         //TODO: DISCUSS WHETHER THIS GETS PUTS IN.
         
         // Vector3 currentScale = transform.localScale; 
@@ -30,7 +43,24 @@ public class e_Lava : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.up * (m_movementSpeed * Time.deltaTime);
+        UpdateLavaSpeed();
+        transform.position += Vector3.up *  (m_currentMovementSpeed * Time.deltaTime);
+    }
+
+    void UpdateLavaSpeed()
+    { //TODO: Check if time in room or time in game. - Check with Design
+        m_currentMovementSpeed = m_baseMovementSpeed + (m_baseMovementSpeed * m_speedMultiplier * e_GlobalData.instance.GetCurrentTimeSpentInGame());
+    }
+
+    IEnumerator DelayLavaStartMove()
+    {
+        float holdSpeed = m_baseMovementSpeed;
+        m_baseMovementSpeed = 0;
+        
+        m_AdrenalineCheck.gameObject.SetActive(false);
+        yield return new WaitForSeconds(m_lavaWaitPeriod);
+        m_baseMovementSpeed = holdSpeed;
+        m_AdrenalineCheck.gameObject.SetActive(true);
     }
 
     private void OnTriggerEnter(Collider other)
