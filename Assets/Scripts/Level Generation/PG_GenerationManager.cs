@@ -5,7 +5,7 @@
 //-------------------------------------
 
 
-
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,24 +18,27 @@ public class PG_GenerationManager : MonoBehaviour
     public int m_desiredChunkWidth = 16;
     [SerializeField]
     public int m_desiredChunkHeight = 9;
-    public int m_chunksPerRoom = 3;
-    public int m_chunkSizeMultiplier = 1;
+    public int m_chunksPerRoom = 6;
+    public int m_chunkSizeMultiplier = 2;
     public GameObject m_currentRoom;
     public bool m_spawnPowerups = false;
     public float m_powerupSpawnChance = 0.0f;
 
-    public float m_worldScale;
+    public float m_worldScale = 1.5f;
 
     private PG_RoomGenerator m_roomGenerator;
     private PG_PlatformGenerator m_platformGenerator;
     private REGION m_currentRegion = REGION.ONE;
 
+    [HideInInspector]
+    public Action m_actionSpawnPowerups;
+
 
     private void Awake()
     {
         //this needs to be set to default values on generation otherwise the UI has a moment and sets it to zero, causing a bombardment of UI draw and OOB errors
-        m_desiredChunkHeight = 9;
-        m_desiredChunkWidth = 16;
+        //m_desiredChunkHeight = 9;
+        //m_desiredChunkWidth = 16;
 
         m_roomGenerator = GetComponent<PG_RoomGenerator>();
         if (!m_roomGenerator)
@@ -43,19 +46,60 @@ public class PG_GenerationManager : MonoBehaviour
             Debug.Log("Room Generator not Loaded on Generation Manager");
         }
         m_platformGenerator = GetComponent<PG_PlatformGenerator>();
+        m_platformGenerator.m_genManager = this;
         if (!m_roomGenerator)
         {
             Debug.Log("Platform Generator not Loaded on Generation Manager");
         }
 
-        m_worldScale = e_GlobalData.instance.GetWorldScale();
+        m_worldScale = 1.5f;
+        if (e_GlobalData.instance)
+        {
+            m_worldScale = e_GlobalData.instance.GetWorldScale();
+        }
 
-        m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
-        m_currentRoom.transform.SetParent(this.transform, false);
-        m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
-        if (m_spawnPowerups) SpawnPowerups();
+        RegenerateRoom();
+        m_actionSpawnPowerups += SpawnPowerups;
+        //m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
+        //m_currentRoom.transform.SetParent(this.transform, false);
+        //m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
+        //if (m_spawnPowerups) SpawnPowerups();
+
 
     }
+
+    void PrintGrid() // debug
+    {
+        string room = "";
+        PG_GridMap grid = m_currentRoom.GetComponent<PG_GridMap>();
+        for (int x = grid.m_height - 1; x > 0; x--)
+        {
+            for (int y = 0; y < grid.m_width; y++)
+            {
+
+                PG_GridMap.BLOCK_TYPE type = grid.m_grid[y, x].m_blockType;
+                switch (type)
+                {
+                    case BLOCK_TYPE.NONE:
+                        room += "0";
+                        break;
+                    case BLOCK_TYPE.WALL:
+                        room += "2";
+                        break;
+                    case BLOCK_TYPE.PLATFORM_MIDDLE:
+                        room += "3";
+                        break;
+                    case BLOCK_TYPE.PLATFORM_END:
+                        room += "4";
+                        break;
+                }
+            }
+
+            room += '\n';
+        }
+        Debug.Log(room);
+    }
+
     public void SpawnPowerups()
     {
         Debug.Log("Spawning Powerups");

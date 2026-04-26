@@ -6,15 +6,15 @@ public class e_GlobalData : MonoBehaviour
 {
 
     public static e_GlobalData instance;
-    [SerializeField] float m_WorldScale;
-    [SerializeField] private float m_PlayerScale;
+    [SerializeField] float m_WorldScale = 1;
+    [SerializeField] private float m_PlayerScale = 1;
     [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. It can be changed to not do this if needed.")]
     [SerializeField] private List<GameObject> m_PlayersToTrack;
-    [SerializeField] private float m_TimeSpentInCurrentRoom;
-    [SerializeField] private float m_TimeSpentInGame;
-    [SerializeField] private float m_lavaSpeedComponent;
+    [SerializeField] private float m_TimeSpentInCurrentRoom = 0;
+    [SerializeField] private float m_TimeSpentInGame = 0 ;
+    [SerializeField] private float m_lavaSpeedComponent = 0;
     
-    [SerializeField] private bool m_IsPaused;
+    [SerializeField] private bool m_IsPaused = false;
 
     void Awake()
     {
@@ -71,11 +71,16 @@ public class e_GlobalData : MonoBehaviour
 
     public GameObject GetPlayer(int playerNum)
     {
-        if (playerNum is 0 or 1)
-        {
-            return m_PlayersToTrack[playerNum];
+        if (m_PlayersToTrack.Count > playerNum){
         }
-        else return null;
+        if (m_PlayersToTrack[playerNum] != null)
+        {
+            return  m_PlayersToTrack[playerNum];
+        }
+        else
+        {
+            return null;
+        }
     }
     
     public void ResetRoomTimer()
@@ -95,18 +100,17 @@ public class e_GlobalData : MonoBehaviour
 
     public bool TogglePause()
     {
-        if (m_IsPaused)
-        {
-            Time.timeScale = 1;
-        }
-        else
-        {
-            Time.timeScale = 0;
-        }
         m_IsPaused = !m_IsPaused;
+        Time.timeScale = m_IsPaused ? 0 : 1;
         return m_IsPaused;
     }
 
+    public void SetPause(bool isPaused)
+    {
+        m_IsPaused = isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+    }
+    
     public void SetLavaSpeedComponent(float newSpeed)
     {
         m_lavaSpeedComponent = newSpeed;

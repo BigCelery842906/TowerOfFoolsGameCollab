@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7885466408937412657}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,21 +150,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be89fb4393356547bd37430729dd126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_YBufferPercent: 20
+  m_XBufferPercent: 15
+  m_MinCameraZoom: 5
+  m_MaxCameraZoom: 30
+  m_LerpTime: 0.8
+  m_DebugDraw: 1
   m_PlayersToTrack: []
   m_ActivePlayers: []
-  trackingAverage: 1
-  m_YBuffer: 0.2
-  m_XBuffer: 0.15
-  tempDepth: 0.3
-  highestYPos: -3.4028235e+38
-  furthestXPos: -3.4028235e+38
-  cameraZoom: 5
-  minCameraZoom: 5
-  maxCameraZoom: 30
-  desiredCameraZoom: 5
-  camHeight: 0
-  camWidth: 0
-  deadZoneHeight: 6
-  deadZoneWidth: 12.45
-  xBufferWorld: 2.67
-  yBufferWorld: 2
+  m_NumOfActivePlayersLastFrame: 2
+  m_TrackingAverage: 1
+  m_CameraZoom: 5
+  m_DesiredCameraZoom: 5
+  m_camPosAtStartOfLerp: {x: 0, y: 0, z: 0}
+  m_CamZoomAtStartOfLerp: 5
+  m_desiredCamPos: {x: 0, y: 0, z: 0}
+  m_currentLerpTime: 0
+  m_DoCameraLerp: 0
+  m_CamHeight: 0
+  m_CamWidth: 0
+  m_DeadZoneHeight: 6
+  m_DeadZoneWidth: 12.45
+  m_XBufferWorld: 2.67
+  m_YBufferWorld: 2
+  m_WorldScale: 1

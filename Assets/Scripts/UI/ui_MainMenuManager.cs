@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 
 public class ui_MainMenuManager : ui_BaseMenuManager
 {
+    [Header("Main Menu UI Components")]
+    [SerializeField] private ui_SettingsMenuManager m_settingsMenuManager;
+    
     [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
     
@@ -18,8 +21,18 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     protected override void InitialiseMenuManager()
     {
         BindButton("play-btn", HandleButtonClicked_Play);
+        BindButton("settings-btn", HandleButtonClicked_Settings);
         BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
         BindButton("quit-btn", HandleButtonClicked_Quit);
+    }
+
+    private void HandleButtonClicked_Settings()
+    {
+        if (!m_settingsMenuManager) return;
+        
+        // Hide the current menu and show the settings menu
+        m_settingsMenuManager.ShowMenu();
+        HideMenu();
     }
 
     private void HandleButtonClicked_Play()
@@ -27,11 +40,11 @@ public class ui_MainMenuManager : ui_BaseMenuManager
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)
         {
-            sc_SceneManager.LoadSceneByIndex(m_sceneBuildIndex);
+            sc_SceneManager.LoadScene(m_sceneBuildIndex);
             return;
         }
         
-        sc_SceneManager.LoadSceneByName(m_sceneName);
+        sc_SceneManager.LoadScene(m_sceneName);
     }
 
     private void HandleButtonClicked_Scoreboard()

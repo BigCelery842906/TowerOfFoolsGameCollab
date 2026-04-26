@@ -68,7 +68,7 @@ public class e_Lava : MonoBehaviour
                 Debug.LogError("Player found but ID not returned", other.gameObject);
                 return;
             }
-            e_GameEvents.instance.PlayerHealthUpdate(false, 100, playerID);
+            e_GameEvents.instance.PlayerHealthUpdate(-100, playerID);
         }
     }
 }

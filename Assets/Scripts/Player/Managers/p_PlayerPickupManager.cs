@@ -9,12 +9,14 @@ using UnityEngine;
 /// </summary>
 public class p_PlayerPickupManager : MonoBehaviour
 {
+    public event Action OnPickupUsed;
     public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
 
     public event Action OnShieldUsed; 
 
     public event Action<float> OnMaxJumpChange; //for the double jump pick up
-    public event Action<float> OnStunStateChange; //for stun
+    public event Action<float> OnStunStateChange; //for stun + adrenaline :)
+    public event Action<float> OnJumpForceChange; //for adrenaline
 
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
@@ -26,6 +28,8 @@ public class p_PlayerPickupManager : MonoBehaviour
     [Tooltip("This is where projectile like daggers will be fired from")]
     [SerializeField] private Transform m_firingPosition;
 
+    private p_playerAnimControl m_playerAnim;
+
     private bool m_isHoldingPickup = false;
     private bool m_hasInteractablePickup = false;
     private BasePickup interactablePickup; //this is sometimes null
@@ -34,6 +38,7 @@ public class p_PlayerPickupManager : MonoBehaviour
     private float m_shieldLavaDis;
 
     private float m_baseMoveSpeed;
+    private float m_baseJumpForce;
 
     private void Awake()
     {
@@ -43,6 +48,12 @@ public class p_PlayerPickupManager : MonoBehaviour
     public void UseInteractablePickup()
     {
         OnUseInteractablePickup?.Invoke();
+    }
+
+    public void UsedPickup()
+    {
+        //broke if i put it in InteractablePickUp
+        OnPickupUsed?.Invoke();
     }
 
 
@@ -63,6 +74,13 @@ public class p_PlayerPickupManager : MonoBehaviour
     /// So the manager has a accurate copy of what the base move speed should be so it can be set to normal after stun or if a boost is added
     /// </summary>
     public void SetBaseMoveSpeed(float speed) { m_baseMoveSpeed = speed; }
+    public void SetBaseJumpForce(float force) { m_baseJumpForce = force; }
+
+    public void SetMoveSpeed(float speed) { OnStunStateChange.Invoke(m_baseMoveSpeed * speed); }
+    public void SetJumpForce(float speed) { OnJumpForceChange.Invoke(m_baseJumpForce * speed); }
+    
+    public void ResetMoveSpeed() { OnStunStateChange.Invoke(m_baseMoveSpeed); }
+    public void ResetJumpForce() { OnJumpForceChange.Invoke(m_baseJumpForce); }
 
     public void SetPlayerShield(bool shield, float lavaDisplacement)
     {
@@ -72,6 +90,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         if(!shield)
         {
             OnShieldUsed?.Invoke();
+            OnPickupUsed?.Invoke();
         }
     }
 
