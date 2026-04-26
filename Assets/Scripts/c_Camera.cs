@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
-[RequireComponent(typeof(Camera))]
 //WRITTEN BY CONNOR SAYSELL - DO NOT BREAK PLEASE (IT TOOK FAR TOO LONG TO GET WORKING)
+
+[RequireComponent(typeof(Camera))] // - Make sure a camera exists on this object
 public class c_Camera : MonoBehaviour
 {
-    
+    #region Camera Plan 
     // Camera Plan for Script
     //     Average Position - TODO: DONE
     //          If all active players are within the average boundary, then track average position
@@ -29,85 +30,102 @@ public class c_Camera : MonoBehaviour
     //      
     //     TODO: Something when all players are dead. Not sure how I missed that - Might be able to get by with this since it just essentially errors to find a new position, so freezes.
     //     TODO: REFACTOR THIS
+    #endregion
 
-    
+    // EXPOSED VALUES
     [Header("Buffers")]
+    
     [Header("This will not visually update while not in play mode.")]
     [Tooltip("What percentage of the screen the Y buffer should be. This is a half value, as it will apply this to both the top and bottom")]
     [Range(0f, 50f)] [SerializeField] private float m_YBufferPercent = 20.0f;
 
-    //Might want a bottom buffer later on
-    
     [Tooltip("What percentage of the screen the X buffer should be. This is a half value, as it will apply this to both the Left and Right")]
     [Range(0f, 50f)] [SerializeField] private float m_XBufferPercent = 15.0f;
-    
 
+    [Space(50.0f)]
+    
     [Header("Camera Values")] 
-    private Camera m_Camera;
     [SerializeField] private float m_MinCameraZoom = 5f;
     [SerializeField] private float m_MaxCameraZoom = 30f;
 
     [SerializeField] private float m_LerpTime = 0.8f;
 
-    private Bounds m_PlayerBounds;
-    
-    
     [Tooltip("Do you want to draw the bounds of the players and the boundaries? Recommended for sorting values, otherwise can be turned off")]
     [SerializeField] private bool m_DebugDraw;
     
-    [Header("Debug Values - Not Editable")]
     
-    [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. This gets taken from the global Data Script, edit from there.")]
-    [SerializeField]
+    //DEBUG VALUES - NOT EXPOSED UNLESS IN DEBUG MODE
+    private Camera m_Camera;
+    private Bounds m_PlayerBounds;
+
+    // This gets taken from the global Data Script
     List<GameObject> m_PlayersToTrack;
+
+    // These are the players who are considered 'Active', AKA they are not dead.
+    List<GameObject> m_ActivePlayers;
+
+    private int m_NumOfActivePlayersLastFrame = 2;
+
+    // Camera Values
+    private float m_CameraZoom = 5f;
+    private float m_DesiredCameraZoom = 5f;
+
+    private Vector3 m_camPosAtStartOfLerp = Vector3.zero;
+    private float m_CamZoomAtStartOfLerp = 5.0f;
+    private Vector3 m_desiredCamPos = Vector3.zero;
+    private float m_currentLerpTime = 0.0f;
+    private bool m_DoCameraLerp = false;
     
-    [Tooltip("These are the players who are considered 'Active', AKA they are not dead. These are the players the camera is trying to track.")]
-    [SerializeField] List<GameObject> m_ActivePlayers;
+    // Dead Zone Values
+    private float m_DeadZoneHeight = 6.0f;
+    private float m_DeadZoneWidth = 12.45f;
+    private float m_XBufferWorld = 2.67f;
+    private float m_YBufferWorld = 2.0f;
 
-    [SerializeField] private int m_NumOfActivePlayersLastFrame = 2;
-
-    [SerializeField] private bool m_TrackingAverage = true;
-    private float tempDepth = 0.3f; // This should not be exposed, should be the near clipping plane on the camera.
-    
-    [Header("Camera Values")] 
-    [SerializeField] private float m_CameraZoom = 5f;
-    [SerializeField] private float m_DesiredCameraZoom = 5f;
-
-    [SerializeField] private Vector3 m_camPosAtStartOfLerp = Vector3.zero;
-    [SerializeField] private float m_CamZoomAtStartOfLerp = 5.0f;
-    [SerializeField] private Vector3 m_desiredCamPos = Vector3.zero;
-    [SerializeField] private float m_currentLerpTime = 0.0f;
-    [SerializeField] private bool m_DoCameraLerp = false;
-
-    //Might need a float for desired X and Y zoom, then take max from that.
-    [SerializeField] private float m_CamHeight;
-    [SerializeField] private float m_CamWidth;
-
-    
-    [Header("Dead Zone Values")] 
-    [SerializeField] private float m_DeadZoneHeight = 6.0f;
-    [SerializeField] private float m_DeadZoneWidth = 12.45f;
-    [SerializeField] private float m_XBufferWorld = 2.67f;
-    [SerializeField] private float m_YBufferWorld = 2.0f;
-
-    [Tooltip("This gets called at the start of the scene load, to scale with the world. If you want to change how much the camera sees, use the min and max camera zoom.")]
-    [SerializeField] private float m_WorldScale = 1.0f;
+    // This gets called at the start of the scene load, to scale with the world. Default 1 in case of no GDF
+    private float m_WorldScale = 1.0f;
 
     void Start()
     {
         m_WorldScale = e_GlobalData.instance.GetWorldScale();
-        
+
         m_Camera = GetComponent<Camera>();
 
         m_PlayersToTrack = new List<GameObject>();
         m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(0));
         m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
-        
+
+        m_ActivePlayers = new List<GameObject>();
     }
 
     void Update()
     {
+        SetActivePlayers();
 
+        DoPlayerBounds();
+        
+        CheckLerpCondition();
+        
+        SetCameraValues();
+
+        //Check for camera mode
+        if (m_DesiredCameraZoom < m_MaxCameraZoom)
+        {
+            CalculateCameraPosition();
+        }
+        else
+        {
+            FollowHighestPlayer();
+        }
+
+        ApplyCameraPosition();
+
+        DoCameraZoom();
+        
+    }
+
+    void SetActivePlayers()
+    {
         m_ActivePlayers.Clear();
         for (int i = 0; i < m_PlayersToTrack.Count; i++)
         {
@@ -116,7 +134,22 @@ public class c_Camera : MonoBehaviour
                 m_ActivePlayers.Add(m_PlayersToTrack[i]);
             }
         }
+    }
 
+    void DoPlayerBounds()
+    {
+        //Reset the player bounds each frame
+        if (m_ActivePlayers.Count == 0) { return; }
+        
+        m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
+        for (int i = 0; i < m_ActivePlayers.Count; i++)
+        {
+            m_PlayerBounds.Encapsulate(m_ActivePlayers[i].transform.position);
+        }
+    }
+
+    void CheckLerpCondition()
+    {
         if (m_NumOfActivePlayersLastFrame != m_ActivePlayers.Count)
         {
             m_NumOfActivePlayersLastFrame = m_ActivePlayers.Count;
@@ -127,42 +160,20 @@ public class c_Camera : MonoBehaviour
         {
             m_currentLerpTime += Time.deltaTime;
         }
+    }
 
-        //Reset the player bounds each frame - Could do an error catch here 
-        m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
-        {
-            m_PlayerBounds.Encapsulate(m_ActivePlayers[i].transform.position);
-        }
-
-        m_CamHeight = m_Camera.orthographicSize * 2;
-        m_CamWidth = m_CamHeight * m_Camera.aspect;
+    void SetCameraValues()
+    {
+        float m_CamHeight = m_Camera.orthographicSize * 2;
+        float m_CamWidth = m_CamHeight * m_Camera.aspect;
 
         m_YBufferWorld = m_CamHeight * (m_YBufferPercent / 100.0f);
         m_XBufferWorld = m_CamWidth * (m_XBufferPercent / 100.0f);
 
         m_DeadZoneHeight = m_CamHeight - (m_YBufferWorld * 2f);
         m_DeadZoneWidth = m_CamWidth - (m_XBufferWorld * 2f);
-
-        if (m_DesiredCameraZoom < m_MaxCameraZoom)
-        {
-            CalculateCameraPosition();
-            m_TrackingAverage = true;
-        }
-        else
-        {
-            FollowHighestPlayer();
-            m_TrackingAverage = false;
-        }
-
-        ApplyCameraPosition();
-        
-        CalculateCameraZoom();
-
-        ApplyCameraZoom();
-
     }
-    
+
     /// <summary>
     /// Calculate the camera position, based on the average of all active players.
     /// This should be used until the camera is fully zoomed out, at which point the highest player tracking should kick into effect.
@@ -242,28 +253,6 @@ public class c_Camera : MonoBehaviour
     }
     
     /// <summary>
-    /// This calculates the desired zoom level for the camera at a given point. It does NOT apply it. This should be done with ApplyCameraZoom();
-    /// Written by Connor Saysell.
-    /// </summary>
-    void CalculateCameraZoom()
-    {
-        m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
-
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
-        {
-            m_PlayerBounds.Encapsulate(m_ActivePlayers[i].transform.position);
-        }
-
-        float requiredHeight = m_PlayerBounds.size.y / 2f + m_YBufferWorld;
-        float requiredWidth = (m_PlayerBounds.size.x / 2f + m_XBufferWorld) / m_Camera.aspect;
-
-        m_DesiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
-
-        m_DesiredCameraZoom = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
-       
-    }
-
-    /// <summary>
     /// This applies the camera position previously calculated, doing a check for the camera lerp if necessary.
     /// Written by Connor Saysell.
     /// </summary>
@@ -274,6 +263,7 @@ public class c_Camera : MonoBehaviour
         {
             camPos = DoCameraPositionLerp();
         }
+
         transform.position = camPos;
     }
     
@@ -288,19 +278,43 @@ public class c_Camera : MonoBehaviour
         return cameraPos;
     }
 
+
+    void DoCameraZoom()
+    {
+        float requiredHeight = m_PlayerBounds.size.y / 2f + m_YBufferWorld;
+        float requiredWidth = (m_PlayerBounds.size.x / 2f + m_XBufferWorld) / m_Camera.aspect;
+
+        m_DesiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
+
+        m_DesiredCameraZoom = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom * m_WorldScale,
+            m_MaxCameraZoom * m_WorldScale);
+        
+        float camZoom = m_DesiredCameraZoom;
+        if (m_DoCameraLerp)
+        {
+            camZoom = DoCameraZoomLerp();
+        }
+
+        m_CameraZoom = Mathf.Clamp(camZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
+        m_Camera.orthographicSize = m_CameraZoom;
+    }
+    /// <summary>
+    /// This calculates the desired zoom level for the camera at a given point. It does NOT apply it. This should be done with ApplyCameraZoom();
+    /// Written by Connor Saysell.
+    /// </summary>
+    void CalculateCameraZoom()
+    {
+        
+
+    }
+    
     /// <summary>
     /// This applies the camera zoom previously calculated, doing a check for the camera lerp if necessary.
     /// Written by Connor Saysell.
     /// </summary>
     void ApplyCameraZoom()
     {
-        float camZoom = m_DesiredCameraZoom;
-        if (m_DoCameraLerp)
-        {
-            camZoom = DoCameraZoomLerp();
-        }
-        m_CameraZoom = Mathf.Clamp(camZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
-        m_Camera.orthographicSize = m_CameraZoom;
+       
     }
 
     /// <summary>
@@ -329,7 +343,8 @@ public class c_Camera : MonoBehaviour
         // Add the same null check that was added for the player respawning here.
         m_DoCameraLerp = false;
     }
-
+    
+    float tempDepth = 0.3f; // Should be the near clipping plane on the camera.
 
     void OnDrawGizmos()
     {
@@ -344,8 +359,7 @@ public class c_Camera : MonoBehaviour
             }
 
             camPos.z += zOffset;
-
-
+            
             // Player Buffer
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(camPos, new Vector3(m_DeadZoneWidth, m_DeadZoneHeight, 0f));
