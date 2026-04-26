@@ -4,8 +4,8 @@ using UnityEngine;
 // Written by Connor Saysell
 public class e_GlobalData : MonoBehaviour
 {
-
     public static e_GlobalData instance;
+    
     [SerializeField] float m_WorldScale = 1;
     [SerializeField] private float m_PlayerScale = 1;
     [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. It can be changed to not do this if needed.")]
@@ -40,8 +40,6 @@ public class e_GlobalData : MonoBehaviour
         
         m_TimeSpentInCurrentRoom = 0;
         m_TimeSpentInGame = 0;
-        
-        
     }
     
     void Update()
@@ -115,6 +113,7 @@ public class e_GlobalData : MonoBehaviour
     {
         m_lavaSpeedComponent = newSpeed;
     }
+    
     public float currentLavaSpeed()
     {
         return m_lavaSpeedComponent * m_TimeSpentInGame;
