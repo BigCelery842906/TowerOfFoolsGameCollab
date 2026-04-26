@@ -28,7 +28,7 @@ public class c_Camera : MonoBehaviour
     //          lerp to being zoomed in on the average position
     //      
     //     TODO: Something when all players are dead. Not sure how I missed that - Might be able to get by with this since it just essentially errors to find a new position, so freezes.
-
+    //     TODO: REFACTOR THIS
 
     
     [Header("Buffers")]
@@ -120,7 +120,7 @@ public class c_Camera : MonoBehaviour
         if (m_NumOfActivePlayersLastFrame != m_ActivePlayers.Count)
         {
             m_NumOfActivePlayersLastFrame = m_ActivePlayers.Count;
-            StartCoroutine(StartLerp());
+            StartCoroutine(StartCameraLerp());
         }
 
         if (m_DoCameraLerp)
@@ -162,9 +162,12 @@ public class c_Camera : MonoBehaviour
         ApplyCameraZoom();
 
     }
-
-    // Calculate the camera position, based on the average of all active players.
-    // This should be used until the camera is fully zoomed out, at which point the highest player tracking should kick into effect.
+    
+    /// <summary>
+    /// Calculate the camera position, based on the average of all active players.
+    /// This should be used until the camera is fully zoomed out, at which point the highest player tracking should kick into effect.
+    /// Written by Connor Saysell.
+    /// </summary>
     void CalculateCameraPosition()
     {
         Vector3 camPos = transform.position;
@@ -202,6 +205,10 @@ public class c_Camera : MonoBehaviour
         m_desiredCamPos = new Vector3(newCamPos.x, newCamPos.y, transform.position.z);
     }
 
+    /// <summary>
+    /// Calculate the position of the camera when following the highest player while the camera is fully zoomed out and following the average player no longer keeps it in the bounding box
+    /// Written by Connor Saysell.
+    /// </summary>
     void FollowHighestPlayer()
     {
 
@@ -233,7 +240,11 @@ public class c_Camera : MonoBehaviour
         m_desiredCamPos = newCamPos;
 
     }
-
+    
+    /// <summary>
+    /// This calculates the desired zoom level for the camera at a given point. It does NOT apply it. This should be done with ApplyCameraZoom();
+    /// Written by Connor Saysell.
+    /// </summary>
     void CalculateCameraZoom()
     {
         m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
@@ -252,41 +263,62 @@ public class c_Camera : MonoBehaviour
        
     }
 
+    /// <summary>
+    /// This applies the camera position previously calculated, doing a check for the camera lerp if necessary.
+    /// Written by Connor Saysell.
+    /// </summary>
     void ApplyCameraPosition()
     {
         Vector3 camPos = m_desiredCamPos;
         if (m_DoCameraLerp)
         {
-            camPos = DoCameraLerp();
+            camPos = DoCameraPositionLerp();
         }
         transform.position = camPos;
     }
-    Vector3 DoCameraLerp()
+    
+    /// <summary>
+    /// This applies the camera position based on where in the lerp process the camera is in
+    /// Written by Connor Saysell.
+    /// </summary>
+    Vector3 DoCameraPositionLerp()
     {
         // Vector3 cameraPos = Vector3.Lerp(transform.position, m_desiredCamPos, m_currentLerpTime / m_LerpTime);
         Vector3 cameraPos = Vector3.Lerp(m_camPosAtStartOfLerp, m_desiredCamPos, m_currentLerpTime / m_LerpTime);
         return cameraPos;
     }
 
+    /// <summary>
+    /// This applies the camera zoom previously calculated, doing a check for the camera lerp if necessary.
+    /// Written by Connor Saysell.
+    /// </summary>
     void ApplyCameraZoom()
     {
         float camZoom = m_DesiredCameraZoom;
         if (m_DoCameraLerp)
         {
-            camZoom = DoCameraZoom();
+            camZoom = DoCameraZoomLerp();
         }
         m_CameraZoom = Mathf.Clamp(camZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
         m_Camera.orthographicSize = m_CameraZoom;
     }
 
-    private float DoCameraZoom()
+    /// <summary>
+    /// This applies the camera zoom based on where in the lerp process the camera is in
+    /// Written by Connor Saysell.
+    /// </summary>
+    private float DoCameraZoomLerp()
     {
         float camZoom = Mathf.Lerp(m_CamZoomAtStartOfLerp, m_DesiredCameraZoom, m_currentLerpTime / m_LerpTime);
         // float camZoom = Mathf.Lerp(m_CameraZoom, m_DesiredCameraZoom, m_currentLerpTime / m_LerpTime);
         return camZoom;
     }
 
-    IEnumerator StartLerp()
+    /// <summary>
+    /// This starts the camera lerp process 
+    /// Written by Connor Saysell.
+    /// </summary>
+    IEnumerator StartCameraLerp()
     {
         m_DoCameraLerp = true;
         m_currentLerpTime = 0;
@@ -294,6 +326,7 @@ public class c_Camera : MonoBehaviour
         m_camPosAtStartOfLerp = transform.position;
         yield return new WaitForSeconds(m_LerpTime);
 
+        // Add the same null check that was added for the player respawning here.
         m_DoCameraLerp = false;
     }
 
