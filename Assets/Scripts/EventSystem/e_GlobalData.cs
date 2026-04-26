@@ -12,7 +12,8 @@ public class e_GlobalData : MonoBehaviour
     [SerializeField] private List<GameObject> m_PlayersToTrack;
     [SerializeField] private float m_TimeSpentInCurrentRoom;
     [SerializeField] private float m_TimeSpentInGame;
-
+    [SerializeField] private float m_lavaSpeedComponent;
+    
     [SerializeField] private bool m_IsPaused;
 
     void Awake()
@@ -39,6 +40,8 @@ public class e_GlobalData : MonoBehaviour
         
         m_TimeSpentInCurrentRoom = 0;
         m_TimeSpentInGame = 0;
+        
+        
     }
     
     void Update()
@@ -102,5 +105,14 @@ public class e_GlobalData : MonoBehaviour
         }
         m_IsPaused = !m_IsPaused;
         return m_IsPaused;
+    }
+
+    public void SetLavaSpeedComponent(float newSpeed)
+    {
+        m_lavaSpeedComponent = newSpeed;
+    }
+    public float currentLavaSpeed()
+    {
+        return m_lavaSpeedComponent * m_TimeSpentInGame;
     }
 }
