@@ -8,170 +8,157 @@ using Vector3 = UnityEngine.Vector3;
 [RequireComponent(typeof(Camera))] // - Make sure a camera exists on this object
 public class c_Camera : MonoBehaviour
 {
-    #region Camera Plan 
-    // Camera Plan for Script
-    //     Average Position - TODO: DONE
-    //          If all active players are within the average boundary, then track average position
-    //
-    //          If a player is outside the boundary, then zoom the camera out to put both players
-    //          inside the boundary, up to a specified value.
-    //
-    //     Zoomed and tracking Furthest Player - TODO: Need to Implement the lava component x distance below the camera. - Currently waiting for tyler to finish with the lava before going in just in case.
-    //          If the specified value is reached, then prioritise the top player.
-    //          Keep this top player within the top buffer of the camera, so they can always see
-    //          the next platform they need to jump to.
-    //
-    //          If the bottom player falls too far out of camera, have a lava object below it (0 speed)
-    //          - Can set this dynamically based on the max zoom value
-    //
-    //     Zoomed and returning to average - TODO: DONE
-    //          If zoomed out, but then only one player becomes active,
-    //          lerp to being zoomed in on the average position
-    //      
-    //     TODO: Something when all players are dead. Not sure how I missed that - Might be able to get by with this since it just essentially errors to find a new position, so freezes.
-    //     TODO: REFACTOR THIS
-    #endregion
-
-    // EXPOSED VALUES
     [Header("Buffers")]
-    
     [Header("This will not visually update while not in play mode.")]
-    [Tooltip("What percentage of the screen the Y buffer should be. This is a half value, as it will apply this to both the top and bottom")]
-    [Range(0f, 50f)] [SerializeField] private float m_YBufferPercent = 20.0f;
+    
+    [Tooltip("What percentage of the screen the Y buffer should be. This is a half value, as it will apply this to both the Top and Bottom")]
+    [Range(0f, 50f)] [SerializeField] private float m_yBufferPercent = 20.0f;
 
     [Tooltip("What percentage of the screen the X buffer should be. This is a half value, as it will apply this to both the Left and Right")]
-    [Range(0f, 50f)] [SerializeField] private float m_XBufferPercent = 15.0f;
-
-    [Space(50.0f)]
+    [Range(0f, 50f)] [SerializeField] private float m_xBufferPercent = 15.0f;
     
     [Header("Camera Values")] 
-    [SerializeField] private float m_MinCameraZoom = 5f;
-    [SerializeField] private float m_MaxCameraZoom = 30f;
+    [SerializeField] private float m_minCameraZoom = 5f;
+    [SerializeField] private float m_maxCameraZoom = 30f;
 
-    [SerializeField] private float m_LerpTime = 0.8f;
+    [SerializeField] private float m_lerpTime = 0.8f;
 
     [Tooltip("Do you want to draw the bounds of the players and the boundaries? Recommended for sorting values, otherwise can be turned off")]
-    [SerializeField] private bool m_DebugDraw;
+    [SerializeField] private bool m_debugDraw;
     
     
     //DEBUG VALUES - NOT EXPOSED UNLESS IN DEBUG MODE
-    private Camera m_Camera;
-    private Bounds m_PlayerBounds;
+    private Camera m_camera;
+    private Bounds m_playerBounds;
 
     // This gets taken from the global Data Script
-    List<GameObject> m_PlayersToTrack;
+    List<GameObject> m_playersToTrack;
 
     // These are the players who are considered 'Active', AKA they are not dead.
-    List<GameObject> m_ActivePlayers;
+    List<GameObject> m_activePlayers;
 
-    private int m_NumOfActivePlayersLastFrame = 2;
+    private int m_numOfActivePlayersLastFrame = 2;
 
     // Camera Values
-    private float m_CameraZoom = 5f;
-    private float m_DesiredCameraZoom = 5f;
+    private float m_desiredCameraZoom = 5f;
 
     private Vector3 m_camPosAtStartOfLerp = Vector3.zero;
-    private float m_CamZoomAtStartOfLerp = 5.0f;
-    private Vector3 m_desiredCamPos = Vector3.zero;
+    private float m_camZoomAtStartOfLerp = 5.0f;
     private float m_currentLerpTime = 0.0f;
-    private bool m_DoCameraLerp = false;
+    private bool m_doCameraLerp = false;
     
     // Dead Zone Values
-    private float m_DeadZoneHeight = 6.0f;
-    private float m_DeadZoneWidth = 12.45f;
-    private float m_XBufferWorld = 2.67f;
-    private float m_YBufferWorld = 2.0f;
+    private float m_deadZoneHeight = 6.0f;
+    private float m_deadZoneWidth = 12.45f;
+    private float m_xBufferWorld = 2.67f;
+    private float m_yBufferWorld = 2.0f;
 
     // This gets called at the start of the scene load, to scale with the world. Default 1 in case of no GDF
-    private float m_WorldScale = 1.0f;
+    private float m_worldScale = 1.0f;
 
     void Start()
     {
-        m_WorldScale = e_GlobalData.instance.GetWorldScale();
+        m_worldScale = e_GlobalData.instance.GetWorldScale();
 
-        m_Camera = GetComponent<Camera>();
+        m_camera = GetComponent<Camera>();
 
-        m_PlayersToTrack = new List<GameObject>();
-        m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(0));
-        m_PlayersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
+        m_playersToTrack = new List<GameObject>();
+        m_playersToTrack.Add(e_GlobalData.instance.GetPlayer(0));
+        m_playersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
 
-        m_ActivePlayers = new List<GameObject>();
+        m_activePlayers = new List<GameObject>();
     }
 
     void Update()
     {
         SetActivePlayers();
-
+        
+        if (m_activePlayers.Count == 0) { return; }
+        
         DoPlayerBounds();
         
         CheckLerpCondition();
         
         SetCameraValues();
 
-        //Check for camera mode
-        if (m_DesiredCameraZoom < m_MaxCameraZoom)
-        {
-            CalculateCameraPosition();
-        }
-        else
-        {
-            FollowHighestPlayer();
-        }
-
-        ApplyCameraPosition();
+        DoCameraPosition();
 
         DoCameraZoom();
-        
     }
 
     void SetActivePlayers()
     {
-        m_ActivePlayers.Clear();
-        for (int i = 0; i < m_PlayersToTrack.Count; i++)
+        m_activePlayers.Clear();
+        for (int i = 0; i < m_playersToTrack.Count; i++)
         {
-            if (m_PlayersToTrack[i].activeSelf)
+            if (m_playersToTrack[i].activeSelf)
             {
-                m_ActivePlayers.Add(m_PlayersToTrack[i]);
+                m_activePlayers.Add(m_playersToTrack[i]);
             }
         }
     }
 
+    /// <summary>
+    /// Reset the player bounds each frame
+    /// Written by Connor Saysell.
+    /// </summary>
     void DoPlayerBounds()
     {
-        //Reset the player bounds each frame
-        if (m_ActivePlayers.Count == 0) { return; }
-        
-        m_PlayerBounds = new Bounds(m_ActivePlayers[0].transform.position, Vector3.zero);
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
+        m_playerBounds = new Bounds(m_activePlayers[0].transform.position, Vector3.zero);
+        for (int i = 0; i < m_activePlayers.Count; i++)
         {
-            m_PlayerBounds.Encapsulate(m_ActivePlayers[i].transform.position);
+            m_playerBounds.Encapsulate(m_activePlayers[i].transform.position);
         }
     }
 
+    /// <summary>
+    /// Does a player number check to see whether the camera should be lerping
+    /// Written by Connor Saysell.
+    /// </summary>
     void CheckLerpCondition()
     {
-        if (m_NumOfActivePlayersLastFrame != m_ActivePlayers.Count)
+        if (m_numOfActivePlayersLastFrame != m_activePlayers.Count)
         {
-            m_NumOfActivePlayersLastFrame = m_ActivePlayers.Count;
+            m_numOfActivePlayersLastFrame = m_activePlayers.Count;
             StartCoroutine(StartCameraLerp());
         }
 
-        if (m_DoCameraLerp)
+        if (m_doCameraLerp)
         {
             m_currentLerpTime += Time.deltaTime;
         }
     }
 
+    /// <summary>
+    /// Set values for the camera such as the dead zone and buffers, ready to be used by other parts of the script.
+    /// Written by Connor Saysell.
+    /// </summary>
     void SetCameraValues()
     {
-        float m_CamHeight = m_Camera.orthographicSize * 2;
-        float m_CamWidth = m_CamHeight * m_Camera.aspect;
+        float camHeight = m_camera.orthographicSize * 2;
+        float camWidth = camHeight * m_camera.aspect;
 
-        m_YBufferWorld = m_CamHeight * (m_YBufferPercent / 100.0f);
-        m_XBufferWorld = m_CamWidth * (m_XBufferPercent / 100.0f);
+        m_yBufferWorld = camHeight * (m_yBufferPercent / 100.0f);
+        m_xBufferWorld = camWidth * (m_xBufferPercent / 100.0f);
 
-        m_DeadZoneHeight = m_CamHeight - (m_YBufferWorld * 2f);
-        m_DeadZoneWidth = m_CamWidth - (m_XBufferWorld * 2f);
+        m_deadZoneHeight = camHeight - (m_yBufferWorld * 2f);
+        m_deadZoneWidth = camWidth - (m_xBufferWorld * 2f);
+    }
+    
+    /// <summary>
+    /// This functions handles everything surrounding the camera position, from doing the average position, to the highest and also the lerping when needed.
+    /// Written by Connor Saysell.
+    /// </summary>
+    void DoCameraPosition()
+    {
+        Vector3 targetCamPos = (m_desiredCameraZoom < m_maxCameraZoom) ? GetAverageCameraPosition() : GetHighestPlayerCamPosition();
+        
+        if (m_doCameraLerp)
+        {
+            targetCamPos = Vector3.Lerp(m_camPosAtStartOfLerp, targetCamPos, m_currentLerpTime / m_lerpTime);
+        }
+
+        transform.position = targetCamPos;
     }
 
     /// <summary>
@@ -179,195 +166,119 @@ public class c_Camera : MonoBehaviour
     /// This should be used until the camera is fully zoomed out, at which point the highest player tracking should kick into effect.
     /// Written by Connor Saysell.
     /// </summary>
-    void CalculateCameraPosition()
+    Vector3 GetAverageCameraPosition()
     {
         Vector3 camPos = transform.position;
 
-        float left = camPos.x - m_DeadZoneWidth / 2f;
-        float right = camPos.x + m_DeadZoneWidth / 2f;
-        float top = camPos.y + m_DeadZoneHeight / 2f;
-        float bottom = camPos.y - m_DeadZoneHeight / 2f;
+        float left = camPos.x - m_deadZoneWidth / 2f;
+        float right = camPos.x + m_deadZoneWidth / 2f;
+        float top = camPos.y + m_deadZoneHeight / 2f;
+        float bottom = camPos.y - m_deadZoneHeight / 2f;
 
-        Vector3 newCamPos = camPos;
-
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
+        for (int i = 0; i < m_activePlayers.Count; i++)
         {
-            Vector3 playerPosition = m_ActivePlayers[i].transform.position;
+            Vector3 playerPosition = m_activePlayers[i].transform.position;
 
             if (playerPosition.x < left)
             {
-                newCamPos.x += playerPosition.x - left;
+                camPos.x += playerPosition.x - left;
             }
             else if (playerPosition.x > right)
             {
-                newCamPos.x += playerPosition.x - right;
+                camPos.x += playerPosition.x - right;
             }
 
             if (playerPosition.y > top)
             {
-                newCamPos.y += playerPosition.y - top;
+                camPos.y += playerPosition.y - top;
             }
             else if (playerPosition.y < bottom)
             {
-                newCamPos.y += playerPosition.y - bottom;
+                camPos.y += playerPosition.y - bottom;
             }
         }
 
-        m_desiredCamPos = new Vector3(newCamPos.x, newCamPos.y, transform.position.z);
+        return new Vector3(camPos.x, camPos.y, transform.position.z);
     }
 
     /// <summary>
-    /// Calculate the position of the camera when following the highest player while the camera is fully zoomed out and following the average player no longer keeps it in the bounding box
+    /// Calculate the position of the camera when following the highest player while the camera is fully zoomed out and following the average player no longer keeps it in the bounding box.
     /// Written by Connor Saysell.
     /// </summary>
-    void FollowHighestPlayer()
+    Vector3 GetHighestPlayerCamPosition()
     {
-
         float highestYPos = float.MinValue;
-        int highestPlayer = -1;
-        for (int i = 0; i < m_ActivePlayers.Count; i++)
+        for (int i = 0; i < m_activePlayers.Count; i++)
         {
-            float playerYPos = m_ActivePlayers[i].transform.position.y;
-
-            if (playerYPos > highestYPos)
-            {
-                highestYPos = playerYPos;
-                highestPlayer = i;
-            }
-        }
-
-        if (highestPlayer == -1) // Essentially a null check
-        {
-            return;
+            highestYPos = Mathf.Max(m_activePlayers[i].transform.position.y, highestYPos);
         }
 
         Vector3 camPos = transform.position;
-        Vector3 newCamPos = camPos;
-        float top = camPos.y + m_DeadZoneHeight / 2f;
+        float top = camPos.y + m_deadZoneHeight / 2f;
 
-        newCamPos.y += highestYPos - top;
-
-
-        m_desiredCamPos = newCamPos;
-
+        camPos.y += highestYPos - top;
+        
+        return camPos;
     }
     
     /// <summary>
-    /// This applies the camera position previously calculated, doing a check for the camera lerp if necessary.
+    /// This calculates and applies the camera zoom for the camera.  
     /// Written by Connor Saysell.
     /// </summary>
-    void ApplyCameraPosition()
-    {
-        Vector3 camPos = m_desiredCamPos;
-        if (m_DoCameraLerp)
-        {
-            camPos = DoCameraPositionLerp();
-        }
-
-        transform.position = camPos;
-    }
-    
-    /// <summary>
-    /// This applies the camera position based on where in the lerp process the camera is in
-    /// Written by Connor Saysell.
-    /// </summary>
-    Vector3 DoCameraPositionLerp()
-    {
-        // Vector3 cameraPos = Vector3.Lerp(transform.position, m_desiredCamPos, m_currentLerpTime / m_LerpTime);
-        Vector3 cameraPos = Vector3.Lerp(m_camPosAtStartOfLerp, m_desiredCamPos, m_currentLerpTime / m_LerpTime);
-        return cameraPos;
-    }
-
-
     void DoCameraZoom()
     {
-        float requiredHeight = m_PlayerBounds.size.y / 2f + m_YBufferWorld;
-        float requiredWidth = (m_PlayerBounds.size.x / 2f + m_XBufferWorld) / m_Camera.aspect;
+        float requiredHeight = m_playerBounds.size.y / 2f + m_yBufferWorld;
+        float requiredWidth = (m_playerBounds.size.x / 2f + m_xBufferWorld) / m_camera.aspect;
 
-        m_DesiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
+        m_desiredCameraZoom = Mathf.Max(requiredHeight, requiredWidth);
 
-        m_DesiredCameraZoom = Mathf.Clamp(m_DesiredCameraZoom, m_MinCameraZoom * m_WorldScale,
-            m_MaxCameraZoom * m_WorldScale);
+        m_desiredCameraZoom = Mathf.Clamp(m_desiredCameraZoom, m_minCameraZoom * m_worldScale, m_maxCameraZoom * m_worldScale);
         
-        float camZoom = m_DesiredCameraZoom;
-        if (m_DoCameraLerp)
+        if (m_doCameraLerp)
         {
-            camZoom = DoCameraZoomLerp();
+            m_desiredCameraZoom = Mathf.Lerp(m_camZoomAtStartOfLerp, m_desiredCameraZoom, m_currentLerpTime / m_lerpTime);
         }
 
-        m_CameraZoom = Mathf.Clamp(camZoom, m_MinCameraZoom * m_WorldScale, m_MaxCameraZoom * m_WorldScale);
-        m_Camera.orthographicSize = m_CameraZoom;
-    }
-    /// <summary>
-    /// This calculates the desired zoom level for the camera at a given point. It does NOT apply it. This should be done with ApplyCameraZoom();
-    /// Written by Connor Saysell.
-    /// </summary>
-    void CalculateCameraZoom()
-    {
-        
-
-    }
-    
-    /// <summary>
-    /// This applies the camera zoom previously calculated, doing a check for the camera lerp if necessary.
-    /// Written by Connor Saysell.
-    /// </summary>
-    void ApplyCameraZoom()
-    {
-       
+        m_camera.orthographicSize = m_desiredCameraZoom;
     }
 
     /// <summary>
-    /// This applies the camera zoom based on where in the lerp process the camera is in
-    /// Written by Connor Saysell.
-    /// </summary>
-    private float DoCameraZoomLerp()
-    {
-        float camZoom = Mathf.Lerp(m_CamZoomAtStartOfLerp, m_DesiredCameraZoom, m_currentLerpTime / m_LerpTime);
-        // float camZoom = Mathf.Lerp(m_CameraZoom, m_DesiredCameraZoom, m_currentLerpTime / m_LerpTime);
-        return camZoom;
-    }
-
-    /// <summary>
-    /// This starts the camera lerp process 
+    /// This starts the camera lerp process.
     /// Written by Connor Saysell.
     /// </summary>
     IEnumerator StartCameraLerp()
     {
-        m_DoCameraLerp = true;
+        m_doCameraLerp = true;
         m_currentLerpTime = 0;
-        m_CamZoomAtStartOfLerp = m_CameraZoom;
+        m_camZoomAtStartOfLerp = m_camera.orthographicSize;
         m_camPosAtStartOfLerp = transform.position;
-        yield return new WaitForSeconds(m_LerpTime);
+        yield return new WaitForSeconds(m_lerpTime);
 
         // Add the same null check that was added for the player respawning here.
-        m_DoCameraLerp = false;
+        m_doCameraLerp = false;
     }
     
-    float tempDepth = 0.3f; // Should be the near clipping plane on the camera.
-
     void OnDrawGizmos()
     {
-        if (m_DebugDraw)
+        if (m_debugDraw)
         {
             Vector3 camPos = transform.position;
-            float zOffset = tempDepth; //Default Value in case of no camera reference
+            float zOffset = 0.3f; //Default Value in case of no camera reference - Should be near clipping plane value
 
-            if (m_Camera != null)
+            if (m_camera != null)
             {
-                zOffset = m_Camera.nearClipPlane;
+                zOffset = m_camera.nearClipPlane;
             }
 
             camPos.z += zOffset;
             
             // Player Buffer
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(camPos, new Vector3(m_DeadZoneWidth, m_DeadZoneHeight, 0f));
+            Gizmos.DrawWireCube(camPos, new Vector3(m_deadZoneWidth, m_deadZoneHeight, 0f));
 
             // Player Bounds
             Gizmos.color = Color.brown;
-            Gizmos.DrawWireCube(m_PlayerBounds.center, m_PlayerBounds.size);
+            Gizmos.DrawWireCube(m_playerBounds.center, m_playerBounds.size);
         }
     }
-
 }
