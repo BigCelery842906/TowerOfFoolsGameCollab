@@ -18,6 +18,8 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     [Tooltip("This value will only be taken into account if 'Use Scene Build Index' is false.")]
     [SerializeField] private string  m_sceneName;
 
+    private bool m_playButtonClicked = false;
+    
     protected override void InitialiseMenuManager()
     {
         BindButton("play-btn", HandleButtonClicked_Play);
@@ -37,6 +39,10 @@ public class ui_MainMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_Play()
     {
+        // Only allow the play button to be clicked once
+        if (m_playButtonClicked) return;
+        m_playButtonClicked = true;
+        
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)
         {

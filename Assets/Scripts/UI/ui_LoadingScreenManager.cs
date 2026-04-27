@@ -9,11 +9,11 @@ public class ui_LoadingScreenManager : ui_BaseMenuManager
         return;
     }
 
-    public void Hide()
-    {
-        m_uiDocument.panelSettings = null;
-        m_uiDocument.rootVisualElement?.Clear();
-    }
+    // public void Hide()
+    // {
+    //     m_uiDocument.panelSettings = null;
+    //     m_uiDocument.rootVisualElement?.Clear();
+    // }
     
     // TODO implement loading progress
 }
