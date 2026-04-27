@@ -23,7 +23,12 @@ public class p_playerAnimControl : MonoBehaviour
         m_anim.SetBool("taunting",true);
         m_anim.SetFloat("Taunt", taunt);
 
-        StartCoroutine(C_WaitForAnim(1, "taunting"));
+        bool shouldRotate;
+
+        if(taunt == 1) { shouldRotate = true; }
+        else { shouldRotate = false; }
+
+        StartCoroutine(C_WaitForAnim(1, "taunting", shouldRotate));
     }
 
     public void SetAnimMove(bool isMoving)
@@ -62,9 +67,9 @@ public class p_playerAnimControl : MonoBehaviour
         m_anim.SetBool("pickup", false);
     }
 
-    private IEnumerator C_WaitForAnim(float seconds, string boolName)
+    private IEnumerator C_WaitForAnim(float seconds, string boolName, bool rotate)
     {
-        //transform.parent.rotation = new Quaternion(0, 180, 0, 0);
+        if (rotate) { transform.parent.rotation = new Quaternion(0, 180, 0, 0); }        
         m_playerPickup.SetStun(seconds);
 
         yield return new WaitForSeconds(seconds);
