@@ -112,4 +112,25 @@ public class e_GlobalData : MonoBehaviour
         m_IsPaused = isPaused;
         Time.timeScale = isPaused ? 0 : 1;
     }
+    
+    public void SetGameEnded(bool isGameEnded)
+    {
+        m_HasGameEnded = isGameEnded;
+    }
+
+    public bool GetGameEnded()
+    {
+        return m_HasGameEnded;
+    }
+    
+    public void SetLavaComponents(float lavaSpeedMultiplier, float initialSpeed)
+    {
+        m_lavaSpeedMultiplier = lavaSpeedMultiplier;
+        m_lavaInitialSpeed = initialSpeed;
+    }
+    
+    public float GetCurrentLavaSpeed()
+    {
+        return m_lavaInitialSpeed + (m_lavaInitialSpeed * m_lavaSpeedMultiplier * GetCurrentTimeSpentInGame()); 
+    }
 }
