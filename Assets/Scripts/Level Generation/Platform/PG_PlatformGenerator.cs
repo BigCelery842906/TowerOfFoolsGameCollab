@@ -233,7 +233,7 @@ public class PG_PlatformGenerator : MonoBehaviour
             {
                 innerAttempts++;
                 int xPos = UnityEngine.Random.Range(1, Mathf.Max(m_bonusPlatformXSeperation + 1, roomGrid.m_width - platformSize - m_bonusPlatformXSeperation - 1));
-                int yPos = UnityEngine.Random.Range(m_platformYSpace, roomGrid.m_height - m_platformYSpace);
+                int yPos = UnityEngine.Random.Range(m_platformYSpace, roomGrid.m_height - (m_platformYSpace * 2));
 
                 if (!SpawnPlatformAtCoords(xPos, yPos, platformSize, 1))
                 {
@@ -436,7 +436,7 @@ void ZigZag(GameObject room)
             xPointer = roomW - platformSize - 1 - m_ZigZagMaxXVariation;
         }
         yPointer -= m_platformYSpace;
-        if (yPointer - (m_platformYSpace / 2) <= 0)
+        if (yPointer - 1 /*- (m_platformYSpace *2)*/ <= 0)
         {
             platformsFinished = true;
             continue;
