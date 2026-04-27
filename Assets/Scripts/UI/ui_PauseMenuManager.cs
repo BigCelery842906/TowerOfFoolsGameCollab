@@ -53,6 +53,8 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
         else
         {
             HideMenu();
+            // also hide the settings menu if it's currently shown
+            if (m_settingsMenuManager.IsMenuShown()) m_settingsMenuManager.HideMenu();
         }
     }
 
