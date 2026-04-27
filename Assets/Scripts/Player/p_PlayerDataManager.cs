@@ -51,7 +51,12 @@ public class p_PlayerDataManager : MonoBehaviour
             yield return new WaitForSeconds(m_respawnTimer);
 
             // Written by Connor, shout if you need to 
+            
             gameObject.SetActive(true);
+            
+            // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
+            if (this == null) yield break;
+            
             Vector3 currentPos = gameObject.transform.position;
             Vector3 newPos = currentPos;
 
