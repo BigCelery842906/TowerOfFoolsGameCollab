@@ -127,6 +127,15 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0176f32-439b-445a-bb15-d6336cd823fc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -195,6 +204,28 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Taunt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74451aef-853d-4a66-b8e2-9d23d26f8696"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98a65bec-453d-4d9a-9017-5c07fa5fc368"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -233,6 +264,15 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""name"": ""Taunt"",
                     ""type"": ""Button"",
                     ""id"": ""5c2799f5-214c-4051-9c00-69d5d9541efb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""6903ed37-edcf-414e-8379-8982d7b3c29e"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -393,28 +433,22 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Taunt"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Menus"",
-            ""id"": ""e4b7c823-287c-474e-a649-aacb8294976c"",
-            ""actions"": [
-                {
-                    ""name"": ""Pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""8478388f-9de1-43b3-910a-e4d1e87712ed"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
+                },
                 {
                     ""name"": """",
-                    ""id"": ""69757281-ffbe-46ea-9bfc-316581e6cb25"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""id"": ""10a4ad17-08a0-4476-8c1c-e7e475ae46e1"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2098282-8143-466a-b2dc-0e3300329e5f"",
+                    ""path"": ""<Gamepad>/{Menu}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -433,22 +467,20 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         m_AM_PlayerOne_Jump = m_AM_PlayerOne.FindAction("Jump", throwIfNotFound: true);
         m_AM_PlayerOne_Attack = m_AM_PlayerOne.FindAction("Attack", throwIfNotFound: true);
         m_AM_PlayerOne_Taunt = m_AM_PlayerOne.FindAction("Taunt", throwIfNotFound: true);
+        m_AM_PlayerOne_Pause = m_AM_PlayerOne.FindAction("Pause", throwIfNotFound: true);
         // AM_PlayerTwo
         m_AM_PlayerTwo = asset.FindActionMap("AM_PlayerTwo", throwIfNotFound: true);
         m_AM_PlayerTwo_Move = m_AM_PlayerTwo.FindAction("Move", throwIfNotFound: true);
         m_AM_PlayerTwo_Jump = m_AM_PlayerTwo.FindAction("Jump", throwIfNotFound: true);
         m_AM_PlayerTwo_Attack = m_AM_PlayerTwo.FindAction("Attack", throwIfNotFound: true);
         m_AM_PlayerTwo_Taunt = m_AM_PlayerTwo.FindAction("Taunt", throwIfNotFound: true);
-        // Menus
-        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
-        m_Menus_Pause = m_Menus.FindAction("Pause", throwIfNotFound: true);
+        m_AM_PlayerTwo_Pause = m_AM_PlayerTwo.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@IA_Player()
     {
         UnityEngine.Debug.Assert(!m_AM_PlayerOne.enabled, "This will cause a leak and performance issues, IA_Player.AM_PlayerOne.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_AM_PlayerTwo.enabled, "This will cause a leak and performance issues, IA_Player.AM_PlayerTwo.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Menus.enabled, "This will cause a leak and performance issues, IA_Player.Menus.Disable() has not been called.");
     }
 
     /// <summary>
@@ -528,6 +560,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     private readonly InputAction m_AM_PlayerOne_Jump;
     private readonly InputAction m_AM_PlayerOne_Attack;
     private readonly InputAction m_AM_PlayerOne_Taunt;
+    private readonly InputAction m_AM_PlayerOne_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_PlayerOne".
     /// </summary>
@@ -555,6 +588,10 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_PlayerOne/Taunt".
         /// </summary>
         public InputAction @Taunt => m_Wrapper.m_AM_PlayerOne_Taunt;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerOne/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_AM_PlayerOne_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -593,6 +630,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Taunt.started += instance.OnTaunt;
             @Taunt.performed += instance.OnTaunt;
             @Taunt.canceled += instance.OnTaunt;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -616,6 +656,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Taunt.started -= instance.OnTaunt;
             @Taunt.performed -= instance.OnTaunt;
             @Taunt.canceled -= instance.OnTaunt;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -657,6 +700,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     private readonly InputAction m_AM_PlayerTwo_Jump;
     private readonly InputAction m_AM_PlayerTwo_Attack;
     private readonly InputAction m_AM_PlayerTwo_Taunt;
+    private readonly InputAction m_AM_PlayerTwo_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_PlayerTwo".
     /// </summary>
@@ -684,6 +728,10 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_PlayerTwo/Taunt".
         /// </summary>
         public InputAction @Taunt => m_Wrapper.m_AM_PlayerTwo_Taunt;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerTwo/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_AM_PlayerTwo_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -722,6 +770,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Taunt.started += instance.OnTaunt;
             @Taunt.performed += instance.OnTaunt;
             @Taunt.canceled += instance.OnTaunt;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -745,6 +796,9 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Taunt.started -= instance.OnTaunt;
             @Taunt.performed -= instance.OnTaunt;
             @Taunt.canceled -= instance.OnTaunt;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -778,102 +832,6 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="AM_PlayerTwoActions" /> instance referencing this action map.
     /// </summary>
     public AM_PlayerTwoActions @AM_PlayerTwo => new AM_PlayerTwoActions(this);
-
-    // Menus
-    private readonly InputActionMap m_Menus;
-    private List<IMenusActions> m_MenusActionsCallbackInterfaces = new List<IMenusActions>();
-    private readonly InputAction m_Menus_Pause;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Menus".
-    /// </summary>
-    public struct MenusActions
-    {
-        private @IA_Player m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public MenusActions(@IA_Player wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Menus/Pause".
-        /// </summary>
-        public InputAction @Pause => m_Wrapper.m_Menus_Pause;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Menus; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="MenusActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="MenusActions" />
-        public void AddCallbacks(IMenusActions instance)
-        {
-            if (instance == null || m_Wrapper.m_MenusActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_MenusActionsCallbackInterfaces.Add(instance);
-            @Pause.started += instance.OnPause;
-            @Pause.performed += instance.OnPause;
-            @Pause.canceled += instance.OnPause;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="MenusActions" />
-        private void UnregisterCallbacks(IMenusActions instance)
-        {
-            @Pause.started -= instance.OnPause;
-            @Pause.performed -= instance.OnPause;
-            @Pause.canceled -= instance.OnPause;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="MenusActions.UnregisterCallbacks(IMenusActions)" />.
-        /// </summary>
-        /// <seealso cref="MenusActions.UnregisterCallbacks(IMenusActions)" />
-        public void RemoveCallbacks(IMenusActions instance)
-        {
-            if (m_Wrapper.m_MenusActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="MenusActions.AddCallbacks(IMenusActions)" />
-        /// <seealso cref="MenusActions.RemoveCallbacks(IMenusActions)" />
-        /// <seealso cref="MenusActions.UnregisterCallbacks(IMenusActions)" />
-        public void SetCallbacks(IMenusActions instance)
-        {
-            foreach (var item in m_Wrapper.m_MenusActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_MenusActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="MenusActions" /> instance referencing this action map.
-    /// </summary>
-    public MenusActions @Menus => new MenusActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AM_PlayerOne" which allows adding and removing callbacks.
     /// </summary>
@@ -909,6 +867,13 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTaunt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AM_PlayerTwo" which allows adding and removing callbacks.
@@ -945,14 +910,6 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTaunt(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menus" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="MenusActions.AddCallbacks(IMenusActions)" />
-    /// <seealso cref="MenusActions.RemoveCallbacks(IMenusActions)" />
-    public interface IMenusActions
-    {
         /// <summary>
         /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

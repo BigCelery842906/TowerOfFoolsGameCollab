@@ -4,6 +4,7 @@ using UnityEngine;
 // Written by Connor Saysell
 public class e_GlobalData : MonoBehaviour
 {
+
     public static e_GlobalData instance;
     
     [SerializeField] float m_WorldScale = 1;
@@ -14,8 +15,10 @@ public class e_GlobalData : MonoBehaviour
     private float m_TimeSpentInGame = 0 ;
     private float m_lavaSpeedMultiplier = 0;
     private float m_lavaInitialSpeed;
-    
+
     private bool m_IsPaused = false;
+
+    private bool m_HasGameEnded = false;
 
     void Awake()
     {
@@ -108,16 +111,5 @@ public class e_GlobalData : MonoBehaviour
     {
         m_IsPaused = isPaused;
         Time.timeScale = isPaused ? 0 : 1;
-    }
-    
-    public void SetLavaComponents(float lavaSpeedMultiplier, float initialSpeed)
-    {
-        m_lavaSpeedMultiplier = lavaSpeedMultiplier;
-        m_lavaInitialSpeed = initialSpeed;
-    }
-    
-    public float GetCurrentLavaSpeed()
-    {
-        return m_lavaInitialSpeed + (m_lavaInitialSpeed * m_lavaSpeedMultiplier * GetCurrentTimeSpentInGame()); 
     }
 }
