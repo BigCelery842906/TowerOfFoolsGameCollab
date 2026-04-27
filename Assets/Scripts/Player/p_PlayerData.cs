@@ -45,20 +45,28 @@ public class p_PlayerData
     #region Score
 
     //Score Management
-    public void UpdateScore(int amount, int playerID)
+    public void UpdateScore(int newScore, int playerID)
     {
         if(playerID == m_PlayerID)
         {
-            ChangeScore(amount);
+            ChangeScore(newScore);
         }
     }
 
-    private void ChangeScore(int amount)
+    private void ChangeScore(int newScore)
     {
-        m_Score += amount;
+        m_Score = newScore;
     }
 
-    public int GetScore() { return m_Score; }
+    public int GetScore(int playerID) 
+    {
+        if(playerID == m_PlayerID)
+        {
+           return m_Score; 
+        }
+
+        return 0;
+    }
 
     #endregion Score
 
