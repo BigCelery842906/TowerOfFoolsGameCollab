@@ -16,6 +16,9 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
     [SerializeField] private bool m_drawDeathReset = false;
     [SerializeField] private float m_respawnTimer = 3.0f;
+    [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
+    private float totalPositionCorrection = 4.0f;
+    
     void Start()
     {
         //This call below is static so needs no instance of player data existing
@@ -32,6 +35,11 @@ public class p_PlayerDataManager : MonoBehaviour
 
         //Bind the Event for a player having no lives to the end game function.
         e_GameEvents.instance.onPlayerNoLives += EndGame;
+    }
+
+    void Update()
+    {
+        totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
     }
 
     void PlayerDeathPositionUpdate(int playerID)
@@ -55,7 +63,11 @@ public class p_PlayerDataManager : MonoBehaviour
             Vector3 currentPos = gameObject.transform.position;
             Vector3 newPos = currentPos;
 
-            newPos.y = currentPos.y + m_deathPositionCorrection;
+            m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
+            
+            float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
+
+            newPos.y = currentPos.y + totalPositionCorrection;
 
             Collider[] potentialPlatforms = Physics.OverlapSphere(newPos, m_radius); //Get all objects in range that have a collider
             List<GameObject> platforms = new List<GameObject>(); // Make a gameobject list (You need the transforms not the collider component now), and lists are just easier to add to
@@ -112,7 +124,7 @@ public class p_PlayerDataManager : MonoBehaviour
         if (m_drawDeathReset)
         {
             Vector3 newPos = gameObject.transform.position;
-            newPos.y += m_deathPositionCorrection;
+            newPos.y += totalPositionCorrection;
             Gizmos.DrawWireSphere(newPos, m_radius);
         }
     }

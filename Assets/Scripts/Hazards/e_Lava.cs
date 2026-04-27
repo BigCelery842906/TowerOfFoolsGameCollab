@@ -48,7 +48,7 @@ public class e_Lava : MonoBehaviour
     }
 
     void UpdateLavaSpeed()
-    { //TODO: Check if time in room or time in game. - Check with Design
+    {
         m_currentMovementSpeed = m_baseMovementSpeed + (m_baseMovementSpeed * m_speedMultiplier * e_GlobalData.instance.GetCurrentTimeSpentInGame());
     }
 
@@ -61,6 +61,9 @@ public class e_Lava : MonoBehaviour
         yield return new WaitForSeconds(m_lavaWaitPeriod);
         m_baseMovementSpeed = holdSpeed;
         m_AdrenalineCheck.gameObject.SetActive(true);
+        
+        e_GlobalData.instance.SetLavaComponents(m_speedMultiplier, m_baseMovementSpeed);
+        
     }
 
     private void OnTriggerEnter(Collider other)
