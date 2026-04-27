@@ -19,6 +19,7 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
     [SerializeField] private bool m_drawDeathReset = false;
     [SerializeField] private float m_respawnTimer = 3.0f;
+    
     void Start()
     {
         //This call below is static so needs no instance of player data existing
@@ -58,7 +59,10 @@ public class p_PlayerDataManager : MonoBehaviour
         {
             gameObject.SetActive(false);
             yield return new WaitForSeconds(m_respawnTimer);
-
+            
+            // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
+            if (this == null) yield break;
+            
             // Written by Connor, shout if you need to 
             
             gameObject.SetActive(true);
@@ -115,6 +119,10 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void EndGame(int playerID)
     {
+        if (e_GlobalData.instance.GetGameEnded()) return;
+        e_GlobalData.instance.SetGameEnded(true);
+        // Debug.Log("End Game Called in playerdatamanager");
+        
         // Destroy(gameObject);
         sc_SceneManager.LoadScene("GameOver");
         //Save Data

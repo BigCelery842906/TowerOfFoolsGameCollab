@@ -65,33 +65,43 @@ public class sc_SceneManager : MonoBehaviour
         
         // load the target scene additively
         AsyncOperation loadTargetSceneOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-
-        while (!loadTargetSceneOperation.isDone)
+        loadTargetSceneOperation.allowSceneActivation = false;
+        
+        // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AsyncOperation-allowSceneActivation.html
+        // "When allowSceneActivation is set to false, Unity stops progress at 0.9, and AsyncOperation.isDone remains false"
+        while (loadTargetSceneOperation.progress < 0.9f)
         {
             // TODO hook progress visuals
             yield return null;
         }
         
+        // activate the target scene once the loading scene is unloaded
+        loadTargetSceneOperation.allowSceneActivation = true;
+
+        // wait until the target scene is loaded before the previous scene is unloaded
+        while (!loadTargetSceneOperation.isDone)
+            yield return null;
+        
         // activate the target scene
         Scene targetScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(targetScene);
         
-        // unload the previous scene if it is still valid
-        if (currentScene.IsValid())
-        {
-            yield return SceneManager.UnloadSceneAsync(currentScene);
-        }
-        
-        // explicitly hide the loading screen
-        if (loadingScreenManager != null) 
-            loadingScreenManager.Hide();
-
-        
         // wait for the user-specified duration
         yield return new WaitForSeconds(m_waitAfterLoadingInSeconds);
         
+        // unload the previous scene if it is still valid
+        if (currentScene.IsValid())
+            yield return SceneManager.UnloadSceneAsync(currentScene);
+        
+        // explicitly hide the loading screen
+        if (loadingScreenManager != null) 
+            loadingScreenManager.HideMenu();
+        
         // unload the loading scene
-        yield return SceneManager.UnloadSceneAsync(loadingScene);
+        loadingScene = SceneManager.GetSceneByName(m_loadingSceneName);
+        if  (loadingScene.IsValid())
+            yield return SceneManager.UnloadSceneAsync(loadingScene);
+        
     }
     
 }
