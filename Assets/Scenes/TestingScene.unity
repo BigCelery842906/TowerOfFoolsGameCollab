@@ -531,6 +531,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4235117051892316211, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_nextRoomEntrance
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4235117051892316211, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_previousRoomExit
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9026932992449788629, guid: 343810732bd90e9478f046157e23c5be, type: 3}
       propertyPath: m_Name
       value: PG_GenerationManager
