@@ -87,12 +87,22 @@ public class p_PlayerDataManager : MonoBehaviour
             }
 
             gameObject.transform.position = newPos;
+
+            p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
+
+            if (playerPickup)
+            {
+                Debug.Log("Player Values Reset");
+                playerPickup.ResetJumpForce();
+                playerPickup.ResetMoveSpeed();
+            }
+
         }
 
     void EndGame(int playerID)
     {
         // Destroy(gameObject);
-        sc_SceneManager.LoadSceneByName("GameOver");
+        sc_SceneManager.LoadScene("GameOver");
         //Save Data
         //Load End Scene
     }

@@ -27,8 +27,8 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
 
     private void HandleButtonClicked_Continue()
     {
-        // TODO: continue button
-        Debug.Log("continue Button Clicked, implementation todo");
+        HideMenu();
+        e_GlobalData.instance.SetPause(false);
     }
 
     private void HandleButtonClicked_Settings()
@@ -42,10 +42,10 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)
         {
-            sc_SceneManager.LoadSceneByIndex(m_mainMenuSceneBuildIndex);
+            sc_SceneManager.LoadScene(m_mainMenuSceneBuildIndex);
             return;
         }
         
-        sc_SceneManager.LoadSceneByName(m_mainMenuSceneName);
+        sc_SceneManager.LoadScene(m_mainMenuSceneName);
     }
 }
