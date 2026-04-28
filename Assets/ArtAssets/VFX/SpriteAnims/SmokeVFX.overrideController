@@ -6,6 +6,8 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: VFXOverride
+  m_Name: SmokeVFX
   m_Controller: {fileID: 9100000, guid: 8c6932461b22d7841aadbac6c9ce1e80, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 8e16eebc1028a2540a0923dfaf5e94f4, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 0b5178a6e7797b6498ac052adf59f144, type: 2}

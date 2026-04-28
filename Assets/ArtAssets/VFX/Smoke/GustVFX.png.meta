@@ -123,243 +123,243 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Image (3)_0
+      name: GustVFX_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 307
+        y: 306
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f5d17aecb246844381d8c9680324af6
-      internalID: -1990857868
+      spriteID: 13d1c2af2a4ad774190c4f55873d0c51
+      internalID: 616534178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_1
+      name: GustVFX_1
       rect:
         serializedVersion: 2
         x: 170
-        y: 307
+        y: 306
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7064cfcfe4bbbf409b05a51d5d563cc
-      internalID: -10303306
+      spriteID: 62098b77cea96e545a8f5ad1d23999bf
+      internalID: -485866466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_2
+      name: GustVFX_2
       rect:
         serializedVersion: 2
         x: 340
-        y: 307
+        y: 306
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90c38521382bd2c4e9960bccf408fe0a
-      internalID: -1428606801
+      spriteID: b5c5a6c67e845184cbbf8e2a6beb653f
+      internalID: -2139194526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_3
+      name: GustVFX_3
       rect:
         serializedVersion: 2
         x: 510
-        y: 307
+        y: 306
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02c6cc42a86921b47823ed0ea5852082
-      internalID: 1403261371
+      spriteID: dafaf2b50e59c29418740c47c5aa8f93
+      internalID: -1907363112
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_4
+      name: GustVFX_4
       rect:
         serializedVersion: 2
         x: 680
-        y: 307
+        y: 306
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 961e8972b8b65084ebf7449458482b09
-      internalID: 507037853
+      spriteID: a39c4d54b2a10f64cb80797a7eb42511
+      internalID: 694964098
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_5
+      name: GustVFX_5
       rect:
         serializedVersion: 2
         x: 850
-        y: 307
+        y: 306
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf83a660621f4904c8300a8d547997cc
-      internalID: -97011757
+      spriteID: 13ac9b94e7cff444cbb9fa46b8e067a2
+      internalID: -1205278252
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_6
+      name: GustVFX_6
       rect:
         serializedVersion: 2
         x: 0
-        y: 127
+        y: 126
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d39d1a8d8516da47b514f2aadcaaab0
-      internalID: -946799316
+      spriteID: e5ad2e1ed7922c54dbca8d079f871419
+      internalID: -756133469
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_7
+      name: GustVFX_7
       rect:
         serializedVersion: 2
         x: 170
-        y: 127
+        y: 126
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f260bbc7e593eb428ffb521e7321cfa
-      internalID: -592320110
+      spriteID: 16dc7762aa53b5b4cb79cc175485d074
+      internalID: 989786430
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_8
+      name: GustVFX_8
       rect:
         serializedVersion: 2
         x: 340
-        y: 127
+        y: 126
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82ad0651df755174686041b1c923ab2b
-      internalID: 231340567
+      spriteID: 61aa7d458284f02498aacbbd497443c3
+      internalID: -1210871329
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_9
+      name: GustVFX_9
       rect:
         serializedVersion: 2
         x: 510
-        y: 127
+        y: 126
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 43058d9b5c9127f44b70282d793b6f38
-      internalID: 833679122
+      spriteID: 13eb883dab975044cb87b969c5621375
+      internalID: -2099478873
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Image (3)_10
+      name: GustVFX_10
       rect:
         serializedVersion: 2
         x: 680
-        y: 127
+        y: 126
         width: 170
         height: 180
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e2b0510622a0a046b5a25c633279aeb
-      internalID: 587132351
+      spriteID: b7625460b8f48f3499477baed3a3c798
+      internalID: -599679068
       vertices: []
       indices: 
       edges: []
@@ -378,19 +378,19 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":170.0,"y":180.0},"gridSpriteOffset":{"x":0.0,"y":89.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":170.0,"y":180.0},"gridSpriteOffset":{"x":0.0,"y":90.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Image (3)_0: -1990857868
-      Image (3)_1: -10303306
-      Image (3)_10: 587132351
-      Image (3)_2: -1428606801
-      Image (3)_3: 1403261371
-      Image (3)_4: 507037853
-      Image (3)_5: -97011757
-      Image (3)_6: -946799316
-      Image (3)_7: -592320110
-      Image (3)_8: 231340567
-      Image (3)_9: 833679122
+      GustVFX_0: 616534178
+      GustVFX_1: -485866466
+      GustVFX_10: -599679068
+      GustVFX_2: -2139194526
+      GustVFX_3: -1907363112
+      GustVFX_4: 694964098
+      GustVFX_5: -1205278252
+      GustVFX_6: -756133469
+      GustVFX_7: 989786430
+      GustVFX_8: -1210871329
+      GustVFX_9: -2099478873
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
