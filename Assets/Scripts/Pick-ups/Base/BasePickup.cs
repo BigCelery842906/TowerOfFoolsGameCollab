@@ -5,6 +5,9 @@ public class BasePickup : MonoBehaviour
     [Tooltip("Dw bout this <3, dont touch it !!!")]
     [SerializeField] private float pickupAnimFloat;
 
+    [Tooltip("The sprite vfx goes here if its being used by the pickup, not used by default")]
+    [SerializeField] private GameObject m_VFXObj;
+
     protected AudioSource m_pickupSound;
 
     protected p_PlayerPickupManager m_playerOne;
