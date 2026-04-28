@@ -27,6 +27,8 @@ public class p_PlayerMovement : MonoBehaviour
     [Tooltip("Oh my you put the ground layer here, it should say ground :D")]
     [SerializeField] private LayerMask m_groundLayer;
 
+    private p_PlayerDataManager m_PlayerDataManager;
+
     private p_PlayerPickupManager m_PlayerPickupManager;
     private p_playerAnimControl m_playerAnim;
     private Rigidbody m_RB;
@@ -43,10 +45,18 @@ public class p_PlayerMovement : MonoBehaviour
     private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
     private Vector3 m_lowGrav;    
     private Vector3 m_apexGrav;    
-    private Vector3 m_highGrav;    
+    private Vector3 m_highGrav;
 
-    private void Awake()
+    private bool respawned = false; //DELETE this
+
+    private void OnEnable()
     {
+        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
+        //p_PlayerDataManager.
+
+        m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
+        if(m_PlayerDataManager != null ) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+
         m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
         if(m_PlayerPickupManager != null) 
         {
@@ -73,6 +83,8 @@ public class p_PlayerMovement : MonoBehaviour
         m_highGrav = new Vector3(0f,m_highGravValue, 0f);
 
         StartCoroutine(C_SlowTick());
+
+        //Debug.Log(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag));
     }
 
     //This is always running and acts like update but a much slower and less expensive version
@@ -80,6 +92,8 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while(true)
         {
+            if (respawned) { Debug.Log("RUNNINGGGGGGG"); }
+
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
@@ -129,6 +143,21 @@ public class p_PlayerMovement : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private void Handle_PlayerReset(int DeadID)
+    {
+        if (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
+
+        respawned = true;
+
+        m_PlayerPickupManager.ResetMoveSpeed();
+        m_PlayerPickupManager.ResetJumpForce();
+
+        m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
+        m_CapsuleCollider.material.staticFriction = m_staticFriction;
+
+        StartCoroutine(C_SlowTick());
     }
 
     public void SetMoveDirection(Vector2 direction)

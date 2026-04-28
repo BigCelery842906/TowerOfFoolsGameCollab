@@ -7,6 +7,8 @@ using System;
 
 public class p_PlayerDataManager : MonoBehaviour
 {
+    public event Action<int> onPlayerRespawned;
+
     //Member Variables
     p_PlayerData m_PlayerData = null;
     int m_PlayerID = -1;
@@ -66,6 +68,7 @@ public class p_PlayerDataManager : MonoBehaviour
             // Written by Connor, shout if you need to 
             
             gameObject.SetActive(true);
+            onPlayerRespawned?.Invoke(m_PlayerID);            
             
             // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
             if (this == null) yield break;
@@ -106,14 +109,16 @@ public class p_PlayerDataManager : MonoBehaviour
 
             gameObject.transform.position = newPos;
 
-            p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
 
-            if (playerPickup)
-            {
-                Debug.Log("Player Values Reset");
-                playerPickup.ResetJumpForce();
-                playerPickup.ResetMoveSpeed();
-            }
+            //Commented by master Unity Dev T Dawg <3 (i switched it to an event i just didnt want to delete ur shit
+            //p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
+
+            //if (playerPickup)
+            //{
+            //    Debug.Log("Player Values Reset");
+            //    playerPickup.ResetJumpForce();
+            //    playerPickup.ResetMoveSpeed();
+            //}
 
         }
 

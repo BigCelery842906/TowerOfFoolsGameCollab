@@ -7,7 +7,7 @@ public class p_playerAnimControl : MonoBehaviour
     private Rigidbody m_RB;
     private p_PlayerPickupManager m_playerPickup; //for setting stun
 
-    private void Awake()
+    private void OnEnable()
     {
         m_anim = GetComponent<Animator>();
         m_RB = GetComponentInParent<Rigidbody>();

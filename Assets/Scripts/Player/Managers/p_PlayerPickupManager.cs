@@ -29,6 +29,7 @@ public class p_PlayerPickupManager : MonoBehaviour
     [SerializeField] private Transform m_firingPosition;
 
     private p_playerAnimControl m_playerAnim;
+    private p_PlayerDataManager m_PlayerDataManager;
 
     private bool m_isHoldingPickup = false;
     private bool m_hasInteractablePickup = false;
@@ -40,12 +41,31 @@ public class p_PlayerPickupManager : MonoBehaviour
     private float m_baseMoveSpeed;
     private float m_baseJumpForce;
 
-    private void Awake()
+    private void OnEnable()
     {
+        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
+
+        m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
+        if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+
         m_playerMovement = GetComponent<p_PlayerMovement>();
     }
 
-    public void UseInteractablePickup()
+    private void Handle_PlayerReset(int DeadID)
+    {
+        if(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
+
+        if (interactablePickup != null) { Destroy(interactablePickup.gameObject); }
+        m_isHoldingPickup = false;
+        m_hasInteractablePickup = false;
+
+        ResetJumpForce();
+        ResetMoveSpeed();
+    }
+
+
+
+public void UseInteractablePickup()
     {
         OnUseInteractablePickup?.Invoke();
     }

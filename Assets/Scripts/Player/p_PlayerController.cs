@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 /// This class is listening for inputs, if u bind to an input any reason bind here but have ur code in a different class <3///
 /// </summary>
 public class p_PlayerController : MonoBehaviour
-{    
+{
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
     private p_PlayerCombat m_playerCombat;
@@ -20,16 +20,15 @@ public class p_PlayerController : MonoBehaviour
     /// </summary>
     private int m_playerID;
 
-    private void Awake()
+    private void OnEnable()
     {
+        e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
+
         m_playerMovement = GetComponent<p_PlayerMovement>();
         m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
         m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
         m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
-    }
 
-    private void OnEnable()
-    {
         m_playerInputs = new IA_Player();
 
         m_playerInputs.Enable();
@@ -41,14 +40,14 @@ public class p_PlayerController : MonoBehaviour
 
             m_playerInputs.AM_PlayerOne.Move.performed += Handle_Move;
             m_playerInputs.AM_PlayerOne.Move.canceled += Handle_MoveCancelled;
-                                    
+
             m_playerInputs.AM_PlayerOne.Jump.performed += Handle_Jump;
             m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
 
             m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
 
             m_playerInputs.AM_PlayerOne.Taunt.performed += Handle_Taunt;
-            
+
             m_playerInputs.AM_PlayerOne.Pause.performed += Handle_Pause;
         }
         else
@@ -84,7 +83,7 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerOne.Attack.performed -= Handle_Attack;
 
             m_playerInputs.AM_PlayerOne.Taunt.performed -= Handle_Taunt;
-            
+
             m_playerInputs.AM_PlayerOne.Pause.performed -= Handle_Pause;
         }
         else
@@ -141,11 +140,20 @@ public class p_PlayerController : MonoBehaviour
             tempF = 0;
         }
 
-            m_playerAnim.SetTauntFloat(tempF);
+        m_playerAnim.SetTauntFloat(tempF);
     }
 
     private void Handle_Pause(InputAction.CallbackContext ctx)
     {
         e_GlobalData.instance.TogglePause();
     }
+
+    private void Handle_PlayerReset(int i)
+    {
+        //we dont need i
+
+        //call other reset functions since this class already has a ref
+
+    }
+
 }
