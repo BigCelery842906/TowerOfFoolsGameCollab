@@ -118,6 +118,24 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Taunt"",
+                    ""type"": ""Button"",
+                    ""id"": ""28efdf1a-5bc9-4f81-91cf-3b26ce7eb764"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0176f32-439b-445a-bb15-d6336cd823fc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -156,30 +174,8 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7b4cfea7-29b0-414d-9efb-98bc5dd247b1"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""e5922e1c-ad80-48f6-994c-aa6a1f5001a5"",
                     ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""93e0e777-b778-4943-8b8d-bed82e44e4b8"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -195,6 +191,39 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a090154e-b88c-43fd-a9ea-e78a44d42a63"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Taunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74451aef-853d-4a66-b8e2-9d23d26f8696"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98a65bec-453d-4d9a-9017-5c07fa5fc368"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -226,6 +255,24 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""409823c6-ade8-4d32-81e4-bece6c223a23"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Taunt"",
+                    ""type"": ""Button"",
+                    ""id"": ""5c2799f5-214c-4051-9c00-69d5d9541efb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""6903ed37-edcf-414e-8379-8982d7b3c29e"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -267,6 +314,39 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""JL"",
+                    ""id"": ""39341f7d-a4a9-4031-bd95-1815fb7976c3"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""82834694-0413-4dc7-8056-969de5ea56a7"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""39810c2b-c32d-459f-bc68-2f862fb3d9d9"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""28de2d43-d200-4494-9d8a-bedfec595d06"",
                     ""path"": ""<Gamepad>/leftStick"",
@@ -281,6 +361,17 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""a2cd7dc6-185b-414f-b2ad-833b575c23e9"",
                     ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f04f0035-fac0-4995-af43-03a9726b08dc"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -309,6 +400,61 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb19d1bb-dc75-4698-96ab-7db19fba611d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f361109-7c2f-4683-bdbb-fa9fe388ec23"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Taunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6668ba6-2b7b-4c5c-964b-78858578e848"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Taunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10a4ad17-08a0-4476-8c1c-e7e475ae46e1"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2098282-8143-466a-b2dc-0e3300329e5f"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -320,11 +466,15 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         m_AM_PlayerOne_Move = m_AM_PlayerOne.FindAction("Move", throwIfNotFound: true);
         m_AM_PlayerOne_Jump = m_AM_PlayerOne.FindAction("Jump", throwIfNotFound: true);
         m_AM_PlayerOne_Attack = m_AM_PlayerOne.FindAction("Attack", throwIfNotFound: true);
+        m_AM_PlayerOne_Taunt = m_AM_PlayerOne.FindAction("Taunt", throwIfNotFound: true);
+        m_AM_PlayerOne_Pause = m_AM_PlayerOne.FindAction("Pause", throwIfNotFound: true);
         // AM_PlayerTwo
         m_AM_PlayerTwo = asset.FindActionMap("AM_PlayerTwo", throwIfNotFound: true);
         m_AM_PlayerTwo_Move = m_AM_PlayerTwo.FindAction("Move", throwIfNotFound: true);
         m_AM_PlayerTwo_Jump = m_AM_PlayerTwo.FindAction("Jump", throwIfNotFound: true);
         m_AM_PlayerTwo_Attack = m_AM_PlayerTwo.FindAction("Attack", throwIfNotFound: true);
+        m_AM_PlayerTwo_Taunt = m_AM_PlayerTwo.FindAction("Taunt", throwIfNotFound: true);
+        m_AM_PlayerTwo_Pause = m_AM_PlayerTwo.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@IA_Player()
@@ -409,6 +559,8 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     private readonly InputAction m_AM_PlayerOne_Move;
     private readonly InputAction m_AM_PlayerOne_Jump;
     private readonly InputAction m_AM_PlayerOne_Attack;
+    private readonly InputAction m_AM_PlayerOne_Taunt;
+    private readonly InputAction m_AM_PlayerOne_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_PlayerOne".
     /// </summary>
@@ -432,6 +584,14 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_PlayerOne/Attack".
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_AM_PlayerOne_Attack;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerOne/Taunt".
+        /// </summary>
+        public InputAction @Taunt => m_Wrapper.m_AM_PlayerOne_Taunt;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerOne/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_AM_PlayerOne_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -467,6 +627,12 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Taunt.started += instance.OnTaunt;
+            @Taunt.performed += instance.OnTaunt;
+            @Taunt.canceled += instance.OnTaunt;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -487,6 +653,12 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Taunt.started -= instance.OnTaunt;
+            @Taunt.performed -= instance.OnTaunt;
+            @Taunt.canceled -= instance.OnTaunt;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -527,6 +699,8 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
     private readonly InputAction m_AM_PlayerTwo_Move;
     private readonly InputAction m_AM_PlayerTwo_Jump;
     private readonly InputAction m_AM_PlayerTwo_Attack;
+    private readonly InputAction m_AM_PlayerTwo_Taunt;
+    private readonly InputAction m_AM_PlayerTwo_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "AM_PlayerTwo".
     /// </summary>
@@ -550,6 +724,14 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AM_PlayerTwo/Attack".
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_AM_PlayerTwo_Attack;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerTwo/Taunt".
+        /// </summary>
+        public InputAction @Taunt => m_Wrapper.m_AM_PlayerTwo_Taunt;
+        /// <summary>
+        /// Provides access to the underlying input action "AM_PlayerTwo/Pause".
+        /// </summary>
+        public InputAction @Pause => m_Wrapper.m_AM_PlayerTwo_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -585,6 +767,12 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
+            @Taunt.started += instance.OnTaunt;
+            @Taunt.performed += instance.OnTaunt;
+            @Taunt.canceled += instance.OnTaunt;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -605,6 +793,12 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
+            @Taunt.started -= instance.OnTaunt;
+            @Taunt.performed -= instance.OnTaunt;
+            @Taunt.canceled -= instance.OnTaunt;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -666,6 +860,20 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Taunt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTaunt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AM_PlayerTwo" which allows adding and removing callbacks.
@@ -695,5 +903,19 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Taunt" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTaunt(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
 }

@@ -10,6 +10,7 @@ public class p_PlayerController : MonoBehaviour
     private p_PlayerMovement m_playerMovement;
     private p_PlayerCombat m_playerCombat;
     private p_PlayerPickupManager m_playerPickupManager;
+    private p_playerAnimControl m_playerAnim;
     #endregion
 
     private IA_Player m_playerInputs;
@@ -24,6 +25,7 @@ public class p_PlayerController : MonoBehaviour
         m_playerMovement = GetComponent<p_PlayerMovement>();
         m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
         m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
+        m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
     }
 
     private void OnEnable()
@@ -44,6 +46,10 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
 
             m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
+
+            m_playerInputs.AM_PlayerOne.Taunt.performed += Handle_Taunt;
+            
+            m_playerInputs.AM_PlayerOne.Pause.performed += Handle_Pause;
         }
         else
         {
@@ -56,6 +62,10 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerTwo.Jump.canceled += Handle_JumpCancelled;
 
             m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
+
+            m_playerInputs.AM_PlayerTwo.Taunt.performed += Handle_Taunt;
+
+            m_playerInputs.AM_PlayerTwo.Pause.performed += Handle_Pause;
         }
     }
 
@@ -70,6 +80,12 @@ public class p_PlayerController : MonoBehaviour
 
             m_playerInputs.AM_PlayerOne.Jump.performed -= Handle_Jump;
             m_playerInputs.AM_PlayerOne.Jump.canceled -= Handle_JumpCancelled;
+
+            m_playerInputs.AM_PlayerOne.Attack.performed -= Handle_Attack;
+
+            m_playerInputs.AM_PlayerOne.Taunt.performed -= Handle_Taunt;
+            
+            m_playerInputs.AM_PlayerOne.Pause.performed -= Handle_Pause;
         }
         else
         {
@@ -78,6 +94,12 @@ public class p_PlayerController : MonoBehaviour
 
             m_playerInputs.AM_PlayerTwo.Jump.performed -= Handle_Jump;
             m_playerInputs.AM_PlayerTwo.Jump.canceled -= Handle_JumpCancelled;
+
+            m_playerInputs.AM_PlayerTwo.Attack.performed -= Handle_Attack;
+
+            m_playerInputs.AM_PlayerTwo.Taunt.performed -= Handle_Taunt;
+
+            m_playerInputs.AM_PlayerTwo.Pause.performed -= Handle_Pause;
         }
     }
 
@@ -105,5 +127,25 @@ public class p_PlayerController : MonoBehaviour
         {
             m_playerCombat.Attack();
         }
+    }
+
+    private void Handle_Taunt(InputAction.CallbackContext ctx)
+    {
+        float tempF = Random.Range(0.0f, 1.0f);
+        if (tempF >= 0.5)
+        {
+            tempF = 1;
+        }
+        else
+        {
+            tempF = 0;
+        }
+
+            m_playerAnim.SetTauntFloat(tempF);
+    }
+
+    private void Handle_Pause(InputAction.CallbackContext ctx)
+    {
+        e_GlobalData.instance.TogglePause();
     }
 }

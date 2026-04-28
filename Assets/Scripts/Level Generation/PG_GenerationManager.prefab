@@ -49,12 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_desiredChunkWidth: 16
   m_desiredChunkHeight: 9
-  m_chunksPerRoom: 5
-  m_chunkSizeMultiplier: 1
+  m_chunksPerRoom: 6
+  m_chunkSizeMultiplier: 2
   m_currentRoom: {fileID: 0}
   m_spawnPowerups: 0
   m_powerupSpawnChance: 0
-  m_worldScale: 1
+  m_worldScale: 1.5
 --- !u!114 &4235117051892316211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +97,9 @@ MonoBehaviour:
   m_randomisePlatformXStep: 1
   m_maxPlatformRandomXStep: 4
   m_minPlatformRandomXStep: 1
+  m_ZigZagMaxXVariation: 5
+  m_ZigZagMinPlatformSize: 5
+  m_ZigZagMaxPlatformSize: 5
   m_middles:
   - {fileID: 219155375013138608, guid: e83be5e0dce13fe49afe415e9b3aebc9, type: 3}
   m_ends:
@@ -105,9 +108,11 @@ MonoBehaviour:
   m_endToSpawn: {fileID: 0}
   m_xSpawnLocation: 1
   m_ySpawnLocation: 1
-  m_platformSpawnSize: 1
+  m_platformXSpawnSize: 1
+  m_platformYSpawnSize: 1
   m_currentGrid: {fileID: 0}
-  m_platformGenMethod: 2
+  m_platformGenMethod: 4
+  m_playerJumpDistance: 3
 --- !u!114 &6849143609539218465
 MonoBehaviour:
   m_ObjectHideFlags: 0

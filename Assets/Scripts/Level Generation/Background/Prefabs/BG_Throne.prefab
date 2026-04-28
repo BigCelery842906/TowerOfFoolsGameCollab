@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_width: 0
   m_height: 0
-  m_bGMat: {fileID: 2100000, guid: f48a8e1e48c3a0c4e90cb194deed9985, type: 2}
+  m_bGMat: {fileID: 2100000, guid: 359f890c0a7e3e844ad833d5a9f00684, type: 2}
 --- !u!33 &5485519984304648427
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class pu_Scoll : BasePickup
@@ -18,8 +19,8 @@ public class pu_Scoll : BasePickup
     {
         if(m_triggeredPlayer.GetPlayerGroundedPPM()) { return; } //not gonna spawn a platform if the players grounded
 
-        Instantiate(m_platformPrefab, new Vector3(m_triggeredPlayer.transform.position.x, m_triggeredPlayer.transform.position.y - m_distaceBelowPlayer, 0f), m_platformPrefab.transform.rotation);
-
+       Instantiate(m_platformPrefab, new Vector3(m_triggeredPlayer.transform.position.x, m_triggeredPlayer.transform.position.y - m_distaceBelowPlayer, 0f), m_platformPrefab.transform.rotation);
+        
         PickupUsed();
     }
 }
