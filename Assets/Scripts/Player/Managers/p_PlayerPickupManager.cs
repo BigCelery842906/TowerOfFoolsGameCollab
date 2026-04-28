@@ -117,6 +117,14 @@ public class p_PlayerPickupManager : MonoBehaviour
         OnStunStateChange?.Invoke(0);
         StartCoroutine(C_Timer(timerLength, m_baseMoveSpeed, OnStunStateChange));
     }
+    
+    public void ResetPickup()
+    {
+        Destroy(interactablePickup.gameObject);
+        m_hasInteractablePickup = false;
+        m_isHoldingPickup = false;
+        m_hasShield = false;
+    }
 
     #endregion
 
@@ -131,7 +139,7 @@ public class p_PlayerPickupManager : MonoBehaviour
     /// <summary>
     /// Returns a bool, Calls the same function within the player movement  
     /// </summary>
-    public bool GetPlayerGroundedPPM() { return m_playerMovement.GetPlayerGrouned(); }
+    public bool GetPlayerGroundedPPM() { return m_playerMovement.GetPlayerGrounded(); }
 
     public bool GetPlayerShield() { return m_hasShield; }
 

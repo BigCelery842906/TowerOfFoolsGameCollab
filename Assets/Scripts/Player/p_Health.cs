@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class p_Health : MonoBehaviour
 {
+    //TODO: IS THIS USED ANYWHERE? - CONNOR
     private p_PlayerPickupManager m_pickupManager;
 
     private int m_health = 1; // For now this is set to 1

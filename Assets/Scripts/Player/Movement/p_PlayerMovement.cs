@@ -43,7 +43,11 @@ public class p_PlayerMovement : MonoBehaviour
     private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
     private Vector3 m_lowGrav;    
     private Vector3 m_apexGrav;    
-    private Vector3 m_highGrav;    
+    private Vector3 m_highGrav;
+
+    private float m_baseSpeed;
+    private float m_baseJumpForce;
+    
 
     private void Awake()
     {
@@ -203,6 +207,17 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void SetMaxJumps(float max) { m_maxJumps = max;}
 
-    public bool GetPlayerGrouned() { return m_isGrounded; } 
+    public bool GetPlayerGrounded() { return m_isGrounded; } 
     #endregion
+    
+    public void ResetPlayerValues()
+    {
+        m_moveSpeed = m_baseSpeed;
+        m_jumpForce = m_baseJumpForce;
+        
+        if (m_PlayerPickupManager)
+        {
+            m_PlayerPickupManager.ResetPickup();
+        }
+    }
 }
