@@ -48,6 +48,8 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
 
             m_playerInputs.AM_PlayerOne.Taunt.performed += Handle_Taunt;
+            
+            m_playerInputs.AM_PlayerOne.Pause.performed += Handle_Pause;
         }
         else
         {
@@ -62,10 +64,9 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
 
             m_playerInputs.AM_PlayerTwo.Taunt.performed += Handle_Taunt;
-        }
 
-        // bind the other non-player specific actions
-        m_playerInputs.Menus.Pause.performed += Handle_Pause;
+            m_playerInputs.AM_PlayerTwo.Pause.performed += Handle_Pause;
+        }
     }
 
     private void OnDisable()
@@ -83,6 +84,8 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerOne.Attack.performed -= Handle_Attack;
 
             m_playerInputs.AM_PlayerOne.Taunt.performed -= Handle_Taunt;
+            
+            m_playerInputs.AM_PlayerOne.Pause.performed -= Handle_Pause;
         }
         else
         {
@@ -95,10 +98,9 @@ public class p_PlayerController : MonoBehaviour
             m_playerInputs.AM_PlayerTwo.Attack.performed -= Handle_Attack;
 
             m_playerInputs.AM_PlayerTwo.Taunt.performed -= Handle_Taunt;
+
+            m_playerInputs.AM_PlayerTwo.Pause.performed -= Handle_Pause;
         }
-        
-        // unbind the other non-specific player actions
-        m_playerInputs.Menus.Pause.performed -= Handle_Pause;
     }
 
     /// <summary>

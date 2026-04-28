@@ -2,6 +2,8 @@ using System.Collections;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+using System;
 
 public class p_PlayerDataManager : MonoBehaviour
 {
@@ -10,12 +12,14 @@ public class p_PlayerDataManager : MonoBehaviour
     int m_PlayerID = -1;
 
     private float m_PlayerScale = 1.0f;
+    private float m_LastPlayerYPos = 0.0f;
     
     [Header("Death Reset Values")]
     [SerializeField] private float m_radius = 10.0f;
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
     [SerializeField] private bool m_drawDeathReset = false;
     [SerializeField] private float m_respawnTimer = 3.0f;
+    
     void Start()
     {
         //This call below is static so needs no instance of player data existing
@@ -27,6 +31,7 @@ public class p_PlayerDataManager : MonoBehaviour
 
         m_PlayerScale = e_GlobalData.instance.GetPlayerScale();
         transform.localScale = new Vector3(m_PlayerScale, m_PlayerScale, m_PlayerScale);
+
         //Bind the Event for a player losing a life to the update for their position.
         e_GameEvents.instance.onPlayerDeathAdded += PlayerDeathPositionUpdate;
 
@@ -45,13 +50,26 @@ public class p_PlayerDataManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        UpdatePlayerScore(m_PlayerID);
+    }
+
     IEnumerator RespawnTimer()
         {
             gameObject.SetActive(false);
             yield return new WaitForSeconds(m_respawnTimer);
-
+            
+            // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
+            if (this == null) yield break;
+            
             // Written by Connor, shout if you need to 
+            
             gameObject.SetActive(true);
+            
+            // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
+            if (this == null) yield break;
+            
             Vector3 currentPos = gameObject.transform.position;
             Vector3 newPos = currentPos;
 
@@ -101,10 +119,30 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void EndGame(int playerID)
     {
+        if (e_GlobalData.instance.GetGameEnded()) return;
+        e_GlobalData.instance.SetGameEnded(true);
+        // Debug.Log("End Game Called in playerdatamanager");
+        
         // Destroy(gameObject);
         sc_SceneManager.LoadScene("GameOver");
         //Save Data
         //Load End Scene
+    }
+
+    void UpdatePlayerScore(int playerID)
+    {
+        if(playerID == m_PlayerID)
+        {
+            Vector3 playerPos = e_GlobalData.instance.GetPlayerPosition(playerID);
+            float playerYPos = playerPos.y;
+
+            if(m_LastPlayerYPos < playerYPos)
+            {
+                m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos) * 12, playerID);
+                m_LastPlayerYPos = playerYPos;
+                Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore(playerID));
+            }
+        }
     }
     
     private void OnDrawGizmos()
