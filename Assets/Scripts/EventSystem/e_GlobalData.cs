@@ -6,15 +6,18 @@ public class e_GlobalData : MonoBehaviour
 {
 
     public static e_GlobalData instance;
+    
     [SerializeField] float m_WorldScale = 1;
     [SerializeField] private float m_PlayerScale = 1;
-    [Tooltip("The players that you intend to track. It will auto populate on start, overriding anything put in here previously. It can be changed to not do this if needed.")]
-    [SerializeField] private List<GameObject> m_PlayersToTrack;
-    [SerializeField] private float m_TimeSpentInCurrentRoom = 0;
-    [SerializeField] private float m_TimeSpentInGame = 0 ;
-
-    [SerializeField] private bool m_IsPaused = false;
     
+    private List<GameObject> m_PlayersToTrack;
+    private float m_TimeSpentInCurrentRoom = 0;
+    private float m_TimeSpentInGame = 0 ;
+    private float m_lavaSpeedMultiplier = 0;
+    private float m_lavaInitialSpeed;
+
+    private bool m_IsPaused = false;
+
     private bool m_HasGameEnded = false;
 
     void Awake()
@@ -101,7 +104,6 @@ public class e_GlobalData : MonoBehaviour
     {
         m_IsPaused = !m_IsPaused;
         Time.timeScale = m_IsPaused ? 0 : 1;
-        
         e_GameEvents.instance.PauseToggle(m_IsPaused);
         return m_IsPaused;
     }
@@ -121,5 +123,16 @@ public class e_GlobalData : MonoBehaviour
     public bool GetGameEnded()
     {
         return m_HasGameEnded;
+    }
+    
+    public void SetLavaComponents(float lavaSpeedMultiplier, float initialSpeed)
+    {
+        m_lavaSpeedMultiplier = lavaSpeedMultiplier;
+        m_lavaInitialSpeed = initialSpeed;
+    }
+    
+    public float GetCurrentLavaSpeed()
+    {
+        return m_lavaInitialSpeed + (m_lavaInitialSpeed * m_lavaSpeedMultiplier * GetCurrentTimeSpentInGame()); 
     }
 }

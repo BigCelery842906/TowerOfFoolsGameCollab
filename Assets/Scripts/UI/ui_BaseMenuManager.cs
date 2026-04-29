@@ -15,6 +15,8 @@ namespace UI
         [SerializeField] private bool m_menuShownByDefault = false;
         
         private Dictionary<Button, Action> m_buttonCallbacks = new Dictionary<Button, Action>();
+
+        private bool m_isMenuShown = false;
         
         protected virtual void Awake()
         {
@@ -80,11 +82,18 @@ namespace UI
         public void ShowMenu()
         {
             m_uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
+            m_isMenuShown = true;
         }
 
         public void HideMenu()
         {
             m_uiDocument.rootVisualElement.style.display = DisplayStyle.None;
+            m_isMenuShown = false;
+        }
+
+        public bool IsMenuShown()
+        {
+            return m_isMenuShown;
         }
     }
 }
