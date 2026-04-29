@@ -110,17 +110,19 @@ public class p_PlayerDataManager : MonoBehaviour
             if (platform.gameObject.CompareTag("PlatformEnd") || platform.gameObject.CompareTag("PlatformMiddle"))
             {
                 //Platforms only have these 2 tags - Can extend to include floors if needed
-                
-                if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
+                if (platform.transform.position.y > newPos.y - 2.0f) //2 is an arbitrary value here
                 {
-
-                    GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
-
-                    if (highestPlatform != null)
+                    if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                     {
-                        if (highestPlatform.GetComponent<PG_PlatformParent>().m_canRespawnOnPlatform)
+
+                        GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
+
+                        if (highestPlatform != null)
                         {
-                            platforms.Add(highestPlatform);
+                            if (highestPlatform.GetComponent<PG_PlatformParent>().m_canRespawnOnPlatform)
+                            {
+                                platforms.Add(highestPlatform);
+                            }
                         }
                     }
                 }
@@ -159,7 +161,6 @@ public class p_PlayerDataManager : MonoBehaviour
         float highestYPosition = float.MinValue;
         GameObject highestPlatform = null;
         
-        //Could probably remove ID check
         string platformName = childplatform.name;
         foreach (GameObject platform in childPlatformsInParent)
         {
