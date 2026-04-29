@@ -22,6 +22,7 @@ public class PG_GenerationManager : MonoBehaviour
     public int m_chunkSizeMultiplier = 2;
     public GameObject m_currentRoom;
     public bool m_spawnPowerups = false;
+    public int m_minimumPowerups;
     public float m_powerupSpawnChance = 0.0f;
 
     public float m_worldScale = 1.5f;
@@ -29,9 +30,14 @@ public class PG_GenerationManager : MonoBehaviour
     private PG_RoomGenerator m_roomGenerator;
     private PG_PlatformGenerator m_platformGenerator;
     private REGION m_currentRegion = REGION.ONE;
+    private List<GameObject> m_spawnedBonusPlatforms;
+    private bool m_powerupsSpawned = false;
 
     [HideInInspector]
     public Action m_actionSpawnPowerups;
+
+    [HideInInspector]
+    public int m_roomNumber;
 
 
     private void Awake()
@@ -39,7 +45,7 @@ public class PG_GenerationManager : MonoBehaviour
         //this needs to be set to default values on generation otherwise the UI has a moment and sets it to zero, causing a bombardment of UI draw and OOB errors
         //m_desiredChunkHeight = 9;
         //m_desiredChunkWidth = 16;
-
+        m_spawnedBonusPlatforms = new();
         m_roomGenerator = GetComponent<PG_RoomGenerator>();
         if (!m_roomGenerator)
         {
@@ -58,8 +64,9 @@ public class PG_GenerationManager : MonoBehaviour
             m_worldScale = e_GlobalData.instance.GetWorldScale();
         }
 
-        RegenerateRoom();
         m_actionSpawnPowerups += SpawnPowerups;
+        //RegenerateRoom();
+        m_spawnedBonusPlatforms = m_platformGenerator.GetBonusPlatforms();
         //m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         //m_currentRoom.transform.SetParent(this.transform, false);
         //m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
@@ -100,51 +107,68 @@ public class PG_GenerationManager : MonoBehaviour
         Debug.Log(room);
     }
 
-    public void SpawnPowerups()
+    public void PopulateData(ref PG_TransitionManager.RoomGenValues values)
     {
-        Debug.Log("Spawning Powerups");
-        PG_GridMap grid = m_currentRoom.GetComponent<PG_GridMap>();
-        if(!grid)
+        m_spawnPowerups = values._spawnPowerups;
+        m_minimumPowerups = values._minPowerups;
+
+        if (m_platformGenerator != null)
         {
-            Debug.Log("Can't find grid for powerup spawns");
+            m_platformGenerator.m_maxPlatformRandomXStep = values._criticalPlatformXVariation;
+            m_platformGenerator.m_ZigZagMinPlatformSize = values._criticalPlatformSize;
+            m_platformGenerator.m_ZigZagMaxPlatformSize = values._criticalPlatformSize;
+
+            m_platformGenerator.m_numberOfBonusPlatforms = values._bonusPlatformNumber;
+            m_platformGenerator.m_areBonusPlatformFixedSize = values._fixedBonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformMinSize = values._minBonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformMaxSize = values._maxBonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformFixedSize = values._bonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformXSeperation = values._bonusPlatformXSeparation;
+            m_platformGenerator.m_failedBonusPlatformSpawnAttempts = values._bonusPlatformSpawnAttempts;
         }
-        
-        for (int x = 0; x < grid.m_width; x++)
+        if(m_roomGenerator != null)
         {
-            for (int y = 0; y < grid.m_height; y++)
-            {
-                bool valid = true;
-                List<PG_PlatformParent> neighbours = new();
-                if (grid.m_grid[x,y].m_blockType == BLOCK_TYPE.PLATFORM_MIDDLE || grid.m_grid[x, y].m_blockType == BLOCK_TYPE.PLATFORM_END)
-                {
-                    neighbours = grid.GetNeighboursOfPlatform(x, y);
-                    foreach (PG_PlatformParent block in neighbours)
-                    {
-                        if(block.m_hasPowerup == true)
-                        {
-                            valid = false;
-                            break;
-                        }
-                    }
-                    if(valid == false)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        float spawnRoll = UnityEngine.Random.Range(0, 100.0f);
-                        if (spawnRoll < m_powerupSpawnChance)
-                        {
-                            GameObject room = transform.GetChild(0).gameObject;
-                            grid.m_grid[x, y].m_contents.GetComponent<PG_PlatformParent>().SpawnPowerup(room);
-                        }
-                    }
-                }
-            }
+            m_roomGenerator.m_previousRoomExit = values._entrance;
+            m_roomGenerator.m_nextRoomEntrance = values._exit;
         }
     }
 
-    public void RegenerateRoom()
+    public void SpawnPowerups()
+    {
+        if (m_powerupsSpawned) return;
+        m_powerupsSpawned = true;
+        if (m_minimumPowerups > m_spawnedBonusPlatforms.Count) m_minimumPowerups = m_spawnedBonusPlatforms.Count;
+        int powerupsSpawned = 0;
+        int failedSpawns = 0;
+        while (powerupsSpawned < m_minimumPowerups && failedSpawns < 50)
+        {
+            bool alreadySpawned = true;
+            PG_PlatformContainer platformContainerScript = null;
+            GameObject platformContainer = null;
+            while (alreadySpawned && failedSpawns < 50)
+            {
+                int platformToSpawn = UnityEngine.Random.Range(0, m_spawnedBonusPlatforms.Count);
+                platformContainer = m_spawnedBonusPlatforms[platformToSpawn];
+                platformContainerScript = platformContainer.GetComponent<PG_PlatformContainer>();
+                alreadySpawned = platformContainerScript.m_powerupSpawned;
+                if (alreadySpawned) failedSpawns++;
+            }
+            if (alreadySpawned) break;
+            //float spawnChance = UnityEngine.Random.Range(0, m_powerupSpawnChance);
+            int blockToSpawnOn = UnityEngine.Random.Range(0, platformContainer.transform.childCount);
+            platformContainerScript.m_powerupSpawned = true;
+            if (platformContainer.transform.GetChild(blockToSpawnOn).GetComponent<PG_PlatformParent>().SpawnPowerup(m_currentRoom))
+            {
+
+                powerupsSpawned++;
+
+            }
+            else platformContainerScript.m_powerupSpawned = false;
+        }
+
+    }
+
+    public GameObject RegenerateRoom()
     {
         if (transform.childCount > 0)
         {
@@ -160,19 +184,26 @@ public class PG_GenerationManager : MonoBehaviour
         m_desiredChunkHeight = 9 * m_chunkSizeMultiplier;
         m_desiredChunkWidth = 16 * m_chunkSizeMultiplier;
 
+        m_powerupsSpawned = false;
+
+        m_platformGenerator.ClearLists();
         m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         m_currentRoom.transform.SetParent(this.transform, false);
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         m_platformGenerator.m_xSpawnLocation = 1;
         m_platformGenerator.m_ySpawnLocation = 1;
-        if (m_spawnPowerups) SpawnPowerups();
+        return m_currentRoom;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
+        if (m_platformGenerator.m_generationFinished && !m_powerupsSpawned)
+        {
+            SpawnPowerups();
+            m_powerupsSpawned = true;
+        }
     }
 
 

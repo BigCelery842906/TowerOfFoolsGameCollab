@@ -23,6 +23,8 @@ public class PG_GridMap : MonoBehaviour
 
     [NonSerialized]
     public bool m_roomComplete = false;
+    [HideInInspector]
+    public float m_yHeight;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()

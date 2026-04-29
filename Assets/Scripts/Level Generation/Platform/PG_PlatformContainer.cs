@@ -9,6 +9,9 @@ public class PG_PlatformContainer : MonoBehaviour
     public PG_PlatformGenerator m_generator;
     [NonSerialized]
     public PG_GridMap m_room;
+
+    public bool m_powerupSpawned = false;
+    public bool m_canRespawnOnPlatform = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

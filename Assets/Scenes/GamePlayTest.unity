@@ -877,10 +877,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 17573803769771838, guid: aed4863a399395746b4387980cea00c9, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.48
@@ -1249,6 +1245,14 @@ PrefabInstance:
     - target: {fileID: 6856678357482579456, guid: 343810732bd90e9478f046157e23c5be, type: 3}
       propertyPath: m_chunksPerRoom
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856678357482579456, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_spawnPowerups
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6856678357482579456, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_powerupSpawnChance
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6856678357482579456, guid: 343810732bd90e9478f046157e23c5be, type: 3}
       propertyPath: m_chunkSizeMultiplier
