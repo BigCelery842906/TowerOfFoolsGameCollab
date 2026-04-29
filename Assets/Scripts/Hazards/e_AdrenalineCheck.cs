@@ -17,11 +17,14 @@ public class e_AdrenalineCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("triggered");
-
         m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
 
         if(m_entryPlayerPickupMan == null) { return; }
+
+        //reset it first 
+        m_entryPlayerPickupMan.ResetMoveSpeed();
+        m_entryPlayerPickupMan.ResetJumpForce();
+
 
         m_entryPlayerPickupMan.SetMoveSpeed(m_movementBoost);
         m_entryPlayerPickupMan.SetJumpForce(m_jumpBoost);
@@ -41,8 +44,6 @@ public class e_AdrenalineCheck : MonoBehaviour
     private IEnumerator C_ResetValuesTimer(p_PlayerPickupManager player)
     {
         yield return new WaitForSeconds(m_timerLength);
-
-        Debug.Log("reset");
 
         player.ResetMoveSpeed();
         player.ResetJumpForce();

@@ -93,8 +93,8 @@ public void UseInteractablePickup()
     /// <summary>
     /// So the manager has a accurate copy of what the base move speed should be so it can be set to normal after stun or if a boost is added
     /// </summary>
-    public void SetBaseMoveSpeed(float speed) { m_baseMoveSpeed = speed; }
-    public void SetBaseJumpForce(float force) { m_baseJumpForce = force; }
+    public void SetBaseMoveSpeed(float speed) { m_baseMoveSpeed = speed; Debug.Log("base speed = " + m_baseMoveSpeed); }
+    public void SetBaseJumpForce(float force) { m_baseJumpForce = force; Debug.Log("base jump = " + m_baseJumpForce); }
 
     public void SetMoveSpeed(float speed) { OnStunStateChange.Invoke(m_baseMoveSpeed * speed); }
     public void SetJumpForce(float speed) { OnJumpForceChange.Invoke(m_baseJumpForce * speed); }

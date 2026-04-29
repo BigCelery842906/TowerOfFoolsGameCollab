@@ -49,16 +49,13 @@ public class p_PlayerMovement : MonoBehaviour
 
     private bool respawned = false; //DELETE this
 
-    private void OnEnable()
+    private void Awake()
     {
-        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
-        //p_PlayerDataManager.
-
         m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
-        if(m_PlayerDataManager != null ) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+        if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
 
         m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
-        if(m_PlayerPickupManager != null) 
+        if (m_PlayerPickupManager != null)
         {
             m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
             m_PlayerPickupManager.SetBaseJumpForce(m_jumpForce);
@@ -79,8 +76,21 @@ public class p_PlayerMovement : MonoBehaviour
 
         //I didnt want to expose vectors to the designers ill be real xx You can change this
         m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
-        m_apexGrav = new Vector3(0f,m_apexGravValue, 0f);
-        m_highGrav = new Vector3(0f,m_highGravValue, 0f);
+        m_apexGrav = new Vector3(0f, m_apexGravValue, 0f);
+        m_highGrav = new Vector3(0f, m_highGravValue, 0f);
+    }
+
+    private void OnEnable()
+    {
+        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
+        //p_PlayerDataManager.
+        //if (respawned) { StartCoroutine(C_SlowTick()); return; }
+
+        if (m_PlayerPickupManager != null)
+        {
+            m_PlayerPickupManager.ResetJumpForce();
+            m_PlayerPickupManager.ResetMoveSpeed();
+        }
 
         StartCoroutine(C_SlowTick());
 
@@ -147,6 +157,7 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void Handle_PlayerReset(int DeadID)
     {
+        return;
         if (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
 
         respawned = true;
@@ -157,7 +168,7 @@ public class p_PlayerMovement : MonoBehaviour
         m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
         m_CapsuleCollider.material.staticFriction = m_staticFriction;
 
-        StartCoroutine(C_SlowTick());
+        //StartCoroutine(C_SlowTick());
     }
 
     public void SetMoveDirection(Vector2 direction)
