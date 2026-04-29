@@ -14,7 +14,8 @@ public class PG_TransitionManager : MonoBehaviour
     public List<GameObject> m_designedRooms;
 
     public GameObject m_generationManager;
-    PG_GenerationManager m_generatorScript;
+
+    public GameObject m_transitionDetector;
 
     private float m_currentYHeight; //top most location of top room
     public RoomGenValues m_generationValues;
@@ -39,26 +40,52 @@ public class PG_TransitionManager : MonoBehaviour
         PopulateDefaultGenerationValues();
         //m_generatorScript = m_generationManager.GetComponent<PG_GenerationManager>();
         //m_generatorScript.PopulateData(ref m_generationValues);
+        int middleRoomidx = 0;
+        if (m_designedRooms.Count > 0)
+        {
+            middleRoomidx = UnityEngine.Random.Range(0, m_designedRooms.Count);
+        }
+        int nextRoomEntrance = m_designedRooms[middleRoomidx].GetComponent<PG_Room>().m_entrance;
+        m_generationValues._exit = nextRoomEntrance;
 
 
-
+        //bottom
         GameObject bottomGenerator = GameObject.Instantiate(m_generationManager);
         m_bottomRoomGenerator = bottomGenerator.GetComponent<PG_GenerationManager>();
+        m_bottomRoomGenerator.PopulateData(ref m_generationValues);
         Vector3 bottomPos = Vector3.zero;
         bottomGenerator.transform.position = bottomPos;
         bottomGenerator.transform.SetParent(m_bottomRoom.transform, false);
         m_worldScale = m_bottomRoomGenerator.m_worldScale;
         GameObject spawnedRoom = m_bottomRoomGenerator.RegenerateRoom();
-       spawnedRoom.transform.SetParent(m_bottomRoom.transform, false);
+        spawnedRoom.transform.SetParent(m_bottomRoom.transform, false);
         //m_bottomRoomGenerator.RegenerateRoom();
 
         PG_GridMap bottomGrid = spawnedRoom.GetComponent<PG_GridMap>();
         m_currentYHeight = bottomGrid.m_height * m_worldScale;
 
+        int exitXPos = nextRoomEntrance;
+        int exitYPos = bottomGrid.m_height -1;
+        Vector2 exitWorldPos = bottomGrid.GetWorldPosFromCell(exitXPos, exitYPos);
+        exitWorldPos.y += (m_worldScale * 2);
+        
+
+        GameObject bottomCollider = GameObject.Instantiate(m_transitionDetector);
+        bottomCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
+        bottomCollider.name = "000000";
+        bottomCollider.transform.rotation = Quaternion.identity;
+        bottomCollider.transform.position = exitWorldPos;
+        bottomCollider.transform.SetParent(m_bottomRoom.transform, false);
+
+
+
+        //middle
         if (m_designedRooms.Count > 0)
         {
-            GameObject middlePrefab = m_designedRooms[UnityEngine.Random.Range(0, m_designedRooms.Count)];
+            GameObject middlePrefab = m_designedRooms[middleRoomidx];
+            middlePrefab.transform.localPosition = Vector3.zero;
             GameObject middleRoom = GameObject.Instantiate(middlePrefab);
+            PG_GridMap middleGrid = middleRoom.GetComponent<PG_GridMap>();
             middleRoom.transform.SetParent(m_middleRoom.transform, false);
             Vector3 middlePos = Vector3.zero;
 
@@ -66,21 +93,55 @@ public class PG_TransitionManager : MonoBehaviour
             
             m_middleRoom.transform.position = middlePos;
 
+
+
+            exitXPos = middleRoom.GetComponent<PG_Room>().m_exit;
+            exitYPos = middleGrid.m_height - 1;
+            exitWorldPos = Vector2.zero;
+            exitWorldPos.x = exitXPos * m_worldScale;
+            exitWorldPos.y += m_currentYHeight + m_worldScale;
+            GameObject middleCollider = GameObject.Instantiate(m_transitionDetector);
+            middleCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
+            middleCollider.name = "000000";
+            middleCollider.transform.rotation = Quaternion.identity;
+            middleCollider.transform.position = exitWorldPos;
+            middleCollider.transform.SetParent(m_middleRoom.transform, false);
             m_currentYHeight += m_middleRoom.GetComponentInChildren<PG_GridMap>().m_height * m_worldScale;
         }
+
+
+        //top
+        int previousRoomExit = m_designedRooms[middleRoomidx].GetComponent<PG_Room>().m_exit;
+        m_generationValues._entrance = previousRoomExit;
+        m_generationValues._exit = UnityEngine.Random.Range(1, 31);
+
         GameObject topGenerator = GameObject.Instantiate(m_generationManager);
         m_topRoomGenerator = topGenerator.GetComponent<PG_GenerationManager>();
+        m_topRoomGenerator.PopulateData(ref m_generationValues);
         Vector3 topPos = Vector3.zero;
         topPos.y += m_currentYHeight;
         topGenerator.transform.position = topPos;
         topGenerator.transform.SetParent(m_topRoom.transform, false);
         m_worldScale = m_topRoomGenerator.m_worldScale;
         GameObject topRoom = m_topRoomGenerator.RegenerateRoom();
+        PG_GridMap topGrid = topRoom.GetComponent<PG_GridMap>();
         topRoom.transform.SetParent(m_topRoom.transform, false);
         //m_topRoomGenerator.RegenerateRoom();
 
-        PG_GridMap topGrid = topRoom.GetComponent<PG_GridMap>();
+
         m_currentYHeight += topGrid.m_height * m_worldScale;
+        exitXPos = topRoom.GetComponent<PG_Room>().m_exit;
+        exitYPos = topGrid.m_height - 1;
+        exitWorldPos = Vector2.zero;
+        exitWorldPos.x = exitXPos * m_worldScale;
+        exitWorldPos.y += m_currentYHeight;
+        GameObject topCollider = GameObject.Instantiate(m_transitionDetector);
+        topCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
+        topCollider.name = "000000";
+        topCollider.transform.rotation = Quaternion.identity;
+        topCollider.transform.position = exitWorldPos;
+        topCollider.transform.SetParent(m_topRoom.transform, false);
+
 
     }
 
@@ -104,9 +165,10 @@ public class PG_TransitionManager : MonoBehaviour
         m_generationValues._exit = UnityEngine.Random.Range(1, 31); //dont judge me for the magic number
     }
 
+
     private void GenerateRoom()
     {
-
+        Debug.Log("Room Collider Hit");
     }
 
     // Update is called once per frame

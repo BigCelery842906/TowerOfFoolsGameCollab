@@ -137,6 +137,7 @@ public class PG_GenerationManager : MonoBehaviour
     {
         if (m_powerupsSpawned) return;
         m_powerupsSpawned = true;
+        m_spawnedBonusPlatforms = m_platformGenerator.GetBonusPlatforms();
         if (m_minimumPowerups > m_spawnedBonusPlatforms.Count) m_minimumPowerups = m_spawnedBonusPlatforms.Count;
         int powerupsSpawned = 0;
         int failedSpawns = 0;

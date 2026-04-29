@@ -359,11 +359,10 @@ public class PG_PlatformGenerator : MonoBehaviour
         {
             Debug.Log("Too Many Failed Bonus Platform Spawns");
         }
-        if (m_genManager.m_spawnPowerups)
-        {
+
             m_generationFinished = true;
 
-        }
+        
         yield return null;
     }
 
