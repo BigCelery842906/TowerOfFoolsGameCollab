@@ -856,6 +856,14 @@ PrefabInstance:
       propertyPath: m_jumpForce
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8577146385212615068, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_playerInputManager
+      value: 
+      objectReference: {fileID: 1258247758}
+    - target: {fileID: 8924269311767037873, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Gamepad
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -925,11 +933,30 @@ PrefabInstance:
       propertyPath: m_jumpForce
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8577146385212615068, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_playerInputManager
+      value: 
+      objectReference: {fileID: 1258247758}
+    - target: {fileID: 8924269311767037873, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Gamepad
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed4863a399395746b4387980cea00c9, type: 3}
+--- !u!114 &1258247758 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1940519547996579190, guid: b2b44cf43f0b98042b9a295e3681728a, type: 3}
+  m_PrefabInstance: {fileID: 1719209601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1258662977
 GameObject:
   m_ObjectHideFlags: 0

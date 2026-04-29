@@ -40,6 +40,27 @@ public class p_PlayerController : MonoBehaviour
                     gamepads[m_playerIndex]
                 );
             }
+
+            else
+            {
+                if (m_playerIndex == 1) { m_playerInput.SwitchCurrentControlScheme("Arrows", Keyboard.current); }
+
+                // Keyboard fallback for 2 players
+                string scheme = (m_playerIndex == 0) ? "WASD" : "Arrows";
+                //m_playerInput.defaultControlScheme = scheme;
+                Debug.Log($"Player {m_playerIndex} scheme: {m_playerInput.currentControlScheme}");
+
+                //m_playerInputManager.JoinPlayer(m_playerIndex, -1, "WASD", Keyboard.current);
+                //m_playerInputManager.JoinPlayer(m_playerIndex, -1, "Arrows", Keyboard.current);
+
+
+                m_playerInputManager.JoinPlayer(
+                    m_playerIndex,
+                    -1,
+                    scheme,
+                    Keyboard.current
+                );
+            }
         }
 
 
