@@ -108,8 +108,9 @@ public class p_PlayerDataManager : MonoBehaviour
             {
                 //Platforms only have these 2 tags - Can extend to include floors if needed
                 
-                
+                // TODO: THIS
                 // Now check for if you can spawn there via the platform container.
+                // if you can, check for the highest platform Y value in that container, then if that individual block says you can spawn there (to make sure there is no block above it)
 
                 if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                 {
@@ -129,7 +130,7 @@ public class p_PlayerDataManager : MonoBehaviour
         }
 
         if (closestPlatformID != -1) //If valid platform
-        {
+        { //TODO: Add world scale value to this
             newPos = platforms[closestPlatformID].transform.position;
             newPos.y += 2;
         }
