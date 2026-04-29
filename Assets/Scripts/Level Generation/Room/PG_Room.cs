@@ -6,15 +6,10 @@ public class PG_Room : MonoBehaviour
 
     List<GameObject> m_gridMaps;
     float m_worldScale;
+    public int m_entrance;
+    public int m_exit;
 
 
-    [HideInInspector]
-    public int m_exitCoord;
-    [HideInInspector]
-    public int m_entranceCoord;
-    
-    //current exit
-    //current entrance
 
     private void Awake()
     {

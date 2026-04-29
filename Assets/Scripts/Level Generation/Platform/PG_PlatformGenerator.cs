@@ -361,7 +361,7 @@ public class PG_PlatformGenerator : MonoBehaviour
         }
         if (m_genManager.m_spawnPowerups)
         {
-            m_generationFinished = true ;
+            m_generationFinished = true;
 
         }
         yield return null;
@@ -727,10 +727,14 @@ public class PG_PlatformGenerator : MonoBehaviour
     }
     public void ClearLists()
     {
-        m_criticalPathPlatforms.Clear();
-        m_bonusPlatforms.Clear();
-        m_platformList.Clear();
-        m_platformUndoStack.Clear();
+        if (m_platformList != null)
+        {
+
+            m_criticalPathPlatforms.Clear();
+            m_bonusPlatforms.Clear();
+            m_platformList.Clear();
+            m_platformUndoStack.Clear();
+        }
     }
     public enum PLATFORM_GENERATION_METHOD
     {
