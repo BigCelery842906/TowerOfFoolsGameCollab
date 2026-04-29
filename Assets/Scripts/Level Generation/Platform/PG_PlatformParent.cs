@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Collections;
 
 public class PG_PlatformParent : MonoBehaviour
 {
@@ -66,4 +67,5 @@ public class PG_PlatformParent : MonoBehaviour
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
     }
+
 }
