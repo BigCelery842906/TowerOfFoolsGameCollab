@@ -65,7 +65,7 @@ public class PG_GenerationManager : MonoBehaviour
         }
 
         m_actionSpawnPowerups += SpawnPowerups;
-        RegenerateRoom();
+        //RegenerateRoom();
         m_spawnedBonusPlatforms = m_platformGenerator.GetBonusPlatforms();
         //m_currentRoom = m_roomGenerator.GenerateRoom(m_desiredChunkWidth, m_desiredChunkHeight, m_worldScale, m_chunksPerRoom);
         //m_currentRoom.transform.SetParent(this.transform, false);
