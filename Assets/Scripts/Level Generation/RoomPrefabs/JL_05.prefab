@@ -1672,6 +1672,7 @@ MonoBehaviour:
   - {fileID: 4071751358056096858}
   - {fileID: 6972616135074775724}
   m_gridNumber: 0
+  m_yHeight: 0
 --- !u!114 &6122187511557744746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,6 +1685,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9985a87f59633640837d39f96722573, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_entrance: 0
+  m_exit: 0
 --- !u!1 &95856579540590028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5487,6 +5490,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6210983284361136651
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6792,6 +6796,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5985999653968184559
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7652,6 +7657,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2091474587009688483
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8975,6 +8981,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 0
 --- !u!33 &4221004858220767606
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9255,6 +9262,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5805060097411539340
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10441,6 +10449,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1432777529140178386
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -10734,6 +10743,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &605364964108126268
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -16322,6 +16332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &880970692127007404
 GameObject:
   m_ObjectHideFlags: 0
@@ -17374,6 +17386,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &451968681672420602
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -18062,6 +18075,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &716015072382462150
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19506,6 +19520,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7261377440495466638
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -22226,6 +22241,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3598340264540316520
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -23617,6 +23633,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1364040115936720123
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -24928,6 +24945,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &1378322490877677351
 GameObject:
   m_ObjectHideFlags: 0
@@ -25788,6 +25807,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4454559845584670958
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -26392,6 +26412,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1268708001725857402
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27598,6 +27619,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2494563653191786296
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -27792,6 +27814,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4903221993455308179
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -29043,6 +29066,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1642879079561542641
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -32582,6 +32606,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2220844870672848259
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -34277,6 +34302,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &850519747024984564
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35410,6 +35436,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5076315850924800506
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -35894,6 +35921,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &9179699703846595091
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -36670,6 +36698,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2800815667507238081
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -39229,6 +39258,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8940808049243646789
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -40692,6 +40722,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2696812983701756350
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -43721,6 +43752,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &2207888179967583750
 GameObject:
   m_ObjectHideFlags: 0
@@ -44070,6 +44103,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3309510573063645489
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -45673,6 +45707,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &562870760919794156
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -45986,6 +46021,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8112956222321606211
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -46491,6 +46527,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4243932862840136199
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -46738,6 +46775,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1766462141951133021
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -50133,6 +50171,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6795639661649455586
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51570,6 +51609,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8531933741858618286
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -52273,6 +52313,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7666310053498192168
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -52897,6 +52938,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4058879010977415980
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -53587,6 +53629,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &9107971993667492974
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -53865,6 +53908,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5286845879677382602
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -54186,6 +54230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &2781603056847162125
 GameObject:
   m_ObjectHideFlags: 0
@@ -54320,6 +54366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &2788375521473156920
 GameObject:
   m_ObjectHideFlags: 0
@@ -54671,6 +54719,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7339036496669509111
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -55361,6 +55410,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5997253131586320899
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -55522,6 +55572,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3335449562316443503
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -56415,6 +56466,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &296971558439487655
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -59188,6 +59240,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7863847074166379076
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -59521,6 +59574,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4441462463303558206
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62490,6 +62544,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6783812247961257350
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -63570,6 +63625,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3559441665974509684
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -65840,6 +65896,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6273415399922211910
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68720,6 +68777,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &3571923235923072032
 GameObject:
   m_ObjectHideFlags: 0
@@ -69679,6 +69738,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1668930305400283673
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -69926,6 +69986,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5869463069960270158
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72340,6 +72401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &3827170601931976827
 GameObject:
   m_ObjectHideFlags: 0
@@ -72656,6 +72719,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 0
 --- !u!33 &5538330320547633800
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -73453,6 +73517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &3861238732311670578
 GameObject:
   m_ObjectHideFlags: 0
@@ -73677,6 +73743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &3875716462123916005
 GameObject:
   m_ObjectHideFlags: 0
@@ -75106,6 +75174,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2559612009729441986
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -76239,6 +76308,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8135096471310060522
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -81080,6 +81150,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2535620981377304235
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -81327,6 +81398,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &952252485354514963
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -82693,6 +82765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &4368255084721936379
 GameObject:
   m_ObjectHideFlags: 0
@@ -83361,6 +83435,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5927621121399562873
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84031,6 +84106,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4808182647257198049
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -84278,6 +84354,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &9198994796931322165
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86403,6 +86480,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1609230583437926657
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86564,6 +86642,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8748958678948284647
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -87089,6 +87168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &4654828449292294343
 GameObject:
   m_ObjectHideFlags: 0
@@ -87524,6 +87605,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2540381604477465194
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -88571,6 +88653,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &238291700591071758
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90621,6 +90704,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6413354800005989919
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90780,6 +90864,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7586898973336709101
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -91199,6 +91284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &4832015013096328542
 GameObject:
   m_ObjectHideFlags: 0
@@ -91247,6 +91334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &4843257931841754882
 GameObject:
   m_ObjectHideFlags: 0
@@ -91338,6 +91427,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5489792295116490914
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -93396,6 +93486,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6638172452641631808
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -94676,6 +94767,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &5036405949621791765
 GameObject:
   m_ObjectHideFlags: 0
@@ -94736,6 +94829,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6991669125442154805
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -94983,6 +95077,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4708716463330417346
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97114,6 +97209,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3426865898684014468
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97685,6 +97781,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5122715516098549525
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97996,6 +98093,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7209046510295304383
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98514,6 +98612,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6322747427844420677
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98675,6 +98774,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &238373418991434615
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98821,6 +98921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &5270796779010046186
 GameObject:
   m_ObjectHideFlags: 0
@@ -101096,6 +101198,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3149821432014269401
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103373,6 +103476,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1841467224339704904
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -103878,6 +103982,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6802914333583043250
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104330,6 +104435,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7280975966755394350
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104696,6 +104802,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2717288971684082742
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104855,6 +104962,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3320594075572126238
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -105360,6 +105468,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4720949245601729698
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -106513,6 +106622,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8466242758594117466
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107581,6 +107691,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &5739352308787851284
 GameObject:
   m_ObjectHideFlags: 0
@@ -109215,6 +109327,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7208506799605121618
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110976,6 +111089,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3770528376968396274
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111135,6 +111249,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8034380054341279182
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -112116,6 +112231,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4977909592294602382
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -113910,6 +114026,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1564200982759680479
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -114697,6 +114814,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &412164019520751424
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -116465,6 +116583,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2476117078091307435
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -118846,6 +118965,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7030020188621840149
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -119276,6 +119396,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4158008143363753168
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -119523,6 +119644,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3758951881288339614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -121866,6 +121988,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6066994515288660486
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123799,6 +123922,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4816404231514113777
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -125350,6 +125474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &6743874062367405542
 GameObject:
   m_ObjectHideFlags: 0
@@ -128708,6 +128834,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &6950670959959355900
 GameObject:
   m_ObjectHideFlags: 0
@@ -129420,6 +129548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &6991639106923156961
 GameObject:
   m_ObjectHideFlags: 0
@@ -130768,6 +130898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 0
 --- !u!1 &7064468815338102998
 GameObject:
   m_ObjectHideFlags: 0
@@ -131734,6 +131866,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8098699612976553148
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -132424,6 +132557,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5059031716531213221
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -133135,6 +133269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &7191205204962705278
 GameObject:
   m_ObjectHideFlags: 0
@@ -133519,6 +133655,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &7223692791203173032
 GameObject:
   m_ObjectHideFlags: 0
@@ -135693,6 +135831,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2417736692290354846
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -136110,6 +136249,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8836143499478385554
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -136271,6 +136411,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &1243571177117199145
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -136537,6 +136678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &7378312931235259042
 GameObject:
   m_ObjectHideFlags: 0
@@ -137311,6 +137454,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &3566404749415193844
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -137948,6 +138092,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4513612911873569007
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -138757,6 +138902,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6641431133046633923
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -138982,6 +139128,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2295767249969068789
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -140710,6 +140857,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7073802516200544054
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -142611,6 +142759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &7735498090756717191
 GameObject:
   m_ObjectHideFlags: 0
@@ -143868,6 +144018,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8128641597702607744
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -147274,6 +147425,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4208411768552919051
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -148440,6 +148592,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8659611671853038637
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -148892,6 +149045,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &546410180825322905
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -149225,6 +149379,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4099317349897584139
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -149505,6 +149660,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &5877364616027000113
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -151769,6 +151925,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7056757287637026994
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -151930,6 +152087,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &6386669878442181517
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -155908,6 +156066,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &8436753641725249937
 GameObject:
   m_ObjectHideFlags: 0
@@ -158194,6 +158354,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8220631686382381597
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -158474,6 +158635,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &533700524186089340
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -159402,6 +159564,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8338899961227216750
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -161322,6 +161485,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8093554699087589845
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -162486,6 +162650,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7917527946863619745
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -163928,6 +164093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &8859208770991874012
 GameObject:
   m_ObjectHideFlags: 0
@@ -164570,6 +164737,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &4248825040787428991
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -165987,6 +166155,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &7292054644060101243
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -166492,6 +166661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &8983552684002926750
 GameObject:
   m_ObjectHideFlags: 0
@@ -168215,6 +168386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3720694eda4e34a9a0f578d05d8491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_powerupSpawned: 0
+  m_canRespawnOnPlatform: 1
 --- !u!1 &9095540165223397704
 GameObject:
   m_ObjectHideFlags: 0
@@ -169027,6 +169200,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &2006270745529950664
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -170127,6 +170301,7 @@ MonoBehaviour:
   - {fileID: 5089860943947677212, guid: 7b5ab1dc01b38f14186c82492877fef3, type: 3}
   m_worldScale: 1.5
   m_hasPowerup: 0
+  m_canRespawnOnPlatform: 1
 --- !u!33 &8044833776358641397
 MeshFilter:
   m_ObjectHideFlags: 0
