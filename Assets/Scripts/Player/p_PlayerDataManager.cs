@@ -125,6 +125,47 @@ public class p_PlayerDataManager : MonoBehaviour
 
         }
 
+    void FindClosestPlatform()
+    {
+        Vector3 currentPos = gameObject.transform.position;
+        Vector3 newPos = currentPos;
+
+        m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
+            
+        float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
+
+        newPos.y = currentPos.y + totalPositionCorrection;
+
+        Collider[] potentialPlatforms = Physics.OverlapSphere(newPos, m_radius); //Get all objects in range that have a collider
+        List<GameObject> platforms = new List<GameObject>(); // Make a gameobject list (You need the transforms not the collider component now), and lists are just easier to add to
+        float closestDistance = float.MaxValue; // Reset to large value
+        int closestPlatformID = -1;
+        foreach (Collider platform in potentialPlatforms)
+        {
+            if (platform.gameObject.CompareTag("PlatformEnd") || platform.gameObject.CompareTag("PlatformMiddle"))
+            {
+                //Platforms only have these 2 tags - Can extend to include floors if needed
+                platforms.Add(platform.gameObject);
+            }
+        }
+
+        for (int i = 0; i < platforms.Count; i++)
+        {
+            float distance = (platforms[i].transform.position - newPos).magnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlatformID = i;
+            }
+        }
+
+        if (closestPlatformID != -1) //If valid platform
+        {
+            newPos = platforms[closestPlatformID].transform.position;
+            newPos.y += 2;
+        }
+    }
+
     void EndGame(int playerID)
     {
         if (e_GlobalData.instance.GetGameEnded()) return;
