@@ -40,6 +40,7 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the movement coroutine <3
 
+    private bool m_jumped; //Doing some anim stuff, want to know if they jumped or had walked off a platform
     private float m_maxJumps; //set in pc at start to one, then controlled by pickups through pc
     private int m_usedJumps; //inc for each jump player maxs until reaches max
     private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
@@ -107,6 +108,7 @@ public class p_PlayerMovement : MonoBehaviour
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
+                m_jumped = false;
 
                 //players grounded so they should have friction again
                 m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
@@ -142,8 +144,8 @@ public class p_PlayerMovement : MonoBehaviour
                         m_playerAnim.SetAnimJump(-1f);
                         break;
                     case < -1f:
-                        m_playerAnim.SetAnimJump(0.6f);
                         Physics.gravity = m_highGrav;
+                        if (!m_jumped) { m_playerAnim.SetAnimJump(2); }
                         break;
                     case > -0.1f:
                         m_playerAnim.SetAnimJump(1);
@@ -157,7 +159,6 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void Handle_PlayerReset(int DeadID)
     {
-        return;
         if (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
 
         respawned = true;
@@ -229,6 +230,7 @@ public class p_PlayerMovement : MonoBehaviour
         {
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             m_isGrounded = false;
+            m_jumped = true;
             Physics.gravity = m_lowGrav;
             m_playerAnim.SetAnimJump(0.1f);
 

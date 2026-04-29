@@ -632,6 +632,17 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
+                    ""id"": ""8579c70b-acf8-445d-924b-21d3cb59be40"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";WASD"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7a9b2975-6429-415f-a332-ac09e7ccfcc7"",
                     ""path"": ""<Keyboard>/rightCtrl"",
                     ""interactions"": """",
@@ -654,19 +665,19 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""45ec6174-5355-48e0-87d5-c7a5e6ba74aa"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""id"": ""496c7419-71d4-4fb0-91b8-14fb64d55cf3"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";WASD"",
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""496c7419-71d4-4fb0-91b8-14fb64d55cf3"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""id"": ""45ec6174-5355-48e0-87d5-c7a5e6ba74aa"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -699,7 +710,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""5dc9a96c-a680-4e13-bf61-76a5efa78b7f"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -710,7 +721,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""96c7cf63-d9e7-4510-b5de-e5797ec0982f"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -719,7 +730,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""JL"",
+                    ""name"": ""Arrows"",
                     ""id"": ""609223cc-7495-4fdb-b0bf-4ed365479ff4"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -731,8 +742,8 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""b43ead58-5d10-4959-9e51-c22bb39ca7ca"",
-                    ""path"": ""<Keyboard>/j"",
+                    ""id"": ""ec4e8238-737f-47dc-b230-f1e3b57f408c"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -742,8 +753,8 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""54b62b97-fb12-42ae-9b1a-92f93972a357"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""id"": ""e1641a64-b38e-4e9c-b1f9-0a82bc04f254"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -764,6 +775,17 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""4ddcfc35-6ee4-40d4-b37a-54eaf7d549ad"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";WASD"",
+                    ""action"": ""Taunt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""831738f3-45cc-4e8f-8f6a-651b2e1b4f0f"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
@@ -776,7 +798,7 @@ public partial class @IA_Player: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""82f0d9a2-f910-4b67-a804-618ae4cd6544"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
