@@ -198,6 +198,7 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected void PickupUsed()
     {
+        if (m_VFXObj != null) { Instantiate(m_VFXObj, transform.position, new Quaternion(0, 0, 0, 0)); }
         if(m_pickupSound != null) { AudioManager.instance.PlayAudioClip(m_pickupSound.clip); }
 
         m_triggeredPlayer.SetPlayerHoldingPickup(false);
