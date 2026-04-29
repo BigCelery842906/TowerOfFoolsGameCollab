@@ -29,7 +29,7 @@ public class PG_PlatformParent : MonoBehaviour
         if(m_hasPowerup == true)
         {
             Debug.Log("Platform already has a powerup!");
-            return false; ;
+            return false;
         }
         int randomNum = UnityEngine.Random.Range(0, m_powerupPool.Count);
         GameObject selected = m_powerupPool[randomNum];
