@@ -17,6 +17,8 @@ public class PG_PlatformParent : MonoBehaviour
     public bool m_hasPowerup = false;
     public int m_xCoord {get; private set;}
     public int m_yCoord {get; private set;}
+    
+    public bool m_canRespawnOnPlatform = true;
 
     public PG_GridMap.BLOCK_TYPE m_type { get; private set; }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,7 +31,7 @@ public class PG_PlatformParent : MonoBehaviour
         if(m_hasPowerup == true)
         {
             Debug.Log("Platform already has a powerup!");
-            return false; ;
+            return false;
         }
         int randomNum = UnityEngine.Random.Range(0, m_powerupPool.Count);
         GameObject selected = m_powerupPool[randomNum];

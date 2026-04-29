@@ -21,6 +21,7 @@ public class EDITOR_PG_GenerationManager : Editor
     SerializedProperty m_worldScale;
     SerializedProperty m_spawnPowerups;
     SerializedProperty m_powerupSpawnChance;
+    SerializedProperty m_minimumPowerups;
 
     public void OnEnable()
     {
@@ -29,6 +30,7 @@ public class EDITOR_PG_GenerationManager : Editor
         m_worldScale = serializedObject.FindProperty("m_worldScale");
         m_spawnPowerups = serializedObject.FindProperty("m_spawnPowerups");
         m_powerupSpawnChance = serializedObject.FindProperty("m_powerupSpawnChance");
+        m_minimumPowerups = serializedObject.FindProperty("m_minimumPowerups");
     }
     public override void OnInspectorGUI()
     {
@@ -54,6 +56,7 @@ public class EDITOR_PG_GenerationManager : Editor
         EditorGUILayout.LabelField("Powerups", divider);
         m_spawnPowerups.boolValue = GUILayout.Toggle(m_spawnPowerups.boolValue, " Spawn Powerups");
         EditorGUILayout.Slider(m_powerupSpawnChance, 0.0f, 100.0f);
+        m_minimumPowerups.intValue = EditorGUILayout.IntField("Minimum Desired Powerups", m_minimumPowerups.intValue);
         
 
         serializedObject.ApplyModifiedProperties();

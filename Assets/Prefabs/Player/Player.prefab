@@ -56847,10 +56847,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_radius: 10
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  m_radius: 20
   m_deathPositionCorrection: 10
   m_drawDeathReset: 1
   m_respawnTimer: 3
+  m_lavaSpeedCorrectionMultiplier: 0.1
 --- !u!54 &806169417569996131
 Rigidbody:
   m_ObjectHideFlags: 0
