@@ -13,109 +13,138 @@ public class p_PlayerController : MonoBehaviour
     private p_playerAnimControl m_playerAnim;
     #endregion
 
-    private IA_Player m_playerInputs;
+    [SerializeField] private PlayerInputManager m_playerInputManager;
+    private PlayerInput m_playerInput;
 
     /// <summary>
-    /// 0 = player 1 , 1 = player 2. Used for input maps and pickups
+    /// 0 = player 1 , 1 = player 2. Used for input  
     /// </summary>
-    private int m_playerID;
+    private int m_playerIndex;
 
-    private void OnEnable()
+    private void Awake()
     {
-        e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
+        m_playerInput = GetComponent<PlayerInput>();
+        m_playerIndex = m_playerInput.playerIndex;
+
+        if(m_playerInputManager != null )
+        {
+            var gamepads = Gamepad.all;
+
+            if (gamepads.Count > m_playerIndex)
+            {
+                // Use gamepads first
+                m_playerInputManager.JoinPlayer(
+                    m_playerIndex,
+                    -1,
+                    "Gamepad",
+                    gamepads[m_playerIndex]
+                );
+            }
+        }
+
 
         m_playerMovement = GetComponent<p_PlayerMovement>();
         m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
         m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
         m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
-
-        m_playerInputs = new IA_Player();
-
-        m_playerInputs.Enable();
-
-        //I did try a couple ways to give the players different action maps but this keeps the inspector clean and its not performance heavy, its just kinda ugly xx
-        if (gameObject.CompareTag("Player0"))
-        {
-            m_playerID = 0;
-
-            m_playerInputs.AM_PlayerOne.Move.performed += Handle_Move;
-            m_playerInputs.AM_PlayerOne.Move.canceled += Handle_MoveCancelled;
-
-            m_playerInputs.AM_PlayerOne.Jump.performed += Handle_Jump;
-            m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
-
-            m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
-
-            m_playerInputs.AM_PlayerOne.Taunt.performed += Handle_Taunt;
-
-            m_playerInputs.AM_PlayerOne.Pause.performed += Handle_Pause;
-        }
-        else
-        {
-            m_playerID = 1;
-
-            m_playerInputs.AM_PlayerTwo.Move.performed += Handle_Move;
-            m_playerInputs.AM_PlayerTwo.Move.canceled += Handle_MoveCancelled;
-
-            m_playerInputs.AM_PlayerTwo.Jump.performed += Handle_Jump;
-            m_playerInputs.AM_PlayerTwo.Jump.canceled += Handle_JumpCancelled;
-
-            m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
-
-            m_playerInputs.AM_PlayerTwo.Taunt.performed += Handle_Taunt;
-
-            m_playerInputs.AM_PlayerTwo.Pause.performed += Handle_Pause;
-        }
     }
 
-    private void OnDisable()
-    {
-        m_playerInputs.Disable();
+    //private void OnEnable()
+    //{
+    //    e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
 
-        if (m_playerID == 0)
-        {
-            m_playerInputs.AM_PlayerOne.Move.performed -= Handle_Move;
-            m_playerInputs.AM_PlayerOne.Move.canceled -= Handle_MoveCancelled;
+    //    m_playerMovement = GetComponent<p_PlayerMovement>();
+    //    m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
+    //    m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
+    //    m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
 
-            m_playerInputs.AM_PlayerOne.Jump.performed -= Handle_Jump;
-            m_playerInputs.AM_PlayerOne.Jump.canceled -= Handle_JumpCancelled;
+    //    m_playerInputs = new IA_Player();
 
-            m_playerInputs.AM_PlayerOne.Attack.performed -= Handle_Attack;
+    //    m_playerInputs.Enable();
 
-            m_playerInputs.AM_PlayerOne.Taunt.performed -= Handle_Taunt;
+    //    //I did try a couple ways to give the players different action maps but this keeps the inspector clean and its not performance heavy, its just kinda ugly xx
+    //    if (gameObject.CompareTag("Player0"))
+    //    {
+    //        m_playerID = 0;
 
-            m_playerInputs.AM_PlayerOne.Pause.performed -= Handle_Pause;
-        }
-        else
-        {
-            m_playerInputs.AM_PlayerTwo.Move.performed -= Handle_Move;
-            m_playerInputs.AM_PlayerTwo.Move.canceled -= Handle_MoveCancelled;
+    //        m_playerInputs.AM_PlayerOne.Move.performed += Handle_Move;
+    //        m_playerInputs.AM_PlayerOne.Move.canceled += Handle_MoveCancelled;
 
-            m_playerInputs.AM_PlayerTwo.Jump.performed -= Handle_Jump;
-            m_playerInputs.AM_PlayerTwo.Jump.canceled -= Handle_JumpCancelled;
+    //        m_playerInputs.AM_PlayerOne.Jump.performed += Handle_Jump;
+    //        m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
 
-            m_playerInputs.AM_PlayerTwo.Attack.performed -= Handle_Attack;
+    //        m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
 
-            m_playerInputs.AM_PlayerTwo.Taunt.performed -= Handle_Taunt;
+    //        m_playerInputs.AM_PlayerOne.Taunt.performed += Handle_Taunt;
 
-            m_playerInputs.AM_PlayerTwo.Pause.performed -= Handle_Pause;
-        }
-    }
+    //        m_playerInputs.AM_PlayerOne.Pause.performed += Handle_Pause;
+    //    }
+    //    else
+    //    {
+    //        m_playerID = 1;
+
+    //        m_playerInputs.AM_PlayerTwo.Move.performed += Handle_Move;
+    //        m_playerInputs.AM_PlayerTwo.Move.canceled += Handle_MoveCancelled;
+
+    //        m_playerInputs.AM_PlayerTwo.Jump.performed += Handle_Jump;
+    //        m_playerInputs.AM_PlayerTwo.Jump.canceled += Handle_JumpCancelled;
+
+    //        m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
+
+    //        m_playerInputs.AM_PlayerTwo.Taunt.performed += Handle_Taunt;
+
+    //        m_playerInputs.AM_PlayerTwo.Pause.performed += Handle_Pause;
+    //    }
+    //}
+
+    //private void OnDisable()
+    //{
+    //    m_playerInputs.Disable();
+
+    //    if (m_playerID == 0)
+    //    {
+    //        m_playerInputs.AM_PlayerOne.Move.performed -= Handle_Move;
+    //        m_playerInputs.AM_PlayerOne.Move.canceled -= Handle_MoveCancelled;
+
+    //        m_playerInputs.AM_PlayerOne.Jump.performed -= Handle_Jump;
+    //        m_playerInputs.AM_PlayerOne.Jump.canceled -= Handle_JumpCancelled;
+
+    //        m_playerInputs.AM_PlayerOne.Attack.performed -= Handle_Attack;
+
+    //        m_playerInputs.AM_PlayerOne.Taunt.performed -= Handle_Taunt;
+
+    //        m_playerInputs.AM_PlayerOne.Pause.performed -= Handle_Pause;
+    //    }
+    //    else
+    //    {
+    //        m_playerInputs.AM_PlayerTwo.Move.performed -= Handle_Move;
+    //        m_playerInputs.AM_PlayerTwo.Move.canceled -= Handle_MoveCancelled;
+
+    //        m_playerInputs.AM_PlayerTwo.Jump.performed -= Handle_Jump;
+    //        m_playerInputs.AM_PlayerTwo.Jump.canceled -= Handle_JumpCancelled;
+
+    //        m_playerInputs.AM_PlayerTwo.Attack.performed -= Handle_Attack;
+
+    //        m_playerInputs.AM_PlayerTwo.Taunt.performed -= Handle_Taunt;
+
+    //        m_playerInputs.AM_PlayerTwo.Pause.performed -= Handle_Pause;
+    //    }
+    //}
 
     /// <summary>
     /// Tells the player what direction to move
     /// </summary>
-    private void Handle_Move(InputAction.CallbackContext ctx) => m_playerMovement.SetMoveDirection(ctx.ReadValue<Vector2>());
+    public void Handle_Move(InputAction.CallbackContext ctx) => m_playerMovement.SetMoveDirection(ctx.ReadValue<Vector2>());
 
     /// <summary>
     /// Tells the player to stop moveing by passing in an empty vector 2
     /// </summary>
-    private void Handle_MoveCancelled(InputAction.CallbackContext ctx) => m_playerMovement.SetMoveDirection(ctx.ReadValue<Vector2>());
+    public void Handle_MoveCancelled(InputAction.CallbackContext ctx) => m_playerMovement.SetMoveDirection(ctx.ReadValue<Vector2>());
 
-    private void Handle_Jump(InputAction.CallbackContext ctx) => m_playerMovement.Jump();
-    private void Handle_JumpCancelled(InputAction.CallbackContext ctx) => m_playerMovement.JumpCancelled();
+    public void Handle_Jump(InputAction.CallbackContext ctx) => m_playerMovement.Jump();
+    public void Handle_JumpCancelled(InputAction.CallbackContext ctx) => m_playerMovement.JumpCancelled();
 
-    private void Handle_Attack(InputAction.CallbackContext ctx)
+    public void Handle_Attack(InputAction.CallbackContext ctx)
     {
         if (m_playerPickupManager.GetPlayerInteractablePickupPPM())
         {
@@ -128,7 +157,7 @@ public class p_PlayerController : MonoBehaviour
         }
     }
 
-    private void Handle_Taunt(InputAction.CallbackContext ctx)
+    public void Handle_Taunt(InputAction.CallbackContext ctx)
     {
         float tempF = Random.Range(0.0f, 1.0f);
         if (tempF >= 0.5)
@@ -143,17 +172,8 @@ public class p_PlayerController : MonoBehaviour
         m_playerAnim.SetTauntFloat(tempF);
     }
 
-    private void Handle_Pause(InputAction.CallbackContext ctx)
+    public void Handle_Pause(InputAction.CallbackContext ctx)
     {
         e_GlobalData.instance.TogglePause();
     }
-
-    private void Handle_PlayerReset(int i)
-    {
-        //we dont need i
-
-        //call other reset functions since this class already has a ref
-
-    }
-
 }
