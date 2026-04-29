@@ -21,6 +21,8 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_respawnTimer = 3.0f;
     [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
     private float totalPositionCorrection = 4.0f;
+
+    private float m_worldScale = 1.0f;
     
     void Start()
     {
@@ -32,6 +34,7 @@ public class p_PlayerDataManager : MonoBehaviour
         m_PlayerData = new p_PlayerData(m_PlayerID);
 
         m_PlayerScale = e_GlobalData.instance.GetPlayerScale();
+        m_worldScale = e_GlobalData.instance.GetWorldScale();
         transform.localScale = new Vector3(m_PlayerScale, m_PlayerScale, m_PlayerScale);
 
         //Bind the Event for a player losing a life to the update for their position.
@@ -108,13 +111,8 @@ public class p_PlayerDataManager : MonoBehaviour
             {
                 //Platforms only have these 2 tags - Can extend to include floors if needed
                 
-                // TODO: THIS
-                // Now check for if you can spawn there via the platform container.
-                // if you can, check for the highest platform Y value in that container, then if that individual block says you can spawn there (to make sure there is no block above it)
-
                 if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                 {
-                    //TODO: DO ADDITIONAL CHECKS HERE FIRST, BEFORE IT GETS ADDED TO THE PLATFORMS ARRAY
 
                     GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
 
@@ -122,7 +120,7 @@ public class p_PlayerDataManager : MonoBehaviour
                     {
                         if (highestPlatform.GetComponent<PG_PlatformParent>().m_canRespawnOnPlatform)
                         {
-                            platforms.Add(platform.gameObject);
+                            platforms.Add(highestPlatform);
                         }
                     }
                 }
@@ -140,9 +138,9 @@ public class p_PlayerDataManager : MonoBehaviour
         }
 
         if (closestPlatformID != -1) //If valid platform
-        { //TODO: Add world scale value to this
+        {
             newPos = platforms[closestPlatformID].transform.position;
-            newPos.y += 2;
+            newPos.y += 2 * m_worldScale;
         }
         
         gameObject.transform.position = newPos;
@@ -162,10 +160,10 @@ public class p_PlayerDataManager : MonoBehaviour
         GameObject highestPlatform = null;
         
         //Could probably remove ID check
-        int platformID = ReturnPlatformIDFromName(childplatform.name);
+        string platformName = childplatform.name;
         foreach (GameObject platform in childPlatformsInParent)
         {
-            if (platformID == ReturnPlatformIDFromName(platform.name))
+            if (platformName == platform.name)
             {
                 float platformYPosition = platform.transform.position.y;
                 if (platformYPosition > highestYPosition)
@@ -182,19 +180,6 @@ public class p_PlayerDataManager : MonoBehaviour
         }
 
         return null;
-    }
-    
-    public static int ReturnPlatformIDFromName(string gameObjectName)
-    {
-        if (gameObjectName.Contains("Platform"))
-        {
-            string intPart = gameObjectName.Replace("Platform ", ""); //Remove the player part of the string
-            int.TryParse(intPart, out int ID);
-            return ID;
-        }
-
-        //If tag doesn't contain player, return error value
-        return -1;
     }
 
     void EndGame(int playerID)
