@@ -114,7 +114,17 @@ public class p_PlayerDataManager : MonoBehaviour
 
                 if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                 {
-                    platforms.Add(platform.gameObject);
+                    //TODO: DO ADDITIONAL CHECKS HERE FIRST, BEFORE IT GETS ADDED TO THE PLATFORMS ARRAY
+
+                    GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
+
+                    if (highestPlatform != null)
+                    {
+                        if (highestPlatform.GetComponent<PG_PlatformParent>().m_canRespawnOnPlatform)
+                        {
+                            platforms.Add(platform.gameObject);
+                        }
+                    }
                 }
             }
         }
@@ -136,6 +146,55 @@ public class p_PlayerDataManager : MonoBehaviour
         }
         
         gameObject.transform.position = newPos;
+    }
+
+    GameObject GetHighestPlatformInBlock(GameObject childplatform)
+    {
+        GameObject platformParent = childplatform.transform.parent.gameObject;
+        List<GameObject> childPlatformsInParent = new List<GameObject>();
+
+        for (int i = 0; i < platformParent.transform.childCount; i++)
+        {
+            childPlatformsInParent.Add(platformParent.transform.GetChild(i).gameObject);
+        }
+        
+        float highestYPosition = float.MinValue;
+        GameObject highestPlatform = null;
+        
+        //Could probably remove ID check
+        int platformID = ReturnPlatformIDFromName(childplatform.name);
+        foreach (GameObject platform in childPlatformsInParent)
+        {
+            if (platformID == ReturnPlatformIDFromName(platform.name))
+            {
+                float platformYPosition = platform.transform.position.y;
+                if (platformYPosition > highestYPosition)
+                {
+                    highestYPosition = platformYPosition;
+                    highestPlatform = platform;
+                }
+            }
+        }
+
+        if (highestPlatform != null)
+        {
+            return highestPlatform;
+        }
+
+        return null;
+    }
+    
+    public static int ReturnPlatformIDFromName(string gameObjectName)
+    {
+        if (gameObjectName.Contains("Platform"))
+        {
+            string intPart = gameObjectName.Replace("Platform ", ""); //Remove the player part of the string
+            int.TryParse(intPart, out int ID);
+            return ID;
+        }
+
+        //If tag doesn't contain player, return error value
+        return -1;
     }
 
     void EndGame(int playerID)
