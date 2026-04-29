@@ -36,6 +36,9 @@ public class PG_GenerationManager : MonoBehaviour
     [HideInInspector]
     public Action m_actionSpawnPowerups;
 
+    [HideInInspector]
+    public int m_roomNumber;
+
 
     private void Awake()
     {
@@ -104,6 +107,32 @@ public class PG_GenerationManager : MonoBehaviour
         Debug.Log(room);
     }
 
+    public void PopulateData(ref PG_TransitionManager.RoomGenValues values)
+    {
+        m_spawnPowerups = values._spawnPowerups;
+        m_minimumPowerups = values._minPowerups;
+
+        if (m_platformGenerator != null)
+        {
+            m_platformGenerator.m_maxPlatformRandomXStep = values._criticalPlatformXVariation;
+            m_platformGenerator.m_ZigZagMinPlatformSize = values._criticalPlatformSize;
+            m_platformGenerator.m_ZigZagMaxPlatformSize = values._criticalPlatformSize;
+
+            m_platformGenerator.m_numberOfBonusPlatforms = values._bonusPlatformNumber;
+            m_platformGenerator.m_areBonusPlatformFixedSize = values._fixedBonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformMinSize = values._minBonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformMaxSize = values._maxBonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformFixedSize = values._bonusPlatformSize;
+            m_platformGenerator.m_bonusPlatformXSeperation = values._bonusPlatformXSeparation;
+            m_platformGenerator.m_failedBonusPlatformSpawnAttempts = values._bonusPlatformSpawnAttempts;
+        }
+        if(m_roomGenerator != null)
+        {
+            m_roomGenerator.m_previousRoomExit = values._entrance;
+            m_roomGenerator.m_nextRoomEntrance = values._exit;
+        }
+    }
+
     public void SpawnPowerups()
     {
         if (m_powerupsSpawned) return;
@@ -139,7 +168,7 @@ public class PG_GenerationManager : MonoBehaviour
 
     }
 
-    public void RegenerateRoom()
+    public GameObject RegenerateRoom()
     {
         if (transform.childCount > 0)
         {
@@ -163,7 +192,7 @@ public class PG_GenerationManager : MonoBehaviour
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         m_platformGenerator.m_xSpawnLocation = 1;
         m_platformGenerator.m_ySpawnLocation = 1;
-
+        return m_currentRoom;
     }
 
 

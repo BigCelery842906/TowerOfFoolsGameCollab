@@ -8,6 +8,14 @@ public class PG_Room : MonoBehaviour
     float m_worldScale;
 
 
+    [HideInInspector]
+    public int m_exitCoord;
+    [HideInInspector]
+    public int m_entranceCoord;
+    
+    //current exit
+    //current entrance
+
     private void Awake()
     {
 
