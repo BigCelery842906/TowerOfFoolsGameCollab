@@ -21,7 +21,7 @@ public class p_PlayerController : MonoBehaviour
     /// </summary>
     private int m_playerIndex;
 
-    private void Awake()
+    private void OnEnable()
     {
         m_playerInput = GetComponent<PlayerInput>();
         m_playerIndex = m_playerInput.playerIndex;

@@ -103,8 +103,6 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while(true)
         {
-            if (respawned) { Debug.Log("RUNNINGGGGGGG"); }
-
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
