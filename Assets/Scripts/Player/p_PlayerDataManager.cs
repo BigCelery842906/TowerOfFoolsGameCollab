@@ -7,7 +7,7 @@ using System;
 
 public class p_PlayerDataManager : MonoBehaviour
 {
-    public event Action<int> onPlayerRespawned;
+    public event Action<int> OnPlayerRespawned;
 
     //Member Variables
     p_PlayerData m_PlayerData = null;
@@ -15,11 +15,7 @@ public class p_PlayerDataManager : MonoBehaviour
 
     private float m_PlayerScale = 1.0f;
     private float m_LastPlayerYPos = 0.0f;
-    
-    [Tooltip("Oh my you put the ground layer here, it should say ground :D")]
-    [SerializeField] private LayerMask m_groundLayer;
-    
-    
+
     [Header("Death Reset Values")]
     [SerializeField] private float m_radius = 10.0f;
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
@@ -28,8 +24,6 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
     private float totalPositionCorrection = 4.0f;
 
-    private float m_worldScale = 1.0f;
-    
     void Start()
     {
         //This call below is static so needs no instance of player data existing
@@ -40,7 +34,6 @@ public class p_PlayerDataManager : MonoBehaviour
         m_PlayerData = new p_PlayerData(m_PlayerID);
 
         m_PlayerScale = e_GlobalData.instance.GetPlayerScale();
-        m_worldScale = e_GlobalData.instance.GetWorldScale();
         transform.localScale = new Vector3(m_PlayerScale, m_PlayerScale, m_PlayerScale);
 
         //Bind the Event for a player losing a life to the update for their position.
@@ -72,37 +65,22 @@ public class p_PlayerDataManager : MonoBehaviour
     }
 
     IEnumerator RespawnTimer()
-        {
-            gameObject.SetActive(false);
-            yield return new WaitForSeconds(m_respawnTimer);
-            
-            // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
-            if (this == null) yield break;
-            
-            // Written by Connor, shout if you need to 
-            
-            gameObject.SetActive(true);
-            
-            FindClosestPlatform();
-            
-            p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
-
-            if (playerPickup)
-            {
-                Debug.Log("Player Values Reset");
-                playerPickup.ResetJumpForce();
-                playerPickup.ResetMoveSpeed();
-            }
-
-        }
-
-    void FindClosestPlatform()
     {
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(m_respawnTimer);
+
+        // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
+        if (this == null) yield break;
+
+        // Written by Connor, shout if you need to 
+
+        gameObject.SetActive(true);
+
         Vector3 currentPos = gameObject.transform.position;
         Vector3 newPos = currentPos;
 
         m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
-            
+
         float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
 
         newPos.y = currentPos.y + totalPositionCorrection;
@@ -116,83 +94,45 @@ public class p_PlayerDataManager : MonoBehaviour
             if (platform.gameObject.CompareTag("PlatformEnd") || platform.gameObject.CompareTag("PlatformMiddle"))
             {
                 //Platforms only have these 2 tags - Can extend to include floors if needed
-                if (platform.transform.position.y > newPos.y - 2.0f) //2 is an arbitrary value here
-                {
-                    if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
-                    {
-
-                        GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
-
-                        if (highestPlatform != null)
-                        {
-                            if (highestPlatform.GetComponent<PG_PlatformParent>().m_canRespawnOnPlatform)
-                            {
-                                platforms.Add(highestPlatform);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (platform.gameObject.layer == m_groundLayer)
-            {
                 platforms.Add(platform.gameObject);
             }
         }
 
-            for (int i = 0; i < platforms.Count; i++)
-            {
-                float distance = (platforms[i].transform.position - newPos).magnitude;
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestPlatformID = i;
-                }
-            }
-
-            if (closestPlatformID != -1) //If valid platform
-            {
-                newPos = platforms[closestPlatformID].transform.position;
-                newPos.y += 2;
-            }
-
-            gameObject.transform.position = newPos;
-
-    GameObject GetHighestPlatformInBlock(GameObject childplatform)
-    {
-        GameObject platformParent = childplatform.transform.parent.gameObject;
-        List<GameObject> childPlatformsInParent = new List<GameObject>();
-
-        for (int i = 0; i < platformParent.transform.childCount; i++)
+        for (int i = 0; i < platforms.Count; i++)
         {
-            childPlatformsInParent.Add(platformParent.transform.GetChild(i).gameObject);
-        }
-        
-        float highestYPosition = float.MinValue;
-        GameObject highestPlatform = null;
-        
-        string platformName = childplatform.name;
-        foreach (GameObject platform in childPlatformsInParent)
-        {
-            if (platformName == platform.name)
+            float distance = (platforms[i].transform.position - newPos).magnitude;
+            if (distance < closestDistance)
             {
-                float platformYPosition = platform.transform.position.y;
-                if (platformYPosition > highestYPosition)
-                {
-                    highestYPosition = platformYPosition;
-                    highestPlatform = platform;
-                }
+                closestDistance = distance;
+                closestPlatformID = i;
             }
         }
 
+        if (closestPlatformID != -1) //If valid platform
+        {
+            newPos = platforms[closestPlatformID].transform.position;
+            newPos.y += 2;
         }
+
+        gameObject.transform.position = newPos;
+
+        p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
+
+        if (playerPickup)
+        {
+            Debug.Log("Player Values Reset");
+            playerPickup.ResetJumpForce();
+            playerPickup.ResetMoveSpeed();
+        }
+
+    }
 
     void EndGame(int playerID)
     {
         if (e_GlobalData.instance.GetGameEnded()) return;
         e_GlobalData.instance.SetGameEnded(true);
         // Debug.Log("End Game Called in playerdatamanager");
-        
+
         // Destroy(gameObject);
         sc_SceneManager.LoadScene("GameOver");
         //Save Data
@@ -201,12 +141,12 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void UpdatePlayerScore(int playerID)
     {
-        if(playerID == m_PlayerID)
+        if (playerID == m_PlayerID)
         {
             Vector3 playerPos = e_GlobalData.instance.GetPlayerPosition(playerID);
             float playerYPos = playerPos.y;
 
-            if(m_LastPlayerYPos < playerYPos)
+            if (m_LastPlayerYPos < playerYPos)
             {
                 m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos) * 12, playerID);
                 m_LastPlayerYPos = playerYPos;
@@ -214,7 +154,7 @@ public class p_PlayerDataManager : MonoBehaviour
             }
         }
     }
-    
+
     private void OnDrawGizmos()
     {
         if (m_drawDeathReset)
