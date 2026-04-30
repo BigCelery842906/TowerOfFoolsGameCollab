@@ -48,10 +48,11 @@ public class p_PlayerController : MonoBehaviour
 
             else
             {
-                if (m_playerIndex == 1) { m_playerInput.SwitchCurrentControlScheme("Arrows", Keyboard.current); }
+                //if (m_playerIndex == 1) { m_playerInput.SwitchCurrentControlScheme("Arrows", Keyboard.current); }
 
                 // Keyboard fallback for 2 players
                 string scheme = (m_playerIndex == 0) ? "WASD" : "Arrows";
+                m_playerInput.SwitchCurrentControlScheme(scheme, Keyboard.current);
                 //m_playerInput.defaultControlScheme = scheme;
                 Debug.Log($"Player {m_playerIndex} scheme: {m_playerInput.currentControlScheme}");
 

@@ -117,6 +117,7 @@ public class p_PlayerDataManager : MonoBehaviour
         gameObject.transform.position = newPos;
 
         p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
+        onPlayerRespawned?.Invoke(m_PlayerID);
 
         if (playerPickup)
         {
