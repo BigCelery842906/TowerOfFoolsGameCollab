@@ -89,6 +89,11 @@ public class p_PlayerMovement : MonoBehaviour
 
         if (m_PlayerPickupManager != null)
         {
+            m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
+            m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+            m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
+
+            Debug.Log("RESET");
             m_PlayerPickupManager.ResetJumpForce();
             m_PlayerPickupManager.ResetMoveSpeed();
         }
