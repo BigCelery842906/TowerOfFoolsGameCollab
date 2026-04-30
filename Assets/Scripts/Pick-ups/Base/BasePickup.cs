@@ -5,6 +5,9 @@ public class BasePickup : MonoBehaviour
     [Tooltip("Dw bout this <3, dont touch it !!!")]
     [SerializeField] private float pickupAnimFloat;
 
+    [Tooltip("The sprite vfx goes here if its being used by the pickup, not used by default")]
+    [SerializeField] private GameObject m_VFXObj;
+
     protected AudioSource m_pickupSound;
 
     protected p_PlayerPickupManager m_playerOne;
@@ -195,6 +198,7 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected void PickupUsed()
     {
+        if (m_VFXObj != null) { Instantiate(m_VFXObj, transform.position, new Quaternion(0, 0, 0, 0)); }
         if(m_pickupSound != null) { AudioManager.instance.PlayAudioClip(m_pickupSound.clip); }
 
         m_triggeredPlayer.SetPlayerHoldingPickup(false);

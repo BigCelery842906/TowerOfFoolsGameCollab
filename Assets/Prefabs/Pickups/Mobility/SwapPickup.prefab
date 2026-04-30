@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a41d9257a72e84190b126c796fadae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 1103535443382450228, guid: af6fa80b604177a44a22f037ceca4a87, type: 3}
+  tempPlayerTrans: {x: 0, y: 0, z: 0}
+  tempOtherPlayerTrans: {x: 0, y: 0, z: 0}
 --- !u!135 &3406098409521167610
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -17,24 +17,50 @@ public class e_AdrenalineCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("triggered");
+        //m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
 
-        m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
+        //if(m_entryPlayerPickupMan == null) { return; }
 
-        if(m_entryPlayerPickupMan == null) { return; }
+        ////reset it first 
+        //m_entryPlayerPickupMan.ResetMoveSpeed();
+        //m_entryPlayerPickupMan.ResetJumpForce();
 
-        m_entryPlayerPickupMan.SetMoveSpeed(m_movementBoost);
-        m_entryPlayerPickupMan.SetJumpForce(m_jumpBoost);
+        //m_entryPlayerPickupMan.AdrenalineBoost(true, m_movementBoost, m_jumpBoost);
+
+        ////m_entryPlayerPickupMan.SetMoveSpeed(m_movementBoost);
+        ////m_entryPlayerPickupMan.SetJumpForce(m_jumpBoost);
 
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if(!other.gameObject.CompareTag("Player")) { return; }
+
+        m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
+
+        if (m_entryPlayerPickupMan == null) { return; }
+
+        //reset it first 
+        m_entryPlayerPickupMan.ResetMoveSpeed();
+        m_entryPlayerPickupMan.ResetJumpForce();
+
+        Debug.LogWarning("BOOST", m_entryPlayerPickupMan);
+        m_entryPlayerPickupMan.AdrenalineBoost(true, m_movementBoost, m_jumpBoost);
+    }
+
+    
+
+
     private void OnTriggerExit(Collider other)
     {
-        m_exitPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
+        if (!other.gameObject.CompareTag("Player")) { return; }
+        m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
 
-        if (m_exitPlayerPickupMan == null) { return; }
+        if (m_entryPlayerPickupMan == null) { return; }
 
-        StartCoroutine(C_ResetValuesTimer(m_exitPlayerPickupMan));
+        m_entryPlayerPickupMan.AdrenalineBoost(false, m_movementBoost, m_jumpBoost);
+
+        //StartCoroutine(C_ResetValuesTimer(m_entryPlayerPickupMan));
 
     }
 
@@ -42,10 +68,10 @@ public class e_AdrenalineCheck : MonoBehaviour
     {
         yield return new WaitForSeconds(m_timerLength);
 
-        Debug.Log("reset");
+        player.AdrenalineBoost(false, m_movementBoost, m_jumpBoost);
 
-        player.ResetMoveSpeed();
-        player.ResetJumpForce();
+        //player.ResetMoveSpeed();
+        //player.ResetJumpForce();
     }
 
 
