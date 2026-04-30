@@ -77,6 +77,7 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
         
         HideMenu();
         e_GlobalData.instance.SetPause(false);
+        e_GlobalData.instance.ResetGameStates();
         
         // Load the scene via build index if that option is selected, if not, load via scene name
         if (m_useSceneBuildIndex)

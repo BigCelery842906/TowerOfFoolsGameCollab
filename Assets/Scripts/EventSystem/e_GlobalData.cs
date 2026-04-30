@@ -28,6 +28,7 @@ public class e_GlobalData : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -160,5 +161,12 @@ public class e_GlobalData : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public void ResetGameStates()
+    {
+        m_PlayerOneScore = 0;
+        m_PlayerTwoScore = 0;
+        m_HasGameEnded = false;
     }
 }

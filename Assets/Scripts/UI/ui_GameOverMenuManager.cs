@@ -28,9 +28,11 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
     {
         BindButton("return-btn", HandleButtonClicked_ReturnToMenu);
         BindButton("replay-btn", HandleButtonClicked_Replay);
-        
-        // reset the state of the game ended in the game over menu
-        e_GlobalData.instance.SetGameEnded(false);
+    }
+
+    private void ResetGameStates()
+    {
+        e_GlobalData.instance.ResetGameStates();
     }
 
     private void HandleButtonClicked_ReturnToMenu()
@@ -39,6 +41,7 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
         m_hasSceneLoadStarted = true;
         
         HideMenu();
+        ResetGameStates();
 
         if (m_useSceneBuildIndexes)
         {
@@ -55,6 +58,7 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
         m_hasSceneLoadStarted = true;
         
         HideMenu();
+        ResetGameStates();
         
         if (m_useSceneBuildIndexes)
         {
