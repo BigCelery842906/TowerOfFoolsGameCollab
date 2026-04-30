@@ -28,6 +28,16 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
     {
         BindButton("return-btn", HandleButtonClicked_ReturnToMenu);
         BindButton("replay-btn", HandleButtonClicked_Replay);
+        
+        // retrieve the 
+        if (m_uiDocument == null) return;
+        if (m_uiDocument.rootVisualElement == null) return;
+            
+        Label plrOneScoreLabel = m_uiDocument.rootVisualElement.Q<Label>("score-plrOne");
+        Label plrTwoScoreLabel = m_uiDocument.rootVisualElement.Q<Label>("score-plrTwo");
+        
+        plrOneScoreLabel.text = $"Score PLR 1: {e_GlobalData.instance.GetPlayerScore(0)}";
+        plrTwoScoreLabel.text = $"Score PLR 2: {e_GlobalData.instance.GetPlayerScore(1)}";
     }
 
     private void ResetGameStates()
