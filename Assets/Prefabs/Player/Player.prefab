@@ -56761,6 +56761,7 @@ GameObject:
   - component: {fileID: 7849269804269014520}
   - component: {fileID: 6765221560075692234}
   - component: {fileID: 7961848418309483780}
+  - component: {fileID: 8070356416164952371}
   - component: {fileID: 806169417569996131}
   m_Layer: 8
   m_Name: Player
@@ -56778,7 +56779,7 @@ Transform:
   m_GameObject: {fileID: 5223547158863069099}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.3869705, y: 28.792501, z: 0}
+  m_LocalPosition: {x: 7.1061788, y: 9.582151, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56800,6 +56801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb90d1c7298cc014bacebb037917c2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerInputManager: {fileID: 0}
 --- !u!114 &7849269804269014520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56847,14 +56849,161 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   m_radius: 20
   m_deathPositionCorrection: 10
   m_drawDeathReset: 1
   m_respawnTimer: 3
   m_lavaSpeedCorrectionMultiplier: 0.1
+--- !u!114 &8070356416164952371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5223547158863069099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a333fb1f9356866408d9b5ec90594b12, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: abd2c92f-ccc0-4593-b567-6f169af230ad
+    m_ActionName: 'AM_PlayerOne/Move[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f38a63f8-cea2-4d08-b519-b4fddc06d24b
+    m_ActionName: 'AM_PlayerOne/Jump[/Keyboard/w,/Keyboard/upArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2732f2dd-04bb-4fc5-988b-c62a9a3bd83a
+    m_ActionName: 'AM_PlayerOne/Attack[/Keyboard/e,/Keyboard/rightCtrl]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 28efdf1a-5bc9-4f81-91cf-3b26ce7eb764
+    m_ActionName: 'AM_PlayerOne/Taunt[/Keyboard/s,/Keyboard/downArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0176f32-439b-445a-bb15-d6336cd823fc
+    m_ActionName: 'AM_PlayerOne/Pause[/Keyboard/escape,/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 559830ca-8f1b-46f1-a96a-7e6216110fbc
+    m_ActionName: 'AM_PlayerTwo/Move[/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/j,/Keyboard/l]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d602980f-dcc4-4402-b49a-30ca58ff02da
+    m_ActionName: 'AM_PlayerTwo/Jump[/Keyboard/upArrow,/Keyboard/i]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 409823c6-ade8-4d32-81e4-bece6c223a23
+    m_ActionName: 'AM_PlayerTwo/Attack[/Keyboard/rightCtrl]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5c2799f5-214c-4051-9c00-69d5d9541efb
+    m_ActionName: 'AM_PlayerTwo/Taunt[/Keyboard/downArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6903ed37-edcf-414e-8379-8982d7b3c29e
+    m_ActionName: 'AM_PlayerTwo/Pause[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8577146385212615068}
+        m_TargetAssemblyTypeName: p_PlayerController, Assembly-CSharp
+        m_MethodName: Handle_Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9c5702a3-8b7f-4384-b266-718f3dcf0e21
+    m_ActionName: 'AM_Gameplay/Move[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8577146385212615068}
+        m_TargetAssemblyTypeName: p_PlayerController, Assembly-CSharp
+        m_MethodName: Handle_Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4307c3e6-7ce4-47dc-bf52-2051b50cfd29
+    m_ActionName: 'AM_Gameplay/Jump[/Keyboard/w,/Keyboard/upArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8577146385212615068}
+        m_TargetAssemblyTypeName: p_PlayerController, Assembly-CSharp
+        m_MethodName: Handle_Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d329d7f-5519-4898-9afb-11b0bb54b8a0
+    m_ActionName: 'AM_Gameplay/Attack[/Keyboard/e,/Keyboard/rightCtrl]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8577146385212615068}
+        m_TargetAssemblyTypeName: p_PlayerController, Assembly-CSharp
+        m_MethodName: Handle_Taunt
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2470ebf7-c741-4bda-b6f2-ef3d23a44d0d
+    m_ActionName: 'AM_Gameplay/Taunt[/Keyboard/s,/Keyboard/downArrow]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8577146385212615068}
+        m_TargetAssemblyTypeName: p_PlayerController, Assembly-CSharp
+        m_MethodName: Handle_Pause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e958253d-7cac-4d85-920e-8dee2a5f7c6e
+    m_ActionName: 'AM_Gameplay/Pause[/Keyboard/escape,/Keyboard/enter]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Gamepad
+  m_DefaultActionMap: AM_Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!54 &806169417569996131
 Rigidbody:
   m_ObjectHideFlags: 0

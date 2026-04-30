@@ -7,7 +7,7 @@ using System;
 
 public class p_PlayerDataManager : MonoBehaviour
 {
-    public event Action<int> OnPlayerRespawned;
+    public event Action<int> onPlayerRespawned;
 
     //Member Variables
     p_PlayerData m_PlayerData = null;
