@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 public class PG_TransitionManager : MonoBehaviour
 {
@@ -19,12 +20,25 @@ public class PG_TransitionManager : MonoBehaviour
 
     private float m_currentYHeight; //top most location of top room
     public RoomGenValues m_generationValues;
+
+
     int m_lastDesignedRoomIndex;
+
+
     float m_worldScale;
     int m_roomNumber = 0;
+    bool m_initComplete;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
+    {
+        Init();
+
+
+
+
+    }
+    private void Init()
     {
         m_bottomRoom = new GameObject();
         m_bottomRoom.name = "Bottom";
@@ -38,6 +52,14 @@ public class PG_TransitionManager : MonoBehaviour
 
 
         PopulateDefaultGenerationValues();
+
+
+        //-----------------------------------------
+        //     all below here is placeholder
+        // this should just call generate 3 times
+        //-----------------------------------------
+
+
         //m_generatorScript = m_generationManager.GetComponent<PG_GenerationManager>();
         //m_generatorScript.PopulateData(ref m_generationValues);
         int middleRoomidx = 0;
@@ -65,10 +87,10 @@ public class PG_TransitionManager : MonoBehaviour
         m_currentYHeight = bottomGrid.m_height * m_worldScale;
 
         int exitXPos = nextRoomEntrance;
-        int exitYPos = bottomGrid.m_height -1;
+        int exitYPos = bottomGrid.m_height - 1;
         Vector2 exitWorldPos = bottomGrid.GetWorldPosFromCell(exitXPos, exitYPos);
         exitWorldPos.y += (m_worldScale * 2);
-        
+
 
         GameObject bottomCollider = GameObject.Instantiate(m_transitionDetector);
         bottomCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
@@ -90,7 +112,7 @@ public class PG_TransitionManager : MonoBehaviour
             Vector3 middlePos = Vector3.zero;
 
             middlePos.y += m_currentYHeight;
-            
+
             m_middleRoom.transform.position = middlePos;
 
 
@@ -142,9 +164,7 @@ public class PG_TransitionManager : MonoBehaviour
         topCollider.transform.position = exitWorldPos;
         topCollider.transform.SetParent(m_topRoom.transform, false);
 
-
     }
-
     void PopulateDefaultGenerationValues()
     {
         m_generationValues = new();
@@ -166,9 +186,65 @@ public class PG_TransitionManager : MonoBehaviour
     }
 
 
-    private void GenerateRoom()
+
+
+    public void GenerateRoom()
     {
         Debug.Log("Room Collider Hit");
+        GameObject room = null;
+        if (m_roomNumber % 2 == 0) // designed
+        {
+            //find room
+            room = m_designedRooms[UnityEngine.Random.Range(0, m_designedRooms.Count)];
+
+        }
+        else //proc gen
+        {
+            //generate room
+        }
+
+        //get world height for each room
+        float bottomWorldHeight = m_bottomRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
+        float middleWorldHeight = m_middleRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
+        float topWorldHeight = m_topRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
+
+        //swap room containers
+        for (int i = 0; i < m_bottomRoom.transform.childCount; i++) //clear bottom room container
+        {
+            Destroy(m_bottomRoom.transform.GetChild(i)); 
+        }
+        for(int i = 0; i < m_middleRoom.transform.childCount; i++) // move middle children to bottom
+        {
+            m_middleRoom.transform.GetChild(i).transform.SetParent(m_bottomRoom.transform, false); 
+        }
+        for(int i = 0; i < m_topRoom.transform.childCount; i++)// move top to middle
+        {
+            m_topRoom.transform.GetChild(i).transform.SetParent(m_middleRoom.transform,false);
+        }
+
+
+
+        //move position of room containers up
+
+        Vector3 bottomTemp = m_bottomRoom.transform.position;
+        bottomTemp.y += bottomWorldHeight;
+        m_bottomRoom.transform.position = bottomTemp;
+
+        Vector3 middleTemp = m_middleRoom.transform.position;
+        middleTemp.y += middleWorldHeight;
+        m_middleRoom.transform.position = middleTemp;
+
+        Vector3 topTemp = m_topRoom.transform.position;
+        topTemp.y += topWorldHeight;
+        m_topRoom.transform.position = topTemp;
+
+        //create instance of room
+
+        //move room to top transform
+
+        //parent to new top container
+
+        m_roomNumber++;
     }
 
     // Update is called once per frame
