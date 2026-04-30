@@ -59,6 +59,8 @@ public class PG_RoomGenerator : MonoBehaviour
         room.AddComponent<PG_Room>();
         PG_Room roomScript = room.GetComponent<PG_Room>();
         roomScript.SetGrids(m_grids);
+        roomScript.m_entrance = m_previousRoomExit;
+        roomScript.m_exit = m_nextRoomEntrance;
         for (int i = 0; i < m_grids.Count; i++)
         {
             Destroy(m_grids[i]);
