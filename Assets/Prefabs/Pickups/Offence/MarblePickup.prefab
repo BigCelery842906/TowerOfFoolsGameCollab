@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc3470655cefcf844aab91c79e0081b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 3846364242354527866, guid: a652f6cceb89db54abfc88f6f852e277, type: 3}
   m_marbelPrefab: {fileID: 1838954293588926550, guid: 6da50e24d0a47ce4f9445f68da21e501, type: 3}
 --- !u!212 &8142736876355473888
 SpriteRenderer:

@@ -31,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c168e7d76741ae449983430b76c2f51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 3846364242354527866, guid: a652f6cceb89db54abfc88f6f852e277, type: 3}
   m_daggerPrefab: {fileID: 3880396194272327959, guid: 52a2701ba95d742488a01a6880a76a8e, type: 3}
 --- !u!135 &2087599968390758964
 SphereCollider:
