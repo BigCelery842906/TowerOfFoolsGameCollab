@@ -110,18 +110,9 @@ public void UseInteractablePickup()
 
     public void AdrenalineBoost(bool shouldBoost, float movementBoost, float jumpBoost, float timer)
     {
-        //if(m_boosted && !shouldBoost) { StartCoroutine(C_AdrenalineBoostTimer(timer)); }
-
         if (!shouldBoost) 
         {
             StartCoroutine(C_AdrenalineBoostTimer(timer));
-
-            //ResetJumpForce(); 
-            //ResetMoveSpeed(); 
-
-            //m_boosted = false;
-
-            //m_sweatVFX.SetActive(false); 
             return; 
         }
 
