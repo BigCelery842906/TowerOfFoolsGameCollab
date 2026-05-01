@@ -129,8 +129,6 @@ public void UseInteractablePickup()
 
         m_sweatVFX.SetActive(true);
 
-        Debug.LogWarning("movemnt: " + movementBoost + "  jump: " + jumpBoost);
-
         OnStunStateChange.Invoke(m_baseMoveSpeed * movementBoost);
         OnJumpForceChange.Invoke(m_baseJumpForce * jumpBoost);
          
