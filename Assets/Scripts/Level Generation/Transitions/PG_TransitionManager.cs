@@ -29,6 +29,11 @@ public class PG_TransitionManager : MonoBehaviour
     int m_roomNumber = 0;
     bool m_initComplete;
 
+    private GameObject bottomCollider;
+    private GameObject middleCollider;
+
+    public GameObject m_newRoom;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,8 +43,13 @@ public class PG_TransitionManager : MonoBehaviour
 
 
     }
-    private void Init()
+    public void Init()
     {
+        if (e_GlobalData.instance)
+        {
+            m_worldScale = e_GlobalData.instance.GetWorldScale();
+        }
+
         m_bottomRoom = new GameObject();
         m_bottomRoom.name = "Bottom";
         m_bottomRoom.transform.SetParent(this.transform);
@@ -59,112 +69,101 @@ public class PG_TransitionManager : MonoBehaviour
         // this should just call generate 3 times
         //-----------------------------------------
 
+        bottomCollider = SpawnCollider();
+        middleCollider = SpawnCollider();
+        
+        MoveColliderToNewPosition(m_newRoom);
 
         //m_generatorScript = m_generationManager.GetComponent<PG_GenerationManager>();
         //m_generatorScript.PopulateData(ref m_generationValues);
-        int middleRoomidx = 0;
-        if (m_designedRooms.Count > 0)
-        {
-            middleRoomidx = UnityEngine.Random.Range(0, m_designedRooms.Count);
-        }
-        int nextRoomEntrance = m_designedRooms[middleRoomidx].GetComponent<PG_Room>().m_entrance;
-        m_generationValues._exit = nextRoomEntrance;
 
 
-        //bottom
-        GameObject bottomGenerator = GameObject.Instantiate(m_generationManager);
-        m_bottomRoomGenerator = bottomGenerator.GetComponent<PG_GenerationManager>();
-        m_bottomRoomGenerator.PopulateData(ref m_generationValues);
-        Vector3 bottomPos = Vector3.zero;
-        bottomGenerator.transform.position = bottomPos;
-        bottomGenerator.transform.SetParent(m_bottomRoom.transform, false);
-        m_worldScale = m_bottomRoomGenerator.m_worldScale;
-        GameObject spawnedRoom = m_bottomRoomGenerator.RegenerateRoom();
-        spawnedRoom.transform.SetParent(m_bottomRoom.transform, false);
-        //m_bottomRoomGenerator.RegenerateRoom();
-
-        PG_GridMap bottomGrid = spawnedRoom.GetComponent<PG_GridMap>();
-        m_currentYHeight = bottomGrid.m_height * m_worldScale;
-
-        int exitXPos = nextRoomEntrance;
-        int exitYPos = bottomGrid.m_height - 1;
-        Vector2 exitWorldPos = bottomGrid.GetWorldPosFromCell(exitXPos, exitYPos);
-        exitWorldPos.y += (m_worldScale * 2);
-
-
-        GameObject bottomCollider = GameObject.Instantiate(m_transitionDetector);
-        bottomCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
-        bottomCollider.name = "000000";
-        bottomCollider.transform.rotation = Quaternion.identity;
-        bottomCollider.transform.position = exitWorldPos;
-        bottomCollider.transform.SetParent(m_bottomRoom.transform, false);
-
-
-
-        //middle
-        if (m_designedRooms.Count > 0)
-        {
-            GameObject middlePrefab = m_designedRooms[middleRoomidx];
-            middlePrefab.transform.localPosition = Vector3.zero;
-            GameObject middleRoom = GameObject.Instantiate(middlePrefab);
-            PG_GridMap middleGrid = middleRoom.GetComponent<PG_GridMap>();
-            middleRoom.transform.SetParent(m_middleRoom.transform, false);
-            Vector3 middlePos = Vector3.zero;
-
-            middlePos.y += m_currentYHeight;
-
-            m_middleRoom.transform.position = middlePos;
-
-
-
-            exitXPos = middleRoom.GetComponent<PG_Room>().m_exit;
-            exitYPos = middleGrid.m_height - 1;
-            exitWorldPos = Vector2.zero;
-            exitWorldPos.x = exitXPos * m_worldScale;
-            exitWorldPos.y += m_currentYHeight + m_worldScale;
-            GameObject middleCollider = GameObject.Instantiate(m_transitionDetector);
-            middleCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
-            middleCollider.name = "000000";
-            middleCollider.transform.rotation = Quaternion.identity;
-            middleCollider.transform.position = exitWorldPos;
-            middleCollider.transform.SetParent(m_middleRoom.transform, false);
-            m_currentYHeight += m_middleRoom.GetComponentInChildren<PG_GridMap>().m_height * m_worldScale;
-        }
-
-
-        //top
-        int previousRoomExit = m_designedRooms[middleRoomidx].GetComponent<PG_Room>().m_exit;
-        m_generationValues._entrance = previousRoomExit;
-        m_generationValues._exit = UnityEngine.Random.Range(1, 31);
-
-        GameObject topGenerator = GameObject.Instantiate(m_generationManager);
-        m_topRoomGenerator = topGenerator.GetComponent<PG_GenerationManager>();
-        m_topRoomGenerator.PopulateData(ref m_generationValues);
-        Vector3 topPos = Vector3.zero;
-        topPos.y += m_currentYHeight;
-        topGenerator.transform.position = topPos;
-        topGenerator.transform.SetParent(m_topRoom.transform, false);
-        m_worldScale = m_topRoomGenerator.m_worldScale;
-        GameObject topRoom = m_topRoomGenerator.RegenerateRoom();
-        PG_GridMap topGrid = topRoom.GetComponent<PG_GridMap>();
-        topRoom.transform.SetParent(m_topRoom.transform, false);
-        //m_topRoomGenerator.RegenerateRoom();
-
-
-        m_currentYHeight += topGrid.m_height * m_worldScale;
-        exitXPos = topRoom.GetComponent<PG_Room>().m_exit;
-        exitYPos = topGrid.m_height - 1;
-        exitWorldPos = Vector2.zero;
-        exitWorldPos.x = exitXPos * m_worldScale;
-        exitWorldPos.y += m_currentYHeight;
-        GameObject topCollider = GameObject.Instantiate(m_transitionDetector);
-        topCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
-        topCollider.name = "000000";
-        topCollider.transform.rotation = Quaternion.identity;
-        topCollider.transform.position = exitWorldPos;
-        topCollider.transform.SetParent(m_topRoom.transform, false);
 
     }
+    
+    // //bottom
+    // GameObject bottomGenerator = GameObject.Instantiate(m_generationManager);
+    // m_bottomRoomGenerator = bottomGenerator.GetComponent<PG_GenerationManager>();
+    // m_bottomRoomGenerator.PopulateData(ref m_generationValues);
+    // Vector3 bottomPos = Vector3.zero;
+    // bottomGenerator.transform.position = bottomPos;
+    // bottomGenerator.transform.SetParent(m_bottomRoom.transform, false);
+    // // m_worldScale = m_bottomRoomGenerator.m_worldScale;
+    // GameObject spawnedRoom = m_bottomRoomGenerator.RegenerateRoom();
+    // spawnedRoom.transform.SetParent(m_bottomRoom.transform, false);
+    // //m_bottomRoomGenerator.RegenerateRoom();
+    //
+    // PG_GridMap bottomGrid = spawnedRoom.GetComponent<PG_GridMap>();
+    // m_currentYHeight = bottomGrid.m_height * m_worldScale;
+    //
+    // int exitXPos = nextRoomEntrance;
+    // int exitYPos = bottomGrid.m_height - 1;
+    // Vector2 exitWorldPos = bottomGrid.GetWorldPosFromCell(exitXPos, exitYPos);
+    // exitWorldPos.y += (m_worldScale * 2);
+    //
+    //
+    // GameObject bottomCollider = GameObject.Instantiate(m_transitionDetector);
+    // bottomCollider.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
+    // bottomCollider.name = "000000";
+    // bottomCollider.transform.rotation = Quaternion.identity;
+    // bottomCollider.transform.position = exitWorldPos;
+    // bottomCollider.transform.SetParent(m_bottomRoom.transform, false);
+
+    GameObject SpawnCollider()
+    {
+        GameObject colliderObject = GameObject.Instantiate(m_transitionDetector, this.gameObject.transform);
+        colliderObject.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
+        colliderObject.name = "000000 - Collider";
+        colliderObject.transform.rotation = Quaternion.identity;
+        colliderObject.transform.localScale = new Vector3(m_worldScale, m_worldScale, m_worldScale);
+        return colliderObject;
+    }
+
+    void MoveColliderToNewPosition(GameObject newRoom)
+    {
+        GameObject collider = NextCollider();
+        Debug.Log(collider, collider);
+
+        Vector2 newPosition = new Vector2();
+        
+        
+        // newRoom.GetComponent<PG_GridMap>().GetWorldPosFromCell(newRoom.GetComponent<PG_GridMap>().m_yHeight)
+        
+        //Get to the PG_Room component somehow
+        
+        int exit = newRoom.GetComponent<PG_Room>().m_exit;
+        int entrance = newRoom.GetComponent<PG_Room>().m_entrance;
+
+        int heightOfRoom = newRoom.GetComponent<PG_GridMap>().m_height;
+        
+        Debug.Log("Exit: " + exit + ", height: " + heightOfRoom);
+        
+        // Vector2 xPos1 = newRoom.GetComponent<PG_GridMap>().CalculateWorldPositionFromCoords(exit - 1, heightOfRoom - 1);
+        // Vector2 xPos2 = newRoom.GetComponent<PG_GridMap>().CalculateWorldPositionFromCoords(exit + 1, heightOfRoom - 1);
+
+        // Vector2 newPos = new Vector2((xPos1.x + xPos2.x) / 2, xPos1.y);
+        
+        Vector2 newPos = new Vector2(exit, heightOfRoom - 1);
+        Debug.Log("Exit: " + exit + ", height: " + heightOfRoom + ", Position: " + newPos);
+        
+        Vector3 newPositionLocal = newPos * m_worldScale;
+        collider.transform.position = newRoom.transform.position + newPositionLocal;
+    }
+
+    GameObject NextCollider()
+    {
+        if (m_roomNumber % 2 == 0)
+        {
+            return bottomCollider;
+        }
+        else
+        {
+            return middleCollider;
+        }
+    }
+    
+    
+    
     void PopulateDefaultGenerationValues()
     {
         m_generationValues = new();
