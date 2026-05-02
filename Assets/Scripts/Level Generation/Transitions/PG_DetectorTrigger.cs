@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PG_DetectorTrigger : MonoBehaviour
 {
-    public Action m_triggerNextRoom;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,7 +14,7 @@ public class PG_DetectorTrigger : MonoBehaviour
         //if (other.gameObject.CompareTag("Player0") || other.gameObject.CompareTag("Player1"))
         if(other.gameObject.CompareTag("Player"))
         {
-            m_triggerNextRoom.Invoke();
+            PG_TransitionManager.instance.GenerateRoom();
         }
     }
 

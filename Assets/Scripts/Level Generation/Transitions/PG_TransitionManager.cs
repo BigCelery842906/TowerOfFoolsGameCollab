@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 
 public class PG_TransitionManager : MonoBehaviour
 {
+    public static PG_TransitionManager instance;
     [SerializeField] public GameObject m_previousRoom;
     [SerializeField] PG_GenerationManager m_previousRoomGenerator;
     [SerializeField] public GameObject m_currentRoom;
@@ -69,8 +70,18 @@ public class PG_TransitionManager : MonoBehaviour
     //Set position
     //
     
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Init();
@@ -183,7 +194,7 @@ public class PG_TransitionManager : MonoBehaviour
     GameObject SpawnCollider()
     {
         GameObject colliderObject = GameObject.Instantiate(m_transitionDetector, this.gameObject.transform);
-        colliderObject.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
+        // colliderObject.GetComponent<PG_DetectorTrigger>().m_triggerNextRoom += GenerateRoom;
         colliderObject.name = "000000 - Collider";
         colliderObject.transform.rotation = Quaternion.identity;
         colliderObject.transform.localScale = new Vector3(m_worldScale, m_worldScale, m_worldScale);
