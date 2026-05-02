@@ -5,12 +5,12 @@ using JetBrains.Annotations;
 
 public class PG_TransitionManager : MonoBehaviour
 {
-    public GameObject m_bottomRoom;
-    PG_GenerationManager m_bottomRoomGenerator;
-    public GameObject m_middleRoom;
-    PG_GenerationManager m_middleRoomGenerator;
-    public GameObject m_topRoom;
-    PG_GenerationManager m_topRoomGenerator;
+    [SerializeField] public GameObject m_previousRoom;
+    [SerializeField] PG_GenerationManager m_previousRoomGenerator;
+    [SerializeField] public GameObject m_currentRoom;
+    [SerializeField] PG_GenerationManager m_currentRoomGenerator;
+    [SerializeField] public GameObject m_nextRoom;
+    [SerializeField] PG_GenerationManager m_nextRoomGenerator;
 
     public List<GameObject> m_designedRooms;
 
@@ -29,19 +29,52 @@ public class PG_TransitionManager : MonoBehaviour
     int m_roomNumber = 0;
     bool m_initComplete;
 
-    private GameObject bottomCollider;
-    private GameObject middleCollider;
+    private GameObject colliderNum1;
+    private GameObject colliderNum2;
 
     public GameObject m_newRoom;
 
+    //Logic Order
+    // For initialisation
+    //Spawn Room 1 with entrance at -1
+    //Spawn Room 2 with entrance at exit of room 1
+    //Spawn Room 3 with entrance at exit of room 2
+    //Spawn Collider 1
+    //Spawn Collider 2
+    //Set Collider 1 pos to exit of room 2
+    //Set Collider 2 pos to exit of room 3
+    //Boot into normal logic for triggering
+    
+    //When Lower Collider triggered, delete the lowest room, spawn another room at exit of highest room
+    //Move lower collider to exit of new highest room
+    
+    
+    //For room spawning logic
+    //Decide if design room or proc gen
+    //Spawn Room
+    //Set collider position
+    
+    //If proc gen
+    // Check if next room is design or not.
+        //If next room is design, get the entrance of this room
+        //Set the next entrance as the current exit
+    //Load parameters for spawning
+    //Generate room
+    //Get position it should spawn at
+    //Set position
+    
+    //If design room
+    //Select random from list
+    //Get position it should spawn at
+    //Set position
+    //
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Init();
-
-
-
-
+        
     }
     public void Init()
     {
@@ -50,15 +83,13 @@ public class PG_TransitionManager : MonoBehaviour
             m_worldScale = e_GlobalData.instance.GetWorldScale();
         }
 
-        m_bottomRoom = new GameObject();
-        m_bottomRoom.name = "Bottom";
-        m_bottomRoom.transform.SetParent(this.transform);
-        m_middleRoom = new GameObject();
-        m_middleRoom.name = "Middle";
-        m_middleRoom.transform.SetParent(this.transform);
-        m_topRoom = new GameObject();
-        m_topRoom.name = "Top";
-        m_topRoom.transform.SetParent(this.transform);
+        //Do we need to spawn previous straight away? I'm thinking spawn current and next, then spawn another when current exit reached
+        m_previousRoom = new GameObject("Previous Room");
+        m_previousRoom.transform.SetParent(this.transform);
+        m_currentRoom = new GameObject("Current Room");
+        m_currentRoom.transform.SetParent(this.transform);
+        m_nextRoom = new GameObject("Next Room");
+        m_nextRoom.transform.SetParent(this.transform);
 
 
         PopulateDefaultGenerationValues();
@@ -69,11 +100,12 @@ public class PG_TransitionManager : MonoBehaviour
         // this should just call generate 3 times
         //-----------------------------------------
 
-        bottomCollider = SpawnCollider();
-        middleCollider = SpawnCollider();
+        colliderNum1 = SpawnCollider();
+        colliderNum2 = SpawnCollider();
         
-        MoveColliderToNewPosition(m_newRoom);
-
+        SpawnProcGenRoom(-1, 5);
+        MoveColliderToNewPosition(m_previousRoom);
+        
         //m_generatorScript = m_generationManager.GetComponent<PG_GenerationManager>();
         //m_generatorScript.PopulateData(ref m_generationValues);
 
@@ -109,6 +141,45 @@ public class PG_TransitionManager : MonoBehaviour
     // bottomCollider.transform.position = exitWorldPos;
     // bottomCollider.transform.SetParent(m_bottomRoom.transform, false);
 
+    void CheckRooms()
+    {
+        
+    }
+
+    void SpawnProcGenRoom(int entrancePosition, int exitPosition)
+    {
+        GameObject bottomGenerator = GameObject.Instantiate(m_generationManager);
+        m_previousRoomGenerator = bottomGenerator.GetComponent<PG_GenerationManager>();
+        m_previousRoomGenerator.PopulateData(ref m_generationValues);
+        Vector3 bottomPos = Vector3.zero;
+        bottomGenerator.transform.position = bottomPos;
+        bottomGenerator.transform.SetParent(m_previousRoom.transform, false);
+        // m_worldScale = m_bottomRoomGenerator.m_worldScale;
+        GameObject spawnedRoom = m_previousRoomGenerator.RegenerateRoom();
+        spawnedRoom.transform.SetParent(m_previousRoom.transform, false);
+        //m_bottomRoomGenerator.RegenerateRoom();
+        
+        PG_GridMap bottomGrid = spawnedRoom.GetComponent<PG_GridMap>();
+        m_currentYHeight = bottomGrid.m_height * m_worldScale;
+        
+        int exitXPos = exitPosition;
+        int exitYPos = bottomGrid.m_height - 1;
+        Vector2 exitWorldPos = bottomGrid.GetWorldPosFromCell(exitXPos, exitYPos);
+        exitWorldPos.y += (m_worldScale * 2);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #region Collider Logic
+    
     GameObject SpawnCollider()
     {
         GameObject colliderObject = GameObject.Instantiate(m_transitionDetector, this.gameObject.transform);
@@ -126,15 +197,21 @@ public class PG_TransitionManager : MonoBehaviour
 
         Vector2 newPosition = new Vector2();
         
-        
-        // newRoom.GetComponent<PG_GridMap>().GetWorldPosFromCell(newRoom.GetComponent<PG_GridMap>().m_yHeight)
-        
         //Get to the PG_Room component somehow
-        
-        int exit = newRoom.GetComponent<PG_Room>().m_exit;
-        int entrance = newRoom.GetComponent<PG_Room>().m_entrance;
+        //Hierarchy is as follows
+        //newRoom object
+        //Children are: PG_GenerationManager and Room
+        //Room holds the component I want
 
-        int heightOfRoom = newRoom.GetComponent<PG_GridMap>().m_height;
+        GameObject RoomObjectInChild = newRoom.GetComponentInChildren<PG_Room>().gameObject;
+        
+        PG_Room curPG_Room = RoomObjectInChild.GetComponent<PG_Room>();
+        PG_GridMap curPG_GridMap = RoomObjectInChild.GetComponent<PG_GridMap>();
+        
+        int exit = curPG_Room.m_exit;
+        int entrance = curPG_Room.m_entrance;
+
+        int heightOfRoom = curPG_GridMap.m_height;
         
         Debug.Log("Exit: " + exit + ", height: " + heightOfRoom);
         
@@ -154,15 +231,15 @@ public class PG_TransitionManager : MonoBehaviour
     {
         if (m_roomNumber % 2 == 0)
         {
-            return bottomCollider;
+            return colliderNum1;
         }
         else
         {
-            return middleCollider;
+            return colliderNum2;
         }
     }
     
-    
+    #endregion
     
     void PopulateDefaultGenerationValues()
     {
@@ -203,39 +280,39 @@ public class PG_TransitionManager : MonoBehaviour
         }
 
         //get world height for each room
-        float bottomWorldHeight = m_bottomRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
-        float middleWorldHeight = m_middleRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
-        float topWorldHeight = m_topRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
+        float bottomWorldHeight = m_previousRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
+        float middleWorldHeight = m_currentRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
+        float topWorldHeight = m_nextRoom.GetComponent<PG_GridMap>().m_height * m_worldScale;
 
         //swap room containers
-        for (int i = 0; i < m_bottomRoom.transform.childCount; i++) //clear bottom room container
+        for (int i = 0; i < m_previousRoom.transform.childCount; i++) //clear bottom room container
         {
-            Destroy(m_bottomRoom.transform.GetChild(i)); 
+            Destroy(m_previousRoom.transform.GetChild(i)); 
         }
-        for(int i = 0; i < m_middleRoom.transform.childCount; i++) // move middle children to bottom
+        for(int i = 0; i < m_currentRoom.transform.childCount; i++) // move middle children to bottom
         {
-            m_middleRoom.transform.GetChild(i).transform.SetParent(m_bottomRoom.transform, false); 
+            m_currentRoom.transform.GetChild(i).transform.SetParent(m_previousRoom.transform, false); 
         }
-        for(int i = 0; i < m_topRoom.transform.childCount; i++)// move top to middle
+        for(int i = 0; i < m_nextRoom.transform.childCount; i++)// move top to middle
         {
-            m_topRoom.transform.GetChild(i).transform.SetParent(m_middleRoom.transform,false);
+            m_nextRoom.transform.GetChild(i).transform.SetParent(m_currentRoom.transform,false);
         }
 
 
 
         //move position of room containers up
 
-        Vector3 bottomTemp = m_bottomRoom.transform.position;
+        Vector3 bottomTemp = m_previousRoom.transform.position;
         bottomTemp.y += bottomWorldHeight;
-        m_bottomRoom.transform.position = bottomTemp;
+        m_previousRoom.transform.position = bottomTemp;
 
-        Vector3 middleTemp = m_middleRoom.transform.position;
+        Vector3 middleTemp = m_currentRoom.transform.position;
         middleTemp.y += middleWorldHeight;
-        m_middleRoom.transform.position = middleTemp;
+        m_currentRoom.transform.position = middleTemp;
 
-        Vector3 topTemp = m_topRoom.transform.position;
+        Vector3 topTemp = m_nextRoom.transform.position;
         topTemp.y += topWorldHeight;
-        m_topRoom.transform.position = topTemp;
+        m_nextRoom.transform.position = topTemp;
 
         //create instance of room
 
