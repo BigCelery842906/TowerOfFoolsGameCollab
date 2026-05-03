@@ -371,7 +371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8644608815299340333, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9219169018262564918, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_LocalPosition.x
@@ -806,7 +806,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6300001
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -814,7 +814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -852,6 +852,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player1
       objectReference: {fileID: 0}
+    - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8577146385212615068, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_playerInputManager
+      value: 
+      objectReference: {fileID: 1258247758}
+    - target: {fileID: 8924269311767037873, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Gamepad
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -867,7 +879,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.33
+      value: 22.48
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -875,7 +887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -913,11 +925,34 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player0
       objectReference: {fileID: 0}
+    - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8577146385212615068, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_playerInputManager
+      value: 
+      objectReference: {fileID: 1258247758}
+    - target: {fileID: 8924269311767037873, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Gamepad
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aed4863a399395746b4387980cea00c9, type: 3}
+--- !u!114 &1258247758 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1940519547996579190, guid: b2b44cf43f0b98042b9a295e3681728a, type: 3}
+  m_PrefabInstance: {fileID: 1719209601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1258662977
 GameObject:
   m_ObjectHideFlags: 0
