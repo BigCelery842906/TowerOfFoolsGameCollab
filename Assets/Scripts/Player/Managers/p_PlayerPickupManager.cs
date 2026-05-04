@@ -9,6 +9,9 @@ using UnityEngine;
 /// </summary>
 public class p_PlayerPickupManager : MonoBehaviour
 {
+    //UI Stuff
+    public event Action<int, SO_PickupInfo.PickupInfo> OnNewPickup; // For UI
+
     public event Action OnPickupUsed;
     public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
 
@@ -22,6 +25,8 @@ public class p_PlayerPickupManager : MonoBehaviour
     private p_PlayerMovement m_playerMovement;
     #endregion
 
+    [SerializeField] private SO_PickupInfo m_pickupStructs;
+
     [Tooltip("This is where pickups will go to after the player picks them up (if they are interactable :scroll/daggers/swap), unless they are destroyed")]
     [SerializeField] private Transform m_pickupLocation;
 
@@ -32,6 +37,8 @@ public class p_PlayerPickupManager : MonoBehaviour
 
     private p_playerAnimControl m_playerAnim;
     private p_PlayerDataManager m_PlayerDataManager;
+
+    private int m_playerID;
 
     private bool m_isHoldingPickup = false;
     private bool m_hasInteractablePickup = false;
@@ -47,12 +54,12 @@ public class p_PlayerPickupManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
-
         m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
         if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
 
         m_playerMovement = GetComponent<p_PlayerMovement>();
+
+        m_playerID = p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag);
     }
 
     private void Handle_PlayerReset(int DeadID)
@@ -68,8 +75,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         ResetJumpForce();
         ResetMoveSpeed();
     }
-
-
+     
 
 public void UseInteractablePickup()
     {
@@ -88,12 +94,24 @@ public void UseInteractablePickup()
     /// <summary>
     /// Called after the player picks up a pickup, is checked in base pickup to prevent them picking up two
     /// </summary>
-    public void SetPlayerHoldingPickup(bool isHoldingPickup)
+    public void SetPlayerHoldingPickup(bool isHoldingPickup, string PickupName)
     {
         m_isHoldingPickup = isHoldingPickup;
 
         //just a fail safe x
-        if(!m_isHoldingPickup) { m_hasInteractablePickup = false;}
+        if(!m_isHoldingPickup) { m_hasInteractablePickup = false; return; }
+
+        SO_PickupInfo.PickupInfo info;
+
+        for(int i = 0; i < m_pickupStructs.m_pickups.Length ; i++)
+        {
+            if (m_pickupStructs.m_pickups[i].Name == PickupName)
+            {
+                info = m_pickupStructs.m_pickups[i];
+
+                OnNewPickup?.Invoke(m_playerID, info);
+            }
+        }
     }
 
     /// <summary>
@@ -102,9 +120,6 @@ public void UseInteractablePickup()
     public void SetBaseMoveSpeed(float speed) { m_baseMoveSpeed = speed; }
     public void SetBaseJumpForce(float force) { m_baseJumpForce = force; }
 
-    //public void SetMoveSpeed(float speed) { OnStunStateChange.Invoke(m_baseMoveSpeed * speed);  Debug.Log("CHANGING MOVE SPEED"); }
-    //public void SetJumpForce(float speed) { OnJumpForceChange.Invoke(m_baseJumpForce * speed); }
-    
     public void ResetMoveSpeed() { OnStunStateChange.Invoke(m_baseMoveSpeed); }
     public void ResetJumpForce() { OnJumpForceChange.Invoke(m_baseJumpForce); }
 

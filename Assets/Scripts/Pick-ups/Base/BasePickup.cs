@@ -8,6 +8,8 @@ public class BasePickup : MonoBehaviour
     [Tooltip("The sprite vfx goes here if its being used by the pickup, not used by default")]
     [SerializeField] private GameObject m_VFXObj;
 
+    [SerializeField] private string m_name;
+
     protected AudioSource m_pickupSound;
 
     protected p_PlayerPickupManager m_playerOne;
@@ -74,7 +76,7 @@ public class BasePickup : MonoBehaviour
             m_otherPlayer = m_playerOne;
         }
 
-        m_triggeredPlayer.SetPlayerHoldingPickup(true);
+        m_triggeredPlayer.SetPlayerHoldingPickup(true, m_name);
         m_isHeld = true;
 
         AudioManager.instance.PlayPickupCollected();
@@ -153,7 +155,7 @@ public class BasePickup : MonoBehaviour
         }
 
         m_isHeld = true;
-        m_triggeredPlayer.SetPlayerHoldingPickup(true);
+        m_triggeredPlayer.SetPlayerHoldingPickup(true, m_name);
 
         AudioManager.instance.PlayPickupCollected();
 
@@ -196,7 +198,7 @@ public class BasePickup : MonoBehaviour
         if (m_VFXObj != null) { Instantiate(m_VFXObj, transform.position, new Quaternion(0, 0, 0, 0)); }
         if(m_pickupSound != null) { AudioManager.instance.PlayAudioClip(m_pickupSound.clip); }
 
-        m_triggeredPlayer.SetPlayerHoldingPickup(false);
+        m_triggeredPlayer.SetPlayerHoldingPickup(false, m_name);
         m_triggeredPlayer.SetIsInteractablePickup(false,this);
         m_triggeredPlayer.UsedPickup();
         m_playerAnim.SetPickupAnim(pickupAnimFloat);
