@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupAnimFloat: 0
   m_VFXObj: {fileID: 3846364242354527866, guid: a652f6cceb89db54abfc88f6f852e277, type: 3}
+  m_name: Dagger
   m_daggerPrefab: {fileID: 3880396194272327959, guid: 52a2701ba95d742488a01a6880a76a8e, type: 3}
 --- !u!135 &2087599968390758964
 SphereCollider:

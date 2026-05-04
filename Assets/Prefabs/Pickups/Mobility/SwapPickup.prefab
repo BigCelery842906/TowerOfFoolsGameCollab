@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupAnimFloat: 0
   m_VFXObj: {fileID: 1103535443382450228, guid: af6fa80b604177a44a22f037ceca4a87, type: 3}
+  m_name: Player Swap
   tempPlayerTrans: {x: 0, y: 0, z: 0}
   tempOtherPlayerTrans: {x: 0, y: 0, z: 0}
 --- !u!135 &3406098409521167610
