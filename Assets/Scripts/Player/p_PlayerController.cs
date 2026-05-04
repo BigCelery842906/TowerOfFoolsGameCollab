@@ -21,11 +21,6 @@ public class p_PlayerController : MonoBehaviour
     /// </summary>
     private int m_playerIndex;
 
-    private void Awake()
-    {
-        
-    }
-
     private void OnEnable()
     {
         m_playerInput = GetComponent<PlayerInput>();
@@ -34,6 +29,8 @@ public class p_PlayerController : MonoBehaviour
         if(m_playerInputManager != null )
         {
             var gamepads = Gamepad.all;
+
+            Debug.Log("gamepads: " + gamepads.Count + "index: " + m_playerIndex);
 
             if (gamepads.Count > m_playerIndex)
             {
@@ -48,17 +45,12 @@ public class p_PlayerController : MonoBehaviour
 
             else
             {
-                //if (m_playerIndex == 1) { m_playerInput.SwitchCurrentControlScheme("Arrows", Keyboard.current); }
 
                 // Keyboard fallback for 2 players
-                string scheme = (m_playerIndex == 0) ? "WASD" : "Arrows";
+                string scheme = (m_playerIndex == 1) ? "WASD" : "Arrows";
                 m_playerInput.SwitchCurrentControlScheme(scheme, Keyboard.current);
-                //m_playerInput.defaultControlScheme = scheme;
+
                 Debug.Log($"Player {m_playerIndex} scheme: {m_playerInput.currentControlScheme}");
-
-                //m_playerInputManager.JoinPlayer(m_playerIndex, -1, "WASD", Keyboard.current);
-                //m_playerInputManager.JoinPlayer(m_playerIndex, -1, "Arrows", Keyboard.current);
-
 
                 m_playerInputManager.JoinPlayer(
                     m_playerIndex,

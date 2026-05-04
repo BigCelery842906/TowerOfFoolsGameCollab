@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class e_AdrenalineCheck : MonoBehaviour
@@ -12,67 +12,39 @@ public class e_AdrenalineCheck : MonoBehaviour
     [Tooltip("This is how long the timer lasts (in seconds) after the player leaves the adrenaline collider")]
     [SerializeField] private float m_timerLength;
 
-    private p_PlayerPickupManager m_entryPlayerPickupMan;
-    private p_PlayerPickupManager m_exitPlayerPickupMan; //in case player are in there at the same time
+    private List<p_PlayerPickupManager> m_players = new List<p_PlayerPickupManager>();
+     
 
     private void OnTriggerEnter(Collider other)
     {
-        //m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
+        if (!other.gameObject.CompareTag("Player")) { return; }
 
-        //if(m_entryPlayerPickupMan == null) { return; }
+        p_PlayerPickupManager temp = other.GetComponentInParent<p_PlayerPickupManager>();
 
-        ////reset it first 
-        //m_entryPlayerPickupMan.ResetMoveSpeed();
-        //m_entryPlayerPickupMan.ResetJumpForce();
+        if (temp == null) { return; }
 
-        //m_entryPlayerPickupMan.AdrenalineBoost(true, m_movementBoost, m_jumpBoost);
+        //see if this player is already in the list
+        if (m_players.Contains(temp)) { return; }
 
-        ////m_entryPlayerPickupMan.SetMoveSpeed(m_movementBoost);
-        ////m_entryPlayerPickupMan.SetJumpForce(m_jumpBoost);
+        m_players.Add(temp);
 
+        for(int i = 0; i < m_players.Count; i++)
+        {
+            m_players[i].AdrenalineBoost(true, m_movementBoost, m_jumpBoost, m_timerLength);
+        }
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(!other.gameObject.CompareTag("Player")) { return; }
-
-        m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
-
-        if (m_entryPlayerPickupMan == null) { return; }
-
-        //reset it first 
-        m_entryPlayerPickupMan.ResetMoveSpeed();
-        m_entryPlayerPickupMan.ResetJumpForce();
-
-        Debug.LogWarning("BOOST", m_entryPlayerPickupMan);
-        m_entryPlayerPickupMan.AdrenalineBoost(true, m_movementBoost, m_jumpBoost);
-    }
-
-    
-
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.gameObject.CompareTag("Player")) { return; }
-        m_entryPlayerPickupMan ??= other.GetComponentInParent<p_PlayerPickupManager>();
 
-        if (m_entryPlayerPickupMan == null) { return; }
+        p_PlayerPickupManager temp = other.GetComponentInParent<p_PlayerPickupManager>();
 
-        m_entryPlayerPickupMan.AdrenalineBoost(false, m_movementBoost, m_jumpBoost);
+        if (temp == null) { return; }
 
-        //StartCoroutine(C_ResetValuesTimer(m_entryPlayerPickupMan));
+        //see if this player is already in the list
+        if (m_players.Contains(temp)) { temp.AdrenalineBoost(false, m_movementBoost, m_jumpBoost, m_timerLength); }
 
+        m_players.Remove(temp);
     }
-
-    private IEnumerator C_ResetValuesTimer(p_PlayerPickupManager player)
-    {
-        yield return new WaitForSeconds(m_timerLength);
-
-        player.AdrenalineBoost(false, m_movementBoost, m_jumpBoost);
-
-        //player.ResetMoveSpeed();
-        //player.ResetJumpForce();
-    }
-
-
 }
