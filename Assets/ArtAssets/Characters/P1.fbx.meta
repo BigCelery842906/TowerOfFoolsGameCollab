@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 02 - Default
-    second: {fileID: 2100000, guid: 41bf2d326a547874caf4c89d21d40c96, type: 2}
+    second: {fileID: 2100000, guid: 44005f92f3884ea48a8ee40ed3e6ee76, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chara1_Hair
-    second: {fileID: 2100000, guid: 41bf2d326a547874caf4c89d21d40c96, type: 2}
+    second: {fileID: 2100000, guid: 1e588ef169eadeb4ba74c09ebc2f65ce, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

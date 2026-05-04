@@ -8,17 +8,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chara1_Hair1
-    second: {fileID: 2100000, guid: 41bf2d326a547874caf4c89d21d40c96, type: 2}
+    second: {fileID: 2100000, guid: 9234f2a7725b83e4cb89abb6fe64bea4, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chara2_LP
-    second: {fileID: 2100000, guid: 41bf2d326a547874caf4c89d21d40c96, type: 2}
+    second: {fileID: 2100000, guid: 9765cbf9864b84c489e0156595b211ce, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Chara2hair_LP
-    second: {fileID: 2100000, guid: 41bf2d326a547874caf4c89d21d40c96, type: 2}
+    second: {fileID: 2100000, guid: 9765cbf9864b84c489e0156595b211ce, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
