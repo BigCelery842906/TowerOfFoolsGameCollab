@@ -58,14 +58,9 @@ public class p_PlayerData
         m_Score = newScore;
     }
 
-    public int GetScore(int playerID) 
+    public int GetScore() 
     {
-        if(playerID == m_PlayerID)
-        {
-           return m_Score; 
-        }
-
-        return 0;
+        return m_Score;
     }
 
     #endregion Score
