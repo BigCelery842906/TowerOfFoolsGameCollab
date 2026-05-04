@@ -80,6 +80,8 @@ public class p_PlayerPickupManager : MonoBehaviour
 public void UseInteractablePickup()
     {
         OnUseInteractablePickup?.Invoke();
+
+        e_GameEvents.instance.PowerUpUsed(m_playerID);
     }
 
     public void UsedPickup()

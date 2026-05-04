@@ -37,9 +37,11 @@ public class Dagger : MonoBehaviour
 
     private IEnumerator C_Rotate()
     {
+        Transform dagger = GetComponentInChildren<Transform>();
         while (true)
         {
-            transform.Rotate(0,0, transform.rotation.z + 25f,Space.World);
+            //transform.Rotate(0,0, transform.rotation.z + 25f,Space.World);
+            dagger.Rotate(0,  0, dagger.rotation.z + 25f, Space.World);
             yield return new WaitForSeconds(0.05f);
         }
     }
