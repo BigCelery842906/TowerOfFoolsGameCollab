@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupAnimFloat: 0
   m_VFXObj: {fileID: 0}
+  m_name: Spring Boots
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 64

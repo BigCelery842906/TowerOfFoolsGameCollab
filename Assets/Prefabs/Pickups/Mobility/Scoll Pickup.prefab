@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d0391c035531045b88a8f7f8f43228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 0}
+  m_name: Scroll
   m_platformPrefab: {fileID: 1247280348690738588, guid: dcf826c4580ecdb4e9995b01bad0738d, type: 3}
   m_distaceBelowPlayer: 1
 --- !u!82 &-8706139558727400884
