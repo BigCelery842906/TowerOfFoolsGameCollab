@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player2
       objectReference: {fileID: 0}
+    - target: {fileID: 8874144418950789611, guid: 3a7e020ce2607e942a06e9686541a181, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -212,21 +216,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5043704889533043654, guid: 343810732bd90e9478f046157e23c5be, type: 3}
-      propertyPath: m_endToSpawn
-      value: 
-      objectReference: {fileID: 4354099230181445210, guid: becfc65c7e42500468ddecc7b93506ae, type: 3}
-    - target: {fileID: 5043704889533043654, guid: 343810732bd90e9478f046157e23c5be, type: 3}
-      propertyPath: m_middleToSpawn
-      value: 
-      objectReference: {fileID: 219155375013138608, guid: e83be5e0dce13fe49afe415e9b3aebc9, type: 3}
-    - target: {fileID: 5043704889533043654, guid: 343810732bd90e9478f046157e23c5be, type: 3}
-      propertyPath: m_platformGenMethod
-      value: 0
+    - target: {fileID: 4235117051892316211, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_nextRoomEntrance
+      value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 6856678357482579456, guid: 343810732bd90e9478f046157e23c5be, type: 3}
-      propertyPath: m_chunksPerRoom
-      value: 6
+    - target: {fileID: 4235117051892316211, guid: 343810732bd90e9478f046157e23c5be, type: 3}
+      propertyPath: m_previousRoomExit
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9026932992449788629, guid: 343810732bd90e9478f046157e23c5be, type: 3}
       propertyPath: m_Name
@@ -288,6 +284,10 @@ PrefabInstance:
     - target: {fileID: 6542232188736982739, guid: 03e7c0a731aa0374a9c3aa9385e4103d, type: 3}
       propertyPath: m_Name
       value: Player1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542232188736982739, guid: 03e7c0a731aa0374a9c3aa9385e4103d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8991791831059815548, guid: 03e7c0a731aa0374a9c3aa9385e4103d, type: 3}
       propertyPath: m_Enabled
