@@ -16,6 +16,9 @@ public class e_GlobalData : MonoBehaviour
     private float m_lavaSpeedMultiplier = 0;
     private float m_lavaInitialSpeed;
 
+    private int m_PlayerOneScore = 0;
+    private int m_PlayerTwoScore = 0;
+
     private bool m_IsPaused = false;
 
     private bool m_HasGameEnded = false;
@@ -25,6 +28,7 @@ public class e_GlobalData : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -117,6 +121,15 @@ public class e_GlobalData : MonoBehaviour
     
     public void SetGameEnded(bool isGameEnded)
     {
+        p_PlayerDataManager pdManagerOne = m_PlayersToTrack[0].GetComponent<p_PlayerDataManager>();
+        p_PlayerDataManager pdManagerTwo = m_PlayersToTrack[1].GetComponent<p_PlayerDataManager>();
+
+        p_PlayerData pdOne = pdManagerOne.GetPlayerData();
+        p_PlayerData pdTwo = pdManagerTwo.GetPlayerData();
+
+        m_PlayerOneScore = pdOne.GetScore();
+        m_PlayerTwoScore = pdTwo.GetScore();
+
         m_HasGameEnded = isGameEnded;
     }
 
@@ -134,5 +147,26 @@ public class e_GlobalData : MonoBehaviour
     public float GetCurrentLavaSpeed()
     {
         return m_lavaInitialSpeed + (m_lavaInitialSpeed * m_lavaSpeedMultiplier * GetCurrentTimeSpentInGame()); 
+    }
+
+    public int GetPlayerScore(int playerID)
+    {
+        if(playerID == 0)
+        {
+            return m_PlayerOneScore;
+        }
+        else if(playerID == 1)
+        {
+            return m_PlayerTwoScore;
+        }
+
+        return 0;
+    }
+
+    public void ResetGameStates()
+    {
+        m_PlayerOneScore = 0;
+        m_PlayerTwoScore = 0;
+        m_HasGameEnded = false;
     }
 }

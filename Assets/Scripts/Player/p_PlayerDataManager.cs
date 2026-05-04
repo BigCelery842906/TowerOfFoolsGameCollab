@@ -149,9 +149,9 @@ public class p_PlayerDataManager : MonoBehaviour
 
             if (m_LastPlayerYPos < playerYPos)
             {
-                m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos) * 12, playerID);
+                m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos * 12), playerID);
                 m_LastPlayerYPos = playerYPos;
-                Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore(playerID));
+                Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore());
             }
         }
     }
@@ -164,5 +164,10 @@ public class p_PlayerDataManager : MonoBehaviour
             newPos.y += totalPositionCorrection;
             Gizmos.DrawWireSphere(newPos, m_radius);
         }
+    }
+
+    public p_PlayerData GetPlayerData()
+    {
+        return m_PlayerData;
     }
 }

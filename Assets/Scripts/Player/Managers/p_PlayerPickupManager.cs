@@ -63,8 +63,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         m_isHoldingPickup = false;
         m_hasInteractablePickup = false;
 
-        Debug.LogAssertion("RAHHH FALSE");
-        AdrenalineBoost(false, 0, 0);
+        AdrenalineBoost(false, 0, 0, 0);
 
         ResetJumpForce();
         ResetMoveSpeed();
@@ -109,28 +108,17 @@ public void UseInteractablePickup()
     public void ResetMoveSpeed() { OnStunStateChange.Invoke(m_baseMoveSpeed); }
     public void ResetJumpForce() { OnJumpForceChange.Invoke(m_baseJumpForce); }
 
-    public void AdrenalineBoost(bool shouldBoost, float movementBoost, float jumpBoost)
+    public void AdrenalineBoost(bool shouldBoost, float movementBoost, float jumpBoost, float timer)
     {
-        if(m_boosted && !shouldBoost) { StartCoroutine(C_AdrenalineBoostTimer(5f)); }
-
         if (!shouldBoost) 
         {
-            Debug.LogAssertion("ADREnalineFunc");
-
-            ResetJumpForce(); 
-            ResetMoveSpeed(); 
-
-            m_boosted = false;
-
-            m_sweatVFX.SetActive(false); 
+            StartCoroutine(C_AdrenalineBoostTimer(timer));
             return; 
         }
 
         if (m_boosted) { return; } //already boosted
 
         m_sweatVFX.SetActive(true);
-
-        Debug.LogWarning("movemnt: " + movementBoost + "  jump: " + jumpBoost);
 
         OnStunStateChange.Invoke(m_baseMoveSpeed * movementBoost);
         OnJumpForceChange.Invoke(m_baseJumpForce * jumpBoost);
@@ -142,6 +130,12 @@ public void UseInteractablePickup()
     {
         yield return new WaitForSeconds(timerLength);
 
+        m_sweatVFX.SetActive(false);
+
+        ResetJumpForce();
+        ResetMoveSpeed();
+
+        m_boosted = false;
     }
 
 

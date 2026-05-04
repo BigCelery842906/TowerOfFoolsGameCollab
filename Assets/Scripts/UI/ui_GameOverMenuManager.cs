@@ -29,8 +29,20 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
         BindButton("return-btn", HandleButtonClicked_ReturnToMenu);
         BindButton("replay-btn", HandleButtonClicked_Replay);
         
-        // reset the state of the game ended in the game over menu
-        e_GlobalData.instance.SetGameEnded(false);
+        // retrieve the 
+        if (m_uiDocument == null) return;
+        if (m_uiDocument.rootVisualElement == null) return;
+            
+        Label plrOneScoreLabel = m_uiDocument.rootVisualElement.Q<Label>("score-plrOne");
+        Label plrTwoScoreLabel = m_uiDocument.rootVisualElement.Q<Label>("score-plrTwo");
+        
+        plrOneScoreLabel.text = $"<gradient=MenuTextGradient>Score: {e_GlobalData.instance.GetPlayerScore(0)}";
+        plrTwoScoreLabel.text = $"<gradient=MenuTextGradient>Score: {e_GlobalData.instance.GetPlayerScore(1)}";
+    }
+
+    private void ResetGameStates()
+    {
+        e_GlobalData.instance.ResetGameStates();
     }
 
     private void HandleButtonClicked_ReturnToMenu()
@@ -39,6 +51,7 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
         m_hasSceneLoadStarted = true;
         
         HideMenu();
+        ResetGameStates();
 
         if (m_useSceneBuildIndexes)
         {
@@ -55,6 +68,7 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
         m_hasSceneLoadStarted = true;
         
         HideMenu();
+        ResetGameStates();
         
         if (m_useSceneBuildIndexes)
         {

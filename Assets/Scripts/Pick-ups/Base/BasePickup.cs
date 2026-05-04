@@ -181,16 +181,11 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected virtual void PickedUp()
     {
-        if (m_triggeredPlayer.GetPlayerInteractablePickupPPM())
-        {
-            //shouldnt destroy an interactable pickup
-            transform.parent = m_triggeredPlayer.GetPickupPlayerPosPPM();
-            transform.localPosition = new Vector3(0,0,0);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        transform.parent = m_triggeredPlayer.GetPickupPlayerPosPPM();
+        transform.localPosition = new Vector3(0, 0, 0);
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = null; 
+        //TODO: SEND TO UI
     }
 
     /// <summary>

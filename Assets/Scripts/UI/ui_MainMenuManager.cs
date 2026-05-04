@@ -7,6 +7,7 @@ public class ui_MainMenuManager : ui_BaseMenuManager
 {
     [Header("Main Menu UI Components")]
     [SerializeField] private ui_SettingsMenuManager m_settingsMenuManager;
+    [SerializeField] private ui_CreditsMenuManager m_creditsMenuManager;
     
     [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
@@ -24,8 +25,14 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     {
         BindButton("play-btn", HandleButtonClicked_Play);
         BindButton("settings-btn", HandleButtonClicked_Settings);
-        BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
+        BindButton("credits-btn", HandleButtonClicked_Credits);
         BindButton("quit-btn", HandleButtonClicked_Quit);
+    }
+
+    private void HandleButtonClicked_Credits()
+    {
+        HideMenu();
+        m_creditsMenuManager.ShowMenu();
     }
 
     private void HandleButtonClicked_Settings()
@@ -51,12 +58,6 @@ public class ui_MainMenuManager : ui_BaseMenuManager
         }
         
         sc_SceneManager.LoadScene(m_sceneName);
-    }
-
-    private void HandleButtonClicked_Scoreboard()
-    {
-        // TODO: Scoreboard button implementation
-        Debug.Log("Scoreboard Button Clicked, implementation todo");
     }
 
     private void HandleButtonClicked_Quit()
