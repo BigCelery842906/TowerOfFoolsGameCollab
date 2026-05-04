@@ -551,7 +551,17 @@ public class PG_PlatformGenerator : MonoBehaviour
         {
             for (int j = 0; j < xSize; j++)
             {
-                PG_GridMap.Cell currentCell = roomGrid.m_grid[x + j, y + i];
+                // Debug.Log("Spawning platform at " + x + "," + y + "," + j);
+                int xCoord = x + j;
+                int yCoord = y + i;
+                if (xCoord < 0 || xCoord >= roomGrid.m_width || yCoord < 0 || yCoord >= roomGrid.m_height)
+                {
+                    Debug.LogError("AHHHHHHH");
+                    return false;
+                }
+
+                PG_GridMap.Cell currentCell = roomGrid.m_grid[xCoord, yCoord];
+                 
                 if (currentCell.m_blockType != PG_GridMap.BLOCK_TYPE.NONE)
                 {
                     //Debug.Log("Can't spawn platform, overlapping other platform");

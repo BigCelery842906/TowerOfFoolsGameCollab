@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_desiredChunkWidth: 16
   m_desiredChunkHeight: 9
-  m_chunksPerRoom: 6
+  m_chunksPerRoom: 2
   m_chunkSizeMultiplier: 2
   m_currentRoom: {fileID: 0}
   m_spawnPowerups: 0
