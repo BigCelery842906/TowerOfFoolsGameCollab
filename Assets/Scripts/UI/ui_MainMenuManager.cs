@@ -24,7 +24,6 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     {
         BindButton("play-btn", HandleButtonClicked_Play);
         BindButton("settings-btn", HandleButtonClicked_Settings);
-        BindButton("scoreboard-btn", HandleButtonClicked_Scoreboard);
         BindButton("quit-btn", HandleButtonClicked_Quit);
     }
 
@@ -51,12 +50,6 @@ public class ui_MainMenuManager : ui_BaseMenuManager
         }
         
         sc_SceneManager.LoadScene(m_sceneName);
-    }
-
-    private void HandleButtonClicked_Scoreboard()
-    {
-        // TODO: Scoreboard button implementation
-        Debug.Log("Scoreboard Button Clicked, implementation todo");
     }
 
     private void HandleButtonClicked_Quit()
