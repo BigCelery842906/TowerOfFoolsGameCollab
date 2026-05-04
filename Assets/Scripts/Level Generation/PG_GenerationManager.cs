@@ -133,6 +133,15 @@ public class PG_GenerationManager : MonoBehaviour
         }
     }
 
+    public PG_RoomGenerator GetRoomGenerator()
+    {
+        if (m_roomGenerator)
+        {
+            return m_roomGenerator;
+        }
+        return null;
+    }
+
     public void SpawnPowerups()
     {
         if (m_powerupsSpawned) return;

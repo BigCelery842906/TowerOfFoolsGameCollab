@@ -14,7 +14,7 @@ public class EDITOR_PG_TransitionManager : Editor
         DrawDefaultInspector();
         if(GUILayout.Button("Generate Next Room"))
         {
-            manager.GenerateRoom();
+            manager.GenerateNextRoom();
         }
     }
 }

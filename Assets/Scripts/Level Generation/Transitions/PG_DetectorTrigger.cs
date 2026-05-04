@@ -10,11 +10,12 @@ public class PG_DetectorTrigger : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+        //TODO: THIS HANGS 
         //Debug.Log("hit");
         //if (other.gameObject.CompareTag("Player0") || other.gameObject.CompareTag("Player1"))
         if(other.gameObject.CompareTag("Player"))
         {
-            PG_TransitionManager.instance.GenerateRoom();
+            PG_TransitionManager.instance.GenerateNextRoom();
         }
     }
 
