@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555fa195656516249acd1ab8340c6b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   m_boostTime: 1
   m_boostStrength: 10
 --- !u!135 &2275276301793519269

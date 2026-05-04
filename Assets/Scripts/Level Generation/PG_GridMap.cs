@@ -23,6 +23,8 @@ public class PG_GridMap : MonoBehaviour
 
     [NonSerialized]
     public bool m_roomComplete = false;
+    [HideInInspector]
+    public float m_yHeight;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -79,6 +81,12 @@ public class PG_GridMap : MonoBehaviour
             neighbours.Add((PG_PlatformParent)m_grid[xCoord + 1, yCoord].m_contents.GetComponent<PG_PlatformParent>());
         }
         return neighbours;
+    }
+    public float GetSquaredUnitDistanceBetweenCells(int aX, int aY, int bX, int bY)
+    {
+        int dx = aX - bX;
+        int dy = aY - bY;
+        return Mathf.Sqrt((dx * dx) + (dy * dy));
     }
 
     void Start()

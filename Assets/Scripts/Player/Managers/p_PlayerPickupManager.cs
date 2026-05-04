@@ -9,12 +9,14 @@ using UnityEngine;
 /// </summary>
 public class p_PlayerPickupManager : MonoBehaviour
 {
+    public event Action OnPickupUsed;
     public event Action OnUseInteractablePickup; //Invoked when the player tries to attack while holding an interactable pickup, bound to in the pickups to use their effect
 
     public event Action OnShieldUsed; 
 
     public event Action<float> OnMaxJumpChange; //for the double jump pick up
-    public event Action<float> OnStunStateChange; //for stun
+    public event Action<float> OnStunStateChange; //for stun + adrenaline :)
+    public event Action<float> OnJumpForceChange; //for adrenaline
 
     #region Player Scripts
     private p_PlayerMovement m_playerMovement;
@@ -26,6 +28,11 @@ public class p_PlayerPickupManager : MonoBehaviour
     [Tooltip("This is where projectile like daggers will be fired from")]
     [SerializeField] private Transform m_firingPosition;
 
+    [SerializeField] private GameObject m_sweatVFX;
+
+    private p_playerAnimControl m_playerAnim;
+    private p_PlayerDataManager m_PlayerDataManager;
+
     private bool m_isHoldingPickup = false;
     private bool m_hasInteractablePickup = false;
     private BasePickup interactablePickup; //this is sometimes null
@@ -34,15 +41,46 @@ public class p_PlayerPickupManager : MonoBehaviour
     private float m_shieldLavaDis;
 
     private float m_baseMoveSpeed;
+    private float m_baseJumpForce;
 
-    private void Awake()
+    private bool m_boosted;
+
+    private void OnEnable()
     {
+        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
+
+        m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
+        if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+
         m_playerMovement = GetComponent<p_PlayerMovement>();
     }
 
-    public void UseInteractablePickup()
+    private void Handle_PlayerReset(int DeadID)
+    {
+        if(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
+
+        if (interactablePickup != null) { Destroy(interactablePickup.gameObject); }
+        m_isHoldingPickup = false;
+        m_hasInteractablePickup = false;
+
+        Debug.LogAssertion("RAHHH FALSE");
+        AdrenalineBoost(false, 0, 0);
+
+        ResetJumpForce();
+        ResetMoveSpeed();
+    }
+
+
+
+public void UseInteractablePickup()
     {
         OnUseInteractablePickup?.Invoke();
+    }
+
+    public void UsedPickup()
+    {
+        //broke if i put it in InteractablePickUp
+        OnPickupUsed?.Invoke();
     }
 
 
@@ -63,6 +101,49 @@ public class p_PlayerPickupManager : MonoBehaviour
     /// So the manager has a accurate copy of what the base move speed should be so it can be set to normal after stun or if a boost is added
     /// </summary>
     public void SetBaseMoveSpeed(float speed) { m_baseMoveSpeed = speed; }
+    public void SetBaseJumpForce(float force) { m_baseJumpForce = force; }
+
+    //public void SetMoveSpeed(float speed) { OnStunStateChange.Invoke(m_baseMoveSpeed * speed);  Debug.Log("CHANGING MOVE SPEED"); }
+    //public void SetJumpForce(float speed) { OnJumpForceChange.Invoke(m_baseJumpForce * speed); }
+    
+    public void ResetMoveSpeed() { OnStunStateChange.Invoke(m_baseMoveSpeed); }
+    public void ResetJumpForce() { OnJumpForceChange.Invoke(m_baseJumpForce); }
+
+    public void AdrenalineBoost(bool shouldBoost, float movementBoost, float jumpBoost)
+    {
+        if(m_boosted && !shouldBoost) { StartCoroutine(C_AdrenalineBoostTimer(5f)); }
+
+        if (!shouldBoost) 
+        {
+            Debug.LogAssertion("ADREnalineFunc");
+
+            ResetJumpForce(); 
+            ResetMoveSpeed(); 
+
+            m_boosted = false;
+
+            m_sweatVFX.SetActive(false); 
+            return; 
+        }
+
+        if (m_boosted) { return; } //already boosted
+
+        m_sweatVFX.SetActive(true);
+
+        Debug.LogWarning("movemnt: " + movementBoost + "  jump: " + jumpBoost);
+
+        OnStunStateChange.Invoke(m_baseMoveSpeed * movementBoost);
+        OnJumpForceChange.Invoke(m_baseJumpForce * jumpBoost);
+         
+        m_boosted = true;
+    }
+
+    private IEnumerator C_AdrenalineBoostTimer(float timerLength)
+    {
+        yield return new WaitForSeconds(timerLength);
+
+    }
+
 
     public void SetPlayerShield(bool shield, float lavaDisplacement)
     {
@@ -72,6 +153,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         if(!shield)
         {
             OnShieldUsed?.Invoke();
+            OnPickupUsed?.Invoke();
         }
     }
 

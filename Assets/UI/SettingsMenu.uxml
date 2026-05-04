@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainStyleSheet.uss?fileID=7433441132597879392&amp;guid=d7167debae920204d8f2e837a88d3567&amp;type=3#MainStyleSheet" />
+    <ui:VisualElement style="flex-grow: 1; align-self: stretch; width: 100%; height: 100%; display: flex;">
+        <ui:VisualElement enabled="true" style="flex-grow: 1; padding-top: 64px; padding-right: 64px; padding-bottom: 64px; padding-left: 64px; align-self: stretch; align-content: center; width: 100%; height: 100%; display: flex; visibility: visible;">
+            <ui:Label text="&lt;gradient=MenuTextGradient&gt;SETTINGS&lt;/gradient&gt;" name="Label" enabled="true" style="align-self: center; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-content: center; width: auto; height: auto; font-size: 72px; align-items: stretch; justify-content: flex-start; bottom: -6px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); -unity-text-outline-width: 0; -unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&amp;guid=03fb5fe5b67ed9749bfee08dac9db391&amp;type=3#Evil Empire&quot;);" />
+            <ui:VisualElement name="topbar" style="flex-grow: 1; height: 20%; align-self: center; align-content: flex-end; flex-direction: row; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+                <ui:Button name="btn-video" style="width: 400px; align-self: center; align-content: center; justify-content: center; align-items: auto; bottom: 0; display: flex; padding-left: 0; padding-right: 0; margin-right: 16px; margin-left: 16px; background-image: url(&quot;project://database/Assets/UI/Assets/Button_Plate_Flat_Default.png?fileID=2800000&amp;guid=fafcb099286da4f489fd0675a391dba3&amp;type=3#Button_Plate_Flat_Default&quot;);">
+                    <ui:Label text="&lt;gradient=MenuTextGradient&gt;VIDEO&lt;/gradient&gt;" name="Label" style="align-self: stretch; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-content: center; width: auto; height: auto; font-size: 64px; align-items: stretch; justify-content: flex-start; bottom: -6px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); -unity-text-outline-width: 0;" />
+                </ui:Button>
+                <ui:Button name="btn-audio" style="width: 400px; align-self: center; align-content: center; justify-content: center; align-items: auto; bottom: 0; display: flex; padding-left: 0; padding-right: 0; margin-right: 16px; margin-left: 16px; background-image: url(&quot;project://database/Assets/UI/Assets/Button_Plate_Flat_Default.png?fileID=2800000&amp;guid=fafcb099286da4f489fd0675a391dba3&amp;type=3#Button_Plate_Flat_Default&quot;);">
+                    <ui:Label text="&lt;gradient=MenuTextGradient&gt;AUDIO&lt;/gradient&gt;" name="Label" style="align-self: stretch; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-content: center; width: auto; height: auto; font-size: 64px; align-items: stretch; justify-content: flex-start; bottom: -6px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); -unity-text-outline-width: 0;" />
+                </ui:Button>
+            </ui:VisualElement>
+            <ui:VisualElement name="tabs" style="flex-grow: 1; height: 80%; margin-bottom: 0; margin-right: 0; margin-left: 0; margin-top: 0;">
+                <ui:ScrollView>
+                    <ui:VisualElement name="panel-video" class="tab-panel" style="flex-grow: 1;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; flex-direction: row; justify-content: space-between; height: 100px;">
+                            <ui:Label text="Resolution" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 48px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=4fa4fd63b64eba74283125c875cf1a87&amp;type=3#NotInter-Regular&quot;); color: rgb(255, 255, 255); -unity-font-style: bold; align-self: stretch; align-content: auto; justify-content: flex-start; -unity-text-align: middle-center;" />
+                            <ui:DropdownField style="width: 400px; align-content: auto; align-self: auto; justify-content: flex-start;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement style="flex-grow: 1; padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; flex-direction: row; justify-content: space-between; height: 100px;">
+                            <ui:Label text="VSync" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 48px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=4fa4fd63b64eba74283125c875cf1a87&amp;type=3#NotInter-Regular&quot;); color: rgb(255, 255, 255); -unity-font-style: bold; align-self: stretch; align-content: auto; justify-content: flex-start; -unity-text-align: middle-center;" />
+                            <ui:Toggle />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="panel-audio" enabled="true" class="tab-panel" style="flex-grow: 1;" />
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:Button name="btn-return" style="width: 400px; align-self: center; align-content: center; justify-content: center; align-items: auto; bottom: 0; display: flex; padding-left: 0; padding-right: 0; margin-right: 16px; margin-left: 16px; background-image: url(&quot;project://database/Assets/UI/Assets/Button_Plate_Flat_Default.png?fileID=2800000&amp;guid=fafcb099286da4f489fd0675a391dba3&amp;type=3#Button_Plate_Flat_Default&quot;); height: 20%;">
+                <ui:Label text="&lt;gradient=MenuTextGradient&gt;BACK&lt;/gradient&gt;" name="Label" style="align-self: stretch; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-content: center; width: auto; height: auto; font-size: 64px; align-items: stretch; justify-content: flex-start; bottom: -6px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); -unity-text-outline-width: 0;" />
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

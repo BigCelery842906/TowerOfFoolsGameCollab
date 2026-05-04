@@ -22,6 +22,7 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
     {
         m_RB = GetComponentInParent<Rigidbody>();
         m_pickupManager = GetComponentInParent<p_PlayerPickupManager>();
+        m_stunSound = GetComponent<AudioSource>();
     }
 
     /// <summary>
