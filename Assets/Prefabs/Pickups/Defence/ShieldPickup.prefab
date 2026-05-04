@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b20c1e66006e64d814749aa3ad23d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 0}
   m_lavaDisplacement: 10
 --- !u!135 &4194941326545115393
 SphereCollider:
@@ -112,7 +114,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1855379684, guid: 31a29ed9b8ec3e04488c434f89f15869, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 17ef32b844a252c42b303b874261826e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
