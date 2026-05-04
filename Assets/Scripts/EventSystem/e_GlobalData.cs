@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct PlayerDataInfo
+{
+    public int deaths;
+    public int score;
+
+}
+
 // Written by Connor Saysell
 public class e_GlobalData : MonoBehaviour
 {
@@ -16,8 +23,8 @@ public class e_GlobalData : MonoBehaviour
     private float m_lavaSpeedMultiplier = 0;
     private float m_lavaInitialSpeed;
 
-    private int m_PlayerOneScore = 0;
-    private int m_PlayerTwoScore = 0;
+    private PlayerDataInfo m_PlayerOneData;
+    private PlayerDataInfo m_PlayerTwoData;
 
     private bool m_IsPaused = false;
 
@@ -127,8 +134,9 @@ public class e_GlobalData : MonoBehaviour
         p_PlayerData pdOne = pdManagerOne.GetPlayerData();
         p_PlayerData pdTwo = pdManagerTwo.GetPlayerData();
 
-        m_PlayerOneScore = pdOne.GetScore();
-        m_PlayerTwoScore = pdTwo.GetScore();
+        // populate player data info structs
+        m_PlayerOneData.score = pdOne.GetScore();
+        m_PlayerTwoData.score = pdTwo.GetScore();
 
         m_HasGameEnded = isGameEnded;
     }
@@ -149,24 +157,22 @@ public class e_GlobalData : MonoBehaviour
         return m_lavaInitialSpeed + (m_lavaInitialSpeed * m_lavaSpeedMultiplier * GetCurrentTimeSpentInGame()); 
     }
 
-    public int GetPlayerScore(int playerID)
+    /// <summary>
+    /// Get the player data info struct for the given player
+    /// </summary>
+    /// <param name="playerId">0 for player 1, 1 for player 2</param>
+    public PlayerDataInfo GetPlayerDataInfo(int playerId)
     {
-        if(playerID == 0)
-        {
-            return m_PlayerOneScore;
-        }
-        else if(playerID == 1)
-        {
-            return m_PlayerTwoScore;
-        }
-
-        return 0;
+        return playerId == 0 ? m_PlayerOneData : m_PlayerTwoData;
     }
 
     public void ResetGameStates()
     {
-        m_PlayerOneScore = 0;
-        m_PlayerTwoScore = 0;
+        // reset the player datas to be empty new struct instances
+        m_PlayerOneData = new PlayerDataInfo();
+        m_PlayerTwoData = new PlayerDataInfo();
+
+        // reset game ended state
         m_HasGameEnded = false;
     }
 }
