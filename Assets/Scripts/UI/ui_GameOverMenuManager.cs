@@ -23,21 +23,26 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
     [SerializeField] private string  m_mainMenuSceneName;
 
     private bool m_hasSceneLoadStarted = false;
+
+    private PlayerDataInfo m_playerOneData;
+    private PlayerDataInfo m_playerTwoData;
     
     protected override void InitialiseMenuManager()
     {
         BindButton("return-btn", HandleButtonClicked_ReturnToMenu);
         BindButton("replay-btn", HandleButtonClicked_Replay);
         
-        // retrieve the 
         if (m_uiDocument == null) return;
         if (m_uiDocument.rootVisualElement == null) return;
             
         Label plrOneScoreLabel = m_uiDocument.rootVisualElement.Q<Label>("score-plrOne");
         Label plrTwoScoreLabel = m_uiDocument.rootVisualElement.Q<Label>("score-plrTwo");
+
+        m_playerOneData = e_GlobalData.instance.GetPlayerDataInfo(0);
+        m_playerTwoData = e_GlobalData.instance.GetPlayerDataInfo(1);
         
-        plrOneScoreLabel.text = $"<gradient=MenuTextGradient>Score: {e_GlobalData.instance.GetPlayerScore(0)}";
-        plrTwoScoreLabel.text = $"<gradient=MenuTextGradient>Score: {e_GlobalData.instance.GetPlayerScore(1)}";
+        plrOneScoreLabel.text = $"<gradient=MenuTextGradient>Score: {m_playerOneData.score}";
+        plrTwoScoreLabel.text = $"<gradient=MenuTextGradient>Score: {m_playerTwoData.score}";
     }
 
     private void ResetGameStates()
