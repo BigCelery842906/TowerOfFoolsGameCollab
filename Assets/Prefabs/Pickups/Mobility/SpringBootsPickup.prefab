@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555fa195656516249acd1ab8340c6b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 0}
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -117,7 +119,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 127046957, guid: 31a29ed9b8ec3e04488c434f89f15869, type: 3}
+  m_Sprite: {fileID: 21300000, guid: eb6b76700c50c1845939fd39dac1ee5b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

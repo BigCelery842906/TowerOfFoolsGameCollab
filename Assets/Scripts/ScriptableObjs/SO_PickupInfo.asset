@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfa4d4c666800446a269f0eeec09045, type: 3}
+  m_Name: SO_PickupInfo
+  m_EditorClassIdentifier: 
+  m_pickups:
+  - Name: SpringBoots
+    Description: Sends the character into the air, passing through any platfroms
+      above them.
+    Image: {fileID: 21300000, guid: 146130c0a45914a4b83a1afae8f38ff2, type: 3}
+  - Name: Scroll
+    Description: When used spawns a temporary platform below the player, can only
+      be used in the air.
+    Image: {fileID: 0}
+  - Name: Player Swap
+    Description: Switches the positions of the players.
+    Image: {fileID: 21300000, guid: 720fa5476daae8646a3464ea843d5b5e, type: 3}
+  - Name: Marbles
+    Description: Throws marbles out in front of you, the marbles have a grace period
+      which after that they stun which ever player walks on them!
+    Image: {fileID: 21300000, guid: 0dd0452bfaaf44842b4a1f63090f0b53, type: 3}
+  - Name: Shield
+    Description: Protects you from one instance of lava/marbles/daggers. Active from
+      pick up till instance blocked.
+    Image: {fileID: 21300000, guid: 8fdb828cc4b2f9843ac10e319a19a015, type: 3}
+  - Name: Daggers
+    Description: Throws one dagger forward, if it hits a player it stuns them.
+    Image: {fileID: 21300000, guid: 8af8b50f151baef48a0a9fc3ae21abfb, type: 3}
