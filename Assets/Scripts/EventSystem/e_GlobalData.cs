@@ -5,7 +5,7 @@ public struct PlayerDataInfo
 {
     public int deaths;
     public int score;
-
+    public int powerUpsUsed;
 }
 
 // Written by Connor Saysell
