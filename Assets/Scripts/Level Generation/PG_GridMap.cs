@@ -48,8 +48,8 @@ public class PG_GridMap : MonoBehaviour
         {
             for (int h = 0; h < height; h++)
             {
-                float vertOffset = m_gridNumber * (m_height * m_worldScale) - m_worldScale;
-                Vector2 cellPos = new Vector2(w * (m_worldScale), (h * m_worldScale) + vertOffset);
+                // float vertOffset = m_gridNumber * (m_height * m_worldScale) - m_worldScale;
+                Vector2 cellPos = new Vector2(w * (m_worldScale), (h * m_worldScale));
                 Cell cell = new Cell(BLOCK_TYPE.NONE, cellPos, null);
                 m_grid[w, h] = cell;
             }
@@ -66,8 +66,13 @@ public class PG_GridMap : MonoBehaviour
 
     public Vector2 GetWorldPosFromCell(int cellW, int cellH)
     {
-
-        return m_grid[cellW, cellH].m_worldPosition;
+        if (cellW < 0 || cellW >= m_width || cellH < 0 || cellH >= m_height)
+        {
+            Debug.LogError($"Invalid cell access: ({cellW}, {cellH}) in grid {m_width}x{m_height}");
+            return Vector2.zero; // fallback
+        }
+        Vector2 localPos = m_grid[cellW, cellH].m_worldPosition;
+        return transform.TransformPoint(localPos);
     }
     public List<PG_PlatformParent> GetNeighboursOfPlatform(int xCoord, int yCoord)
     {

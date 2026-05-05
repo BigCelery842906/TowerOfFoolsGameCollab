@@ -95,7 +95,7 @@ public class PG_RoomGenerator : MonoBehaviour
             roomHeight += gridHeight;
 
         }
-        GameObject room = GenerateGrid(roomWidth, roomHeight, m_worldScale, 0);
+        GameObject room = GenerateGrid(roomWidth, roomHeight, m_worldScale, m_numGrids);
         PG_GridMap roomGrid = room.GetComponent<PG_GridMap>();
 
         int culOffset = 0;
@@ -142,6 +142,11 @@ public class PG_RoomGenerator : MonoBehaviour
         if (exitPos == int.MaxValue)
         {
             exitPos = UnityEngine.Random.Range(1, grid.m_width - 1);
+        }
+
+        if (entrancePos == int.MaxValue)
+        {
+            entrancePos = UnityEngine.Random.Range(1, grid.m_width - 1);
         }
 
         for (int w = 0; w < grid.m_width; w++)
