@@ -15,9 +15,6 @@ public class p_PlayerDataManager : MonoBehaviour
 
     private float m_PlayerScale = 1.0f;
     private float m_LastPlayerYPos = 0.0f;
-
-    [Tooltip("Oh my you put the ground layer here, it should say ground :D")]
-    [SerializeField] private LayerMask m_groundLayer;
     
     [Header("Death Reset Values")]
     [SerializeField] private float m_radius = 10.0f;
@@ -131,11 +128,6 @@ public class p_PlayerDataManager : MonoBehaviour
                         }
                     }
                 }
-            }
-
-            if (platform.gameObject.layer == m_groundLayer)
-            {
-                platforms.Add(platform.gameObject);
             }
         }
 
