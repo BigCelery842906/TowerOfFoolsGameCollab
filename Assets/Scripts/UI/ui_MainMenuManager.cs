@@ -8,6 +8,7 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     [Header("Main Menu UI Components")]
     [SerializeField] private ui_SettingsMenuManager m_settingsMenuManager;
     [SerializeField] private ui_CreditsMenuManager m_creditsMenuManager;
+    [SerializeField] private ui_BaseMenuManager m_controlsMenuManager;
     
     [Header("Level Settings")]
     [SerializeField] private bool m_useSceneBuildIndex;
@@ -26,6 +27,7 @@ public class ui_MainMenuManager : ui_BaseMenuManager
         BindButton("play-btn", HandleButtonClicked_Play);
         BindButton("settings-btn", HandleButtonClicked_Settings);
         BindButton("credits-btn", HandleButtonClicked_Credits);
+        BindButton("controls-btn", HandleButtonClicked_Controls);
         BindButton("quit-btn", HandleButtonClicked_Quit);
     }
 
@@ -33,6 +35,12 @@ public class ui_MainMenuManager : ui_BaseMenuManager
     {
         HideMenu();
         m_creditsMenuManager.ShowMenu();
+    }
+
+    private void HandleButtonClicked_Controls()
+    {
+        HideMenu();
+        m_controlsMenuManager.ShowMenu();
     }
 
     private void HandleButtonClicked_Settings()
