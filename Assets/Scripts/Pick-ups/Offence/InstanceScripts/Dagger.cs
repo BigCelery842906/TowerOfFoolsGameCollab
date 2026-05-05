@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Dagger : MonoBehaviour
@@ -12,11 +13,11 @@ public class Dagger : MonoBehaviour
     private void Awake()
     {
         m_RB ??= GetComponent<Rigidbody>();
-
         
+        transform.rotation = transform.parent.rotation;
         Vector3 daggerForce = transform.forward * m_speed;
+        transform.SetParent(null);
         m_RB.AddForce(daggerForce, ForceMode.Impulse);
-        transform.rotation = new Quaternion(0,90,0,0);
 
         StartCoroutine(C_Rotate());
         StartCoroutine(C_LifetimeTimer());
@@ -37,11 +38,9 @@ public class Dagger : MonoBehaviour
 
     private IEnumerator C_Rotate()
     {
-        Transform dagger = GetComponentInChildren<Transform>();
         while (true)
         {
-            //transform.Rotate(0,0, transform.rotation.z + 25f,Space.World);
-            dagger.Rotate(0,  0, dagger.rotation.z + 25f, Space.World);
+            transform.Rotate(new Vector3(1, 0, 0), 25);
             yield return new WaitForSeconds(0.05f);
         }
     }

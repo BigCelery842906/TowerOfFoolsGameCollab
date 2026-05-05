@@ -83,24 +83,17 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        //e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
-        //p_PlayerDataManager.
-        //if (respawned) { StartCoroutine(C_SlowTick()); return; }
-
         if (m_PlayerPickupManager != null)
         {
             m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
             m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
             m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
 
-            Debug.Log("RESET");
             m_PlayerPickupManager.ResetJumpForce();
             m_PlayerPickupManager.ResetMoveSpeed();
         }
 
         StartCoroutine(C_SlowTick());
-
-        //Debug.Log(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag));
     }
 
     //This is always running and acts like update but a much slower and less expensive version
@@ -220,7 +213,6 @@ public class p_PlayerMovement : MonoBehaviour
     //The player also hangs at their apex for a little bit longer than normal too
 
     //All done for game feel since this is a platformer
-
     private void SetJumpForce(float jumpForce) { m_jumpForce = jumpForce; }
 
     public void Jump()
