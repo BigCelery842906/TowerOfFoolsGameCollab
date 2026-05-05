@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UI;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -39,13 +40,26 @@ public class ui_HUDManager : ui_BaseMenuManager
         m_plrTwoPowerupName = m_uiDocument.rootVisualElement.Q<Label>("plrTwo-powerup-name");
         m_plrTwoPowerupDescription = m_uiDocument.rootVisualElement.Q<Label>("plrTwo-powerup-description");
         m_plrTwoPowerupImage = m_uiDocument.rootVisualElement.Q<VisualElement>("plrTwo-powerup-card");
+    }
 
+    private void Start()
+    {
+        // call the unequip functions right away to hide visibility and reset widgets
+        HandlePickupUsed_PlayerOne();
+        HandlePickupUsed_PlayerTwo();
+        
         // begin a coroutine to wait until the players are ready to be retrieved
         StartCoroutine(PollQueryForPlayers());
     }
 
     IEnumerator PollQueryForPlayers()
     {
+        if (e_GlobalData.instance == null)
+        {
+            // if global data was not found, wait and retry
+            yield return new WaitForSeconds(0.05f);
+        }
+        
         m_playerOne = e_GlobalData.instance.GetPlayer(0);
         m_playerTwo = e_GlobalData.instance.GetPlayer(1);
         if (m_playerOne == null || m_playerTwo == null)
@@ -59,7 +73,28 @@ public class ui_HUDManager : ui_BaseMenuManager
         m_playerTwoPickupManager = m_playerTwo.GetComponent<p_PlayerPickupManager>();
         
         // bind the player events
-        m_playerOnePickupManager.OnPickupUsed
+        m_playerOnePickupManager.OnPickupUsed += HandlePickupUsed_PlayerOne;
+        m_playerOnePickupManager.OnNewPickup += HandlePickupEquipped_PlayerOne;
+        
+        m_playerTwoPickupManager.OnPickupUsed += HandlePickupUsed_PlayerTwo;
+        m_playerTwoPickupManager.OnNewPickup += HandlePickupEquipped_PlayerTwo;
+    }
+
+    private void OnDestroy()
+    {
+        if (m_playerOnePickupManager != null)
+        {
+            m_playerOnePickupManager.OnPickupUsed -= HandlePickupUsed_PlayerOne;
+            m_playerOnePickupManager.OnNewPickup -= HandlePickupEquipped_PlayerOne;
+        }
+
+        if (m_playerTwoPickupManager != null)
+        {
+            m_playerTwoPickupManager.OnPickupUsed -= HandlePickupUsed_PlayerTwo;
+            m_playerTwoPickupManager.OnNewPickup -= HandlePickupEquipped_PlayerTwo;
+        }
+        
+        base.OnDestroy();
     }
 
     private void HandlePickupUsed_PlayerOne()
@@ -72,20 +107,20 @@ public class ui_HUDManager : ui_BaseMenuManager
         m_plrTwoPowerupWidget.style.display = DisplayStyle.None;
     }
     
-    private void HandlePickupEquipped_PlayerOne()
+    private void HandlePickupEquipped_PlayerOne(int playerId, SO_PickupInfo.PickupInfo pickupInfo)
     {
-        m_plrOnePowerupName.text = "pu name";
-        m_plrOnePowerupDescription.text = "pu desc";
-        m_plrOnePowerupImage.style.backgroundImage = null;
+        m_plrOnePowerupName.text = pickupInfo.Name;
+        m_plrOnePowerupDescription.text = pickupInfo.Description;
+        m_plrOnePowerupImage.style.backgroundImage = new StyleBackground(pickupInfo.Image);
         
         m_plrOnePowerupWidget.style.display = DisplayStyle.Flex;
     }
     
-    private void HandlePickupEquipped_PlayerTwo()
+    private void HandlePickupEquipped_PlayerTwo(int playerId, SO_PickupInfo.PickupInfo pickupInfo)
     {
-        m_plrTwoPowerupName.text = "pu name";
-        m_plrTwoPowerupDescription.text = "pu desc";
-        m_plrTwoPowerupImage.style.backgroundImage = null;
+        m_plrTwoPowerupName.text = pickupInfo.Name;
+        m_plrTwoPowerupDescription.text = pickupInfo.Description;
+        m_plrTwoPowerupImage.style.backgroundImage = new StyleBackground(pickupInfo.Image);
         
         m_plrTwoPowerupWidget.style.display = DisplayStyle.Flex;
     }
