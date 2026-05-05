@@ -44,7 +44,7 @@ public class PG_TransitionManager : MonoBehaviour
 
     [SerializeField] int chanceOfProcGen = 5;
     [SerializeField] int chanceOfDesign = 1;
-    
+
     bool isSpawning = false;
     private bool useFirstCollider = true;
 
@@ -59,31 +59,31 @@ public class PG_TransitionManager : MonoBehaviour
     //Set Collider 1 pos to exit of room 2
     //Set Collider 2 pos to exit of room 3
     //Boot into normal logic for triggering
-    
+
     //When Lower Collider triggered, delete the lowest room, spawn another room at exit of highest room
     //Move lower collider to exit of new highest room
-    
-    
+
+
     //For room spawning logic - Current Working on
     //Decide if design room or proc gen
     //Spawn Room
     //Set collider position
-    
+
     //If proc gen
     // Check if next room is design or not.
-        //If next room is design, get the entrance of this room
-        //Set the next entrance as the current exit
+    //If next room is design, get the entrance of this room
+    //Set the next entrance as the current exit
     //Load parameters for spawning
     //Generate room
     //Get position it should spawn at
     //Set position
-    
+
     //If design room
     //Select random from list
     //Get position it should spawn at
     //Set position
     //
-    
+
     void Awake()
     {
         if (instance == null)
@@ -95,11 +95,11 @@ public class PG_TransitionManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     void Start()
     {
         Init();
-        
+
     }
     public void Init()
     {
@@ -151,12 +151,12 @@ public class PG_TransitionManager : MonoBehaviour
     {
         yield return SpawnRooms(true, false);
         yield return SpawnRooms(true, false);
-         yield return SpawnRooms(true, false);
+        yield return SpawnRooms(true, false);
         yield return null;
         MoveColliderToNewPosition(m_nextRoom);
         m_initComplete = true;
     }
-    
+
     // //bottom
     // GameObject bottomGenerator = GameObject.Instantiate(m_generationManager);
     // m_bottomRoomGenerator = bottomGenerator.GetComponent<PG_GenerationManager>();
@@ -187,10 +187,10 @@ public class PG_TransitionManager : MonoBehaviour
 
     IEnumerator SpawnRooms(bool isProcGen = true, bool isNextRoomDesign = false)
     {
-        
+
         MoveRoomObjects();
         yield return null;
-        
+
         if (isProcGen)
         {
             if (isNextRoomDesign)
@@ -206,13 +206,13 @@ public class PG_TransitionManager : MonoBehaviour
         {
             SpawnDesignRoom();
         }
-        
+
         m_roomNumber++;
 
         yield return null;
-    
-        if(m_initComplete) MoveColliderToNewPosition(m_nextRoom);
-        
+
+        if (m_initComplete) MoveColliderToNewPosition(m_nextRoom);
+
         isSpawning = false;
 
     }
@@ -239,21 +239,21 @@ public class PG_TransitionManager : MonoBehaviour
         {
             entrancePosition = m_nextRoomGenerator.GetRoomGenerator().m_previousRoomExit;
         }
-        
+
         Vector3 position = Vector3.zero; //Pivot is on bottom left for the room so this works
         position.y += m_currentYHeight;
         nextGenerator.transform.position = position;
         nextGenerator.transform.SetParent(m_nextRoom.transform, false);
-     
+
         GameObject spawnedRoom = m_nextRoomGenerator.RegenerateRoom();
 
         spawnedRoom.transform.SetParent(m_nextRoom.transform, false);
 
-        
+
         PG_GridMap grid = spawnedRoom.GetComponent<PG_GridMap>();
         m_currentYHeight += (grid.m_height * m_worldScale) - m_worldScale;
-        
-        m_lastExitIndex = exitPosition; 
+
+        m_lastExitIndex = exitPosition;
     }
 
     void SpawnDesignRoom()
@@ -262,18 +262,18 @@ public class PG_TransitionManager : MonoBehaviour
         {
             GameObject designRoom = GameObject.Instantiate(m_designedRooms[designRoomID]);
             PG_GridMap grid = designRoom.GetComponentInChildren<PG_GridMap>();
-            
+
             Vector3 position = Vector3.zero;
             position.y += m_currentYHeight;
             designRoom.transform.position = position;
-            
+
             designRoom.transform.SetParent(m_nextRoom.transform, false);
 
             int exitXPos = designRoom.GetComponent<PG_Room>().m_exit;
             int exitYPos = grid.m_height - 1;
-            
+
             m_currentYHeight += (grid.m_height * m_worldScale) - m_worldScale;
-            
+
             m_lastExitIndex = exitXPos;
         }
     }
@@ -283,9 +283,9 @@ public class PG_TransitionManager : MonoBehaviour
         GameObject nextDesignRoom = m_designedRooms[designRoomID];
         nextDesignRoomEntrance = nextDesignRoom.GetComponent<PG_Room>().m_entrance;
     }
-    
+
     #region Collider Logic
-    
+
     GameObject SpawnCollider(int num)
     {
         GameObject colliderObject = GameObject.Instantiate(m_transitionDetector, this.gameObject.transform);
@@ -363,9 +363,10 @@ public class PG_TransitionManager : MonoBehaviour
     {
         PG_Room roomScript = newRoom.GetComponentInChildren<PG_Room>();
         PG_GridMap roomGrid = null;
-        
 
-        for( int i = 0; i < newRoom.transform.childCount; i++)
+        //find the actual valid gridmap
+        //getcomponentinchildren gets the dummy gridmap from the generator
+        for (int i = 0; i < newRoom.transform.childCount; i++)
         {
             PG_GridMap tempGrid = newRoom.transform.GetChild(i).GetComponent<PG_GridMap>();
             if (tempGrid.m_height > 0)
@@ -374,17 +375,19 @@ public class PG_TransitionManager : MonoBehaviour
                 break;
             }
         }
-        //Vector3 roomPos = roomScript.transform.position;
-        Vector3 colliderPos = Vector3.zero;
-        //if (m_initComplete) colliderPos = colliderNum1.transform.position;
+        if(roomGrid == null)
+        {
+            Debug.Log(newRoom.name + " Cannot find gridmap");
+            return;
+        }
 
+        Vector3 colliderPos = Vector3.zero; //init to zero
 
-
-            colliderPos.x = 0.0f;
-        colliderPos.y = m_currentYHeight - ((roomGrid.m_height -1)* m_worldScale);
+        //we track currentyheight already, so just subtract the height of the next room
+        colliderPos.y = m_currentYHeight - ((roomGrid.m_height - 1) * m_worldScale); 
         colliderPos.x += roomScript.m_entrance * m_worldScale;
         colliderNum1.transform.position = colliderPos;
-        
+
     }
 
 
@@ -410,19 +413,19 @@ public class PG_TransitionManager : MonoBehaviour
         //Move the old previous (currently in temp ref), and set that as the next
         //Rename object to be 'next'
         //Spawn new room as next - Done in gen script
-        
+
         KillChildrenOfObject(m_previousRoom);
-        
+
         GameObject tempRef = m_previousRoom;
-        
+
         m_previousRoom = m_currentRoom;
         m_previousRoom.name = "Previous Room";
         m_previousRoomGenerator = m_currentRoomGenerator;
-        
+
         m_currentRoom = m_nextRoom;
         m_currentRoom.name = "Current Room";
         m_currentRoomGenerator = m_nextRoomGenerator;
-        
+
         m_nextRoom = tempRef;
         m_nextRoom.name = "Next Room";
         if (m_nextRoomGenerator != null)
@@ -442,9 +445,9 @@ public class PG_TransitionManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    
+
     #endregion
-    
+
     void PopulateDefaultGenerationValues()
     {
         m_generationValues = new();
@@ -471,7 +474,7 @@ public class PG_TransitionManager : MonoBehaviour
     public void GenerateNextRoom()
     {
         if (isSpawning) return;
-        
+
         isSpawning = true;
         Debug.Log("Room Collider Hit");
 
@@ -495,7 +498,7 @@ public class PG_TransitionManager : MonoBehaviour
                 isNextDesign = false;
             }
         }
-        
+
 
         StartCoroutine(SpawnRooms(isCurProcGen, isNextDesign));
     }
