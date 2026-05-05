@@ -17,7 +17,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource m_backgroundMusic;
     [SerializeField] private AudioSource m_pickupGained;
     [SerializeField] private AudioSource m_pickupSounds;
-
+    [SerializeField] private AudioSource m_soundEffectSource;
+    
     [SerializeField] private List<AudioData> m_Sounds;
 
     private void Awake()
@@ -44,22 +45,18 @@ public class AudioManager : MonoBehaviour
         m_pickupSounds.Play();
     }
 
-    public void PlayAudio(string name)
+    public void PlayAudio(string audioName)
     {
-        AudioSource source = null;
-
         for(int i = 0; i < m_Sounds.Count; i++)
         {
-            if (m_Sounds[i].Name == name)
+            if (m_Sounds[i].Name == audioName)
             {
-                source.clip = m_Sounds[i].Clip;
+                m_soundEffectSource.PlayOneShot(m_Sounds[i].Clip);
+                return;
             }
         }
-
-        if (source != null)
-        {
-            source.Play();
-        }
+        
+        Debug.LogWarning($"Audio manager: clip '{audioName}' not found");
     }
 
     public void PlayPickupCollected()
