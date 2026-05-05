@@ -707,11 +707,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &836008050 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5223547158863069099, guid: aed4863a399395746b4387980cea00c9, type: 3}
-  m_PrefabInstance: {fileID: 1103444629}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1040981264
 GameObject:
   m_ObjectHideFlags: 0
@@ -791,11 +786,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1084560701 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5223547158863069099, guid: aed4863a399395746b4387980cea00c9, type: 3}
-  m_PrefabInstance: {fileID: 1089112562}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1089112562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1267,7 +1257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.12201
+      value: -27.3
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1301,18 +1291,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: m_PlayersToTrack.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: 'm_PlayersToTrack.Array.data[0]'
-      value: 
-      objectReference: {fileID: 836008050}
-    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
-      propertyPath: 'm_PlayersToTrack.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1084560701}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1325,7 +1303,6 @@ SceneRoots:
   - {fileID: 520612816}
   - {fileID: 1354469260}
   - {fileID: 1719209601}
-  - {fileID: 2138649003}
   - {fileID: 484929435}
   - {fileID: 1893799542}
   - {fileID: 1103444629}
@@ -1336,3 +1313,4 @@ SceneRoots:
   - {fileID: 774984187}
   - {fileID: 810579600}
   - {fileID: 1862478739}
+  - {fileID: 2138649003}

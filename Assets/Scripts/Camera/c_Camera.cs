@@ -25,6 +25,8 @@ public class c_Camera : MonoBehaviour
 
     [Tooltip("Do you want to draw the bounds of the players and the boundaries? Recommended for sorting values, otherwise can be turned off")]
     [SerializeField] private bool m_debugDraw;
+
+    [SerializeField] GameObject m_CameraLava;
     
     
     //DEBUG VALUES - NOT EXPOSED UNLESS IN DEBUG MODE
@@ -67,6 +69,8 @@ public class c_Camera : MonoBehaviour
         m_playersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
 
         m_activePlayers = new List<GameObject>();
+        
+        MoveCameraLava();
     }
 
     void Update()
@@ -258,6 +262,13 @@ public class c_Camera : MonoBehaviour
         m_doCameraLerp = false;
     }
     
+
+    void MoveCameraLava()
+    {
+        Vector3 lavaPos = m_CameraLava.transform.localPosition;
+        lavaPos.y = -1.15f * m_worldScale * m_maxCameraZoom;
+        m_CameraLava.transform.localPosition = lavaPos;
+    }
     void OnDrawGizmos()
     {
         if (m_debugDraw)
