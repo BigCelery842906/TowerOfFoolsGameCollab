@@ -30,7 +30,7 @@ public class PG_TransitionManager : MonoBehaviour
 
     float m_worldScale;
     int m_roomNumber = 1;
-    bool m_initComplete;
+    bool m_initComplete = false;
 
     private GameObject colliderNum1;
     // private GameObject colliderNum2;
@@ -47,6 +47,7 @@ public class PG_TransitionManager : MonoBehaviour
     
     bool isSpawning = false;
     private bool useFirstCollider = true;
+
 
     //Logic Order
     // For initialisation - COMPLETE
@@ -150,7 +151,10 @@ public class PG_TransitionManager : MonoBehaviour
     {
         yield return SpawnRooms(true, false);
         yield return SpawnRooms(true, false);
-        // yield return SpawnRooms(true, false);
+         yield return SpawnRooms(true, false);
+        yield return null;
+        MoveColliderToNewPosition(m_nextRoom);
+        m_initComplete = true;
     }
     
     // //bottom
@@ -207,7 +211,7 @@ public class PG_TransitionManager : MonoBehaviour
 
         yield return null;
     
-        MoveColliderToNewPosition(m_currentRoom);
+        if(m_initComplete) MoveColliderToNewPosition(m_nextRoom);
         
         isSpawning = false;
 
@@ -292,70 +296,96 @@ public class PG_TransitionManager : MonoBehaviour
         return colliderObject;
     }
 
+    //void MoveColliderToNewPosition(GameObject newRoom)
+    //{
+    //    GameObject collider = colliderNum1;
+    //    Debug.Log(collider, collider);
+
+    //    Vector2 newPosition = new Vector2();
+
+    //    //Get to the PG_Room component somehow
+    //    //Hierarchy is as follows
+    //    //newRoom object
+    //    //Children are: PG_GenerationManager and Room
+    //    //Room holds the component I want
+
+    //    GameObject RoomObjectInChild = newRoom.GetComponentInChildren<PG_Room>().gameObject;
+
+    //    PG_Room curPG_Room = RoomObjectInChild.GetComponent<PG_Room>();
+    //    PG_GridMap curPG_GridMap = RoomObjectInChild.GetComponent<PG_GridMap>();
+
+    //    int exit = curPG_Room.m_exit;
+    //    int entrance = curPG_Room.m_entrance;
+
+    //    int heightOfRoom = curPG_GridMap.m_height;
+
+    //    Debug.Log("Exit: " + exit + ", height: " + heightOfRoom);
+
+    //    // Vector2 xPos1 = newRoom.GetComponent<PG_GridMap>().GetWorldPosFromCell(exit - 1, heightOfRoom - 1);
+    //    // Vector2 xPos2 = newRoom.GetComponent<PG_GridMap>().GetWorldPosFromCell(exit + 1, heightOfRoom - 1);
+    //    //  
+    //    // Vector2 newPos = new Vector2((xPos1.x + xPos2.x) / 2, xPos1.y);
+
+
+    //    Debug.Log("Exit:" + exit);
+    //    Vector2 left = curPG_GridMap.GetWorldPosFromCell(exit - 1, heightOfRoom - 1);
+    //    Vector2 right = curPG_GridMap.GetWorldPosFromCell(exit + 1, heightOfRoom - 1);
+
+    //    Debug.Log("Room world pos: " + RoomObjectInChild.transform.position);
+    //    Debug.Log("Left world: " + left + " Right world: " + right);
+
+
+    //    Vector2 newPositionWorld = Vector2.zero;
+
+    //    if (left == Vector2.zero)
+    //    {
+    //        newPositionWorld = new Vector2( right.x - m_worldScale, right.y);
+    //    }
+    //    else if (right == Vector2.zero)
+    //    {
+    //        newPositionWorld = new Vector2( left.x + m_worldScale, left.y);
+    //    }
+    //    else
+    //    {
+    //        newPositionWorld = new Vector2((left.x + right.x) / 2f, left.y);
+    //    }
+
+    //    Vector2 newPos = new Vector2(exit, heightOfRoom - 1);
+    //    Debug.Log("Exit: " + exit + ", height: " + heightOfRoom + ", Position: " + newPos);
+
+    //    Vector3 newPositionLocal = newPos * m_worldScale;
+    //    // Vector3 newPositionWorld = m_nextRoomGenerator.transform.position + newPositionLocal;
+    //    // Vector3 newPositionWorld = RoomObjectInChild.transform.position + newPositionLocal;
+    //    // m_currentYHeight = newPositionWorld.y;
+    //    collider.transform.position = newPositionWorld;
+    //}
     void MoveColliderToNewPosition(GameObject newRoom)
     {
-        GameObject collider = colliderNum1;
-        Debug.Log(collider, collider);
-    
-        Vector2 newPosition = new Vector2();
+        PG_Room roomScript = newRoom.GetComponentInChildren<PG_Room>();
+        PG_GridMap roomGrid = null;
         
-        //Get to the PG_Room component somehow
-        //Hierarchy is as follows
-        //newRoom object
-        //Children are: PG_GenerationManager and Room
-        //Room holds the component I want
-    
-        GameObject RoomObjectInChild = newRoom.GetComponentInChildren<PG_Room>().gameObject;
-        
-        PG_Room curPG_Room = RoomObjectInChild.GetComponent<PG_Room>();
-        PG_GridMap curPG_GridMap = RoomObjectInChild.GetComponent<PG_GridMap>();
-        
-        int exit = curPG_Room.m_exit;
-        int entrance = curPG_Room.m_entrance;
-    
-        int heightOfRoom = curPG_GridMap.m_height;
-        
-        Debug.Log("Exit: " + exit + ", height: " + heightOfRoom);
-        
-        // Vector2 xPos1 = newRoom.GetComponent<PG_GridMap>().GetWorldPosFromCell(exit - 1, heightOfRoom - 1);
-        // Vector2 xPos2 = newRoom.GetComponent<PG_GridMap>().GetWorldPosFromCell(exit + 1, heightOfRoom - 1);
-        //  
-        // Vector2 newPos = new Vector2((xPos1.x + xPos2.x) / 2, xPos1.y);
-        
-        
-        Debug.Log("Exit:" + exit);
-        Vector2 left = curPG_GridMap.GetWorldPosFromCell(exit - 1, heightOfRoom - 1);
-        Vector2 right = curPG_GridMap.GetWorldPosFromCell(exit + 1, heightOfRoom - 1);
-        
-        Debug.Log("Room world pos: " + RoomObjectInChild.transform.position);
-        Debug.Log("Left world: " + left + " Right world: " + right);
-        
-        
-        Vector2 newPositionWorld = Vector2.zero;
 
-        if (left == Vector2.zero)
+        for( int i = 0; i < newRoom.transform.childCount; i++)
         {
-            newPositionWorld = new Vector2( right.x - m_worldScale, right.y);
+            PG_GridMap tempGrid = newRoom.transform.GetChild(i).GetComponent<PG_GridMap>();
+            if (tempGrid.m_height > 0)
+            {
+                roomGrid = tempGrid;
+                break;
+            }
         }
-        else if (right == Vector2.zero)
-        {
-            newPositionWorld = new Vector2( left.x + m_worldScale, left.y);
-        }
-        else
-        {
-            newPositionWorld = new Vector2((left.x + right.x) / 2f, left.y);
-        }
+        //Vector3 roomPos = roomScript.transform.position;
+        Vector3 colliderPos = Vector3.zero;
+        //if (m_initComplete) colliderPos = colliderNum1.transform.position;
 
-        Vector2 newPos = new Vector2(exit, heightOfRoom - 1);
-        Debug.Log("Exit: " + exit + ", height: " + heightOfRoom + ", Position: " + newPos);
+
+
+            colliderPos.x = 0.0f;
+        colliderPos.y = m_currentYHeight - ((roomGrid.m_height -1)* m_worldScale);
+        colliderPos.x += roomScript.m_entrance * m_worldScale;
+        colliderNum1.transform.position = colliderPos;
         
-        Vector3 newPositionLocal = newPos * m_worldScale;
-        // Vector3 newPositionWorld = m_nextRoomGenerator.transform.position + newPositionLocal;
-        // Vector3 newPositionWorld = RoomObjectInChild.transform.position + newPositionLocal;
-        // m_currentYHeight = newPositionWorld.y;
-        collider.transform.position = newPositionWorld;
     }
-
 
 
     // GameObject NextCollider()
@@ -364,7 +394,7 @@ public class PG_TransitionManager : MonoBehaviour
     //     useFirstCollider = !useFirstCollider;
     //     return result;
     // }
-    
+
     #endregion
 
     #region Room Move Logic
