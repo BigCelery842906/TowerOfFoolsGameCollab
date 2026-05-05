@@ -505,9 +505,15 @@ public class PG_TransitionManager : MonoBehaviour
 
     void RollRandomDesignRoom()
     {
-        designRoomID = Random.Range(0, m_designedRooms.Count);
-        GetNextDesignEntrance();
-
+        if (m_designedRooms.Count > 0)
+        {
+            designRoomID = Random.Range(0, m_designedRooms.Count);
+            GetNextDesignEntrance();
+        }
+        else
+        {
+            Debug.LogWarning("No Designed Rooms assigned.");
+        }
     }
 
     // Update is called once per frame
