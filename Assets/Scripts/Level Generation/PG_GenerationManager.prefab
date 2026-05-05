@@ -49,12 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_desiredChunkWidth: 16
   m_desiredChunkHeight: 9
-  m_chunksPerRoom: 6
+  m_chunksPerRoom: 2
   m_chunkSizeMultiplier: 2
   m_currentRoom: {fileID: 0}
-  m_spawnPowerups: 1
-  m_minimumPowerups: 10
-  m_powerupSpawnChance: 0.2
+  m_spawnPowerups: 0
+  m_minimumPowerups: 0
+  m_powerupSpawnChance: 0
   m_worldScale: 1.5
   m_roomNumber: 0
 --- !u!114 &4235117051892316211
@@ -114,8 +114,8 @@ MonoBehaviour:
   - {fileID: 219155375013138608, guid: e83be5e0dce13fe49afe415e9b3aebc9, type: 3}
   m_ends:
   - {fileID: 4354099230181445210, guid: becfc65c7e42500468ddecc7b93506ae, type: 3}
-  m_middleToSpawn: {fileID: 219155375013138608, guid: e83be5e0dce13fe49afe415e9b3aebc9, type: 3}
-  m_endToSpawn: {fileID: 4354099230181445210, guid: becfc65c7e42500468ddecc7b93506ae, type: 3}
+  m_middleToSpawn: {fileID: 0}
+  m_endToSpawn: {fileID: 0}
   m_xSpawnLocation: 1
   m_ySpawnLocation: 1
   m_platformXSpawnSize: 1

@@ -1,4 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+//Gey
+
+[System.Serializable]
+struct AudioData
+{
+    public AudioClip Clip;
+    public string Name;
+}
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,20 +17,46 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource m_backgroundMusic;
     [SerializeField] private AudioSource m_pickupGained;
     [SerializeField] private AudioSource m_pickupSounds;
+    [SerializeField] private AudioSource m_soundEffectSource;
+    
+    [SerializeField] private List<AudioData> m_Sounds;
 
     private void Awake()
     {
-        instance = this;
+
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         if (!m_backgroundMusic.isPlaying) { m_backgroundMusic.Play(); }
     }
 
-    public void PlayAudioClip ( AudioClip sound)
+    public void PlayAudioClip (AudioClip sound)
     {
         m_pickupSounds.clip = null;
         m_pickupSounds.clip = sound;
 
         m_pickupSounds.Play();
+    }
+
+    public void PlayAudio(string audioName)
+    {
+        for(int i = 0; i < m_Sounds.Count; i++)
+        {
+            if (m_Sounds[i].Name == audioName)
+            {
+                m_soundEffectSource.PlayOneShot(m_Sounds[i].Clip);
+                return;
+            }
+        }
+        
+        Debug.LogWarning($"Audio manager: clip '{audioName}' not found");
     }
 
     public void PlayPickupCollected()

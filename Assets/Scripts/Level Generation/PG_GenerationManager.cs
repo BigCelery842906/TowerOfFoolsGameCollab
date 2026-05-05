@@ -133,10 +133,20 @@ public class PG_GenerationManager : MonoBehaviour
         }
     }
 
+    public PG_RoomGenerator GetRoomGenerator()
+    {
+        if (m_roomGenerator)
+        {
+            return m_roomGenerator;
+        }
+        return null;
+    }
+
     public void SpawnPowerups()
     {
         if (m_powerupsSpawned) return;
         m_powerupsSpawned = true;
+        m_spawnedBonusPlatforms = m_platformGenerator.GetBonusPlatforms();
         if (m_minimumPowerups > m_spawnedBonusPlatforms.Count) m_minimumPowerups = m_spawnedBonusPlatforms.Count;
         int powerupsSpawned = 0;
         int failedSpawns = 0;

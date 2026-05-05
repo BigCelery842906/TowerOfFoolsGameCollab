@@ -21,11 +21,6 @@ public class p_PlayerController : MonoBehaviour
     /// </summary>
     private int m_playerIndex;
 
-    private void Awake()
-    {
-        
-    }
-
     private void OnEnable()
     {
         m_playerInput = GetComponent<PlayerInput>();
@@ -34,6 +29,8 @@ public class p_PlayerController : MonoBehaviour
         if(m_playerInputManager != null )
         {
             var gamepads = Gamepad.all;
+
+            Debug.Log("gamepads: " + gamepads.Count + "index: " + m_playerIndex);
 
             if (gamepads.Count > m_playerIndex)
             {
@@ -48,17 +45,12 @@ public class p_PlayerController : MonoBehaviour
 
             else
             {
-                //if (m_playerIndex == 1) { m_playerInput.SwitchCurrentControlScheme("Arrows", Keyboard.current); }
 
                 // Keyboard fallback for 2 players
-                string scheme = (m_playerIndex == 0) ? "WASD" : "Arrows";
+                string scheme = (m_playerIndex == 1) ? "WASD" : "Arrows";
                 m_playerInput.SwitchCurrentControlScheme(scheme, Keyboard.current);
-                //m_playerInput.defaultControlScheme = scheme;
+
                 Debug.Log($"Player {m_playerIndex} scheme: {m_playerInput.currentControlScheme}");
-
-                //m_playerInputManager.JoinPlayer(m_playerIndex, -1, "WASD", Keyboard.current);
-                //m_playerInputManager.JoinPlayer(m_playerIndex, -1, "Arrows", Keyboard.current);
-
 
                 m_playerInputManager.JoinPlayer(
                     m_playerIndex,
@@ -76,88 +68,7 @@ public class p_PlayerController : MonoBehaviour
         m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
     }
 
-    //private void OnEnable()
-    //{
-    //    e_GameEvents.instance.onPlayerDeathAdded += Handle_PlayerReset;
-
-    //    m_playerMovement = GetComponent<p_PlayerMovement>();
-    //    m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
-    //    m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
-    //    m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
-
-    //    m_playerInputs = new IA_Player();
-
-    //    m_playerInputs.Enable();
-
-    //    //I did try a couple ways to give the players different action maps but this keeps the inspector clean and its not performance heavy, its just kinda ugly xx
-    //    if (gameObject.CompareTag("Player0"))
-    //    {
-    //        m_playerID = 0;
-
-    //        m_playerInputs.AM_PlayerOne.Move.performed += Handle_Move;
-    //        m_playerInputs.AM_PlayerOne.Move.canceled += Handle_MoveCancelled;
-
-    //        m_playerInputs.AM_PlayerOne.Jump.performed += Handle_Jump;
-    //        m_playerInputs.AM_PlayerOne.Jump.canceled += Handle_JumpCancelled;
-
-    //        m_playerInputs.AM_PlayerOne.Attack.performed += Handle_Attack;
-
-    //        m_playerInputs.AM_PlayerOne.Taunt.performed += Handle_Taunt;
-
-    //        m_playerInputs.AM_PlayerOne.Pause.performed += Handle_Pause;
-    //    }
-    //    else
-    //    {
-    //        m_playerID = 1;
-
-    //        m_playerInputs.AM_PlayerTwo.Move.performed += Handle_Move;
-    //        m_playerInputs.AM_PlayerTwo.Move.canceled += Handle_MoveCancelled;
-
-    //        m_playerInputs.AM_PlayerTwo.Jump.performed += Handle_Jump;
-    //        m_playerInputs.AM_PlayerTwo.Jump.canceled += Handle_JumpCancelled;
-
-    //        m_playerInputs.AM_PlayerTwo.Attack.performed += Handle_Attack;
-
-    //        m_playerInputs.AM_PlayerTwo.Taunt.performed += Handle_Taunt;
-
-    //        m_playerInputs.AM_PlayerTwo.Pause.performed += Handle_Pause;
-    //    }
-    //}
-
-    //private void OnDisable()
-    //{
-    //    m_playerInputs.Disable();
-
-    //    if (m_playerID == 0)
-    //    {
-    //        m_playerInputs.AM_PlayerOne.Move.performed -= Handle_Move;
-    //        m_playerInputs.AM_PlayerOne.Move.canceled -= Handle_MoveCancelled;
-
-    //        m_playerInputs.AM_PlayerOne.Jump.performed -= Handle_Jump;
-    //        m_playerInputs.AM_PlayerOne.Jump.canceled -= Handle_JumpCancelled;
-
-    //        m_playerInputs.AM_PlayerOne.Attack.performed -= Handle_Attack;
-
-    //        m_playerInputs.AM_PlayerOne.Taunt.performed -= Handle_Taunt;
-
-    //        m_playerInputs.AM_PlayerOne.Pause.performed -= Handle_Pause;
-    //    }
-    //    else
-    //    {
-    //        m_playerInputs.AM_PlayerTwo.Move.performed -= Handle_Move;
-    //        m_playerInputs.AM_PlayerTwo.Move.canceled -= Handle_MoveCancelled;
-
-    //        m_playerInputs.AM_PlayerTwo.Jump.performed -= Handle_Jump;
-    //        m_playerInputs.AM_PlayerTwo.Jump.canceled -= Handle_JumpCancelled;
-
-    //        m_playerInputs.AM_PlayerTwo.Attack.performed -= Handle_Attack;
-
-    //        m_playerInputs.AM_PlayerTwo.Taunt.performed -= Handle_Taunt;
-
-    //        m_playerInputs.AM_PlayerTwo.Pause.performed -= Handle_Pause;
-    //    }
-    //}
-
+    
     /// <summary>
     /// Tells the player what direction to move
     /// </summary>
