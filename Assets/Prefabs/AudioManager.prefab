@@ -1,5 +1,134 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &528023576904123754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8797841224712414456}
+  - component: {fileID: 386081651658488675}
+  m_Layer: 0
+  m_Name: SoundEffectSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8797841224712414456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528023576904123754}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7831700401190512495}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &386081651658488675
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528023576904123754}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 150
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &581509455652792069
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +162,7 @@ Transform:
   - {fileID: 7471043939123887112}
   - {fileID: 2544511223804668747}
   - {fileID: 8344995770222275406}
+  - {fileID: 8797841224712414456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6293232249084675971
@@ -50,6 +180,64 @@ MonoBehaviour:
   m_backgroundMusic: {fileID: 2153084584921871034}
   m_pickupGained: {fileID: 6898905413301642427}
   m_pickupSounds: {fileID: 7927131353210531410}
+  m_soundEffectSource: {fileID: 386081651658488675}
+  m_Sounds:
+  - Clip: {fileID: 8300000, guid: 8099b66103d0f464998e354fff17eb04, type: 3}
+    Name: Bell_1
+  - Clip: {fileID: 8300000, guid: 906f6b377804355448b903a5e63fbf03, type: 3}
+    Name: Bell_2
+  - Clip: {fileID: 8300000, guid: 8099b66103d0f464998e354fff17eb04, type: 3}
+    Name: Bell_1
+  - Clip: {fileID: 8300000, guid: a2fbc0ac92d08394eaf885a03b8c750f, type: 3}
+    Name: Death
+  - Clip: {fileID: 8300000, guid: effa22f0377d94242998118d70fd6481, type: 3}
+    Name: Death_NoScream
+  - Clip: {fileID: 8300000, guid: a15ccff2dda0d96478bf4110eaee621a, type: 3}
+    Name: Footstep_1
+  - Clip: {fileID: 8300000, guid: 49b71e722f7b2f04ea3dbfdb69f03a59, type: 3}
+    Name: Footstep_2
+  - Clip: {fileID: 8300000, guid: ad34295a7fe26494599845a06b95bc2c, type: 3}
+    Name: Footstep_3
+  - Clip: {fileID: 8300000, guid: e4560b566a538da4b80461ba9c503dd1, type: 3}
+    Name: Jump_2
+  - Clip: {fileID: 8300000, guid: 3cf96f911235bc646b378887c01babfc, type: 3}
+    Name: Jump_2
+  - Clip: {fileID: 8300000, guid: cea0103628bd1094095c4b643afd6290, type: 3}
+    Name: Footstep_3
+  - Clip: {fileID: 8300000, guid: 84b287df52aa2884ba2fb1437eb18136, type: 3}
+    Name: Respawn_Choir
+  - Clip: {fileID: 8300000, guid: 52944a7359724a0418341bec5382bf81, type: 3}
+    Name: Short_Scream
+  - Clip: {fileID: 8300000, guid: e24e28f3c2238564ea8db52074fe51b1, type: 3}
+    Name: Sticky_Footstep_1
+  - Clip: {fileID: 8300000, guid: 133ec56bf1a1b7b40b21677bae5464dd, type: 3}
+    Name: Sticky_Footstep_2
+  - Clip: {fileID: 8300000, guid: defaeb58a2503b5429852ad1fd0cdeea, type: 3}
+    Name: Sticky_Footstep_3
+  - Clip: {fileID: 8300000, guid: 1a13149ed39267242a513ed53d451f47, type: 3}
+    Name: Lava_Close
+  - Clip: {fileID: 8300000, guid: e7f83ef93ecf52448b681368a79059e4, type: 3}
+    Name: Shield_Ambient
+  - Clip: {fileID: 8300000, guid: d481e534e510ee54d8d03f9c6b36f313, type: 3}
+    Name: Shield_Break
+  - Clip: {fileID: 8300000, guid: a1cfe2b65c32f7d4b9cf1d81c035aaec, type: 3}
+    Name: Shield_Equip
+  - Clip: {fileID: 8300000, guid: 39f74848f9703024284f738fd737dc59, type: 3}
+    Name: Marble_Fall
+  - Clip: {fileID: 8300000, guid: 3ef11608b38e5f148969384bd1c63c97, type: 3}
+    Name: Marble_Used
+  - Clip: {fileID: 8300000, guid: 75f6cfb4e1fb1a148b427c513a9d3c0a, type: 3}
+    Name: Spike_Trap
+  - Clip: {fileID: 8300000, guid: 6ccf842761efba74daae3e73789b6d61, type: 3}
+    Name: Player_Swap
+  - Clip: {fileID: 8300000, guid: 937f866312384f04590dd32efae517da, type: 3}
+    Name: Stun
+  - Clip: {fileID: 8300000, guid: b110a2625ee874846b75a7c4f550a73b, type: 3}
+    Name: Teleport
+  - Clip: {fileID: 8300000, guid: 0331ee82e850f9643ae860374ea86a27, type: 3}
+    Name: UI_Confirm
+  - Clip: {fileID: 8300000, guid: c825b541949b93740a21cea8ccd4cb11, type: 3}
+    Name: UI_Hover
 --- !u!1 &2725975829647741593
 GameObject:
   m_ObjectHideFlags: 0
