@@ -72,4 +72,13 @@
     text-overflow: clip;
     -unity-text-outline-width: 0;
     -unity-font-definition: url("project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&guid=03fb5fe5b67ed9749bfee08dac9db391&type=3#Evil Empire");
+    -unity-background-image-tint-color: rgb(255, 241, 172);
+    transition-property: all;
+}
+
+.credits-label {
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&guid=03fb5fe5b67ed9749bfee08dac9db391&type=3#Evil Empire");
+    text-overflow: clip;
+    white-space: pre-wrap;
+    text-shadow: 0 2.8px 4.3px rgb(0, 0, 0);
 }

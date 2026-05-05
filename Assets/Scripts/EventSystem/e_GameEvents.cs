@@ -33,6 +33,7 @@ public class e_GameEvents : MonoBehaviour
     //PlayerID is the int
     public event Action<int> onPlayerDeathAdded;
     public event Action<int> onPlayerNoLives;
+    public event Action<int> onPowerUpUsed;
 
     //For the pause toggle, bool is the value on whether the game is now paused or not
     public event Action<bool> onPauseToggle;
@@ -85,6 +86,15 @@ public class e_GameEvents : MonoBehaviour
         {
             onPauseToggle(pauseVal);
             Debug.Log("Pause Event Fired, set to: " +  pauseVal);
+        }
+    }
+
+    public void PowerUpUsed(int playerID)
+    {
+        if(onPowerUpUsed != null)
+        {
+            onPowerUpUsed(playerID);
+            Debug.Log("Player: " + playerID + " Used a PowerUp");
         }
     }
 }

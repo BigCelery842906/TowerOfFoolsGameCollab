@@ -7,13 +7,15 @@ using System;
 
 public class p_PlayerDataManager : MonoBehaviour
 {
+    public event Action<int> onPlayerRespawned;
+
     //Member Variables
     p_PlayerData m_PlayerData = null;
     int m_PlayerID = -1;
 
     private float m_PlayerScale = 1.0f;
     private float m_LastPlayerYPos = 0.0f;
-    
+
     [Header("Death Reset Values")]
     [SerializeField] private float m_radius = 10.0f;
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
@@ -21,7 +23,7 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_respawnTimer = 3.0f;
     [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
     private float totalPositionCorrection = 4.0f;
-    
+
     void Start()
     {
         //This call below is static so needs no instance of player data existing
@@ -63,74 +65,75 @@ public class p_PlayerDataManager : MonoBehaviour
     }
 
     IEnumerator RespawnTimer()
+    {
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(m_respawnTimer);
+
+        // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
+        if (this == null) yield break;
+
+        // Written by Connor, shout if you need to 
+
+        gameObject.SetActive(true);
+
+        Vector3 currentPos = gameObject.transform.position;
+        Vector3 newPos = currentPos;
+
+        m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
+
+        float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
+
+        newPos.y = currentPos.y + totalPositionCorrection;
+
+        Collider[] potentialPlatforms = Physics.OverlapSphere(newPos, m_radius); //Get all objects in range that have a collider
+        List<GameObject> platforms = new List<GameObject>(); // Make a gameobject list (You need the transforms not the collider component now), and lists are just easier to add to
+        float closestDistance = float.MaxValue; // Reset to large value
+        int closestPlatformID = -1;
+        foreach (Collider platform in potentialPlatforms)
         {
-            gameObject.SetActive(false);
-            yield return new WaitForSeconds(m_respawnTimer);
-            
-            // if self is invalid (despawned/scene unloaded etc) -- destroyed during the above wait -- cancel out
-            if (this == null) yield break;
-            
-            // Written by Connor, shout if you need to 
-            
-            gameObject.SetActive(true);
-            
-            Vector3 currentPos = gameObject.transform.position;
-            Vector3 newPos = currentPos;
-
-            m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
-            
-            float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
-
-            newPos.y = currentPos.y + totalPositionCorrection;
-
-            Collider[] potentialPlatforms = Physics.OverlapSphere(newPos, m_radius); //Get all objects in range that have a collider
-            List<GameObject> platforms = new List<GameObject>(); // Make a gameobject list (You need the transforms not the collider component now), and lists are just easier to add to
-            float closestDistance = float.MaxValue; // Reset to large value
-            int closestPlatformID = -1;
-            foreach (Collider platform in potentialPlatforms)
+            if (platform.gameObject.CompareTag("PlatformEnd") || platform.gameObject.CompareTag("PlatformMiddle"))
             {
-                if (platform.gameObject.CompareTag("PlatformEnd") || platform.gameObject.CompareTag("PlatformMiddle"))
-                {
-                    //Platforms only have these 2 tags - Can extend to include floors if needed
-                    platforms.Add(platform.gameObject);
-                }
+                //Platforms only have these 2 tags - Can extend to include floors if needed
+                platforms.Add(platform.gameObject);
             }
-
-            for (int i = 0; i < platforms.Count; i++)
-            {
-                float distance = (platforms[i].transform.position - newPos).magnitude;
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestPlatformID = i;
-                }
-            }
-
-            if (closestPlatformID != -1) //If valid platform
-            {
-                newPos = platforms[closestPlatformID].transform.position;
-                newPos.y += 2;
-            }
-
-            gameObject.transform.position = newPos;
-
-            p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
-
-            if (playerPickup)
-            {
-                Debug.Log("Player Values Reset");
-                playerPickup.ResetJumpForce();
-                playerPickup.ResetMoveSpeed();
-            }
-
         }
+
+        for (int i = 0; i < platforms.Count; i++)
+        {
+            float distance = (platforms[i].transform.position - newPos).magnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlatformID = i;
+            }
+        }
+
+        if (closestPlatformID != -1) //If valid platform
+        {
+            newPos = platforms[closestPlatformID].transform.position;
+            newPos.y += 2;
+        }
+
+        gameObject.transform.position = newPos;
+
+        p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
+        onPlayerRespawned?.Invoke(m_PlayerID);
+
+        if (playerPickup)
+        {
+            Debug.Log("Player Values Reset");
+            playerPickup.ResetJumpForce();
+            playerPickup.ResetMoveSpeed();
+        }
+
+    }
 
     void EndGame(int playerID)
     {
         if (e_GlobalData.instance.GetGameEnded()) return;
         e_GlobalData.instance.SetGameEnded(true);
         // Debug.Log("End Game Called in playerdatamanager");
-        
+
         // Destroy(gameObject);
         sc_SceneManager.LoadScene("GameOver");
         //Save Data
@@ -139,20 +142,20 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void UpdatePlayerScore(int playerID)
     {
-        if(playerID == m_PlayerID)
+        if (playerID == m_PlayerID)
         {
             Vector3 playerPos = e_GlobalData.instance.GetPlayerPosition(playerID);
             float playerYPos = playerPos.y;
 
-            if(m_LastPlayerYPos < playerYPos)
+            if (m_LastPlayerYPos < playerYPos)
             {
-                m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos) * 12, playerID);
+                m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos * 12), playerID);
                 m_LastPlayerYPos = playerYPos;
-                // Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore(playerID));
+                Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore());
             }
         }
     }
-    
+
     private void OnDrawGizmos()
     {
         if (m_drawDeathReset)
@@ -161,5 +164,10 @@ public class p_PlayerDataManager : MonoBehaviour
             newPos.y += totalPositionCorrection;
             Gizmos.DrawWireSphere(newPos, m_radius);
         }
+    }
+
+    public p_PlayerData GetPlayerData()
+    {
+        return m_PlayerData;
     }
 }

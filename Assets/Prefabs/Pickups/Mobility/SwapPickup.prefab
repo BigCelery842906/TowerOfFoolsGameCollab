@@ -46,6 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a41d9257a72e84190b126c796fadae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupAnimFloat: 0
+  m_VFXObj: {fileID: 1103535443382450228, guid: af6fa80b604177a44a22f037ceca4a87, type: 3}
+  m_name: Player Swap
+  tempPlayerTrans: {x: 0, y: 0, z: 0}
+  tempOtherPlayerTrans: {x: 0, y: 0, z: 0}
 --- !u!135 &3406098409521167610
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -111,7 +116,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 111780383, guid: 31a29ed9b8ec3e04488c434f89f15869, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fbcce0e0c8e5b7c499ae7411e18f1b3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
