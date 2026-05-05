@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 struct AudioData
 {
-    public AudioSource Source;
+    public AudioClip Clip;
     public string Name;
 }
 
@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
         {
             if (m_Sounds[i].Name == name)
             {
-                source = m_Sounds[i].Source;
+                source.clip = m_Sounds[i].Clip;
             }
         }
 
