@@ -16,7 +16,7 @@ GameObject:
   m_Layer: 0
   m_Name: Dagger
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -214,7 +214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f08e4cf270e22984bafea7dc1ac371a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.8
+      value: -7.724
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f08e4cf270e22984bafea7dc1ac371a4, type: 3}
       propertyPath: m_LocalRotation.w
