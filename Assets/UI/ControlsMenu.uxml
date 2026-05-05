@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainStyleSheet.uss?fileID=7433441132597879392&amp;guid=d7167debae920204d8f2e837a88d3567&amp;type=3#MainStyleSheet" />
+    <ui:VisualElement style="flex-grow: 1; align-self: center; width: 100%; height: 100%; display: flex; background-color: rgba(0, 0, 0, 0); padding-top: 64px; padding-right: 64px; padding-bottom: 64px; padding-left: 64px; background-image: url(&quot;project://database/Assets/UI/Assets/Scoreboard_Background.png?fileID=2800000&amp;guid=3ba44788b45ca0a4c854d942d6547e3b&amp;type=3#Scoreboard_Background&quot;); align-content: center; justify-content: space-around; -unity-background-image-tint-color: rgb(123, 123, 123);">
+        <ui:VisualElement>
+            <ui:Label text="CONTROLS" class="credits-label" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 64px; margin-left: 0; font-size: 72px; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&amp;guid=03fb5fe5b67ed9749bfee08dac9db391&amp;type=3#Evil Empire&quot;); align-self: stretch; -unity-text-align: middle-center; -unity-font-style: bold;" />
+            <ui:VisualElement style="flex-grow: 1; height: 425px; flex-direction: row;">
+                <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Assets/controls_controller_scheme.png?fileID=2800000&amp;guid=35c152323ca314545980a82f440d2451&amp;type=3#controls_controller_scheme&quot;); -unity-background-scale-mode: scale-to-fit; height: 100%; width: 50%;" />
+                <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Assets/controls_keyboard_scheme.png?fileID=2800000&amp;guid=58c3b00339b902142a02fdedc4e53c7e&amp;type=3#controls_keyboard_scheme&quot;); -unity-background-scale-mode: scale-to-fit; height: 100%; width: 50%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button name="quit-btn" style="width: 400px; align-self: center; align-content: center; justify-content: center; align-items: auto; bottom: 0; display: flex; padding-left: 0; padding-right: 0; margin-right: 16px; margin-left: 16px; background-image: url(&quot;project://database/Assets/UI/Assets/Button%20Background%201.png?fileID=2800000&amp;guid=c1884a2f20d2c934b8ed3db683fe758c&amp;type=3#Button Background 1&quot;); height: 121px;">
+            <ui:Label text="&lt;gradient=MenuTextGradient&gt;BACK&lt;/gradient&gt;" name="Label" style="align-self: stretch; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-content: center; width: auto; height: auto; font-size: 64px; align-items: stretch; justify-content: flex-start; bottom: -6px; text-shadow: 0 0 0 rgba(0, 0, 0, 0); -unity-text-outline-width: 0;" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>
