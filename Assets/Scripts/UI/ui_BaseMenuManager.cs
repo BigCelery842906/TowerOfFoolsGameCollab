@@ -59,7 +59,22 @@ namespace UI
 
             // Bind and track the callback
             button.clicked += callback;
+            
+            // Bind the audio events for the button
+            button.clicked += PlayClickSound;
+            button.RegisterCallback<PointerEnterEvent>(PlayHoverSound);
+            
             m_buttonCallbacks.Add(button, callback);
+        }
+
+        private void PlayHoverSound(PointerEnterEvent enterEvent)
+        {
+            AudioManager.instance.PlayAudio("UI_Hover");
+        }
+
+        private void PlayClickSound()
+        {
+            AudioManager.instance.PlayAudio("UI_Confirm");
         }
 
         protected virtual void OnDestroy()
@@ -73,6 +88,10 @@ namespace UI
                 } 
                 
                 buttonCallback.Key.clicked -= buttonCallback.Value;
+                
+                // Unbind the audio events for the button
+                buttonCallback.Key.clicked += PlayClickSound;
+                buttonCallback.Key.UnregisterCallback<PointerEnterEvent>(PlayHoverSound);
             }
             
             // Clear the button callbacks set
