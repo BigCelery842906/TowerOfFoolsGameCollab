@@ -14,8 +14,8 @@ public class pu_Daggers : BasePickup
 
     protected override void InteractedPickupEffect()
     {
-        Instantiate(m_daggerPrefab, m_triggeredPlayer.GetFiringPlayerPosPPM().position, transform.rotation);
-        //Instantiate(m_daggerPrefab, m_triggeredPlayer.GetFiringPlayerPosPPM().position, m_daggerPrefab.transform.rotation);
+        //Instantiate(m_daggerPrefab, m_triggeredPlayer.GetFiringPlayerPosPPM().position, transform.rotation);
+        Instantiate(m_daggerPrefab, m_triggeredPlayer.GetFiringPlayerPosPPM().position, m_daggerPrefab.transform.rotation, m_triggeredPlayer.GetFiringPlayerPosPPM());
         PickupUsed();
     }
 } 

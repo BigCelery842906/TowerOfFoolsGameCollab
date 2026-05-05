@@ -14,12 +14,13 @@ public class Dagger : MonoBehaviour
     {
         m_RB ??= GetComponent<Rigidbody>();
         
-        transform.rotation = new Quaternion(0,90,0,0);
+        transform.rotation = transform.parent.rotation;
         Vector3 daggerForce = transform.forward * m_speed;
+        transform.SetParent(null);
         m_RB.AddForce(daggerForce, ForceMode.Impulse);
 
         StartCoroutine(C_Rotate());
-        StartCoroutine(C_LifetimeTimer());
+        //StartCoroutine(C_LifetimeTimer());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -46,7 +47,7 @@ public class Dagger : MonoBehaviour
         {
             //dagger.Rotate(dagger.rotation.x + 25f,  0, 0, Space.World);
             //transform.Rotate(transform.rotation.x + 25f, 0, 0);
-            //transform.Rotate(new Vector3(0, 1, 0), 25);
+            transform.Rotate(new Vector3(1, 0, 0), 25);
             //transform.rotation = new Quaternion(transform.rotation.x + 25f, 0f, 0f, 0);
             yield return new WaitForSeconds(0.05f);
         }
