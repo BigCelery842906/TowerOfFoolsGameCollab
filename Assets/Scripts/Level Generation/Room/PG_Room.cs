@@ -6,6 +6,9 @@ public class PG_Room : MonoBehaviour
 
     List<GameObject> m_gridMaps;
     float m_worldScale;
+    public int m_entrance;
+    public int m_exit;
+
 
 
     private void Awake()

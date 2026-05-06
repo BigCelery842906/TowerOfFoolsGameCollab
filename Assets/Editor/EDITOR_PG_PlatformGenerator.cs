@@ -79,7 +79,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
             platformYSize.intValue = EditorGUILayout.IntSlider(new GUIContent("Platform Y Size"), platformYSize.intValue, 1, maxYSize - 1);
             if (GUILayout.Button(new GUIContent("Spawn Platform")))
             {
-                generator.SpawnPlatformAtCoords(generator.m_xSpawnLocation, generator.m_ySpawnLocation, generator.m_platformXSpawnSize, generator.m_platformYSpawnSize);
+                generator.SpawnPlatformAtCoords(generator.m_xSpawnLocation, generator.m_ySpawnLocation, generator.m_platformXSpawnSize, generator.m_platformYSpawnSize, false);
             }
             GUILayout.Space(20);
             if (m_warningStyle == null)
@@ -91,7 +91,7 @@ public class EDITOR_PG_PlatformGenerator : Editor
             GUILayout.Label("ONLY USE IMMEDIATELY AFTER CREATION OF A PLATFORM", m_warningStyle);
             if (GUILayout.Button(new GUIContent("Undo Platform Placement")))
             {
-                generator.UndoPlatformPlacement();
+                generator.UndoPlatformPlacement(false);
             }
 
         }

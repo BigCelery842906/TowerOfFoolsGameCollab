@@ -1,6 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct PlayerDataInfo
+{
+    public int deaths;
+    public int score;
+    public int powerUpsUsed;
+}
+
 // Written by Connor Saysell
 public class e_GlobalData : MonoBehaviour
 {
@@ -16,6 +23,9 @@ public class e_GlobalData : MonoBehaviour
     private float m_lavaSpeedMultiplier = 0;
     private float m_lavaInitialSpeed;
 
+    private PlayerDataInfo m_PlayerOneData;
+    private PlayerDataInfo m_PlayerTwoData;
+
     private bool m_IsPaused = false;
 
     private bool m_HasGameEnded = false;
@@ -25,13 +35,20 @@ public class e_GlobalData : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
+            instance.DoStart();
             Destroy(gameObject);
         }
     }
     void Start()
+    {
+        DoStart();
+    }
+
+    void DoStart()
     {
         GameObject[] tempGO = GameObject.FindGameObjectsWithTag("Player");
         // This would be the capsule component of the player, so I need to get the parent for the actual physical player
@@ -117,6 +134,16 @@ public class e_GlobalData : MonoBehaviour
     
     public void SetGameEnded(bool isGameEnded)
     {
+        p_PlayerDataManager pdManagerOne = m_PlayersToTrack[0].GetComponent<p_PlayerDataManager>();
+        p_PlayerDataManager pdManagerTwo = m_PlayersToTrack[1].GetComponent<p_PlayerDataManager>();
+
+        p_PlayerData pdOne = pdManagerOne.GetPlayerData();
+        p_PlayerData pdTwo = pdManagerTwo.GetPlayerData();
+
+        // populate player data info structs
+        m_PlayerOneData.score = pdOne.GetScore();
+        m_PlayerTwoData.score = pdTwo.GetScore();
+
         m_HasGameEnded = isGameEnded;
     }
 
@@ -134,5 +161,24 @@ public class e_GlobalData : MonoBehaviour
     public float GetCurrentLavaSpeed()
     {
         return m_lavaInitialSpeed + (m_lavaInitialSpeed * m_lavaSpeedMultiplier * GetCurrentTimeSpentInGame()); 
+    }
+
+    /// <summary>
+    /// Get the player data info struct for the given player
+    /// </summary>
+    /// <param name="playerId">0 for player 1, 1 for player 2</param>
+    public PlayerDataInfo GetPlayerDataInfo(int playerId)
+    {
+        return playerId == 0 ? m_PlayerOneData : m_PlayerTwoData;
+    }
+
+    public void ResetGameStates()
+    {
+        // reset the player datas to be empty new struct instances
+        m_PlayerOneData = new PlayerDataInfo();
+        m_PlayerTwoData = new PlayerDataInfo();
+
+        // reset game ended state
+        m_HasGameEnded = false;
     }
 }

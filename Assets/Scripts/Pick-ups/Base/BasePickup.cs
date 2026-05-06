@@ -5,6 +5,11 @@ public class BasePickup : MonoBehaviour
     [Tooltip("Dw bout this <3, dont touch it !!!")]
     [SerializeField] private float pickupAnimFloat;
 
+    [Tooltip("The sprite vfx goes here if its being used by the pickup, not used by default")]
+    [SerializeField] protected GameObject m_VFXObj;
+
+    [SerializeField] private string m_name;
+
     protected AudioSource m_pickupSound;
 
     protected p_PlayerPickupManager m_playerOne;
@@ -28,11 +33,14 @@ public class BasePickup : MonoBehaviour
         //grabbing refs to our players
         foreach(p_PlayerPickupManager player in Resources.FindObjectsOfTypeAll(typeof(p_PlayerPickupManager)))
         {
-            if (player.gameObject.CompareTag("Player0"))
+            Debug.Log(player.name);
+            //if (player.gameObject.CompareTag("Player0") && !player.gameObject.name.Contains("Variant"))
+            if(player.gameObject.name == "Player1" ) //|| player.gameObject.name == "Player1 Variant 1")
             {
                 m_playerOne = player;
             }
-            else
+            //else if(player.gameObject.CompareTag("Player1") && !player.gameObject.name.Contains("Variant"))
+            else if (player.gameObject.name == "Player2") // || player.gameObject.name == "Player2 Variant 1")
             {
                 m_playerTwo = player;
             }
@@ -71,7 +79,7 @@ public class BasePickup : MonoBehaviour
             m_otherPlayer = m_playerOne;
         }
 
-        m_triggeredPlayer.SetPlayerHoldingPickup(true);
+        m_triggeredPlayer.SetPlayerHoldingPickup(true, m_name);
         m_isHeld = true;
 
         AudioManager.instance.PlayPickupCollected();
@@ -150,7 +158,7 @@ public class BasePickup : MonoBehaviour
         }
 
         m_isHeld = true;
-        m_triggeredPlayer.SetPlayerHoldingPickup(true);
+        m_triggeredPlayer.SetPlayerHoldingPickup(true, m_name);
 
         AudioManager.instance.PlayPickupCollected();
 
@@ -178,16 +186,11 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected virtual void PickedUp()
     {
-        if (m_triggeredPlayer.GetPlayerInteractablePickupPPM())
-        {
-            //shouldnt destroy an interactable pickup
-            transform.parent = m_triggeredPlayer.GetPickupPlayerPosPPM();
-            transform.localPosition = new Vector3(0,0,0);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        transform.parent = m_triggeredPlayer.GetPickupPlayerPosPPM();
+        transform.localPosition = new Vector3(0, 0, 0);
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = null; 
+        //TODO: SEND TO UI
     }
 
     /// <summary>
@@ -195,9 +198,10 @@ public class BasePickup : MonoBehaviour
     /// </summary>
     protected void PickupUsed()
     {
+        if (m_VFXObj != null) { Instantiate(m_VFXObj, transform.position, new Quaternion(0, 0, 0, 0)); }
         if(m_pickupSound != null) { AudioManager.instance.PlayAudioClip(m_pickupSound.clip); }
 
-        m_triggeredPlayer.SetPlayerHoldingPickup(false);
+        m_triggeredPlayer.SetPlayerHoldingPickup(false, m_name);
         m_triggeredPlayer.SetIsInteractablePickup(false,this);
         m_triggeredPlayer.UsedPickup();
         m_playerAnim.SetPickupAnim(pickupAnimFloat);

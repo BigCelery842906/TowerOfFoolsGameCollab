@@ -27,6 +27,8 @@ public class p_PlayerMovement : MonoBehaviour
     [Tooltip("Oh my you put the ground layer here, it should say ground :D")]
     [SerializeField] private LayerMask m_groundLayer;
 
+    private p_PlayerDataManager m_PlayerDataManager;
+
     private p_PlayerPickupManager m_PlayerPickupManager;
     private p_playerAnimControl m_playerAnim;
     private Rigidbody m_RB;
@@ -38,17 +40,23 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the movement coroutine <3
 
+    private bool m_jumped; //Doing some anim stuff, want to know if they jumped or had walked off a platform
     private float m_maxJumps; //set in pc at start to one, then controlled by pickups through pc
     private int m_usedJumps; //inc for each jump player maxs until reaches max
     private bool m_isGrounded; //bool for stopping the grounded check (is also set to true in the grounded check)
     private Vector3 m_lowGrav;    
     private Vector3 m_apexGrav;    
-    private Vector3 m_highGrav;    
+    private Vector3 m_highGrav;
+
+    private bool respawned = false; //DELETE this
 
     private void Awake()
     {
+        m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
+        if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+
         m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
-        if(m_PlayerPickupManager != null) 
+        if (m_PlayerPickupManager != null)
         {
             m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
             m_PlayerPickupManager.SetBaseJumpForce(m_jumpForce);
@@ -69,8 +77,21 @@ public class p_PlayerMovement : MonoBehaviour
 
         //I didnt want to expose vectors to the designers ill be real xx You can change this
         m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
-        m_apexGrav = new Vector3(0f,m_apexGravValue, 0f);
-        m_highGrav = new Vector3(0f,m_highGravValue, 0f);
+        m_apexGrav = new Vector3(0f, m_apexGravValue, 0f);
+        m_highGrav = new Vector3(0f, m_highGravValue, 0f);
+    }
+
+    private void OnEnable()
+    {
+        if (m_PlayerPickupManager != null)
+        {
+            m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
+            m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+            m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
+
+            m_PlayerPickupManager.ResetJumpForce();
+            m_PlayerPickupManager.ResetMoveSpeed();
+        }
 
         StartCoroutine(C_SlowTick());
     }
@@ -83,6 +104,7 @@ public class p_PlayerMovement : MonoBehaviour
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
+                m_jumped = false;
 
                 //players grounded so they should have friction again
                 m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
@@ -118,8 +140,8 @@ public class p_PlayerMovement : MonoBehaviour
                         m_playerAnim.SetAnimJump(-1f);
                         break;
                     case < -1f:
-                        m_playerAnim.SetAnimJump(0.6f);
                         Physics.gravity = m_highGrav;
+                        if (!m_jumped) { m_playerAnim.SetAnimJump(2); }
                         break;
                     case > -0.1f:
                         m_playerAnim.SetAnimJump(1);
@@ -129,6 +151,21 @@ public class p_PlayerMovement : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private void Handle_PlayerReset(int DeadID)
+    {
+        if (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
+
+        respawned = true;
+
+        m_PlayerPickupManager.ResetMoveSpeed();
+        m_PlayerPickupManager.ResetJumpForce();
+
+        m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
+        m_CapsuleCollider.material.staticFriction = m_staticFriction;
+
+        //StartCoroutine(C_SlowTick());
     }
 
     public void SetMoveDirection(Vector2 direction)
@@ -176,7 +213,6 @@ public class p_PlayerMovement : MonoBehaviour
     //The player also hangs at their apex for a little bit longer than normal too
 
     //All done for game feel since this is a platformer
-
     private void SetJumpForce(float jumpForce) { m_jumpForce = jumpForce; }
 
     public void Jump()
@@ -189,6 +225,7 @@ public class p_PlayerMovement : MonoBehaviour
         {
             m_RB.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
             m_isGrounded = false;
+            m_jumped = true;
             Physics.gravity = m_lowGrav;
             m_playerAnim.SetAnimJump(0.1f);
 
