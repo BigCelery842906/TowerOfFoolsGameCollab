@@ -85,3 +85,21 @@
     background-image: none !important;
     background-color: rgba(0, 0, 0, 0) !important;
 }
+
+.unity-button:hover:enabled {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0px !important;
+    border-color: transparent !important;
+}
+
+.unity-button:focus {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0px !important;
+    border-color: transparent !important;
+}
+
+.unity-button:focus:enabled {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0px !important;
+    border-color: transparent !important;
+}

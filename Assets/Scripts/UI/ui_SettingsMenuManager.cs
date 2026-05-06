@@ -12,6 +12,7 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     
     private List<VisualElement> m_tabPanels = new List<VisualElement>();
     
+    protected override string GetDefaultFocusButtonName() { return "btn-return"; }
     protected override void InitialiseMenuManager()
     {
         if (m_uiDocument == null) return;
