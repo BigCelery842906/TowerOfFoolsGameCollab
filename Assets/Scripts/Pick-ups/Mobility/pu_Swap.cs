@@ -15,24 +15,18 @@ public class pu_Swap : BasePickup
 
     protected override void InteractedPickupEffect()
     {
-        //m_triggeredPlayer.transform.position = Vector3.zero;
-
-
-        Debug.Log("player = " + m_triggeredPlayer.gameObject.name + "  other : " + m_otherPlayer.name);
-
+        Debug.Log("player = " + m_triggeredPlayer.gameObject.name + "  other : " + m_otherPlayer.gameObject.name);
+        
         //Grab the positions of each player
-        //Vector3 tempPlayerTrans = m_triggeredPlayer.transform.position;
-        //Vector3 tempOtherPlayerTrans = m_otherPlayer.transform.position;        
-
-        tempPlayerTrans = m_triggeredPlayer.transform.position;
-        tempOtherPlayerTrans = m_otherPlayer.transform.position;
+        int playerID = p_PlayerData.ReturnPlayerIDFromTag(m_triggeredPlayer.tag);
+        tempOtherPlayerTrans = (playerID == 0) ? e_GlobalData.instance.GetPlayerPosition(1) : e_GlobalData.instance.GetPlayerPosition(0);
+        tempPlayerTrans = (playerID == 0) ? e_GlobalData.instance.GetPlayerPosition(0) : e_GlobalData.instance.GetPlayerPosition(1);
 
         Debug.Log(tempPlayerTrans + "player");
         Debug.Log(tempOtherPlayerTrans + "other player");
 
-        //Swap their positions
-        m_otherPlayer.transform.position = tempPlayerTrans;
-        m_triggeredPlayer.transform.position = tempOtherPlayerTrans;
+        m_triggeredPlayer.transform.position = tempPlayerTrans;
+        m_otherPlayer.transform.position = tempOtherPlayerTrans;
 
         PickupUsed();
     }
