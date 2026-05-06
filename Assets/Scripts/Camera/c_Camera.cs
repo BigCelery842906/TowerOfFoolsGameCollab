@@ -256,9 +256,11 @@ public class c_Camera : MonoBehaviour
         m_currentLerpTime = 0;
         m_camZoomAtStartOfLerp = m_camera.orthographicSize;
         m_camPosAtStartOfLerp = transform.position;
+        m_CameraLava.SetActive(false);
         yield return new WaitForSeconds(m_lerpTime);
 
         // Add the same null check that was added for the player respawning here.
+        m_CameraLava.SetActive(true);
         m_doCameraLerp = false;
     }
     

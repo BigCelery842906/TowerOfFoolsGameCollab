@@ -39,10 +39,16 @@ public class e_GlobalData : MonoBehaviour
         }
         else
         {
+            instance.DoStart();
             Destroy(gameObject);
         }
     }
     void Start()
+    {
+        DoStart();
+    }
+
+    void DoStart()
     {
         GameObject[] tempGO = GameObject.FindGameObjectsWithTag("Player");
         // This would be the capsule component of the player, so I need to get the parent for the actual physical player
