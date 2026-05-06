@@ -19,7 +19,7 @@
                         </ui:VisualElement>
                         <ui:VisualElement style="flex-grow: 1; padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px; flex-direction: row; justify-content: space-between; height: 100px;">
                             <ui:Label text="VSync" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 48px; -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=4fa4fd63b64eba74283125c875cf1a87&amp;type=3#NotInter-Regular&quot;); color: rgb(255, 255, 255); -unity-font-style: bold; align-self: stretch; align-content: auto; justify-content: flex-start; -unity-text-align: middle-center;" />
-                            <ui:Toggle />
+                            <ui:Toggle class="settings-checkbox" />
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="panel-audio" enabled="true" class="tab-panel" style="flex-grow: 1;" />

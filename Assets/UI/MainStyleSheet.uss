@@ -154,3 +154,45 @@
 .unity-base-dropdown__item:hover:enabled {
     background-color: rgba(255, 200, 80, 0.15);
 }
+
+.settings-checkbox.unity-toggle {
+    margin: 0;
+    padding: 0;
+}
+
+.settings-checkbox .unity-label {
+    display: none;
+}
+
+.settings-checkbox .unity-toggle__checkmark {
+    background-image: none !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    color: rgba(0, 0, 0, 0) !important;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+
+.settings-checkbox .unity-toggle__input:hover {
+    -unity-background-image-tint-color: rgb(255, 241, 172);
+}
+
+.settings-checkbox.unity-toggle:checked .unity-toggle__input {
+    background-image: url("project://database/Assets/UI/Assets/checkbox-filled.png");
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    width: 48px;
+    height: 48px;
+}
+
+.settings-checkbox .unity-toggle__input {
+    background-image: url("project://database/Assets/UI/Assets/checkbox-empty.png");
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    width: 48px;
+    height: 48px;
+}
