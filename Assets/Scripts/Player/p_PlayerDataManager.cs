@@ -15,7 +15,7 @@ public class p_PlayerDataManager : MonoBehaviour
 
     private float m_PlayerScale = 1.0f;
     private float m_LastPlayerYPos = 0.0f;
-
+    
     [Header("Death Reset Values")]
     [SerializeField] private float m_radius = 10.0f;
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
@@ -24,6 +24,7 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
     private float totalPositionCorrection = 4.0f;
 
+    private float m_worldScale = 1.0f;
     void Start()
     {
         //This call below is static so needs no instance of player data existing
@@ -35,6 +36,7 @@ public class p_PlayerDataManager : MonoBehaviour
 
         m_PlayerScale = e_GlobalData.instance.GetPlayerScale();
         transform.localScale = new Vector3(m_PlayerScale, m_PlayerScale, m_PlayerScale);
+        m_worldScale = e_GlobalData.instance.GetWorldScale();
 
         //Bind the Event for a player losing a life to the update for their position.
         e_GameEvents.instance.onPlayerDeathAdded += PlayerDeathPositionUpdate;
@@ -76,11 +78,27 @@ public class p_PlayerDataManager : MonoBehaviour
 
         gameObject.SetActive(true);
 
+        FindClosestPlatform();
+        
+        p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
+        onPlayerRespawned?.Invoke(m_PlayerID);
+
+        if (playerPickup)
+        {
+            Debug.Log("Player Values Reset");
+            playerPickup.ResetJumpForce();
+            playerPickup.ResetMoveSpeed();
+        }
+
+    }
+    
+    void FindClosestPlatform()
+    {
         Vector3 currentPos = gameObject.transform.position;
         Vector3 newPos = currentPos;
 
         m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
-
+            
         float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
 
         newPos.y = currentPos.y + totalPositionCorrection;
@@ -94,7 +112,22 @@ public class p_PlayerDataManager : MonoBehaviour
             if (platform.gameObject.CompareTag("PlatformEnd") || platform.gameObject.CompareTag("PlatformMiddle"))
             {
                 //Platforms only have these 2 tags - Can extend to include floors if needed
-                platforms.Add(platform.gameObject);
+                if (platform.transform.position.y > newPos.y - 2.0f) //2 is an arbitrary value here
+                {
+                    if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
+                    {
+
+                        GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
+
+                        if (highestPlatform != null)
+                        {
+                            if (highestPlatform.GetComponent<PG_PlatformParent>().m_canRespawnOnPlatform)
+                            {
+                                platforms.Add(highestPlatform);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -111,22 +144,47 @@ public class p_PlayerDataManager : MonoBehaviour
         if (closestPlatformID != -1) //If valid platform
         {
             newPos = platforms[closestPlatformID].transform.position;
-            newPos.y += 2;
+            newPos.y += 2 * m_worldScale;
         }
-
+        
         gameObject.transform.position = newPos;
+    }
+    
+    GameObject GetHighestPlatformInBlock(GameObject childplatform)
+    {
+        GameObject platformParent = childplatform.transform.parent.gameObject;
+        List<GameObject> childPlatformsInParent = new List<GameObject>();
 
-        p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
-        onPlayerRespawned?.Invoke(m_PlayerID);
-
-        if (playerPickup)
+        for (int i = 0; i < platformParent.transform.childCount; i++)
         {
-            Debug.Log("Player Values Reset");
-            playerPickup.ResetJumpForce();
-            playerPickup.ResetMoveSpeed();
+            childPlatformsInParent.Add(platformParent.transform.GetChild(i).gameObject);
+        }
+        
+        float highestYPosition = float.MinValue;
+        GameObject highestPlatform = null;
+        
+        string platformName = childplatform.name;
+        foreach (GameObject platform in childPlatformsInParent)
+        {
+            if (platformName == platform.name)
+            {
+                float platformYPosition = platform.transform.position.y;
+                if (platformYPosition > highestYPosition)
+                {
+                    highestYPosition = platformYPosition;
+                    highestPlatform = platform;
+                }
+            }
         }
 
+        if (highestPlatform != null)
+        {
+            return highestPlatform;
+        }
+
+        return null;
     }
+
 
     void EndGame(int playerID)
     {
