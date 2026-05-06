@@ -12,6 +12,9 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     
     private List<VisualElement> m_tabPanels = new List<VisualElement>();
     
+    private DropdownField resolutionsDropdown;
+    private List<Resolution> resolutionsOptions;
+    
     protected override string GetDefaultFocusButtonName() { return "btn-return"; }
     protected override void InitialiseMenuManager()
     {
@@ -32,6 +35,7 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
         // open the default tab
         SwitchTab("panel-video");
         
+        PopulateSettingsMenu();
     }
     
     void SwitchTab(string tabName)
@@ -60,5 +64,57 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
         // Hide the current settings menu and show the other menu
         m_otherMenuManager.ShowMenu();
         HideMenu();
+    }
+
+    private void PopulateSettingsMenu()
+    {
+        PopulateResolutionDropdown();
+    }
+
+    private void PopulateResolutionDropdown()
+    {
+        resolutionsDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("resolutions-dropdown");
+        resolutionsOptions = new List<Resolution>();
+
+        foreach (var res in Screen.resolutions)
+        {
+            // only add resolutions that are 16:9
+            if (Mathf.Approximately((float)res.width / (float)res.height, 16f / 9f))
+            {
+                resolutionsOptions.Add(res);
+            }
+        }
+
+        resolutionsDropdown.choices.Clear();
+        bool foundDefaultOption = false;
+        
+        for (int i = 0; i < resolutionsOptions.Count; i++)
+        {
+            Resolution resolution = resolutionsOptions[i];
+            resolutionsDropdown.choices.Add($"{resolution.width} x {resolution.height} @ {resolution.refreshRateRatio}Hz");
+
+            // attempt to default to 1920 x 1080 if it exists
+            if (resolution.width == 1920 && resolution.height == 1080)
+            {
+                Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+                resolutionsDropdown.index = i;
+                foundDefaultOption = true;
+            }
+        }
+
+        // if 1920x1080 was not found default to the first available option
+        if (!foundDefaultOption)
+        {
+            if (resolutionsOptions.Count > 0)
+            {
+                Screen.SetResolution(resolutionsOptions[0].width, resolutionsOptions[0].height, Screen.fullScreen);
+            }
+        }
+
+        resolutionsDropdown.RegisterValueChangedCallback(evt =>
+        {
+            Resolution selectedResolution = resolutionsOptions[resolutionsDropdown.index];
+            Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreen);
+        });
     }
 }
