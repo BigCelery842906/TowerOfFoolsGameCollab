@@ -214,7 +214,7 @@ MonoBehaviour:
   m_creditsMenuManager: {fileID: 349895718}
   m_controlsMenuManager: {fileID: 349895719}
   m_useSceneBuildIndex: 1
-  m_sceneBuildIndex: 2
+  m_sceneBuildIndex: 3
   m_sceneName: GamePlayTest
 --- !u!4 &349895716
 Transform:
