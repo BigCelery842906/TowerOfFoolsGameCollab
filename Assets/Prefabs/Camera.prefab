@@ -72,7 +72,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 30
+  orthographic size: 45
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -688,6 +688,10 @@ PrefabInstance:
     - {fileID: 4589871559087479814, guid: 35337230675222746927b72da1bcd964, type: 3}
     - {fileID: 6663234815726045712, guid: 35337230675222746927b72da1bcd964, type: 3}
     - {fileID: 4491251914940081998, guid: 35337230675222746927b72da1bcd964, type: 3}
+    - {fileID: 3462605701292633471, guid: 35337230675222746927b72da1bcd964, type: 3}
+    - {fileID: 7591188112133370698, guid: 35337230675222746927b72da1bcd964, type: 3}
+    - {fileID: 3343124260974895428, guid: 35337230675222746927b72da1bcd964, type: 3}
+    - {fileID: 8588889065549250417, guid: 35337230675222746927b72da1bcd964, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35337230675222746927b72da1bcd964, type: 3}
