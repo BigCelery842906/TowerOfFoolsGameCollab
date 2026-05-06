@@ -26,7 +26,8 @@ public class pu_SpringBoots : BasePickup
     {
         m_elapsedTime = 0;
         if(m_RB != null) { StartCoroutine(C_BoostPlayer()); }
-
+        if (m_VFXObj != null) { Instantiate(m_VFXObj, new Vector3(transform.position.x - 0.5f,transform.position.y -2.5f,0), new Quaternion(0, 0, 0, 0)); }
+        m_VFXObj = null;
     }
 
     private IEnumerator C_BoostPlayer()

@@ -25,6 +25,8 @@ public class c_Camera : MonoBehaviour
 
     [Tooltip("Do you want to draw the bounds of the players and the boundaries? Recommended for sorting values, otherwise can be turned off")]
     [SerializeField] private bool m_debugDraw;
+
+    [SerializeField] GameObject m_CameraLava;
     
     
     //DEBUG VALUES - NOT EXPOSED UNLESS IN DEBUG MODE
@@ -67,6 +69,8 @@ public class c_Camera : MonoBehaviour
         m_playersToTrack.Add(e_GlobalData.instance.GetPlayer(1));
 
         m_activePlayers = new List<GameObject>();
+        
+        MoveCameraLava();
     }
 
     void Update()
@@ -252,12 +256,21 @@ public class c_Camera : MonoBehaviour
         m_currentLerpTime = 0;
         m_camZoomAtStartOfLerp = m_camera.orthographicSize;
         m_camPosAtStartOfLerp = transform.position;
+        m_CameraLava.SetActive(false);
         yield return new WaitForSeconds(m_lerpTime);
 
         // Add the same null check that was added for the player respawning here.
+        m_CameraLava.SetActive(true);
         m_doCameraLerp = false;
     }
     
+
+    void MoveCameraLava()
+    {
+        Vector3 lavaPos = m_CameraLava.transform.localPosition;
+        lavaPos.y = -1.15f * m_worldScale * m_maxCameraZoom;
+        m_CameraLava.transform.localPosition = lavaPos;
+    }
     void OnDrawGizmos()
     {
         if (m_debugDraw)

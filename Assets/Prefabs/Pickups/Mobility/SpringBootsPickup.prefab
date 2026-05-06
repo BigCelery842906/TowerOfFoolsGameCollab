@@ -48,13 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupAnimFloat: 0
-  m_VFXObj: {fileID: 0}
+  m_VFXObj: {fileID: 4576511049781824036, guid: e16b7964c215d944e8cc7d3d115147a3, type: 3}
   m_name: Spring Boots
   m_groundLayer:
     serializedVersion: 2
     m_Bits: 64
   m_boostTime: 1
-  m_boostStrength: 10
+  m_boostStrength: 5
 --- !u!135 &2275276301793519269
 SphereCollider:
   m_ObjectHideFlags: 0
