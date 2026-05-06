@@ -26,6 +26,11 @@ public class p_PlayerController : MonoBehaviour
         m_playerInput = GetComponent<PlayerInput>();
         m_playerIndex = m_playerInput.playerIndex;
 
+        if (m_playerInputManager == null)
+        {
+            m_playerInputManager = FindFirstObjectByType<PlayerInputManager>();
+        }
+
         if(m_playerInputManager != null )
         {
             var gamepads = Gamepad.all;
