@@ -1,0 +1,67 @@
+@import url("unity-theme://default");
+@import url("/Assets/UI/MainStyleSheet.uss");
+
+.unity-base-dropdown__item {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item:hover .unity-base-dropdown__item-content {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item:checked .unity-base-dropdown__item-content {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item:hover .unity-base-dropdown__label,
+.unity-base-dropdown__item:checked .unity-base-dropdown__label {
+    color: rgb(255, 241, 172) !important;
+}
+
+.unity-base-dropdown__item-content > .unity-base-dropdown__label {
+    color: rgb(255, 255, 255) !important;
+    font-size: 32px !important;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&guid=03fb5fe5b67ed9749bfee08dac9db391&type=3#Evil Empire") !important;
+}
+
+.unity-base-dropdown__checkmark {
+    display: none !important;
+}
+
+.unity-base-dropdown__container-outer {
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    border-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__container-inner {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-scroll-view__content-and-vertical-scroll-container {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-scroll-view__content-viewport {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-scroll-view__content-container {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item-content {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item:checked {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item:hover {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.unity-base-dropdown__item:hover .unity-base-dropdown__item-content {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
