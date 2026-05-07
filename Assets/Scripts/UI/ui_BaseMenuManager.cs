@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace UI
@@ -115,7 +116,9 @@ namespace UI
         {
             // get the default focus button name from the overridden member
             string defaultFocusButtonName = GetDefaultFocusButtonName();
-            if (defaultFocusButtonName != null)
+            
+            // gate the default button focus behind gamepad presence (by checking number of connected gamepads to be more than 0)
+            if (defaultFocusButtonName != null && Gamepad.all.Count > 0)
             {
                 // if it's not null, attempt to focus the button
                 Button button = GetButtonFromStringName(defaultFocusButtonName);
