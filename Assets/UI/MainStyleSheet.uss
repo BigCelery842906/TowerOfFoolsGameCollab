@@ -131,7 +131,7 @@
     -unity-font-definition: url("project://database/Assets/UI/Fonts/Evil%20Empire.otf?fileID=12800000&guid=03fb5fe5b67ed9749bfee08dac9db391&type=3#Evil Empire");
     font-size: 48px;
     color: rgb(255, 255, 255);
-    -unity-background-image-tint-color: rgb(210, 210, 210);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
     background-image: url("project://database/Assets/UI/Assets/Settings/Drop%20down%20panel.png?fileID=21300000&guid=47bb9cf7e84db334b8cfd550fc8b5a0f&type=3#Drop down panel");
     border-width: 0;
     padding: 8px 16px;
@@ -152,11 +152,19 @@
 }
 
 .settings-dropdown .unity-base-popup-field__input:hover {
-    -unity-background-image-tint-color: rgb(180, 180, 180);
+    -unity-background-image-tint-color: rgba(255, 200, 80, 0.15) !important;
+}
+
+.settings-dropdown .unity-base-popup-field__input:hover {
+    -unity-background-image-tint-color: rgba(255, 200, 80, 0.15) !important;
 }
 
 .settings-dropdown:focus .unity-base-popup-field__input:hover {
-    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-background-image-tint-color: rgba(255, 200, 80, 0.15) !important;
+}
+
+.settings-dropdown:focus .unity-base-popup-field__input {
+    -unity-background-image-tint-color: rgb(180, 255, 0) !important;
 }
 
 .unity-base-dropdown__item > .unity-base-dropdown__label {
@@ -189,7 +197,15 @@
     background-color: rgba(255, 200, 80, 0.15);
 }
 
+.unity-base-dropdown__item:focus {
+    background-color: rgba(255, 200, 80, 0.15);
+}
+
 .unity-base-dropdown__item:hover:enabled {
+    background-color: rgba(255, 200, 80, 0.15);
+}
+
+.unity-base-dropdown__item:focus:enabled {
     background-color: rgba(255, 200, 80, 0.15);
 }
 
@@ -213,6 +229,10 @@
 }
 
 .settings-checkbox .unity-toggle__input:hover {
+    -unity-background-image-tint-color: rgb(255, 241, 172);
+}
+
+.settings-checkbox .unity-toggle__input:focus {
     -unity-background-image-tint-color: rgb(255, 241, 172);
 }
 
