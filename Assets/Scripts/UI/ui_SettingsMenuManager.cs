@@ -14,6 +14,8 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     
     private DropdownField resolutionsDropdown;
     private List<Resolution> resolutionsOptions;
+    private DropdownField refreshRateDropdown;
+    private List<uint> refreshRateOptions;
     
     protected override string GetDefaultFocusButtonName() { return "btn-return"; }
     protected override void InitialiseMenuManager()
@@ -86,35 +88,79 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
         }
 
         resolutionsDropdown.choices.Clear();
-        bool foundDefaultOption = false;
+        
+        int currentScreenHeight = Screen.currentResolution.height;
+        int currentScreenWidth = Screen.currentResolution.width;
+        RefreshRate currentScreenRefreshRate = Screen.currentResolution.refreshRateRatio;
         
         for (int i = 0; i < resolutionsOptions.Count; i++)
         {
-            Resolution resolution = resolutionsOptions[i];
-            resolutionsDropdown.choices.Add($"{resolution.width} x {resolution.height} @ {resolution.refreshRateRatio}Hz");
-
-            // attempt to default to 1920 x 1080 if it exists
-            if (resolution.width == 1920 && resolution.height == 1080)
+            Resolution resolution = resolutionsOptions[i]; 
+            resolutionsDropdown.choices.Add($"{resolution.width} x {resolution.height}");
+            
+            if (!refreshRateOptions.Contains(resolution.refreshRateRatio.numerator))
             {
-                Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+                refreshRateOptions.Add(resolution.refreshRateRatio.numerator);
+            }
+            
+            // attempt to default to current resolution
+            if (resolution.width == currentScreenHeight &&
+                resolution.height == currentScreenWidth &&
+                currentScreenRefreshRate.numerator == resolution.refreshRateRatio.numerator &&
+                currentScreenRefreshRate.denominator == resolution.refreshRateRatio.denominator
+                )
+            {
                 resolutionsDropdown.index = i;
-                foundDefaultOption = true;
+                e_GlobalData.instance.m_settingsInfo.resolutionIndex = i;
+                
+                // Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
             }
         }
-
-        // if 1920x1080 was not found default to the first available option
-        if (!foundDefaultOption)
-        {
-            if (resolutionsOptions.Count > 0)
-            {
-                Screen.SetResolution(resolutionsOptions[0].width, resolutionsOptions[0].height, Screen.fullScreen);
-            }
-        }
-
+        
         resolutionsDropdown.RegisterValueChangedCallback(evt =>
         {
+            uint selectedRefreshRate = refreshRateOptions[refreshRateDropdown.index];
             Resolution selectedResolution = resolutionsOptions[resolutionsDropdown.index];
-            Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreen);
+            e_GlobalData.instance.m_settingsInfo.resolutionIndex = resolutionsDropdown.index;
+
+            RefreshRate newRefreshRate = new RefreshRate();
+            newRefreshRate.numerator = selectedRefreshRate;
+            
+            // Screen.SetResolution(selectedResolution.width, selectedResolution.height, , newRefreshRate);
+        });
+
+        PopulateRefreshRateDropdown();
+    }
+
+    private void PopulateRefreshRateDropdown()
+    {
+        refreshRateDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("resolutions-dropdown");
+        refreshRateDropdown.choices.Clear();
+        
+        RefreshRate currentScreenRefreshRate = Screen.currentResolution.refreshRateRatio;
+        
+        for (int i = 0; i < refreshRateOptions.Count; i++)
+        {
+            uint refreshRate = refreshRateOptions[i]; 
+            refreshRateDropdown.choices.Add($"{refreshRate}Hz");
+            
+            // attempt to default to current resolution
+            if (refreshRate == currentScreenRefreshRate.numerator)
+            {
+                refreshRateDropdown.index = i;
+                e_GlobalData.instance.m_settingsInfo.refreshRateIndex = i;
+                
+                // Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+            }
+        }
+        
+        resolutionsDropdown.RegisterValueChangedCallback(evt =>
+        {
+            uint selectedRefreshRate = refreshRateOptions[refreshRateDropdown.index];
+            Resolution selectedResolution = resolutionsOptions[resolutionsDropdown.index];
+            e_GlobalData.instance.m_settingsInfo.refreshRateIndex = refreshRateDropdown.index;
+            
+            // Screen.SetResolution(selectedResolution.width, selectedResolution.height, Screen.fullScreen);
         });
     }
 }

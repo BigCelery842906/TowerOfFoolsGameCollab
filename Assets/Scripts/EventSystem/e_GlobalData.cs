@@ -8,6 +8,12 @@ public struct PlayerDataInfo
     public int powerUpsUsed;
 }
 
+public struct SettingsInfo
+{
+    public int resolutionIndex;
+    public int refreshRateIndex;
+}
+
 // Written by Connor Saysell
 public class e_GlobalData : MonoBehaviour
 {
@@ -25,6 +31,7 @@ public class e_GlobalData : MonoBehaviour
 
     private PlayerDataInfo m_PlayerOneData;
     private PlayerDataInfo m_PlayerTwoData;
+    public SettingsInfo m_settingsInfo = new SettingsInfo();
 
     private bool m_IsPaused = false;
 
