@@ -12,6 +12,8 @@ public struct SettingsInfo
 {
     public int resolutionIndex;
     public int refreshRateIndex;
+    public int windowModeIndex;
+    public bool vsyncEnabled;
 }
 
 // Written by Connor Saysell
