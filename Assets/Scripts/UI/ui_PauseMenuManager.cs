@@ -21,6 +21,7 @@ public class ui_PauseMenuManager : ui_BaseMenuManager
 
     private bool m_quitButtonPressed = false;
     
+    protected override string GetDefaultFocusButtonName() { return "continue-btn"; }
     protected override void InitialiseMenuManager()
     {
         BindButton("continue-btn", HandleButtonClicked_Continue);

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //Gey
 
@@ -34,6 +35,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainMenu")) return;
         if (!m_backgroundMusic.isPlaying) { m_backgroundMusic.Play(); }
     }
 

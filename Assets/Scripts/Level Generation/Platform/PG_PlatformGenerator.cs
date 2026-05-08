@@ -624,7 +624,9 @@ public class PG_PlatformGenerator : MonoBehaviour
             }
         }
         platformContainer.transform.SetParent(roomGrid.gameObject.transform, false);
-
+        Vector3 adjustedZPos = platformContainer.transform.position;
+        adjustedZPos.z += 0.6f;
+        platformContainer.transform.position = adjustedZPos;
         m_platformUndoStack.Push(platformContainer);
         m_platformList.Add(platformContainer);
         if (criticalPath)

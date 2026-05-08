@@ -22,6 +22,7 @@ public class ui_MainMenuManager : ui_BaseMenuManager
 
     private bool m_playButtonClicked = false;
     
+    protected override string GetDefaultFocusButtonName() { return "play-btn"; }
     protected override void InitialiseMenuManager()
     {
         BindButton("play-btn", HandleButtonClicked_Play);

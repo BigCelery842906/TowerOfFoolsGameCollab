@@ -39,6 +39,8 @@ public class PG_GenerationManager : MonoBehaviour
     [HideInInspector]
     public int m_roomNumber;
 
+    [HideInInspector]
+    public bool m_roomGenerationFinished = false;
 
     private void Awake()
     {
@@ -180,6 +182,7 @@ public class PG_GenerationManager : MonoBehaviour
 
     public GameObject RegenerateRoom()
     {
+        m_roomGenerationFinished = false;
         if (transform.childCount > 0)
         {
             GameObject room = transform.GetChild(0).gameObject;
@@ -202,6 +205,7 @@ public class PG_GenerationManager : MonoBehaviour
         m_platformGenerator.GeneratePlatforms(m_currentRoom, m_worldScale);
         m_platformGenerator.m_xSpawnLocation = 1;
         m_platformGenerator.m_ySpawnLocation = 1;
+        
         return m_currentRoom;
     }
 
@@ -211,6 +215,7 @@ public class PG_GenerationManager : MonoBehaviour
     {
         if (m_platformGenerator.m_generationFinished && !m_powerupsSpawned)
         {
+            m_roomGenerationFinished = true;
             SpawnPowerups();
             m_powerupsSpawned = true;
         }
