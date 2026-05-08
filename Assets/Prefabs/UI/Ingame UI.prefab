@@ -253,7 +253,7 @@ MonoBehaviour:
   m_menuShownByDefault: 0
   m_settingsMenuManager: {fileID: 8529885331666982340}
   m_useSceneBuildIndex: 1
-  m_mainMenuSceneBuildIndex: 0
+  m_mainMenuSceneBuildIndex: 1
   m_mainMenuSceneName: 
 --- !u!114 &8774860627827070646
 MonoBehaviour:

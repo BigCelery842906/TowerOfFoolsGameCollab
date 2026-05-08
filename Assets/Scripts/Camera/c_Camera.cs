@@ -88,6 +88,8 @@ public class c_Camera : MonoBehaviour
         DoCameraPosition();
 
         DoCameraZoom();
+        
+        m_CameraLava.SetActive(!m_doCameraLerp);
     }
 
     void SetActivePlayers()
@@ -256,11 +258,9 @@ public class c_Camera : MonoBehaviour
         m_currentLerpTime = 0;
         m_camZoomAtStartOfLerp = m_camera.orthographicSize;
         m_camPosAtStartOfLerp = transform.position;
-        m_CameraLava.SetActive(false);
         yield return new WaitForSeconds(m_lerpTime);
 
         // Add the same null check that was added for the player respawning here.
-        m_CameraLava.SetActive(true);
         m_doCameraLerp = false;
     }
     
@@ -268,7 +268,7 @@ public class c_Camera : MonoBehaviour
     void MoveCameraLava()
     {
         Vector3 lavaPos = m_CameraLava.transform.localPosition;
-        lavaPos.y = -1.15f * m_worldScale * m_maxCameraZoom;
+        lavaPos.y = -1.75f * m_worldScale * Mathf.Abs(m_camera.transform.localPosition.y - m_maxCameraZoom);
         m_CameraLava.transform.localPosition = lavaPos;
     }
     void OnDrawGizmos()
