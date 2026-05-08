@@ -97,18 +97,22 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
 
         // vsync
         // "If vSyncCount == 1, rendering is synchronized to the vertical refresh rate of the display."
-        bool isVsyncEnabled = QualitySettings.vSyncCount > 0;
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+            e_GlobalData.instance.m_settingsInfo.vsyncEnabled = QualitySettings.vSyncCount > 0;
         m_vsyncToggle.RegisterValueChangedCallback(OnVsyncChanged);
-        m_vsyncToggle.value = isVsyncEnabled;
-        e_GlobalData.instance.m_settingsInfo.vsyncEnabled = isVsyncEnabled;
+        m_vsyncToggle.value = e_GlobalData.instance.m_settingsInfo.vsyncEnabled;
 
         // window mode
         m_windowModeDropdown.RegisterValueChangedCallback(OnWindowModeChanged);
         PopulateWindowModeDropdown();
 
         // volume
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+            e_GlobalData.instance.m_settingsInfo.volume = AudioListener.volume * 100f;
         m_volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
-        m_volumeSlider.value = AudioListener.volume * 100f;
+        m_volumeSlider.value = e_GlobalData.instance.m_settingsInfo.volume;
+
+        e_GlobalData.instance.m_settingsInfo.initialised = true;
     }
 
     protected override void OnDestroy()
@@ -154,34 +158,30 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     private void OnVolumeChanged(ChangeEvent<float> evt)
     {
         AudioListener.volume = evt.newValue / 100f;
+        e_GlobalData.instance.m_settingsInfo.volume = evt.newValue;
     }
 
     private void PopulateWindowModeDropdown()
     {
         m_windowModeDropdown.choices.Clear();
         m_windowModeDropdown.choices.AddRange(m_fullScreenModeOptions.Keys);
-        
-        // find the key that matches the current screen mode
-        string defaultKey = null;
-        foreach (var mode in m_fullScreenModeOptions)
+
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
         {
-            if (mode.Value == Screen.fullScreenMode)
+            string defaultKey = null;
+            foreach (var mode in m_fullScreenModeOptions)
             {
-                defaultKey =  mode.Key;
-                break;
+                if (mode.Value == Screen.fullScreenMode)
+                {
+                    defaultKey = mode.Key;
+                    break;
+                }
             }
+
+            e_GlobalData.instance.m_settingsInfo.windowModeIndex = defaultKey != null ? m_windowModeDropdown.choices.IndexOf(defaultKey) : 0;
         }
 
-        if (defaultKey != null)
-        {
-            m_windowModeDropdown.value = defaultKey;
-        }
-        else
-        {
-            m_windowModeDropdown.value = m_windowModeDropdown.choices[0];
-        }
-
-        e_GlobalData.instance.m_settingsInfo.windowModeIndex = m_windowModeDropdown.index;
+        m_windowModeDropdown.index = e_GlobalData.instance.m_settingsInfo.windowModeIndex;
     }
 
 
@@ -214,21 +214,27 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     {
         m_resolutionsDropdown.choices.Clear();
 
-        Resolution currentRes = Screen.currentResolution;
-        int defaultIndex = 0;
-
-        for (int i = 0; i < m_resolutionsOptions.Count; i++)
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
         {
-            Resolution res =  m_resolutionsOptions[i];
-            m_resolutionsDropdown.choices.Add($"{res.width} x {res.height}");
-            
-            // if this is the current resolution
-            if (res.width == currentRes.width && res.height == currentRes.height)
-                defaultIndex = i;
+            Resolution currentRes = Screen.currentResolution;
+            int defaultIndex = 0;
+
+            for (int i = 0; i < m_resolutionsOptions.Count; i++)
+            {
+                m_resolutionsDropdown.choices.Add($"{m_resolutionsOptions[i].width} x {m_resolutionsOptions[i].height}");
+                if (m_resolutionsOptions[i].width == currentRes.width && m_resolutionsOptions[i].height == currentRes.height)
+                    defaultIndex = i;
+            }
+
+            e_GlobalData.instance.m_settingsInfo.resolutionIndex = defaultIndex;
+        }
+        else
+        {
+            for (int i = 0; i < m_resolutionsOptions.Count; i++)
+                m_resolutionsDropdown.choices.Add($"{m_resolutionsOptions[i].width} x {m_resolutionsOptions[i].height}");
         }
 
-        m_resolutionsDropdown.index = defaultIndex;
-        e_GlobalData.instance.m_settingsInfo.resolutionIndex = defaultIndex;
+        m_resolutionsDropdown.index = e_GlobalData.instance.m_settingsInfo.resolutionIndex;
     }
 
 
@@ -236,22 +242,29 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     {
         m_refreshRateDropdown.choices.Clear();
 
-        // if the resolution label does not exist, cancel out
         if (!m_refreshRatesPerResolution.ContainsKey(resolutionLabel)) return;
-        
-        uint hertz = (uint)Math.Round((double)Screen.currentResolution.refreshRateRatio.numerator / Screen.currentResolution.refreshRateRatio.denominator);
-        int defaultIndex = 0;
 
-        for (int i = 0; i < m_refreshRatesPerResolution[resolutionLabel].Count; i++)
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
         {
-            m_refreshRateDropdown.choices.Add($"{m_refreshRatesPerResolution[resolutionLabel][i]}Hz");
+            uint hertz = (uint)Math.Round((double)Screen.currentResolution.refreshRateRatio.numerator / Screen.currentResolution.refreshRateRatio.denominator);
+            int defaultIndex = 0;
 
-            if (hertz == m_refreshRatesPerResolution[resolutionLabel][i])
-                defaultIndex = i;
+            for (int i = 0; i < m_refreshRatesPerResolution[resolutionLabel].Count; i++)
+            {
+                m_refreshRateDropdown.choices.Add($"{m_refreshRatesPerResolution[resolutionLabel][i]}Hz");
+                if (hertz == m_refreshRatesPerResolution[resolutionLabel][i])
+                    defaultIndex = i;
+            }
+
+            e_GlobalData.instance.m_settingsInfo.refreshRateIndex = defaultIndex;
         }
-        
-        m_refreshRateDropdown.index = defaultIndex;
-        e_GlobalData.instance.m_settingsInfo.refreshRateIndex = defaultIndex;
+        else
+        {
+            for (int i = 0; i < m_refreshRatesPerResolution[resolutionLabel].Count; i++)
+                m_refreshRateDropdown.choices.Add($"{m_refreshRatesPerResolution[resolutionLabel][i]}Hz");
+        }
+
+        m_refreshRateDropdown.index = e_GlobalData.instance.m_settingsInfo.refreshRateIndex;
     }
 
     private void ApplyResolution()
