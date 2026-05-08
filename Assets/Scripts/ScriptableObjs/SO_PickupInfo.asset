@@ -20,7 +20,7 @@ MonoBehaviour:
   - Name: Scroll
     Description: When used spawns a temporary platform below the player, can only
       be used in the air.
-    Image: {fileID: 0}
+    Image: {fileID: 21300000, guid: 92df37ed967582c48bc4e6a991b63375, type: 3}
   - Name: Player Swap
     Description: Switches the positions of the players.
     Image: {fileID: 21300000, guid: 720fa5476daae8646a3464ea843d5b5e, type: 3}
