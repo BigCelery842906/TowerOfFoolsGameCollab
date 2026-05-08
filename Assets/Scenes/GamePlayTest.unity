@@ -357,7 +357,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 940592925491975314, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_movementBoost
-      value: 1.15
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1397562906674845865, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_jumpBoost
@@ -365,7 +365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1397562906674845865, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_movementBoost
-      value: 1.15
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3095776905635358122, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_lavaWaitPeriod
@@ -373,7 +373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3095776905635358122, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_speedMultiplier
-      value: 0.07
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 3095776905635358122, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_startingYPosition
@@ -381,7 +381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3095776905635358122, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_currentMovementSpeed
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3389956847503313472, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_Enabled
@@ -409,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5517627550738845267, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_movementBoost
-      value: 1.15
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7466366279013144379, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_Range
@@ -425,7 +425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7739803195895168875, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_speedMultiplier
-      value: 0.07
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 7739803195895168875, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_startingYPosition
@@ -433,7 +433,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7739803195895168875, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_currentMovementSpeed
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8431232975637558096, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_lavaWaitPeriod
@@ -441,11 +441,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8431232975637558096, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_speedMultiplier
-      value: 0.07
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 8431232975637558096, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_startingYPosition
       value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8431232975637558096, guid: 35337230675222746927b72da1bcd964, type: 3}
+      propertyPath: m_currentMovementSpeed
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8644608815299340333, guid: 35337230675222746927b72da1bcd964, type: 3}
       propertyPath: m_Name
@@ -943,7 +947,7 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!43 &1319525334
+--- !u!43 &1062142187
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1317,11 +1321,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9975641
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.06975647
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1333,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1346,6 +1350,14 @@ PrefabInstance:
     - target: {fileID: 2567493114257180752, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: m_maxCameraZoom
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: m_minCameraZoom
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
