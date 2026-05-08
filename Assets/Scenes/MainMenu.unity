@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8264070355954900946, guid: b2b44cf43f0b98042b9a295e3681728a, type: 3}
       propertyPath: m_Name
-      value: EventSystem (1)
+      value: EventSystem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
