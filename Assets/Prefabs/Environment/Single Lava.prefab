@@ -44,8 +44,8 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.55655974, b: 0, a: 1}
-  m_Intensity: 2000
-  m_Range: 50
+  m_Intensity: 1000
+  m_Range: 400
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_currentMovementSpeed: 0.1
   m_baseMovementSpeed: 0.4
   m_speedMultiplier: 0.03
-  m_lavaWaitPeriod: 5
+  m_lavaWaitPeriod: 8
   m_startFromPosition: 1
   m_startingYPosition: -7
   m_AdrenalineCheck: {fileID: 2034195372379904271}
@@ -354,8 +354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b2c7ffebcdb9e47972c2a5fb04ce46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementBoost: 1.25
-  m_jumpBoost: 1.1
+  m_movementBoost: 1.2
+  m_jumpBoost: 1.25
   m_timerLength: 5
 --- !u!65 &110361702493930728
 BoxCollider:
