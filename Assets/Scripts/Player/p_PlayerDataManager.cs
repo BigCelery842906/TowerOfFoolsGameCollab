@@ -209,7 +209,7 @@ public class p_PlayerDataManager : MonoBehaviour
             {
                 m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos * 12), playerID);
                 m_LastPlayerYPos = playerYPos;
-               // Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore());
+                // Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore());
             }
         }
     }
