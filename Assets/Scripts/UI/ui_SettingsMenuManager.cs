@@ -17,6 +17,7 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     private DropdownField m_refreshRateDropdown;
     private DropdownField m_windowModeDropdown;
     private Toggle m_vsyncToggle;
+    private Slider m_volumeSlider;
     
     private List<Resolution> m_resolutionsOptions;
     private Dictionary<string, List<uint>> m_refreshRatesPerResolution;
@@ -84,49 +85,75 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
         m_refreshRateDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("refreshrate-dropdown");
         m_windowModeDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("windowmode-dropdown");
         m_vsyncToggle = m_uiDocument.rootVisualElement.Q<Toggle>("vsync-toggle");
+        m_volumeSlider = m_uiDocument.rootVisualElement.Q<Slider>("volume-slider");
 
         // resolution & refresh rate
         BuildResolutionData();
         PopulateResolutionDropdown();
         PopulateRefreshRateDropdown(m_resolutionsDropdown.value);
         
-        m_resolutionsDropdown.RegisterValueChangedCallback(evt =>
-        {
-            PopulateRefreshRateDropdown(evt.newValue);
-            ApplyResolution();
-        });
+        m_resolutionsDropdown.RegisterValueChangedCallback(OnResolutionChanged);
+        m_refreshRateDropdown.RegisterValueChangedCallback(OnRefreshRateChanged);
 
-        m_refreshRateDropdown.RegisterValueChangedCallback(evt =>
-        {
-            ApplyResolution();
-        });
-        
         // vsync
         // "If vSyncCount == 1, rendering is synchronized to the vertical refresh rate of the display."
         bool isVsyncEnabled = QualitySettings.vSyncCount > 0;
-
-        m_vsyncToggle.RegisterValueChangedCallback(evt =>
-        {
-            QualitySettings.vSyncCount = evt.newValue ? 1 : 0;
-            e_GlobalData.instance.m_settingsInfo.vsyncEnabled = evt.newValue;
-            
-            // when vsync is enabled the frame rate is determined by the display refresh rate, so the
-            // refresh rate setting becomes unused, so disable it while vsync is enabled
-            m_refreshRateDropdown.SetEnabled(!evt.newValue);
-        });
-        
+        m_vsyncToggle.RegisterValueChangedCallback(OnVsyncChanged);
         m_vsyncToggle.value = isVsyncEnabled;
         e_GlobalData.instance.m_settingsInfo.vsyncEnabled = isVsyncEnabled;
-        
+
         // window mode
-        m_windowModeDropdown.RegisterValueChangedCallback(evt =>
-        {
-            FullScreenMode newMode = m_fullScreenModeOptions[evt.newValue];
-            e_GlobalData.instance.m_settingsInfo.windowModeIndex = m_windowModeDropdown.index;
-            Screen.SetResolution(Screen.width, Screen.height, newMode);
-        });
-        
+        m_windowModeDropdown.RegisterValueChangedCallback(OnWindowModeChanged);
         PopulateWindowModeDropdown();
+
+        // volume
+        m_volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
+        m_volumeSlider.value = AudioListener.volume * 100f;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        // unbind all of the callbacks
+        m_resolutionsDropdown?.UnregisterValueChangedCallback(OnResolutionChanged);
+        m_refreshRateDropdown?.UnregisterValueChangedCallback(OnRefreshRateChanged);
+        m_vsyncToggle?.UnregisterValueChangedCallback(OnVsyncChanged);
+        m_windowModeDropdown?.UnregisterValueChangedCallback(OnWindowModeChanged);
+        m_volumeSlider?.UnregisterValueChangedCallback(OnVolumeChanged);
+    }
+
+    private void OnResolutionChanged(ChangeEvent<string> evt)
+    {
+        PopulateRefreshRateDropdown(evt.newValue);
+        ApplyResolution();
+    }
+
+    private void OnRefreshRateChanged(ChangeEvent<string> evt)
+    {
+        ApplyResolution();
+    }
+
+    private void OnVsyncChanged(ChangeEvent<bool> evt)
+    {
+        QualitySettings.vSyncCount = evt.newValue ? 1 : 0;
+        e_GlobalData.instance.m_settingsInfo.vsyncEnabled = evt.newValue;
+
+        // when vsync is enabled the frame rate is determined by the display refresh rate, so the
+        // refresh rate setting becomes unused, so disable it while vsync is enabled
+        m_refreshRateDropdown.SetEnabled(!evt.newValue);
+    }
+
+    private void OnWindowModeChanged(ChangeEvent<string> evt)
+    {
+        FullScreenMode newMode = m_fullScreenModeOptions[evt.newValue];
+        e_GlobalData.instance.m_settingsInfo.windowModeIndex = m_windowModeDropdown.index;
+        Screen.SetResolution(Screen.width, Screen.height, newMode);
+    }
+
+    private void OnVolumeChanged(ChangeEvent<float> evt)
+    {
+        AudioListener.volume = evt.newValue / 100f;
     }
 
     private void PopulateWindowModeDropdown()
