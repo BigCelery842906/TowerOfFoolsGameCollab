@@ -1,8 +1,9 @@
-using System.Collections;
-using NUnit.Framework;
-using UnityEngine;
-using System.Collections.Generic;
 using JetBrains.Annotations;
+using NUnit.Framework;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PG_TransitionManager : MonoBehaviour
 {
@@ -149,9 +150,19 @@ public class PG_TransitionManager : MonoBehaviour
 
     IEnumerator InitCoRoutine()
     {
+
+
         yield return SpawnRooms(true, false);
-        yield return SpawnRooms(true, false);
-        yield return SpawnRooms(true, false);
+        for(int i = 0; i < 2; i++)
+        {
+            while(!m_nextRoomGenerator.m_roomGenerationFinished)
+            {
+                yield return null;
+            }
+            yield return SpawnRooms(true, false);
+        }
+        //yield return SpawnRooms(true, false);
+        //yield return SpawnRooms(true, false);
         yield return null;
         MoveColliderToNewPosition(m_nextRoom);
         m_initComplete = true;
@@ -221,6 +232,7 @@ public class PG_TransitionManager : MonoBehaviour
     {
         GameObject nextGenerator = GameObject.Instantiate(m_generationManager);
         m_nextRoomGenerator = nextGenerator.GetComponent<PG_GenerationManager>();
+        RandomiseGenerationValues();
         m_nextRoomGenerator.PopulateData(ref m_generationValues);
         if (exitPosition != -1)
         {
@@ -461,13 +473,35 @@ public class PG_TransitionManager : MonoBehaviour
         m_generationValues._maxBonusPlatformSize = 5;
         m_generationValues._bonusPlatformSize = 5;
         m_generationValues._bonusPlatformXSeparation = 2;
-        m_generationValues._bonusPlatformSpawnAttempts = 50;
+        m_generationValues._bonusPlatformSpawnAttempts = 100;
         m_generationValues._bonusPlatformNumber = 20;
 
         m_generationValues._entrance = -1;
         m_generationValues._exit = UnityEngine.Random.Range(2, 30); //dont judge me for the magic number
     }
 
+    void RandomiseGenerationValues()
+    {
+        
+
+        UnityEngine.Random.InitState(DateTime.Now.Millisecond);
+        m_generationValues._minPowerups = UnityEngine.Random.Range(5, 30);
+
+        m_generationValues._criticalPlatformSize = UnityEngine.Random.Range(2, 7);
+        m_generationValues._criticalPlatformXVariation = UnityEngine.Random.Range(2, m_generationValues._criticalPlatformSize);
+        int boolCheck = UnityEngine.Random.Range(0, 3);
+        m_generationValues._fixedBonusPlatformSize = (boolCheck == 0);
+        if(m_generationValues._fixedBonusPlatformSize )
+        {
+            m_generationValues._bonusPlatformSize = UnityEngine.Random.Range(1, 7);
+        }
+        else
+        {
+            m_generationValues._minBonusPlatformSize = UnityEngine.Random.Range(1, 5);
+            m_generationValues._maxBonusPlatformSize = UnityEngine.Random.Range(m_generationValues._minBonusPlatformSize, 7);
+        }
+        m_generationValues._bonusPlatformNumber = UnityEngine.Random.Range(20, 50);
+    }
 
 
 
@@ -486,7 +520,7 @@ public class PG_TransitionManager : MonoBehaviour
         }
         if (isCurProcGen)
         {
-            int nextRoomRandom = Random.Range(0, chanceOfDesign + chanceOfProcGen);
+            int nextRoomRandom = UnityEngine.Random.Range(0, chanceOfDesign + chanceOfProcGen);
             if (nextRoomRandom < chanceOfDesign) // designed
             {
                 Debug.Log("Rolling random design room");
@@ -507,7 +541,7 @@ public class PG_TransitionManager : MonoBehaviour
     {
         if (m_designedRooms.Count > 0)
         {
-            designRoomID = Random.Range(0, m_designedRooms.Count);
+            designRoomID = UnityEngine.Random.Range(0, m_designedRooms.Count);
             GetNextDesignEntrance();
         }
         else
