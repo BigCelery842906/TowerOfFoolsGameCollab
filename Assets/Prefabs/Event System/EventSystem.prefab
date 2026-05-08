@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a884bc07af178147b24ba50e32bc113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_WorldScale: 1
+  m_WorldScale: 1.5
   m_PlayerScale: 1
 --- !u!114 &1940519547996579190
 MonoBehaviour:
