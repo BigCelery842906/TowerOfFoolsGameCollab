@@ -103,3 +103,67 @@
     border-width: 0px !important;
     border-color: transparent !important;
 }
+
+.settings-slider .unity-base-slider__dragger-border {
+    display: none !important;
+    border-width: 0 !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.settings-slider .unity-base-slider__dragger {
+    background-image: url("project://database/Assets/UI/Assets/Settings/Slider%20button.png?fileID=21300000&guid=423bd4a44a8aac9438741d2301a0527e&type=3#Slider button");
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    top: 25% !important;
+    -unity-background-image-tint-color: rgb(255, 255, 255) !important;
+}
+
+.settings-slider .unity-base-slider__dragger:hover,
+.settings-slider .unity-base-slider__dragger:hover:enabled,
+.settings-slider:focus .unity-base-slider__dragger {
+    -unity-background-image-tint-color: rgb(255, 241, 172) !important;
+}
+
+.settings-slider .unity-base-slider__drag-container {
+    background-image: url("project://database/Assets/UI/Assets/Settings/Slider%20-%20increase.png?fileID=21300000&guid=b7f28dd8e112b2b4d838779ca67efcdd&type=3#Slider - increase");
+    -unity-background-scale-mode: stretch-to-fill;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    padding: 0 !important;
+    height: 42px;
+    overflow: visible;
+}
+
+.settings-slider .unity-base-slider__tracker {
+    background-color: rgba(0, 0, 0, 0) !important;
+    background-image: none !important;
+    border-width: 0 !important;
+    height: 100% !important;
+    margin: 0 !important;
+    top: 0 !important;
+}
+
+.settings-slider .unity-base-slider__fill {
+    background-image: url("project://database/Assets/UI/Assets/Settings/Slider%20-%20Decrease.png?fileID=21300000&guid=74285f3840d2e3645915436cc0dac680&type=3#Slider - Decrease");
+    -unity-background-scale-mode: stretch-to-fill;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border-width: 0 !important;
+    height: 100% !important;
+    top: 0 !important;
+    margin: 0 !important;
+}
+
+.settings-slider .unity-base-slider__tracker:hover,
+.settings-slider .unity-base-slider__tracker:hover:enabled {
+    background-color: rgba(0, 0, 0, 0) !important;
+    background-image: none !important;
+}
