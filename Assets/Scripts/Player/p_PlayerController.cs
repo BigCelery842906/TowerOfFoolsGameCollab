@@ -52,7 +52,7 @@ public class p_PlayerController : MonoBehaviour
             {
 
                 // Keyboard fallback for 2 players
-                string scheme = (m_playerIndex == 1) ? "WASD" : "Arrows";
+                string scheme = (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) == 0) ? "WASD" : "Arrows";
                 m_playerInput.SwitchCurrentControlScheme(scheme, Keyboard.current);
 
                 Debug.Log($"Player {m_playerIndex} scheme: {m_playerInput.currentControlScheme}");
