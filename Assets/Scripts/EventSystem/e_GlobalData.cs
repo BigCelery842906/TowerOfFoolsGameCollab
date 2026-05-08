@@ -14,6 +14,8 @@ public struct SettingsInfo
     public int refreshRateIndex;
     public int windowModeIndex;
     public bool vsyncEnabled;
+    public float volume;
+    public bool initialised;
 }
 
 // Written by Connor Saysell
