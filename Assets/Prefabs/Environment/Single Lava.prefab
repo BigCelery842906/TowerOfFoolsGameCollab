@@ -44,7 +44,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 0.55655974, b: 0, a: 1}
-  m_Intensity: 70
+  m_Intensity: 2000
   m_Range: 50
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -192,12 +192,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a56953df1e94dfe49bdcd22330a29ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_currentMovementSpeed: 0.5
-  m_baseMovementSpeed: 0.5
-  m_speedMultiplier: 0.02
+  m_currentMovementSpeed: 0.1
+  m_baseMovementSpeed: 0.4
+  m_speedMultiplier: 0.03
   m_lavaWaitPeriod: 5
   m_startFromPosition: 1
-  m_startingYPosition: -5
+  m_startingYPosition: -7
   m_AdrenalineCheck: {fileID: 2034195372379904271}
 --- !u!1 &7997343170357358610
 GameObject:
