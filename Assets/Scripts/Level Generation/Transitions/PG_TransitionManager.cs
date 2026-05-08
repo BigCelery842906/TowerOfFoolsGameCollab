@@ -150,9 +150,19 @@ public class PG_TransitionManager : MonoBehaviour
 
     IEnumerator InitCoRoutine()
     {
+
+
         yield return SpawnRooms(true, false);
-        yield return SpawnRooms(true, false);
-        yield return SpawnRooms(true, false);
+        for(int i = 0; i < 2; i++)
+        {
+            while(!m_nextRoomGenerator.m_roomGenerationFinished)
+            {
+                yield return null;
+            }
+            yield return SpawnRooms(true, false);
+        }
+        //yield return SpawnRooms(true, false);
+        //yield return SpawnRooms(true, false);
         yield return null;
         MoveColliderToNewPosition(m_nextRoom);
         m_initComplete = true;
@@ -222,7 +232,7 @@ public class PG_TransitionManager : MonoBehaviour
     {
         GameObject nextGenerator = GameObject.Instantiate(m_generationManager);
         m_nextRoomGenerator = nextGenerator.GetComponent<PG_GenerationManager>();
-        //RandomiseGenerationValues();
+        RandomiseGenerationValues();
         m_nextRoomGenerator.PopulateData(ref m_generationValues);
         if (exitPosition != -1)
         {
@@ -472,13 +482,13 @@ public class PG_TransitionManager : MonoBehaviour
 
     void RandomiseGenerationValues()
     {
-        float timeSeed = DateTime.Now.Millisecond;
+        
 
         UnityEngine.Random.InitState(DateTime.Now.Millisecond);
-        m_generationValues._minPowerups = UnityEngine.Random.Range(2, 30);
+        m_generationValues._minPowerups = UnityEngine.Random.Range(5, 30);
 
         m_generationValues._criticalPlatformSize = UnityEngine.Random.Range(2, 7);
-        m_generationValues._criticalPlatformXVariation = UnityEngine.Random.Range(1, m_generationValues._criticalPlatformSize);
+        m_generationValues._criticalPlatformXVariation = UnityEngine.Random.Range(2, m_generationValues._criticalPlatformSize);
         int boolCheck = UnityEngine.Random.Range(0, 3);
         m_generationValues._fixedBonusPlatformSize = (boolCheck == 0);
         if(m_generationValues._fixedBonusPlatformSize )
