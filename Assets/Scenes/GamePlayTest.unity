@@ -429,12 +429,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: Single Lava
       objectReference: {fileID: 0}
+    - target: {fileID: 9197457806374378780, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197457806374378780, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
+      propertyPath: m_Size.y
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197457806374378780, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
---- !u!43 &821764603
+--- !u!43 &588134854
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1062,11 +1074,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9975641
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.06975647
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1078,7 +1090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2538945774980315133, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1091,6 +1103,14 @@ PrefabInstance:
     - target: {fileID: 2567493114257180752, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 2567493114257180752, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7885466408937412657, guid: 14e3bb47a21fdba4599b78afb34aaea3, type: 3}
+      propertyPath: m_debugDraw
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1465,6 +1485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_uiDocument: {fileID: 2403265475794537113}
   m_menuShownByDefault: 1
+  m_lifeLostTexture: {fileID: 0}
 --- !u!4 &9047469461675237649
 Transform:
   m_ObjectHideFlags: 0
