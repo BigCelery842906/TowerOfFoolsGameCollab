@@ -58,6 +58,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
 
         m_playerMovement = GetComponent<p_PlayerMovement>();
+        m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
 
         m_playerID = p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag);
     }

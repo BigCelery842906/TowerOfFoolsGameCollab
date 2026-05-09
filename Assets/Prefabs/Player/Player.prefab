@@ -56886,6 +56886,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveSpeed: 10
   m_jumpForce: 8
+  m_dynamicFriction: 5
+  m_staticFriction: 2
   m_lowerGravValue: -15
   m_apexGravValue: -10
   m_highGravValue: -30

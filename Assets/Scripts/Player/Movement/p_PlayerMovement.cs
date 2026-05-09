@@ -11,6 +11,10 @@ public class p_PlayerMovement : MonoBehaviour
     [Tooltip("How high the player jumps, 9 feels good?")]
     [SerializeField] private float m_jumpForce;
 
+    [Header("Friction")]
+    [SerializeField] private float m_dynamicFriction;
+    [SerializeField] private float m_staticFriction;
+
     [Header("Gravity Variables")]
     [Tooltip("This value is how much gravity the player has has when they start jumping, should feel lighter than the higher gravity")]
     [SerializeField] private float m_lowerGravValue;
@@ -34,9 +38,6 @@ public class p_PlayerMovement : MonoBehaviour
     private Rigidbody m_RB;
     private CapsuleCollider m_CapsuleCollider;
 
-    private float m_dynamicFriction; //dont set this here do it in the physics material
-    private float m_staticFriction; //dont set this here do it in the physics material
-
     private Vector2 m_moveDir; //is set based on input 
     private bool m_shouldMove; //bool for stopping the movement coroutine <3
 
@@ -48,10 +49,51 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector3 m_apexGrav;    
     private Vector3 m_highGrav;
 
-    private bool respawned = false; //DELETE this
+    private Coroutine m_slowTick;
 
-    private void Awake()
+    //private void Awake()
+    //{
+    //    m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
+    //    if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+
+    //    m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
+    //    if (m_PlayerPickupManager != null)
+    //    {
+    //        m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
+    //        m_PlayerPickupManager.SetBaseJumpForce(m_jumpForce);
+
+    //        m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
+    //        m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+    //        m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
+    //    }
+
+    //    m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
+
+    //    m_RB = GetComponent<Rigidbody>();
+    //    m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
+
+    //    //getting the intended values
+    //    m_dynamicFriction = m_CapsuleCollider.material.dynamicFriction;
+    //    m_staticFriction = m_CapsuleCollider.material.staticFriction;
+
+    //    //I didnt want to expose vectors to the designers ill be real xx You can change this
+    //    m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
+    //    m_apexGrav = new Vector3(0f, m_apexGravValue, 0f);
+    //    m_highGrav = new Vector3(0f, m_highGravValue, 0f);
+    //}
+
+    private void OnEnable()
     {
+        if (m_PlayerPickupManager != null)
+        {
+            m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
+            m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
+            m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
+
+            m_PlayerPickupManager.ResetJumpForce();
+            m_PlayerPickupManager.ResetMoveSpeed();
+        }
+
         m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
         if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
 
@@ -71,36 +113,33 @@ public class p_PlayerMovement : MonoBehaviour
         m_RB = GetComponent<Rigidbody>();
         m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
-        //getting the intended values
-        m_dynamicFriction = m_CapsuleCollider.material.dynamicFriction;
-        m_staticFriction = m_CapsuleCollider.material.staticFriction;
-
         //I didnt want to expose vectors to the designers ill be real xx You can change this
         m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
         m_apexGrav = new Vector3(0f, m_apexGravValue, 0f);
         m_highGrav = new Vector3(0f, m_highGravValue, 0f);
+
+
+        //Handle_PlayerReset(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag));
+
+        //StopCoroutine(C_SlowTick());
+
+        Invoke(nameof(Handle_PlayerReset), 0.5f);
+
+        //m_slowTick = StartCoroutine(C_SlowTick());
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
-        if (m_PlayerPickupManager != null)
-        {
-            m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
-            m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
-            m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
-
-            m_PlayerPickupManager.ResetJumpForce();
-            m_PlayerPickupManager.ResetMoveSpeed();
-        }
-
-        StartCoroutine(C_SlowTick());
+        StopCoroutine(C_SlowTick());
     }
 
     //This is always running and acts like update but a much slower and less expensive version
     private IEnumerator C_SlowTick()
     {
-        while(true)
+        while (true)
         {
+            //Debug.LogAssertion("INN LOOP");
+
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
@@ -141,6 +180,7 @@ public class p_PlayerMovement : MonoBehaviour
                         break;
                     case < -1f:
                         Physics.gravity = m_highGrav;
+                        
                         if (!m_jumped) { m_playerAnim.SetAnimJump(2); }
                         break;
                     case > -0.1f:
@@ -157,7 +197,7 @@ public class p_PlayerMovement : MonoBehaviour
     {
         if (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
 
-        respawned = true;
+        Debug.LogAssertion("FUCCCCCCCCCCCKKKKKKKKKKK");
 
         m_PlayerPickupManager.ResetMoveSpeed();
         m_PlayerPickupManager.ResetJumpForce();
@@ -165,7 +205,8 @@ public class p_PlayerMovement : MonoBehaviour
         m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
         m_CapsuleCollider.material.staticFriction = m_staticFriction;
 
-        //StartCoroutine(C_SlowTick());
+        //StopCoroutine(C_SlowTick());
+        StartCoroutine(C_SlowTick());
     }
 
     public void SetMoveDirection(Vector2 direction)
@@ -217,8 +258,6 @@ public class p_PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        Debug.Log(m_jumpForce);
-
         if(m_moveSpeed <= 0) { return; }//prevents player jumping while stunned
 
         if(Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f) || m_usedJumps < m_maxJumps)
