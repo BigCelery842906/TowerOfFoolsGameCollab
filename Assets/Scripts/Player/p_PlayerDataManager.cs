@@ -149,7 +149,7 @@ public class p_PlayerDataManager : MonoBehaviour
         }
         
         gameObject.transform.position = newPos;
-        onPlayerRepositioned.Invoke(m_PlayerID);
+        onPlayerRepositioned?.Invoke(m_PlayerID);
     }
     
     GameObject GetHighestPlatformInBlock(GameObject childplatform)
