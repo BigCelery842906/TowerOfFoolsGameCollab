@@ -25,7 +25,7 @@ public class BasePickup : MonoBehaviour
 
     private bool m_isHeld;
 
-    private void Awake()
+    private void OnEnable()
     {
         m_triggeredPlayer = null;
         m_isHeld = false;
@@ -86,59 +86,7 @@ public class BasePickup : MonoBehaviour
 
         PickupEffect();
 
-    }
-
-    //TODO: decide if i wanna fix this? (probs not worth it but depends what design wants)
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (m_isHeld) { return; }
-
-    //    m_triggeredPlayer = null;
-
-    //    if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
-
-    //    m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
-    //    m_playerCollider ??= other.GetComponent<CapsuleCollider>();
-
-    //    if(m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
-
-    //    player is already holding a pickup and i dont think they need a second one >:c
-    //    if(m_triggeredPlayer.GetPlayerHoldingPickup()) { m_triggeredPlayer.OnPickupUsed += DelayedPickUp; return; }
-
-    //    m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
-
-    //    if (m_triggeredPlayer.CompareTag("Player0"))
-    //    {
-    //        PlayerOne Triggered it
-    //        m_otherPlayer = m_playerTwo;
-    //    }
-    //    else
-    //    {
-    //        PlayerTwo Triggered it
-    //        m_otherPlayer = m_playerOne;
-    //    }
-
-    //    m_triggeredPlayer.SetPlayerHoldingPickup(true);
-    //    m_isHeld = true;
-
-    //    AudioManager.instance.PlayPickupCollected();
-
-    //    PickupEffect();     
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if(m_isHeld) { return; } 
-
-    //    if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
-
-    //    if(other.gameObject != m_triggeredPlayer) { return; } //different player than the one that orignially stepped here
-
-    //    m_triggeredPlayer.OnPickupUsed -= DelayedPickUp;
-    //    m_triggeredPlayer = null;
-
-    //}
+    }    
 
     private void DelayedPickUp()
     {

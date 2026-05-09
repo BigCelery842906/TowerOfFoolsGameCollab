@@ -8,7 +8,6 @@ using System;
 public class p_PlayerDataManager : MonoBehaviour
 {
     public event Action<int> onPlayerRespawned;
-    public event Action<int> onPlayerRepositioned; //unity has a bug where it can leave coroutines early after an object gets enabled and then moved in the same frame? xx
 
     //Member Variables
     p_PlayerData m_PlayerData = null;
@@ -44,11 +43,6 @@ public class p_PlayerDataManager : MonoBehaviour
 
         //Bind the Event for a player having no lives to the end game function.
         e_GameEvents.instance.onPlayerNoLives += EndGame;
-    }
-
-    private void OnEnable()
-    {
-        onPlayerRepositioned?.Invoke(m_PlayerID);
     }
 
     void Update()
@@ -152,7 +146,6 @@ public class p_PlayerDataManager : MonoBehaviour
         }
         
         gameObject.transform.position = newPos;
-        onPlayerRepositioned?.Invoke(m_PlayerID);
     }
     
     GameObject GetHighestPlatformInBlock(GameObject childplatform)
