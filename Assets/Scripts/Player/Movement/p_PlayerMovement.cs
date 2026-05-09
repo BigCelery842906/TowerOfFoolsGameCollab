@@ -52,37 +52,6 @@ public class p_PlayerMovement : MonoBehaviour
     private Coroutine m_slowTick;
     private bool hasLooped = false; //DELETE
 
-    //private void Awake()
-    //{
-    //    m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
-    //    if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
-
-    //    m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
-    //    if (m_PlayerPickupManager != null)
-    //    {
-    //        m_PlayerPickupManager.SetBaseMoveSpeed(m_moveSpeed);
-    //        m_PlayerPickupManager.SetBaseJumpForce(m_jumpForce);
-
-    //        m_PlayerPickupManager.OnMaxJumpChange += SetMaxJumps;
-    //        m_PlayerPickupManager.OnStunStateChange += SetMoveSpeed;
-    //        m_PlayerPickupManager.OnJumpForceChange += SetJumpForce;
-    //    }
-
-    //    m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
-
-    //    m_RB = GetComponent<Rigidbody>();
-    //    m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
-
-    //    //getting the intended values
-    //    m_dynamicFriction = m_CapsuleCollider.material.dynamicFriction;
-    //    m_staticFriction = m_CapsuleCollider.material.staticFriction;
-
-    //    //I didnt want to expose vectors to the designers ill be real xx You can change this
-    //    m_lowGrav = new Vector3(0f, m_lowerGravValue, 0f);
-    //    m_apexGrav = new Vector3(0f, m_apexGravValue, 0f);
-    //    m_highGrav = new Vector3(0f, m_highGravValue, 0f);
-    //}
-
     private void OnEnable()
     {
         if (m_PlayerPickupManager != null)
@@ -128,7 +97,7 @@ public class p_PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        StopCoroutine(C_SlowTick());
+        StopCoroutine(m_slowTick);
     }
 
     //This is always running and acts like update but a much slower and less expensive version
@@ -137,7 +106,6 @@ public class p_PlayerMovement : MonoBehaviour
         while (true)
         {
             hasLooped = true;
-            //Debug.LogAssertion("INN LOOP");
 
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {

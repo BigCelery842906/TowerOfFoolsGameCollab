@@ -63,7 +63,6 @@ public class p_PlayerDataManager : MonoBehaviour
             //Don't even ask. I need an active instance of monobehaviour otherwise the player won't do the reset to active.
             MonoBehaviour camMono = Camera.main.GetComponent<MonoBehaviour>();
             camMono.StartCoroutine(RespawnTimer());
-            // StartCoroutine(RespawnTimer());
         }
     }
 
@@ -122,7 +121,6 @@ public class p_PlayerDataManager : MonoBehaviour
                 {
                     if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                     {
-
                         GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
 
                         if (highestPlatform != null)
