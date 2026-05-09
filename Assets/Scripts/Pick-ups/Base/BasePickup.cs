@@ -31,16 +31,13 @@ public class BasePickup : MonoBehaviour
         m_isHeld = false;
 
         //grabbing refs to our players
-        foreach(p_PlayerPickupManager player in Resources.FindObjectsOfTypeAll(typeof(p_PlayerPickupManager)))
+        foreach (p_PlayerPickupManager player in FindObjectsByType(typeof(p_PlayerPickupManager), FindObjectsSortMode.None))
         {
-            //Debug.Log(player.name);
-            //if (player.gameObject.CompareTag("Player0") && !player.gameObject.name.Contains("Variant"))
-            if(player.gameObject.name == "Player1" ) //|| player.gameObject.name == "Player1 Variant 1")
+            if(p_PlayerData.ReturnPlayerIDFromTag(player.tag) == 0 ) 
             {
                 m_playerOne = player;
             }
-            //else if(player.gameObject.CompareTag("Player1") && !player.gameObject.name.Contains("Variant"))
-            else if (player.gameObject.name == "Player2") // || player.gameObject.name == "Player2 Variant 1")
+            else if (p_PlayerData.ReturnPlayerIDFromTag(player.tag) == 1) 
             {
                 m_playerTwo = player;
             }
