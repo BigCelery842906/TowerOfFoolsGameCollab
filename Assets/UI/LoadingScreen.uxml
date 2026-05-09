@@ -4,4 +4,5 @@
         <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/ArtAssets/Logo.PNG?fileID=2800000&amp;guid=446aab2d63698154f99815ce11ead977&amp;type=3#Logo&quot;); -unity-background-scale-mode: scale-to-fit; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: 25%; background-position-x: right 0;" />
         <ui:VisualElement style="flex-grow: 1; position: absolute; bottom: 30px; background-image: url(&quot;project://database/Assets/UI/Assets/loading_card.png?fileID=2800000&amp;guid=4d58977794818044a927890f4132726d&amp;type=3#loading_card&quot;); width: 100%; height: 284px; -unity-background-scale-mode: scale-to-fit; top: auto; left: 0; right: 0; -unity-text-align: upper-left; align-self: center; justify-content: center; align-items: center; align-content: center;" />
     </ui:VisualElement>
+    <ui:VisualElement name="concept-art" style="flex-grow: 1; position: absolute; top: 100px; left: 200px; right: 200px; bottom: 350px; -unity-background-scale-mode: scale-to-fit;" />
 </ui:UXML>

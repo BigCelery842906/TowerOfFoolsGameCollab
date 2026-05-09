@@ -150,6 +150,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_uiDocument: {fileID: 1658521372}
   m_menuShownByDefault: 1
+  m_conceptArtAssets:
+  - {fileID: 2800000, guid: 00c8eecfd090b3b4a841a9ae5c99ac02, type: 3}
+  - {fileID: 2800000, guid: 99d6fb903eaeccf46a3e2533822ad3ff, type: 3}
+  - {fileID: 2800000, guid: bf62622ef86904c45a682401a3376c6f, type: 3}
+  - {fileID: 2800000, guid: f874c7af6b98fe744b3ffb36d62a0564, type: 3}
+  - {fileID: 2800000, guid: 2c61c5d2dc05bfa4b94e9ce81ec21461, type: 3}
+  - {fileID: 2800000, guid: 4a126e238b9c61646b023072b362829f, type: 3}
+  - {fileID: 2800000, guid: 745d009ed5b45644dbd797e146974fb8, type: 3}
+  - {fileID: 2800000, guid: 27dfe31615677844bb67a0d2e0ba3ab3, type: 3}
+  - {fileID: 2800000, guid: 04f490bb95803ec499336200b52e9919, type: 3}
+  - {fileID: 2800000, guid: 892544722bed38c46a2af098b520581f, type: 3}
+  - {fileID: 2800000, guid: 9788cdba262ce54478f0caf9a7640e0d, type: 3}
 --- !u!4 &26059473
 Transform:
   m_ObjectHideFlags: 0
