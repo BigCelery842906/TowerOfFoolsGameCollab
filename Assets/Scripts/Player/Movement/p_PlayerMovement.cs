@@ -50,6 +50,7 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector3 m_highGrav;
 
     private Coroutine m_slowTick;
+    private bool hasLooped = false; //DELETE
 
     //private void Awake()
     //{
@@ -95,7 +96,11 @@ public class p_PlayerMovement : MonoBehaviour
         }
 
         m_PlayerDataManager = GetComponent<p_PlayerDataManager>();
-        if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
+        if (m_PlayerDataManager != null) 
+        {
+            m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; 
+            m_PlayerDataManager.onPlayerRepositioned += Handle_PlayerReset;  //called after the player is repositioned after respawn , corouintes can leave early if object repositioned?
+        }
 
         m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
         if (m_PlayerPickupManager != null)
@@ -118,14 +123,7 @@ public class p_PlayerMovement : MonoBehaviour
         m_apexGrav = new Vector3(0f, m_apexGravValue, 0f);
         m_highGrav = new Vector3(0f, m_highGravValue, 0f);
 
-
-        //Handle_PlayerReset(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag));
-
-        //StopCoroutine(C_SlowTick());
-
-        Invoke(nameof(Handle_PlayerReset), 0.5f);
-
-        //m_slowTick = StartCoroutine(C_SlowTick());
+        m_slowTick = StartCoroutine(C_SlowTick());
     }
 
     private void OnDisable()
@@ -138,6 +136,7 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while (true)
         {
+            hasLooped = true;
             //Debug.LogAssertion("INN LOOP");
 
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
@@ -207,6 +206,7 @@ public class p_PlayerMovement : MonoBehaviour
 
         //StopCoroutine(C_SlowTick());
         StartCoroutine(C_SlowTick());
+        hasLooped = false;
     }
 
     public void SetMoveDirection(Vector2 direction)
