@@ -46,6 +46,11 @@ public class p_PlayerDataManager : MonoBehaviour
         e_GameEvents.instance.onPlayerNoLives += EndGame;
     }
 
+    private void OnEnable()
+    {
+        onPlayerRepositioned?.Invoke(m_PlayerID);
+    }
+
     void Update()
     {
         totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
