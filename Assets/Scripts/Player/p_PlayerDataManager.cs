@@ -8,6 +8,7 @@ using System;
 public class p_PlayerDataManager : MonoBehaviour
 {
     public event Action<int> onPlayerRespawned;
+    public event Action<int> onPlayerRepositioned; //unity has a bug where it can leave coroutines early after an object gets enabled and then moved in the same frame? xx
 
     //Member Variables
     p_PlayerData m_PlayerData = null;
@@ -45,6 +46,11 @@ public class p_PlayerDataManager : MonoBehaviour
         e_GameEvents.instance.onPlayerNoLives += EndGame;
     }
 
+    private void OnEnable()
+    {
+        onPlayerRepositioned?.Invoke(m_PlayerID);
+    }
+
     void Update()
     {
         totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
@@ -57,7 +63,6 @@ public class p_PlayerDataManager : MonoBehaviour
             //Don't even ask. I need an active instance of monobehaviour otherwise the player won't do the reset to active.
             MonoBehaviour camMono = Camera.main.GetComponent<MonoBehaviour>();
             camMono.StartCoroutine(RespawnTimer());
-            // StartCoroutine(RespawnTimer());
         }
     }
 
@@ -116,7 +121,6 @@ public class p_PlayerDataManager : MonoBehaviour
                 {
                     if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                     {
-
                         GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
 
                         if (highestPlatform != null)
@@ -148,6 +152,7 @@ public class p_PlayerDataManager : MonoBehaviour
         }
         
         gameObject.transform.position = newPos;
+        onPlayerRepositioned?.Invoke(m_PlayerID);
     }
     
     GameObject GetHighestPlatformInBlock(GameObject childplatform)
