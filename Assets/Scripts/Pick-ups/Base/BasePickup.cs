@@ -25,22 +25,19 @@ public class BasePickup : MonoBehaviour
 
     private bool m_isHeld;
 
-    private void Awake()
+    private void OnEnable()
     {
         m_triggeredPlayer = null;
         m_isHeld = false;
 
         //grabbing refs to our players
-        foreach(p_PlayerPickupManager player in Resources.FindObjectsOfTypeAll(typeof(p_PlayerPickupManager)))
+        foreach (p_PlayerPickupManager player in FindObjectsByType(typeof(p_PlayerPickupManager), FindObjectsSortMode.None))
         {
-            //Debug.Log(player.name);
-            //if (player.gameObject.CompareTag("Player0") && !player.gameObject.name.Contains("Variant"))
-            if(player.gameObject.name == "Player1" ) //|| player.gameObject.name == "Player1 Variant 1")
+            if(p_PlayerData.ReturnPlayerIDFromTag(player.tag) == 0 ) 
             {
                 m_playerOne = player;
             }
-            //else if(player.gameObject.CompareTag("Player1") && !player.gameObject.name.Contains("Variant"))
-            else if (player.gameObject.name == "Player2") // || player.gameObject.name == "Player2 Variant 1")
+            else if (p_PlayerData.ReturnPlayerIDFromTag(player.tag) == 1) 
             {
                 m_playerTwo = player;
             }
@@ -86,59 +83,7 @@ public class BasePickup : MonoBehaviour
 
         PickupEffect();
 
-    }
-
-    //TODO: decide if i wanna fix this? (probs not worth it but depends what design wants)
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (m_isHeld) { return; }
-
-    //    m_triggeredPlayer = null;
-
-    //    if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
-
-    //    m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
-    //    m_playerCollider ??= other.GetComponent<CapsuleCollider>();
-
-    //    if(m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
-
-    //    player is already holding a pickup and i dont think they need a second one >:c
-    //    if(m_triggeredPlayer.GetPlayerHoldingPickup()) { m_triggeredPlayer.OnPickupUsed += DelayedPickUp; return; }
-
-    //    m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
-
-    //    if (m_triggeredPlayer.CompareTag("Player0"))
-    //    {
-    //        PlayerOne Triggered it
-    //        m_otherPlayer = m_playerTwo;
-    //    }
-    //    else
-    //    {
-    //        PlayerTwo Triggered it
-    //        m_otherPlayer = m_playerOne;
-    //    }
-
-    //    m_triggeredPlayer.SetPlayerHoldingPickup(true);
-    //    m_isHeld = true;
-
-    //    AudioManager.instance.PlayPickupCollected();
-
-    //    PickupEffect();     
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if(m_isHeld) { return; } 
-
-    //    if(!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
-
-    //    if(other.gameObject != m_triggeredPlayer) { return; } //different player than the one that orignially stepped here
-
-    //    m_triggeredPlayer.OnPickupUsed -= DelayedPickUp;
-    //    m_triggeredPlayer = null;
-
-    //}
+    }    
 
     private void DelayedPickUp()
     {

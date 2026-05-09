@@ -21,6 +21,12 @@ public class p_PlayerController : MonoBehaviour
     /// </summary>
     private int m_playerIndex;
 
+    private void Awake()
+    {
+        int id = p_PlayerData.ReturnPlayerIDFromTag(tag);
+        e_GameEvents.instance.PlayerLivesUpdate(3, id);
+    }
+
     private void OnEnable()
     {
         m_playerInput = GetComponent<PlayerInput>();

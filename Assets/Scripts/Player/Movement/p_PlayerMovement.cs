@@ -50,7 +50,6 @@ public class p_PlayerMovement : MonoBehaviour
     private Vector3 m_highGrav;
 
     private Coroutine m_slowTick;
-    private bool hasLooped = false; //DELETE
 
     private void OnEnable()
     {
@@ -68,7 +67,6 @@ public class p_PlayerMovement : MonoBehaviour
         if (m_PlayerDataManager != null) 
         {
             m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; 
-            m_PlayerDataManager.onPlayerRepositioned += Handle_PlayerReset;  //called after the player is repositioned after respawn , corouintes can leave early if object repositioned?
         }
 
         m_PlayerPickupManager = GetComponentInParent<p_PlayerPickupManager>();
@@ -105,8 +103,6 @@ public class p_PlayerMovement : MonoBehaviour
     {
         while (true)
         {
-            hasLooped = true;
-
             if (Physics.Raycast(m_groundCheckTransform.position, Vector3.down, out RaycastHit hit, 0.3f, m_groundLayer))
             {
                 m_isGrounded = true;
@@ -136,7 +132,6 @@ public class p_PlayerMovement : MonoBehaviour
             if (m_RB.linearVelocity.y < 1f && m_RB.linearVelocity.y > 0f)
             {
                 Physics.gravity = m_apexGrav;
-                //do a diff anim?
             }
             else
             {
@@ -164,17 +159,11 @@ public class p_PlayerMovement : MonoBehaviour
     {
         if (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
 
-        Debug.LogAssertion("FUCCCCCCCCCCCKKKKKKKKKKK");
-
         m_PlayerPickupManager.ResetMoveSpeed();
         m_PlayerPickupManager.ResetJumpForce();
 
         m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
         m_CapsuleCollider.material.staticFriction = m_staticFriction;
-
-        //StopCoroutine(C_SlowTick());
-        StartCoroutine(C_SlowTick());
-        hasLooped = false;
     }
 
     public void SetMoveDirection(Vector2 direction)
