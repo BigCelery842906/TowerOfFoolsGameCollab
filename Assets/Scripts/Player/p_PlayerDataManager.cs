@@ -60,7 +60,7 @@ public class p_PlayerDataManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private voidFixedUpdate()
     {
         UpdatePlayerScore(m_PlayerID);
     }
@@ -79,7 +79,10 @@ public class p_PlayerDataManager : MonoBehaviour
 
         FindClosestPlatform();
 
-        PG_TransitionManager.instance.CheckPlayerAboveTransitionCollider(gameObject.transform.position);
+        if (PG_TransitionManager.instance != null) 
+        {
+            PG_TransitionManager.instance.CheckPlayerAboveTransitionCollider(gameObject.transform.position);
+        }
         
         p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
         onPlayerRespawned?.Invoke(m_PlayerID);
