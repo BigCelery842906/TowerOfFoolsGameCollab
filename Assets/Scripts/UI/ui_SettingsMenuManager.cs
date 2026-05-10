@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,22 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
     
     private List<VisualElement> m_tabPanels = new List<VisualElement>();
     
+    private DropdownField m_resolutionsDropdown;
+    private DropdownField m_refreshRateDropdown;
+    private DropdownField m_windowModeDropdown;
+    private Toggle m_vsyncToggle;
+    private Slider m_volumeSlider;
+    
+    private List<Resolution> m_resolutionsOptions;
+    private Dictionary<string, List<uint>> m_refreshRatesPerResolution;
+    private Dictionary<string, FullScreenMode> m_fullScreenModeOptions =  new Dictionary<string, FullScreenMode>
+    {
+        { "Exclusive Fullscreen", FullScreenMode.ExclusiveFullScreen },
+        { "Borderless Windowed", FullScreenMode.FullScreenWindow },
+        { "Windowed", FullScreenMode.Windowed }
+    };
+    
+    protected override string GetDefaultFocusButtonName() { return "btn-return"; }
     protected override void InitialiseMenuManager()
     {
         if (m_uiDocument == null) return;
@@ -31,6 +48,7 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
         // open the default tab
         SwitchTab("panel-video");
         
+        PopulateSettingsMenu();
     }
     
     void SwitchTab(string tabName)
@@ -59,5 +77,215 @@ public class ui_SettingsMenuManager : ui_BaseMenuManager
         // Hide the current settings menu and show the other menu
         m_otherMenuManager.ShowMenu();
         HideMenu();
+    }
+
+    private void PopulateSettingsMenu()
+    {
+        m_resolutionsDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("resolutions-dropdown");
+        m_refreshRateDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("refreshrate-dropdown");
+        m_windowModeDropdown = m_uiDocument.rootVisualElement.Q<DropdownField>("windowmode-dropdown");
+        m_vsyncToggle = m_uiDocument.rootVisualElement.Q<Toggle>("vsync-toggle");
+        m_volumeSlider = m_uiDocument.rootVisualElement.Q<Slider>("volume-slider");
+
+        // resolution & refresh rate
+        BuildResolutionData();
+        PopulateResolutionDropdown();
+        PopulateRefreshRateDropdown(m_resolutionsDropdown.value);
+        
+        m_resolutionsDropdown.RegisterValueChangedCallback(OnResolutionChanged);
+        m_refreshRateDropdown.RegisterValueChangedCallback(OnRefreshRateChanged);
+
+        // vsync
+        // "If vSyncCount == 1, rendering is synchronized to the vertical refresh rate of the display."
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+            e_GlobalData.instance.m_settingsInfo.vsyncEnabled = QualitySettings.vSyncCount > 0;
+        m_vsyncToggle.RegisterValueChangedCallback(OnVsyncChanged);
+        m_vsyncToggle.value = e_GlobalData.instance.m_settingsInfo.vsyncEnabled;
+
+        // window mode
+        m_windowModeDropdown.RegisterValueChangedCallback(OnWindowModeChanged);
+        PopulateWindowModeDropdown();
+
+        // volume
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+            e_GlobalData.instance.m_settingsInfo.volume = AudioListener.volume * 100f;
+        m_volumeSlider.RegisterValueChangedCallback(OnVolumeChanged);
+        m_volumeSlider.value = e_GlobalData.instance.m_settingsInfo.volume;
+
+        e_GlobalData.instance.m_settingsInfo.initialised = true;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        
+        // unbind all of the callbacks
+        m_resolutionsDropdown?.UnregisterValueChangedCallback(OnResolutionChanged);
+        m_refreshRateDropdown?.UnregisterValueChangedCallback(OnRefreshRateChanged);
+        m_vsyncToggle?.UnregisterValueChangedCallback(OnVsyncChanged);
+        m_windowModeDropdown?.UnregisterValueChangedCallback(OnWindowModeChanged);
+        m_volumeSlider?.UnregisterValueChangedCallback(OnVolumeChanged);
+    }
+
+    private void OnResolutionChanged(ChangeEvent<string> evt)
+    {
+        PopulateRefreshRateDropdown(evt.newValue);
+        ApplyResolution();
+    }
+
+    private void OnRefreshRateChanged(ChangeEvent<string> evt)
+    {
+        ApplyResolution();
+    }
+
+    private void OnVsyncChanged(ChangeEvent<bool> evt)
+    {
+        QualitySettings.vSyncCount = evt.newValue ? 1 : 0;
+        e_GlobalData.instance.m_settingsInfo.vsyncEnabled = evt.newValue;
+
+        // when vsync is enabled the frame rate is determined by the display refresh rate, so the
+        // refresh rate setting becomes unused, so disable it while vsync is enabled
+        m_refreshRateDropdown.SetEnabled(!evt.newValue);
+    }
+
+    private void OnWindowModeChanged(ChangeEvent<string> evt)
+    {
+        FullScreenMode newMode = m_fullScreenModeOptions[evt.newValue];
+        e_GlobalData.instance.m_settingsInfo.windowModeIndex = m_windowModeDropdown.index;
+        Screen.SetResolution(Screen.width, Screen.height, newMode);
+    }
+
+    private void OnVolumeChanged(ChangeEvent<float> evt)
+    {
+        AudioListener.volume = evt.newValue / 100f;
+        e_GlobalData.instance.m_settingsInfo.volume = evt.newValue;
+    }
+
+    private void PopulateWindowModeDropdown()
+    {
+        m_windowModeDropdown.choices.Clear();
+        m_windowModeDropdown.choices.AddRange(m_fullScreenModeOptions.Keys);
+
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+        {
+            string defaultKey = null;
+            foreach (var mode in m_fullScreenModeOptions)
+            {
+                if (mode.Value == Screen.fullScreenMode)
+                {
+                    defaultKey = mode.Key;
+                    break;
+                }
+            }
+
+            e_GlobalData.instance.m_settingsInfo.windowModeIndex = defaultKey != null ? m_windowModeDropdown.choices.IndexOf(defaultKey) : 0;
+        }
+
+        m_windowModeDropdown.index = e_GlobalData.instance.m_settingsInfo.windowModeIndex;
+    }
+
+
+    private void BuildResolutionData()
+    {
+        m_resolutionsOptions = new List<Resolution>();
+        m_refreshRatesPerResolution = new Dictionary<string, List<uint>>();
+
+        foreach (Resolution res in Screen.resolutions)
+        {
+            // if it's not a 16:9 ratio, ignore it
+            if (!Mathf.Approximately((float)res.width / res.height, 16f / 9f)) continue;
+
+            string resLabel = $"{res.width} x {res.height}";
+
+            // if the refresh rates dictionary does not have the resolution label, add it
+            if (!m_refreshRatesPerResolution.ContainsKey(resLabel))
+            {
+                m_resolutionsOptions.Add(res);
+                m_refreshRatesPerResolution[resLabel] = new List<uint>();
+            }
+            
+            // store all the refresh rates for the resolution
+            uint hertz = (uint)Math.Round((double)res.refreshRateRatio.numerator / res.refreshRateRatio.denominator);
+            m_refreshRatesPerResolution[resLabel].Add(hertz);
+        }
+    }
+
+    private void PopulateResolutionDropdown()
+    {
+        m_resolutionsDropdown.choices.Clear();
+
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+        {
+            Resolution currentRes = Screen.currentResolution;
+            int defaultIndex = 0;
+
+            for (int i = 0; i < m_resolutionsOptions.Count; i++)
+            {
+                m_resolutionsDropdown.choices.Add($"{m_resolutionsOptions[i].width} x {m_resolutionsOptions[i].height}");
+                if (m_resolutionsOptions[i].width == currentRes.width && m_resolutionsOptions[i].height == currentRes.height)
+                    defaultIndex = i;
+            }
+
+            e_GlobalData.instance.m_settingsInfo.resolutionIndex = defaultIndex;
+        }
+        else
+        {
+            for (int i = 0; i < m_resolutionsOptions.Count; i++)
+                m_resolutionsDropdown.choices.Add($"{m_resolutionsOptions[i].width} x {m_resolutionsOptions[i].height}");
+        }
+
+        m_resolutionsDropdown.index = e_GlobalData.instance.m_settingsInfo.resolutionIndex;
+    }
+
+
+    private void PopulateRefreshRateDropdown(string resolutionLabel)
+    {
+        m_refreshRateDropdown.choices.Clear();
+
+        if (!m_refreshRatesPerResolution.ContainsKey(resolutionLabel)) return;
+
+        if (!e_GlobalData.instance.m_settingsInfo.initialised)
+        {
+            uint hertz = (uint)Math.Round((double)Screen.currentResolution.refreshRateRatio.numerator / Screen.currentResolution.refreshRateRatio.denominator);
+            int defaultIndex = 0;
+
+            for (int i = 0; i < m_refreshRatesPerResolution[resolutionLabel].Count; i++)
+            {
+                m_refreshRateDropdown.choices.Add($"{m_refreshRatesPerResolution[resolutionLabel][i]}Hz");
+                if (hertz == m_refreshRatesPerResolution[resolutionLabel][i])
+                    defaultIndex = i;
+            }
+
+            e_GlobalData.instance.m_settingsInfo.refreshRateIndex = defaultIndex;
+        }
+        else
+        {
+            for (int i = 0; i < m_refreshRatesPerResolution[resolutionLabel].Count; i++)
+                m_refreshRateDropdown.choices.Add($"{m_refreshRatesPerResolution[resolutionLabel][i]}Hz");
+        }
+
+        m_refreshRateDropdown.index = e_GlobalData.instance.m_settingsInfo.refreshRateIndex;
+    }
+
+    private void ApplyResolution()
+    {
+        string resLabel = m_resolutionsDropdown.value;
+
+        // if the resolution label does not exist, cancel out
+        if (!m_refreshRatesPerResolution.ContainsKey(resLabel)) return;
+
+        Resolution res = m_resolutionsOptions[m_resolutionsDropdown.index];
+        uint selectedRefreshRate = m_refreshRatesPerResolution[resLabel][m_refreshRateDropdown.index];
+        
+        e_GlobalData.instance.m_settingsInfo.resolutionIndex = m_resolutionsDropdown.index;
+        e_GlobalData.instance.m_settingsInfo.refreshRateIndex = m_refreshRateDropdown.index;
+
+        RefreshRate newRefreshRate = new RefreshRate
+        {
+            numerator = selectedRefreshRate, denominator = 1
+        };
+
+        FullScreenMode selectedFullScreenMode = m_fullScreenModeOptions[m_windowModeDropdown.value];
+        Screen.SetResolution(res.width, res.height, selectedFullScreenMode, newRefreshRate);
     }
 }

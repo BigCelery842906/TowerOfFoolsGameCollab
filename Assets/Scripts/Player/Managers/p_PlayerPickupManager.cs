@@ -58,8 +58,16 @@ public class p_PlayerPickupManager : MonoBehaviour
         if (m_PlayerDataManager != null) { m_PlayerDataManager.onPlayerRespawned += Handle_PlayerReset; }
 
         m_playerMovement = GetComponent<p_PlayerMovement>();
+        m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
 
         m_playerID = p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag);
+    }
+
+    private void OnDisable()
+    {
+        OnPickupUsed?.Invoke();
+        m_isHoldingPickup = false;
+        m_hasInteractablePickup = false;
     }
 
     private void Handle_PlayerReset(int DeadID)
@@ -67,8 +75,7 @@ public class p_PlayerPickupManager : MonoBehaviour
         if(p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) != DeadID) { return; }
 
         if (interactablePickup != null) { Destroy(interactablePickup.gameObject); }
-        m_isHoldingPickup = false;
-        m_hasInteractablePickup = false;
+
 
         AdrenalineBoost(false, 0, 0, 0);
 

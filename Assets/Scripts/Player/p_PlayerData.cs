@@ -166,6 +166,12 @@ public class p_PlayerData
 
         return false;
     }
+
+    public int GetLives()
+    {
+        return m_Lives;
+    }
+    
     #endregion Lives
 
     public int GetPlayerID() { return m_PlayerID; }

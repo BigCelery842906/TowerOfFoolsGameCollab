@@ -27,6 +27,7 @@ public class ui_GameOverMenuManager : ui_BaseMenuManager
     private PlayerDataInfo m_playerOneData;
     private PlayerDataInfo m_playerTwoData;
     
+    protected override string GetDefaultFocusButtonName() { return "replay-btn"; }
     protected override void InitialiseMenuManager()
     {
         BindButton("return-btn", HandleButtonClicked_ReturnToMenu);

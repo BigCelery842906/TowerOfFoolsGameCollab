@@ -57,7 +57,6 @@ public class p_PlayerDataManager : MonoBehaviour
             //Don't even ask. I need an active instance of monobehaviour otherwise the player won't do the reset to active.
             MonoBehaviour camMono = Camera.main.GetComponent<MonoBehaviour>();
             camMono.StartCoroutine(RespawnTimer());
-            // StartCoroutine(RespawnTimer());
         }
     }
 
@@ -79,6 +78,11 @@ public class p_PlayerDataManager : MonoBehaviour
         gameObject.SetActive(true);
 
         FindClosestPlatform();
+
+        if (PG_TransitionManager.instance != null) 
+        {
+            PG_TransitionManager.instance.CheckPlayerAboveTransitionCollider(gameObject.transform.position);
+        }
         
         p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
         onPlayerRespawned?.Invoke(m_PlayerID);
@@ -116,7 +120,6 @@ public class p_PlayerDataManager : MonoBehaviour
                 {
                     if (platform.GetComponentInParent<PG_PlatformContainer>().m_canRespawnOnPlatform)
                     {
-
                         GameObject highestPlatform = GetHighestPlatformInBlock(platform.gameObject);
 
                         if (highestPlatform != null)
@@ -209,7 +212,7 @@ public class p_PlayerDataManager : MonoBehaviour
             {
                 m_PlayerData.UpdateScore(Convert.ToInt32(playerYPos * 12), playerID);
                 m_LastPlayerYPos = playerYPos;
-                Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore());
+                // Debug.Log("Player " + playerID + ", Score: " + m_PlayerData.GetScore());
             }
         }
     }

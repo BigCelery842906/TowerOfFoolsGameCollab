@@ -5,6 +5,7 @@ using UnityEngine.Video;
 
 public class m_VideoPlay : MonoBehaviour
 {
+    //Quick script thrown together by CS for the purpose of loading the video that the uni want us to play
     [SerializeField] private VideoPlayer m_player;
 
     [SerializeField] private string m_sceneToLoad;

@@ -98859,11 +98859,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.5474553
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.6250162
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 35798953218804996, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -99328,6 +99328,18 @@ PrefabInstance:
     - target: {fileID: 6928075979708719878, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: 'm_Bones.Array.data[13]'
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_jumpForce
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_highGravValue
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 7962804996601980142, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_RootBone

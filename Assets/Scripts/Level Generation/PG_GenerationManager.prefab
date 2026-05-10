@@ -57,6 +57,7 @@ MonoBehaviour:
   m_powerupSpawnChance: 0.3
   m_worldScale: 1.5
   m_roomNumber: 0
+  m_roomGenerationFinished: 0
 --- !u!114 &4235117051892316211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +79,10 @@ MonoBehaviour:
   - {fileID: 689665274087819324, guid: de4d5a509df1bc6488139161906e3704, type: 3}
   - {fileID: 689665274087819324, guid: b9ae77b604085964b8f34b9d45ec0e4e, type: 3}
   - {fileID: 689665274087819324, guid: c2d4940d670c8884ab5aa69fab6d45af, type: 3}
+  - {fileID: 689665274087819324, guid: ce3dd41ccc29a0641b8a246e57d59490, type: 3}
+  - {fileID: 689665274087819324, guid: 066b798230d20fa47b730689d88bfbfd, type: 3}
+  - {fileID: 689665274087819324, guid: f8cd7f40742600640bdcab060aa5a995, type: 3}
+  - {fileID: 689665274087819324, guid: 2a4dd13f4cab0ac4091e9c640edbe1ed, type: 3}
   m_nextRoomEntrance: 2
   m_previousRoomExit: 2147483647
 --- !u!114 &5043704889533043654

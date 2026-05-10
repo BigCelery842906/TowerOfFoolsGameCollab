@@ -21,16 +21,22 @@ public class p_PlayerController : MonoBehaviour
     /// </summary>
     private int m_playerIndex;
 
+    private void Awake()
+    {
+        int id = p_PlayerData.ReturnPlayerIDFromTag(tag);
+        e_GameEvents.instance.PlayerLivesUpdate(3, id);
+    }
+
     private void OnEnable()
     {
         m_playerInput = GetComponent<PlayerInput>();
         m_playerIndex = m_playerInput.playerIndex;
 
-        if(m_playerInputManager != null )
+        m_playerInputManager = e_GameEvents.instance.gameObject.GetComponent<PlayerInputManager>();
+
+        if (m_playerInputManager != null )
         {
             var gamepads = Gamepad.all;
-
-            Debug.Log("gamepads: " + gamepads.Count + "index: " + m_playerIndex);
 
             if (gamepads.Count > m_playerIndex)
             {
@@ -45,12 +51,9 @@ public class p_PlayerController : MonoBehaviour
 
             else
             {
-
                 // Keyboard fallback for 2 players
-                string scheme = (m_playerIndex == 1) ? "WASD" : "Arrows";
+                string scheme = (p_PlayerData.ReturnPlayerIDFromTag(gameObject.tag) == 0) ? "WASD" : "Arrows";
                 m_playerInput.SwitchCurrentControlScheme(scheme, Keyboard.current);
-
-                Debug.Log($"Player {m_playerIndex} scheme: {m_playerInput.currentControlScheme}");
 
                 m_playerInputManager.JoinPlayer(
                     m_playerIndex,
@@ -61,13 +64,13 @@ public class p_PlayerController : MonoBehaviour
             }
         }
 
-
         m_playerMovement = GetComponent<p_PlayerMovement>();
         m_playerCombat = GetComponentInChildren<p_PlayerCombat>();
         m_playerPickupManager = GetComponent<p_PlayerPickupManager>();
         m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
     }
 
+    
     
     /// <summary>
     /// Tells the player what direction to move
