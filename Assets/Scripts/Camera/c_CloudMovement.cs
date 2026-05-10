@@ -16,10 +16,10 @@ public class c_CloudMovement : MonoBehaviour
     void Update()
     {
         Vector3 position = transform.localPosition;
-        position.y -= m_CloudMovement * Time.deltaTime;
+        position.x += m_CloudMovement * Time.deltaTime;
         transform.localPosition = position;
         
-        if (transform.localPosition.y < -120.0f)
+        if (transform.localPosition.x > 250f)
         {
             MoveCloudToTop();
             PickRandomSpeed();
@@ -43,7 +43,7 @@ public class c_CloudMovement : MonoBehaviour
     void MoveCloudToTop()
     {
         Vector3 position = transform.localPosition;
-        position.y = 140.0f;
+        position.x = -150;
         transform.localPosition = position;
     }
 }
