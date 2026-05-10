@@ -47,10 +47,10 @@ public class e_GlobalData : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            DoStart();
         }
-        else
+        else if (instance != this)
         {
-            instance.DoStart();
             Destroy(gameObject);
         }
     }
@@ -101,7 +101,9 @@ public class e_GlobalData : MonoBehaviour
 
     public GameObject GetPlayer(int playerNum)
     {
-        if (m_PlayersToTrack.Count > playerNum){
+        if (m_PlayersToTrack.Count < playerNum)
+        {
+            return null;
         }
         if (m_PlayersToTrack[playerNum] != null)
         {

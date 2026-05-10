@@ -56924,10 +56924,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_radius: 12
-  m_deathPositionCorrection: 12
+  m_deathPositionCorrection: 8
   m_drawDeathReset: 1
   m_respawnTimer: 3
-  m_lavaSpeedCorrectionMultiplier: 0.1
+  m_lavaSpeedCorrectionMultiplier: 0.8
+  m_curLavaSpeed: 1.8226393
 --- !u!114 &8070356416164952371
 MonoBehaviour:
   m_ObjectHideFlags: 0

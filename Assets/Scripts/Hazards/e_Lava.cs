@@ -49,7 +49,14 @@ public class e_Lava : MonoBehaviour
 
     void UpdateLavaSpeed()
     {
-        m_currentMovementSpeed = m_baseMovementSpeed + (m_baseMovementSpeed * m_speedMultiplier * e_GlobalData.instance.GetCurrentTimeSpentInGame());
+        m_currentMovementSpeed = m_baseMovementSpeed +
+                                 (m_baseMovementSpeed * m_speedMultiplier *
+                                  e_GlobalData.instance.GetCurrentTimeSpentInGame());
+
+        if (m_currentMovementSpeed > 0)
+        {
+            e_GlobalData.instance.SetLavaComponents(m_speedMultiplier, m_baseMovementSpeed);
+        }
     }
 
     IEnumerator DelayLavaStartMove()

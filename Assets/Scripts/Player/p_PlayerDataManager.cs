@@ -22,6 +22,7 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private bool m_drawDeathReset = false;
     [SerializeField] private float m_respawnTimer = 3.0f;
     [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
+    [SerializeField] private float m_curLavaSpeed = 0.0f;
     private float totalPositionCorrection = 4.0f;
 
     private float m_worldScale = 1.0f;
@@ -47,7 +48,7 @@ public class p_PlayerDataManager : MonoBehaviour
 
     void Update()
     {
-        totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
+        totalPositionCorrection = CalculatePositionCorrection();
     }
 
     void PlayerDeathPositionUpdate(int playerID)
@@ -95,15 +96,21 @@ public class p_PlayerDataManager : MonoBehaviour
         }
 
     }
+
+    float CalculatePositionCorrection()
+    {
+        m_curLavaSpeed = e_GlobalData.instance.GetCurrentLavaSpeed();
+        return m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier * m_curLavaSpeed);
+    }
     
     void FindClosestPlatform()
     {
         Vector3 currentPos = gameObject.transform.position;
         Vector3 newPos = currentPos;
 
-        m_lavaSpeedCorrectionMultiplier = e_GlobalData.instance.GetCurrentLavaSpeed();
+        m_curLavaSpeed = e_GlobalData.instance.GetCurrentLavaSpeed();
             
-        float totalPositionCorrection = m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
+        float totalPositionCorrection = CalculatePositionCorrection();
 
         newPos.y = currentPos.y + totalPositionCorrection;
 
@@ -222,7 +229,7 @@ public class p_PlayerDataManager : MonoBehaviour
         if (m_drawDeathReset)
         {
             Vector3 newPos = gameObject.transform.position;
-            newPos.y += totalPositionCorrection;
+            newPos.y += CalculatePositionCorrection();
             Gizmos.DrawWireSphere(newPos, m_radius);
         }
     }
