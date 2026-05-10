@@ -78,6 +78,8 @@ public class p_PlayerDataManager : MonoBehaviour
         gameObject.SetActive(true);
 
         FindClosestPlatform();
+
+        PG_TransitionManager.instance.CheckPlayerAboveTransitionCollider(gameObject.transform.position);
         
         p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
         onPlayerRespawned?.Invoke(m_PlayerID);

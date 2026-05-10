@@ -505,6 +505,16 @@ public class PG_TransitionManager : MonoBehaviour
 
 
 
+    public void CheckPlayerAboveTransitionCollider(Vector3 newPlayerPosition)
+    {
+        if (colliderNum1 == null) return;
+        if (newPlayerPosition.y > colliderNum1.transform.position.y)
+        {
+            GenerateNextRoom();
+        }
+    }
+    
+
     public void GenerateNextRoom()
     {
         if (isSpawning) return;
