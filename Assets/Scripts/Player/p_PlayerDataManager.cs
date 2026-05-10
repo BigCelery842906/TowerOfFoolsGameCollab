@@ -60,7 +60,7 @@ public class p_PlayerDataManager : MonoBehaviour
         }
     }
 
-    private voidFixedUpdate()
+    private void FixedUpdate()
     {
         UpdatePlayerScore(m_PlayerID);
     }
