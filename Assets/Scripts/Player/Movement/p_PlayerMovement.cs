@@ -164,6 +164,8 @@ public class p_PlayerMovement : MonoBehaviour
 
         m_CapsuleCollider.material.dynamicFriction = m_dynamicFriction;
         m_CapsuleCollider.material.staticFriction = m_staticFriction;
+
+        m_slowTick = StartCoroutine(C_SlowTick());
     }
 
     public void SetMoveDirection(Vector2 direction)
