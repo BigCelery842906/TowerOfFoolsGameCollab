@@ -56884,13 +56884,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a10854e5a365aa458ebaef8d5c34460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_moveSpeed: 10
-  m_jumpForce: 8
-  m_dynamicFriction: 5
+  m_moveSpeed: 9
+  m_jumpForce: 9
+  m_dynamicFriction: 4
   m_staticFriction: 2
   m_lowerGravValue: -15
   m_apexGravValue: -10
-  m_highGravValue: -30
+  m_highGravValue: -50
   m_groundCheckTransform: {fileID: 6575185594403553813}
   m_groundLayer:
     serializedVersion: 2
