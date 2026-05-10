@@ -44,10 +44,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8893fd58332edf4ba7c57be40d67021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bottomRoom: {fileID: 0}
-  m_middleRoom: {fileID: 0}
-  m_topRoom: {fileID: 0}
+  m_previousRoom: {fileID: 0}
+  m_previousRoomGenerator: {fileID: 0}
+  m_currentRoom: {fileID: 0}
+  m_currentRoomGenerator: {fileID: 0}
+  m_nextRoom: {fileID: 0}
+  m_nextRoomGenerator: {fileID: 0}
   m_designedRooms:
-  - {fileID: 4317464147243676381, guid: 230c280f336361643987da32eb851453, type: 3}
+  - {fileID: 6244044372633959147, guid: 3580c71ab70068e448b56767728ffc14, type: 3}
+  - {fileID: 5979704059011846361, guid: 408f8e02508097248a288f880646f860, type: 3}
+  - {fileID: 5988299021468688961, guid: 53ee35750dbcb104ca12ff45c706a266, type: 3}
+  - {fileID: 7309355898028910901, guid: 7d9b1ac6383208d48bfa8e64862f88ff, type: 3}
+  - {fileID: 8978397667258749901, guid: 0691799e24a44444fb5e12c70056a5ad, type: 3}
+  - {fileID: 746247316491953147, guid: 698a9bc14e6561248b37799080dbed78, type: 3}
+  - {fileID: 8651368732740669784, guid: e3f683d18cd9beb47bb60e5f50028db3, type: 3}
+  - {fileID: 1621178642186880574, guid: 696577b63e367fe429441c72bb7dcf59, type: 3}
   m_generationManager: {fileID: 9026932992449788629, guid: 343810732bd90e9478f046157e23c5be, type: 3}
   m_transitionDetector: {fileID: 2421139530609085525, guid: 0095f6e7ecbc4734c9ec6eadb5ee8f7d, type: 3}
+  m_newRoom: {fileID: 0}
+  designRoomID: 0
+  chanceOfProcGen: 5
+  chanceOfDesign: 1
