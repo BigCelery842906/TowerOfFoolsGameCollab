@@ -54,14 +54,23 @@ public class BasePickup : MonoBehaviour
 
         if (!other.gameObject.CompareTag("Player")) { return; } //checks that we are actually colliding with a player, early return if not
 
-        m_triggeredPlayer ??= other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
-        m_playerAnim ??= other.gameObject.GetComponent<p_playerAnimControl>();
-        m_playerCollider ??= other.GetComponent<CapsuleCollider>();
+        m_triggeredPlayer = other.gameObject.GetComponentInParent<p_PlayerPickupManager>();
+        m_playerAnim = other.gameObject.GetComponent<p_playerAnimControl>();
+        m_playerCollider = other.GetComponent<CapsuleCollider>();
 
-        if (m_triggeredPlayer == null) { return; } //if it fails to get the component it returns, preventing null ref errors <3
+        if (m_triggeredPlayer == null || m_playerAnim == null || m_playerCollider == null)
+        {
+            return;
+        } //if it fails to get the component it returns, preventing null ref errors <3
 
         //player is already holding a pickup and i dont think they need a second one >:c
-        if (m_triggeredPlayer.GetPlayerHoldingPickup()) { return; }
+        if (m_triggeredPlayer.GetPlayerHoldingPickup())
+        {
+            // ensure m_triggeredPlayer is reset so that if someone comes in and is holding a pickup already,
+            // it doesnt lock the other player from picking something up
+            m_triggeredPlayer = null;
+            return;
+        }
 
         m_triggeredPlayer.OnUseInteractablePickup += InteractedPickupEffect;
 

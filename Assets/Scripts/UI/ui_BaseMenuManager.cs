@@ -104,7 +104,7 @@ namespace UI
                 buttonCallback.Key.clicked -= buttonCallback.Value;
                 
                 // Unbind the audio events for the button
-                buttonCallback.Key.clicked += PlayClickSound;
+                buttonCallback.Key.clicked -= PlayClickSound;
                 buttonCallback.Key.UnregisterCallback<PointerEnterEvent>(PlayHoverSound);
             }
             
