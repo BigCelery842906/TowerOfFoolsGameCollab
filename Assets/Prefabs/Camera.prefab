@@ -152,12 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be89fb4393356547bd37430729dd126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_yBufferPercent: 32
+  m_yBufferPercent: 20
   m_xBufferPercent: 12.5
   m_minCameraZoom: 6
   m_maxCameraZoom: 35
   m_lerpTime: 0.8
-  m_debugDraw: 0
+  m_debugDraw: 1
   m_CameraLava: {fileID: 8063266158334854191}
 --- !u!1 &5353998978696619259
 GameObject:
