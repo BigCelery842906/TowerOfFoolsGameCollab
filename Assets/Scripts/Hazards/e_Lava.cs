@@ -28,11 +28,16 @@ public class e_Lava : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, m_startingYPosition, transform.position.z);
         }
-        StartCoroutine(DelayLavaStartMove());
+
 
         if (m_AdrenalineCheck == null)
         {
             m_AdrenalineCheck = GetComponentInChildren<e_AdrenalineCheck>();
+        }
+
+        if (m_AdrenalineCheck)
+        {
+            StartCoroutine(DelayLavaStartMove());
         }
         //TODO: DISCUSS WHETHER THIS GETS PUTS IN.
         
