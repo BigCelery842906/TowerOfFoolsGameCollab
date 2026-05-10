@@ -23,11 +23,8 @@ public class pu_Swap : BasePickup
         tempOtherPlayerTrans = (playerID == 0) ? e_GlobalData.instance.GetPlayerPosition(1) : e_GlobalData.instance.GetPlayerPosition(0);
         tempPlayerTrans = (playerID == 0) ? e_GlobalData.instance.GetPlayerPosition(0) : e_GlobalData.instance.GetPlayerPosition(1);
 
-        Debug.Log(tempPlayerTrans + "player");
-        Debug.Log(tempOtherPlayerTrans + "other player");
-
-        m_triggeredPlayer.transform.position = tempPlayerTrans;
-        m_otherPlayer.transform.position = tempOtherPlayerTrans;
+        m_triggeredPlayer.transform.position = tempOtherPlayerTrans;
+        m_otherPlayer.transform.position = tempPlayerTrans;
 
         PickupUsed();
     }
