@@ -72,18 +72,33 @@ public class ui_HUDManager : ui_BaseMenuManager
 
     IEnumerator PollQueryForPlayers()
     {
-        if (e_GlobalData.instance == null)
+        while (e_GlobalData.instance == null)
         {
             // if global data was not found, wait and retry
             yield return new WaitForSeconds(0.05f);
         }
         
-        m_playerOne = e_GlobalData.instance.GetPlayer(1);
-        m_playerTwo = e_GlobalData.instance.GetPlayer(0);
-        if (m_playerOne == null || m_playerTwo == null)
+        GameObject tempPlayerOne = e_GlobalData.instance.GetPlayer(1);
+        GameObject tempPlayerTwo = e_GlobalData.instance.GetPlayer(0);
+        while (tempPlayerOne == null || tempPlayerTwo == null)
         {
             // if either player was not found, wait and retry
             yield return new WaitForSeconds(0.05f);
+            
+            tempPlayerOne = e_GlobalData.instance.GetPlayer(1);
+            tempPlayerTwo = e_GlobalData.instance.GetPlayer(0);
+        }
+
+        int tempPOneID = p_PlayerData.ReturnPlayerIDFromTag(tempPlayerOne.gameObject.tag);
+        if (tempPOneID == 0)
+        {
+            m_playerOne = tempPlayerOne;
+            m_playerTwo = tempPlayerTwo;
+        }
+        else
+        {
+            m_playerTwo = tempPlayerOne;
+            m_playerOne = tempPlayerTwo;
         }
         
         // if both players are found, store their components
