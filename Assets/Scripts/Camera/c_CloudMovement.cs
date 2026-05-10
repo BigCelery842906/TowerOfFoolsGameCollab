@@ -10,6 +10,7 @@ public class c_CloudMovement : MonoBehaviour
     void Start()
     {
        PickRandomSpeed();
+       GetComponent<SpriteRenderer>().sortingOrder = -transform.GetSiblingIndex();
     }
 
     // Update is called once per frame
