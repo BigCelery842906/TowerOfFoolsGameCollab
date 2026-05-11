@@ -188,6 +188,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6293232249084675971, guid: 9d090edd859a43147ab441667f34d595, type: 3}
+      propertyPath: m_Sounds.Array.size
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293232249084675971, guid: 9d090edd859a43147ab441667f34d595, type: 3}
+      propertyPath: m_Sounds.Array.data[8].Name
+      value: Jump_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293232249084675971, guid: 9d090edd859a43147ab441667f34d595, type: 3}
+      propertyPath: m_Sounds.Array.data[10].Name
+      value: Jump_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293232249084675971, guid: 9d090edd859a43147ab441667f34d595, type: 3}
+      propertyPath: m_Sounds.Array.data[28].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: eaaa1e13d35293e49bcd973dee288756, type: 3}
+    - target: {fileID: 6293232249084675971, guid: 9d090edd859a43147ab441667f34d595, type: 3}
+      propertyPath: m_Sounds.Array.data[28].Name
+      value: Oof_Death
+      objectReference: {fileID: 0}
     - target: {fileID: 7831700401190512495, guid: 9d090edd859a43147ab441667f34d595, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.98833

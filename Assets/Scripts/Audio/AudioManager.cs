@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//Gey
-
 [System.Serializable]
 struct AudioData
 {
@@ -89,6 +87,21 @@ public class AudioManager : MonoBehaviour
             }
         }
         
+        Debug.LogWarning($"Audio manager: clip '{audioName}' not found");
+    }
+
+    public void PlayAudio(string audioName, float volume)
+    {
+        for (int i = 0; i < m_Sounds.Count; i++)
+        {
+            if (m_Sounds[i].Name == audioName)
+            {
+                m_soundEffectSource.volume = volume;
+                m_soundEffectSource.PlayOneShot(m_Sounds[i].Clip);
+                return;
+            }
+        }
+
         Debug.LogWarning($"Audio manager: clip '{audioName}' not found");
     }
 
