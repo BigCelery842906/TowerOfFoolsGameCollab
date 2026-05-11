@@ -21,7 +21,6 @@ public class p_PlayerDataManager : MonoBehaviour
     [SerializeField] private float m_deathPositionCorrection = 10.0f;
     [SerializeField] private bool m_drawDeathReset = false;
     [SerializeField] private float m_respawnTimer = 3.0f;
-    [SerializeField] private float m_lavaSpeedCorrectionMultiplier = 0.1f;
     private float totalPositionCorrection = 4.0f;
 
     private float m_worldScale = 1.0f;
@@ -117,7 +116,7 @@ public class p_PlayerDataManager : MonoBehaviour
 
     float CalculatePositionCorrection()
     {
-        return m_deathPositionCorrection + (m_deathPositionCorrection * m_lavaSpeedCorrectionMultiplier);
+        return m_deathPositionCorrection;
     }
     
     void FindClosestPlatform()
