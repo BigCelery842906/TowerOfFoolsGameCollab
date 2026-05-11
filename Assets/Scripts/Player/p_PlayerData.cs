@@ -29,7 +29,6 @@ public class p_PlayerData
         e_GameEvents.instance.onPlayerHealthUpdate += UpdateHealth;
         e_GameEvents.instance.onPlayerScoreUpdate += UpdateScore;
         e_GameEvents.instance.onPlayerLivesUpdate += UpdateLives;
-        e_GameEvents.instance.onPlayerLivesUpdate += PlayDeathSound;
 
         e_GameEvents.instance.onPlayerDeathAdded += IncrementDeaths;
     }
@@ -39,7 +38,6 @@ public class p_PlayerData
         e_GameEvents.instance.onPlayerHealthUpdate -= UpdateHealth;
         e_GameEvents.instance.onPlayerScoreUpdate -= UpdateScore;
         e_GameEvents.instance.onPlayerLivesUpdate -= UpdateLives;
-        e_GameEvents.instance.onPlayerLivesUpdate -= PlayDeathSound;
 
         e_GameEvents.instance.onPlayerDeathAdded -= IncrementDeaths;
     }
@@ -78,11 +76,21 @@ public class p_PlayerData
         }
     }
 
-    public void PlayDeathSound(int playerID, int amount)
+    public void PlayDeathSound()
     {
+
         int deathSoundToPlay = Random.Range(0, 2);
 
+        //Easter Egg
+        int oofDeath = Random.Range(0, 30);
+
         Debug.Log("Death sound: " + deathSoundToPlay);
+
+        if(oofDeath == 1)
+        {
+            AudioManager.instance.PlayAudio("Oof_Death", 2);
+            return;
+        }
 
         if (deathSoundToPlay == 0)
         {
@@ -128,6 +136,7 @@ public class p_PlayerData
 
             if (CheckDead())
             {
+                PlayDeathSound();
                 e_GameEvents.instance.PlayerLivesUpdate(-1, m_PlayerID);
                 Debug.Log("Player " + m_PlayerID + " is Dead");
             }

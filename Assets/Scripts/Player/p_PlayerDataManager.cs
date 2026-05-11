@@ -83,6 +83,9 @@ public class p_PlayerDataManager : MonoBehaviour
         p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
         onPlayerRespawned?.Invoke(m_PlayerID);
 
+        //Respawn sound
+        AudioManager.instance.PlayAudio("Respawn_Choir", 1f);
+
         if (playerPickup)
         {
             Debug.Log("Player Values Reset");
