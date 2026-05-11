@@ -1342,10 +1342,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player1 Variant 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7681952062167918221, guid: 1b31b166407f06c419efce6f1e4e1c0e, type: 3}
-      propertyPath: m_lavaSpeedCorrectionMultiplier
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8353554372534280725, guid: 1b31b166407f06c419efce6f1e4e1c0e, type: 3}
       propertyPath: m_playerInputManager
       value: 
@@ -1355,7 +1351,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b31b166407f06c419efce6f1e4e1c0e, type: 3}
---- !u!43 &2033888149
+--- !u!43 &1927338184
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1571,6 +1567,10 @@ PrefabInstance:
     - target: {fileID: 7039006090255952521, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
       propertyPath: m_Name
       value: Single Lava
+      objectReference: {fileID: 0}
+    - target: {fileID: 7039006090255952521, guid: 2e11785f9e937fc4f9814e8bb81b8761, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
