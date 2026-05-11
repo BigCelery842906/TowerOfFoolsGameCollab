@@ -30,7 +30,8 @@ public class p_PlayerController : MonoBehaviour
     private void OnEnable()
     {
         m_playerInput = GetComponent<PlayerInput>();
-        m_playerIndex = m_playerInput.playerIndex;
+        //m_playerIndex = m_playerInput.playerIndex;
+        m_playerIndex = p_PlayerData.ReturnPlayerIDFromTag(tag);
 
         m_playerInputManager = e_GameEvents.instance.gameObject.GetComponent<PlayerInputManager>();
 
