@@ -56888,7 +56888,7 @@ MonoBehaviour:
   m_jumpForce: 9
   m_dynamicFriction: 4
   m_staticFriction: 2
-  m_lowerGravValue: -15
+  m_lowerGravValue: -20
   m_apexGravValue: -10
   m_highGravValue: -50
   m_groundCheckTransform: {fileID: 6575185594403553813}
@@ -56923,7 +56923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_radius: 12
+  m_radius: 10
   m_deathPositionCorrection: 8
   m_drawDeathReset: 1
   m_respawnTimer: 3
