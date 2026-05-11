@@ -65,7 +65,9 @@ public class p_PlayerCombat : MonoBehaviour, IAttackable
             return; //skip 
         }
 
-        m_stunSound.Play();
+        //m_stunSound.Play();
+        AudioManager.instance.PlayAudio("Stun");
+        
         m_pickupManager.SetStun(stunLength);
     }
 }

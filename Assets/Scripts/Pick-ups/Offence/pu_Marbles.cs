@@ -16,5 +16,6 @@ public class pu_marbles : BasePickup
     {
         Instantiate(m_marbelPrefab, m_triggeredPlayer.GetFiringPlayerPosPPM().position, m_triggeredPlayer.transform.rotation);
         PickupUsed();
+        AudioManager.instance.PlayAudio("Marble_Used");
     }
 }
