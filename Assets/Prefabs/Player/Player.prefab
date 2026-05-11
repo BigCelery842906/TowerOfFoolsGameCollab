@@ -56885,12 +56885,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_moveSpeed: 9
-  m_jumpForce: 9
+  m_jumpForce: 9.5
   m_dynamicFriction: 4
   m_staticFriction: 2
   m_lowerGravValue: -20
   m_apexGravValue: -10
-  m_highGravValue: -50
+  m_highGravValue: -55
   m_groundCheckTransform: {fileID: 6575185594403553813}
   m_groundLayer:
     serializedVersion: 2
@@ -56923,11 +56923,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_radius: 10
-  m_deathPositionCorrection: 8
+  m_radius: 20
+  m_deathPositionCorrection: 15
   m_drawDeathReset: 1
   m_respawnTimer: 3
-  m_lavaSpeedCorrectionMultiplier: 0.8
+  m_lavaSpeedCorrectionMultiplier: 0.3
   m_curLavaSpeed: 1.8226393
 --- !u!114 &8070356416164952371
 MonoBehaviour:
