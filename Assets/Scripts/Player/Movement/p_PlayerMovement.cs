@@ -83,6 +83,7 @@ public class p_PlayerMovement : MonoBehaviour
         m_playerAnim = GetComponentInChildren<p_playerAnimControl>();
 
         m_RB = GetComponent<Rigidbody>();
+        m_RB.maxLinearVelocity = 15.0f;
         m_CapsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
         //I didnt want to expose vectors to the designers ill be real xx You can change this
