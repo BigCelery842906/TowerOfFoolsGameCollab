@@ -72,6 +72,19 @@ public class p_PlayerData
     {
         if(playerID == m_PlayerID)
         {
+            int deathSoundToPlay = Random.Range(0, 2);
+
+            Debug.Log("Death sound: " + deathSoundToPlay);
+
+            if (deathSoundToPlay == 0)
+            {
+                AudioManager.instance.PlayAudio("Death");
+            }
+            else if (deathSoundToPlay == 1)
+            {
+                AudioManager.instance.PlayAudio("Death_NoScream");
+            }
+
             m_Deaths++;
         }
     }

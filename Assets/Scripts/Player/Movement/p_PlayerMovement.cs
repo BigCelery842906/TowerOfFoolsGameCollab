@@ -181,7 +181,8 @@ public class p_PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(m_moveDir);
 
             m_shouldMove = true;
-            StartCoroutine(C_Move());            
+            StartCoroutine(C_Move());
+            StartCoroutine(C_MoveSound());
         }
 
         m_playerAnim.SetAnimMove(m_shouldMove);
@@ -201,6 +202,39 @@ public class p_PlayerMovement : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    private IEnumerator C_MoveSound()
+    {
+        //Sound
+
+        if (m_moveSpeed <= 0f) { yield return new WaitForFixedUpdate(); }
+
+        while (m_shouldMove)
+        {
+            if(m_isGrounded)
+            {
+                int footStepToPlay = Random.Range(0, 3);
+
+                if (footStepToPlay == 0)
+                {
+                    AudioManager.instance.PlayAudio("Footstep_1", 2.0f);
+                }
+                else if (footStepToPlay == 1)
+                {
+                    AudioManager.instance.PlayAudio("Footstep_2", 2.0f);
+                }
+                else
+                {
+                    AudioManager.instance.PlayAudio("Footstep_3", 2.0f);
+                }
+
+                yield return new WaitForSeconds(1f);
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+
     }
 
     private void SetMoveSpeed(float newSpeed)
@@ -227,7 +261,18 @@ public class p_PlayerMovement : MonoBehaviour
             Physics.gravity = m_lowGrav;
             m_playerAnim.SetAnimJump(0.1f);
 
-            m_usedJumps++;
+            int soundToPlay = Random.Range(0, 2);
+
+            if (soundToPlay == 0)
+            {
+                AudioManager.instance.PlayAudio("Bell_1");
+            }
+            else
+            {
+                AudioManager.instance.PlayAudio("Bell_2");
+            }
+
+                m_usedJumps++;
         }
     }
 
