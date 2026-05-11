@@ -83,6 +83,9 @@ public class p_PlayerDataManager : MonoBehaviour
         p_PlayerPickupManager playerPickup = gameObject.GetComponent<p_PlayerPickupManager>();
         onPlayerRespawned?.Invoke(m_PlayerID);
 
+        //Respawn sound
+        AudioManager.instance.PlayAudio("Respawn_Choir", 1f);
+
         if (playerPickup)
         {
             Debug.Log("Player Values Reset");
@@ -94,11 +97,22 @@ public class p_PlayerDataManager : MonoBehaviour
 
     public void DoRespawnNoTimer()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
         FindClosestPlatform();
 
         if (PG_TransitionManager.instance != null) 
         {
             PG_TransitionManager.instance.CheckPlayerAboveTransitionCollider(gameObject.transform.position);
+        }
+
+        if (rb)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
         }
     }
 
