@@ -261,18 +261,30 @@ public class p_PlayerMovement : MonoBehaviour
             Physics.gravity = m_lowGrav;
             m_playerAnim.SetAnimJump(0.1f);
 
-            int soundToPlay = Random.Range(0, 2);
+            int soundToPlay = Random.Range(0, 5);
 
             if (soundToPlay == 0)
             {
                 AudioManager.instance.PlayAudio("Bell_1");
             }
-            else
+            else if(soundToPlay == 1)
             {
                 AudioManager.instance.PlayAudio("Bell_2");
             }
+            else if (soundToPlay == 2)
+            {
+                AudioManager.instance.PlayAudio("Jump_1");
+            }
+            else if (soundToPlay == 3)
+            {
+                AudioManager.instance.PlayAudio("Jump_2");
+            }
+            else if (soundToPlay == 4)
+            {
+                AudioManager.instance.PlayAudio("Jump_3");
+            }
 
-                m_usedJumps++;
+            m_usedJumps++;
         }
     }
 
