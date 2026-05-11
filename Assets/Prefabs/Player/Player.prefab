@@ -56928,7 +56928,7 @@ MonoBehaviour:
   m_drawDeathReset: 1
   m_respawnTimer: 3
   m_lavaSpeedCorrectionMultiplier: 0.8
-  m_curLavaSpeed: 1.8226393
+  m_curLavaSpeed: 0
 --- !u!114 &8070356416164952371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57098,7 +57098,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
