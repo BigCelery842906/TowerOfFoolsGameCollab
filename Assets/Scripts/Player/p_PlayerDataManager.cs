@@ -94,11 +94,22 @@ public class p_PlayerDataManager : MonoBehaviour
 
     public void DoRespawnNoTimer()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
         FindClosestPlatform();
 
         if (PG_TransitionManager.instance != null) 
         {
             PG_TransitionManager.instance.CheckPlayerAboveTransitionCollider(gameObject.transform.position);
+        }
+
+        if (rb)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
         }
     }
 
