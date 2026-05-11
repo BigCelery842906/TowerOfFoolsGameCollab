@@ -56927,7 +56927,7 @@ MonoBehaviour:
   m_deathPositionCorrection: 8
   m_drawDeathReset: 1
   m_respawnTimer: 3
-  m_lavaSpeedCorrectionMultiplier: 0.8
+  m_lavaSpeedCorrectionMultiplier: 0.3
   m_curLavaSpeed: 0
 --- !u!114 &8070356416164952371
 MonoBehaviour:
