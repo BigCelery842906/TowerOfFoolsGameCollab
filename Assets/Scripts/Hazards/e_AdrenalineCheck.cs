@@ -32,6 +32,8 @@ public class e_AdrenalineCheck : MonoBehaviour
         {
             m_players[i].AdrenalineBoost(true, m_movementBoost, m_jumpBoost, m_timerLength);
         }
+
+        AudioManager.instance.PlayAudio("Lava_Close");
     }
 
     private void OnTriggerExit(Collider other)
