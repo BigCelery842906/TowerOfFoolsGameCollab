@@ -511,6 +511,7 @@ public class PG_TransitionManager : MonoBehaviour
         if (newPlayerPosition.y > colliderNum1.transform.position.y)
         {
             GenerateNextRoom();
+            CheckPlayerAboveTransitionCollider(newPlayerPosition);
         }
     }
     
