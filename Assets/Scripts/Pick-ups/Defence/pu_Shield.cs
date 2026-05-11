@@ -21,6 +21,12 @@ public class pu_Shield : BasePickup
 
     private void ShieldUsed()
     {
+        p_PlayerDataManager triggeredPlayerDataManager = m_triggeredPlayer.gameObject.GetComponent<p_PlayerDataManager>();
+        if (triggeredPlayerDataManager)
+        {
+            Debug.Log("Found Player Data Manager");
+            triggeredPlayerDataManager.DoRespawnNoTimer();
+        }
         m_triggeredPlayer.OnShieldUsed -= ShieldUsed;
         PickupUsed();
     }

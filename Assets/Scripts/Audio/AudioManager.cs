@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,8 +36,38 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainMenu")) return;
-        if (!m_backgroundMusic.isPlaying) { m_backgroundMusic.Play(); }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu")
+        {
+            //If already playing, don't.
+            m_backgroundMusic.Stop();
+        }
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        if (scene.name == "MainMenu")
+        {
+            if (!m_backgroundMusic.isPlaying)
+            {
+                m_backgroundMusic.Play();
+            }
+        }
     }
 
     public void PlayAudioClip (AudioClip sound)

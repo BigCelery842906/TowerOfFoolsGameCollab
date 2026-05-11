@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public struct PlayerDataInfo
 {
@@ -47,14 +49,29 @@ public class e_GlobalData : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            DoStart();
         }
-        else
+        else if (instance != this)
         {
-            instance.DoStart();
             Destroy(gameObject);
         }
     }
-    void Start()
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         DoStart();
     }
@@ -101,7 +118,9 @@ public class e_GlobalData : MonoBehaviour
 
     public GameObject GetPlayer(int playerNum)
     {
-        if (m_PlayersToTrack.Count > playerNum){
+        if (m_PlayersToTrack.Count < playerNum)
+        {
+            return null;
         }
         if (m_PlayersToTrack[playerNum] != null)
         {

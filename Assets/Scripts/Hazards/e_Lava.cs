@@ -28,11 +28,16 @@ public class e_Lava : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, m_startingYPosition, transform.position.z);
         }
-        StartCoroutine(DelayLavaStartMove());
+
 
         if (m_AdrenalineCheck == null)
         {
             m_AdrenalineCheck = GetComponentInChildren<e_AdrenalineCheck>();
+        }
+
+        if (m_AdrenalineCheck)
+        {
+            StartCoroutine(DelayLavaStartMove());
         }
         //TODO: DISCUSS WHETHER THIS GETS PUTS IN.
         
@@ -49,7 +54,14 @@ public class e_Lava : MonoBehaviour
 
     void UpdateLavaSpeed()
     {
-        m_currentMovementSpeed = m_baseMovementSpeed + (m_baseMovementSpeed * m_speedMultiplier * e_GlobalData.instance.GetCurrentTimeSpentInGame());
+        m_currentMovementSpeed = m_baseMovementSpeed +
+                                 (m_baseMovementSpeed * m_speedMultiplier *
+                                  e_GlobalData.instance.GetCurrentTimeSpentInGame());
+
+        if (m_currentMovementSpeed > 0)
+        {
+            e_GlobalData.instance.SetLavaComponents(m_speedMultiplier, m_baseMovementSpeed);
+        }
     }
 
     IEnumerator DelayLavaStartMove()

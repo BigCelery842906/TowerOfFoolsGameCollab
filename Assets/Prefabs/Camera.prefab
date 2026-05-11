@@ -152,12 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be89fb4393356547bd37430729dd126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_yBufferPercent: 32
-  m_xBufferPercent: 12.5
-  m_minCameraZoom: 6
+  m_yBufferPercent: 38
+  m_xBufferPercent: 12
+  m_minCameraZoom: 8
   m_maxCameraZoom: 35
   m_lerpTime: 0.8
-  m_debugDraw: 0
+  m_debugDraw: 1
   m_CameraLava: {fileID: 8063266158334854191}
 --- !u!1 &5353998978696619259
 GameObject:
@@ -281,7 +281,7 @@ Transform:
   m_GameObject: {fileID: 6275617476819291078}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 250}
+  m_LocalPosition: {x: 0, y: 0, z: 345}
   m_LocalScale: {x: 300, y: 300, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
