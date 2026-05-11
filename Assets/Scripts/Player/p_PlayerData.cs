@@ -76,32 +76,6 @@ public class p_PlayerData
         }
     }
 
-    public void PlayDeathSound()
-    {
-
-        int deathSoundToPlay = Random.Range(0, 2);
-
-        //Easter Egg
-        int oofDeath = Random.Range(0, 30);
-
-        Debug.Log("Death sound: " + deathSoundToPlay);
-
-        if(oofDeath == 1)
-        {
-            AudioManager.instance.PlayAudio("Oof_Death", 2);
-            return;
-        }
-
-        if (deathSoundToPlay == 0)
-        {
-            AudioManager.instance.PlayAudio("Death");
-        }
-        else if (deathSoundToPlay == 1)
-        {
-            AudioManager.instance.PlayAudio("Death_NoScream");
-        }
-    }
-
     public int GetDeaths() { return m_Deaths; }
 
     #endregion Deaths
@@ -136,7 +110,6 @@ public class p_PlayerData
 
             if (CheckDead())
             {
-                PlayDeathSound();
                 e_GameEvents.instance.PlayerLivesUpdate(-1, m_PlayerID);
                 Debug.Log("Player " + m_PlayerID + " is Dead");
             }
