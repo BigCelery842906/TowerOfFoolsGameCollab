@@ -56923,12 +56923,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f9923517c71494bbbbef96843c6a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_radius: 10
-  m_deathPositionCorrection: 8
+  m_radius: 20
+  m_deathPositionCorrection: 15
   m_drawDeathReset: 1
   m_respawnTimer: 3
   m_lavaSpeedCorrectionMultiplier: 0.3
-  m_curLavaSpeed: 0
 --- !u!114 &8070356416164952371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57098,7 +57097,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1

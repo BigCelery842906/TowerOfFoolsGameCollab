@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_jumpForce
-      value: 9
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_moveSpeed
@@ -62,15 +62,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_highGravValue
-      value: -50
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 7849269804269014520, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_lowerGravValue
       value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 7961848418309483780, guid: aed4863a399395746b4387980cea00c9, type: 3}
+      propertyPath: m_curLavaSpeed
+      value: 1.3589789
+      objectReference: {fileID: 0}
+    - target: {fileID: 7961848418309483780, guid: aed4863a399395746b4387980cea00c9, type: 3}
       propertyPath: m_drawDeathReset
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

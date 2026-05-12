@@ -194,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_currentMovementSpeed: 0.1
   m_baseMovementSpeed: 0.4
-  m_speedMultiplier: 0.03
+  m_speedMultiplier: 0.04
   m_lavaWaitPeriod: 8
   m_startFromPosition: 1
   m_startingYPosition: -7
